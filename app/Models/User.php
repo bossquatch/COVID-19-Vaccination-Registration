@@ -47,6 +47,21 @@ class User extends Authenticatable // implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function AuditLogs()
+    {
+        return $this->hasMany(AuditLog::class, 'user_id');
+    }
+
+    public function AuditChanges()
+    {
+        return $this->morphMany(AuditLog::class, 'auditable');
+    }
+
+    public function registration()
+    {
+        return $this->hasOne(Registration::class, 'user_id');
+    }
+
     // roles and permissions
     public function roles()
     {

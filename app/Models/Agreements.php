@@ -10,4 +10,9 @@ class Agreement extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function registrations()
+    {
+        return $this->belongsToMany(Registration::class)->withTimestamps();
+    }
 }
