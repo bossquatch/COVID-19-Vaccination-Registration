@@ -35,6 +35,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('city',60)->nullable();
             $table->char('state',2)->nullable();
             $table->string('zip',14)->nullable();
+            $table->timestamp('submitted_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

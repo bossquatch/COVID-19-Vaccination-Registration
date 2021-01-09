@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -51,8 +52,11 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'firstName' => ['required', 'string', 'max:255'],
+            'middleName' => ['nullable', 'string', 'max:30'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'regex:/^(?=.*[0-9])[- +()0-9]+$/', 'max:14'],
+            'dateOfBirth' => ['required', 'date', 'before:'.Carbon::now()->add(-13, 'years')->format('m-d-Y')],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -65,10 +69,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'first_name' => $data['firstName'],
+            'middle_name' => $data['middleName'],
+            'last_name' => $data['lastName'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'birth_date' => $data['dateOfBirth'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $this->logChanges($user, 'created', false, true);
+
+        $user->assignRole('user');
+
+        return $user;
     }
 }

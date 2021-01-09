@@ -43,10 +43,6 @@
         @yield('content')
     </main>
 
-    @include('layouts.partials.footer')
-
-    @include('layouts.partials.modals')
-
     @yield('scripts')
 </body>
 </html>
