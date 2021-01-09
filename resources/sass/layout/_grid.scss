@@ -1,0 +1,44 @@
+﻿.col-2dot4,
+.col-sm-2dot4,
+.col-md-2dot4,
+.col-lg-2dot4,
+.col-xl-2dot4 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-2dot4 {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+@include media-breakpoint-up(sm) {
+    .col-sm-2dot4 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .col-md-2dot4 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .col-lg-2dot4 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    .col-xl-2dot4 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}

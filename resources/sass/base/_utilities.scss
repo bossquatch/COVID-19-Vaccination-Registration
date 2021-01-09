@@ -1,0 +1,25 @@
+﻿// Lift
+.lift {
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+
+    &:focus,
+    &:hover {
+        box-shadow: 0 1rem 2.5rem rgba($box-shadow-light-color, 0.1), 0 0.5rem 1rem -0.75rem rgba($box-shadow-light-color, 0.1);
+        transform: translate3d(0, -0.1875rem, 0);
+    }
+
+    &.lift-lg {
+        &:focus,
+        &:hover {
+            box-shadow: 0 2rem 5rem rgba($box-shadow-light-color, 0.1), 0 0.5rem 1rem -0.75rem rgba($box-shadow-light-color, 0.05);
+            transform: translate3d(0, -0.3125rem, 0);
+        }
+    }
+}
+
+// Z-Indexes
+@for $i from 0 through 3 {
+    .z-#{$i} {
+        z-index: $i;
+    }
+}

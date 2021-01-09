@@ -1,0 +1,6 @@
+﻿/* Complex map loop to dynamically create gradient classes */
+@each $label, $map in $gradient-map {
+    .#{$label}-gradient {
+        @include gradient-directional($start-color: map-get($map, "start-color"), $end-color: map-get($map, "end-color"), $deg: map-get($map, "deg"));
+    }
+}

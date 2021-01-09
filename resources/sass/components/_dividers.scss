@@ -1,0 +1,37 @@
+﻿/*
+    Divider with Text
+    Example:
+    <hr class="hr-text" data-content="OR" aria-label="Or create new customer">
+*/
+.hr-text {
+    border: 0;
+    color: $black;
+    height: 1.5em;
+    line-height: 1rem;
+    margin-bottom: 2.25rem;
+    margin-top: 1.5rem;
+    opacity: 0.5;
+    outline: 0;
+    position: relative;
+    text-align: center;
+
+    &::before {
+        // use linear-gradient for a fade effect, or use a solid background color for a solid bar
+        background: linear-gradient(to right, transparent, $text-muted, transparent);
+        content: "";
+        height: 1px;
+        left: 0;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+    }
+
+    &::after {
+        background-color: $white;
+        content: attr(data-content);
+        display: inline-block;
+        line-height: 1.5rem;
+        padding: 0 0.5rem;
+        position: relative;
+    }
+}

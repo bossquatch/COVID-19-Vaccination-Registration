@@ -1,0 +1,49 @@
+.table-silk {
+    font-size: $font-size-sm;
+    margin-bottom: 0;
+
+    thead {
+        background-color: $gray-lighter;
+
+        th {
+            border-bottom: 1px solid $border-light;
+            border-bottom-width: 1px;
+            color: $gray-dark;
+            font-size: $font-size-sm * 0.8;
+            font-weight: bold;
+
+            > a {
+                color: inherit;
+                text-decoration: none;
+
+                &[data-sort]::after {
+                    content: "\f0dc";
+                    font-family: $font-awesome-base;
+                    margin-left: 0.25rem;
+                }
+            }
+        }
+    }
+
+    thead,
+    tbody {
+        th,
+        td {
+            border-top: 1px solid $border-light;
+            padding: $table-silk-cell-py $table-silk-cell-px;
+            vertical-align: middle;
+
+            &:first-child {
+                padding-left: $table-silk-indent;
+            }
+
+            &:last-child {
+                padding-right: $table-silk-indent;
+            }
+        }
+    }
+
+    .dropdown-ellipsis {
+        padding: 0.25rem 0.5rem;
+    }
+}

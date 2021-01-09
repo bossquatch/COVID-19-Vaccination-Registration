@@ -1,0 +1,201 @@
+﻿@include media-breakpoint-down(sm) {
+    .btn-sm-block {
+        display: block;
+        width: 100%;
+    }
+}
+
+.btn.btn-round {
+    border-radius: 10rem;
+}
+
+/*
+// ----------------------------------------
+// HTML Usage
+// ----------------------------------------
+//
+// ----------------------------------------
+// Default:
+// ----------------------------------------
+// <a class="btn btn-header btn-round btn-lg" href="#">
+//     <span class="fad fa-check mr-1"></span> Apply Now
+// </a>
+//
+// ----------------------------------------
+// Outline:
+// ----------------------------------------
+// <a class="btn btn-header-outline btn-round btn-lg" href="#">
+//     <span class="fad fa-check mr-1"></span> Apply Now
+// </a>
+//
+// ----------------------------------------
+*/
+.btn.btn-header {
+    @include button-variant($blue-custom, $blue-custom);
+    box-shadow: 0 0.125rem 0.125rem 0 rgba($blue-custom, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba($blue-custom, 0.2), 0 0.0625rem 0.3125rem 0 rgba($blue-custom, 0.12);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    padding: 1.125rem 2.25rem;
+
+    &.focus,
+    &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba($blue-custom, 0.25);
+    }
+
+    &-success {
+        @include button-variant($success, $success);
+        box-shadow: 0 0.125rem 0.125rem 0 rgba($success, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba($success, 0.2), 0 0.0625rem 0.3125rem 0 rgba($success, 0.12);
+
+        &.focus,
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba($success, 0.25);
+        }
+    }
+
+    &-danger {
+        @include button-variant($danger, $danger);
+        box-shadow: 0 0.125rem 0.125rem 0 rgba($danger, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba($danger, 0.2), 0 0.0625rem 0.3125rem 0 rgba($danger, 0.12);
+
+        &.focus,
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba($danger, 0.25);
+        }
+    }
+
+    &-warning {
+        @include button-variant($warning, $warning);
+        box-shadow: 0 0.125rem 0.125rem 0 rgba($warning, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba($warning, 0.2), 0 0.0625rem 0.3125rem 0 rgba($warning, 0.12);
+
+        &.focus,
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba($warning, 0.25);
+        }
+    }
+
+    &-outline {
+        @include button-outline-variant($blue-custom);
+        box-shadow: 0 0.125rem 0.125rem 0 rgba($blue-custom, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba($blue-custom, 0.2), 0 0.0625rem 0.3125rem 0 rgba($blue-custom, 0.12);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        padding: 1.125rem 2.25rem;
+
+        &.focus,
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba($blue-custom, 0.25);
+        }
+    }
+}
+
+.btn-dropdown-arrow {
+    align-items: center;
+    display: flex;
+
+    &:hover,
+    &:focus,
+    &.focus {
+        text-decoration: none;
+    }
+
+    &[data-toggle="collapse"] {
+        &::after {
+            content: "\f107";
+            display: block;
+            font-family: $font-awesome-base;
+            font-weight: 900;
+            margin-left: auto;
+            transition: transform 0.2s;
+        }
+
+        &[aria-expanded="true"]::after {
+            transform: rotate(-180deg);
+        }
+    }
+}
+
+.btn-featured {
+    background-color: $gray-blue;
+    border-radius: 50%;
+    color: $gray-600;
+    transition: all 0.2s;
+
+    &::before {
+        content: "";
+        display: block;
+        padding-top: 100%;
+    }
+
+    &:hover,
+    &:active {
+        box-shadow: 0 0.0625rem 0.375rem 0 $box-shadow-color;
+        color: $black;
+        text-decoration: none;
+    }
+
+    .fas,
+    .far,
+    .fal,
+    .fad,
+    .fab {
+        font-size: 2.5rem;
+    }
+}
+
+.link-icon {
+    display: inline-block;
+
+    .fas,
+    .far,
+    .fal,
+    .fad,
+    .fab {
+        font-size: 0.625rem;
+    }
+}
+
+.btn-image {
+    background-color: $blue;
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid $black-lighter;
+    border-radius: unset;
+    color: $white;
+    font-size: 1.25rem;
+    height: 7.5rem;
+    line-height: 1.28;
+    padding: 0.8rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+    .block-text {
+        color: $white;
+        position: relative;
+        text-shadow: 0 0 1.25rem $black;
+        z-index: 1;
+    }
+
+    &::after {
+        background: rgba($black, 0.5);
+        content: "";
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: background 0.3s;
+        width: 100%;
+    }
+
+    &:hover {
+        color: $white;
+        text-decoration: none;
+    }
+
+    &:focus::after,
+    &:hover::after {
+        background: rgba($black, 0.3);
+    }
+}

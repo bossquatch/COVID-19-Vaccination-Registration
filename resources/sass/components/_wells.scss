@@ -1,0 +1,33 @@
+﻿.well {
+    background: $black-lighter;
+    color: $white;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+
+    .list-links {
+        margin: 0;
+
+        .list-item:not(:last-of-type) {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    a {
+        color: $white;
+    }
+
+    &.well-blue {
+        background: $blue-bocc;
+        color: $white;
+    }
+
+    &.well-green {
+        background: $green-bocc;
+        color: $white;
+    }
+
+    &.well-gray {
+        background: $gray-light;
+        color: $black;
+    }
+}

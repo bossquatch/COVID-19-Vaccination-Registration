@@ -1,0 +1,38 @@
+﻿/* -----------------------------------------------------------------------------------------------------------------
+    Shape: Curve
+   -----------------------------------------------------------------------------------------------------------------
+    HTML Structure:
+   -----------------------------------------------------------------------------------------------------------------
+
+   <div class="position-relative">
+       <div class="shape-curve shape-curve--light">
+           <svg class="shape-curve-svg" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+           </svg>
+       </div>
+   </div>
+----------------------------------------------------------------------------------------------------------------- */
+
+.shape-curve {
+    bottom: 0;
+    color: inherit;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+
+    .shape-curve-svg {
+        display: block;
+        transform: scale(2);
+        transform-origin: top center;
+        width: 100%;
+    }
+
+    &--white {
+        color: $white;
+    }
+
+    &--light {
+        color: $gray-lighter;
+    }
+}

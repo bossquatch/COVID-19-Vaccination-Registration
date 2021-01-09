@@ -1,0 +1,23 @@
+﻿/*
+// ----------------------------------------
+// HTML Usage
+// ----------------------------------------
+//
+// <div class="main main-raised pt-8 pt-md-11 pb-8 pb-md-12"></div>
+//
+// ----------------------------------------
+*/
+.main {
+    position: relative;
+    background: $white;
+    z-index: 3;
+}
+
+@include media-breakpoint-up(lg) {
+    .main-raised {
+        margin: -3.75rem 1.875rem 0;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        border-radius: $border-radius;
+    }
+}

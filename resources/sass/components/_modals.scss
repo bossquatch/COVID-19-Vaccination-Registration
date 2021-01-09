@@ -1,0 +1,21 @@
+﻿.modal {
+    &.modal-fullscreen {
+        background-color: $white;
+        /* stylelint-disable-next-line declaration-no-important */
+        padding-right: 0 !important;
+
+        .modal-dialog {
+            margin: 0;
+            min-width: 100%;
+
+            .modal-content {
+                min-height: 100vh;
+
+                .modal-body {
+                    padding-bottom: 2rem;
+                    padding-top: 2rem;
+                }
+            }
+        }
+    }
+}
