@@ -58,6 +58,8 @@ return [
 
     'default_password' => env('DEFAULT_PASSWORD', ''),
 
+    'usps_username' => env('USPS_USERNAME', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

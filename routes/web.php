@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/home/register', [App\Http\Controllers\RegistrationController::class, 'submitRegistration']);
+
+Route::get('/address/validate', [App\Http\Controllers\UspsController::class, 'validateInlineAddress']);
