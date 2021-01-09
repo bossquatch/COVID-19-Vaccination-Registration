@@ -12,6 +12,6 @@ class Race extends Model
     protected $guarded = [];
 
     public function registrations() {
-        return $this->hasMany(Registration::class, 'status_id');
+        return $this->hasMany(Registration::class, 'race_id');
     }
 }

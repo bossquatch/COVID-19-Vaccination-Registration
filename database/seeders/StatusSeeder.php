@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class StatusSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        App\Models\Status::insert([
+        \App\Models\Status::insert([
             ['id' => '1', 'name' => 'In Wait List', 'fa_icon' => 'fad fa-sync text-secondary', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['id' => '2', 'name' => 'Appointment Pending', 'fa_icon' => 'fad fa-exclamation-triangle text-warning', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['id' => '3', 'name' => 'Scheduled', 'fa_icon' => 'fad fa-calendar-alt text-info', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
