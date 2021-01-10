@@ -13,7 +13,7 @@ class RegistrationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'can:create_registration']);
     }
 
     public function submitRegistration()
@@ -44,7 +44,7 @@ class RegistrationController extends Controller
             }
         }
 
-        $code = $randomletter . '-' . Carbon::now()->isoFormat('SSSS');
+        $code = $randomletter . Carbon::now()->isoFormat('SSSS');
         $agreements = array_keys($valid['agreement']);
         $user = Auth::user();
 

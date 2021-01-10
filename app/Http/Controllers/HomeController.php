@@ -27,7 +27,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $permissions = $user->permissions();
         if ($permissions->contains('read_registration')) {
-            return view('manage.index');
+            return redirect('/manage');
         } else {
             if ($user->registration) {
                 return view('register.status');

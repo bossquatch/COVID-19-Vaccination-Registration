@@ -88,6 +88,27 @@
     </div>
 </div>
 
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-label="Loading Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body p-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fa fa-spinner fa-spin fa-3x"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-5">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Variable Modal -->
 <div class="modal fade" id="varModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Variable Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
