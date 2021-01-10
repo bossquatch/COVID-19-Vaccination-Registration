@@ -91,11 +91,26 @@
                                     Code {{ Auth::user()->registration->code }}
                                 </p>
 
+                                <p class="text-gray-dark mb-0">
+                                    Phone number ending in: {{ substr(Auth::user()->phone, -4) }}
+                                </p>
+                                @if (Auth::user()->sms_verified_at != null)
+                                <p class="text-success">
+                                    Verified
+                                </p>
+                                @else
+                                <form method="POST" action="{{ url('/sms/resend') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('I wish to receive to text updates to this number') }}</button>.
+                                </form>
+                               {{-- <a href="/sms/verify">
+                                    I wish to receive to text updates to this number.
+                                </a>    --}}
+                                @endif
+
                                 <!-- Button -->
                                {{--@if ($application->status_id != '1' && $application->status_id != '5')--}}
-                                {{--<a class="btn btn-header btn-round btn-lg" href="/Application/review">
-                                    View application
-                                </a>--}}
+                                
                                 {{--@else
                                 <a class="btn btn-header btn-round btn-lg" href="/Application">
                                     Continue application

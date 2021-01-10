@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -46,6 +47,19 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function hasVerifiedPhone()
+    {
+        return (bool)($this->sms_verified_at != null);
+    }
+
+    public function markPhoneAsVerified()
+    {
+        return $this->forceFill([
+            'sms_capable' => true,
+            'sms_verified_at' => Carbon::now(),
+        ])->save();
+    }
 
     public function AuditLogs()
     {
