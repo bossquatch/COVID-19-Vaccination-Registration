@@ -16,7 +16,7 @@ class ManageController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'can:read_registration']);
+        $this->middleware(['verified', 'can:read_registration']);
     }
 
     /**

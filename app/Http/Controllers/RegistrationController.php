@@ -13,7 +13,7 @@ class RegistrationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'can:create_registration']);
+        $this->middleware(['verified', 'can:create_registration']);
     }
 
     public function submitRegistration()
