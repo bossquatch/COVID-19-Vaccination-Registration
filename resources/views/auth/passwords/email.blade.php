@@ -10,7 +10,7 @@
         <div class="row align-items-center justify-content-center min-vh-100">
             <div class="col-lg-6 align-self-stretch d-none d-lg-block px-0">
                 <!-- Image -->
-                <div class="h-100 w-cover bg-cover" style="background-image: url({{ asset('images/downtown-bartow.jpg') }});"></div>
+                <div class="h-100 w-cover bg-cover" style="background-image: url({{ asset('images/register-image.jpg') }});"></div>
             </div>
 
             <div class="col-12 col-md-10 col-lg-6 px-8 px-lg-11 py-8 py-lg-11">
