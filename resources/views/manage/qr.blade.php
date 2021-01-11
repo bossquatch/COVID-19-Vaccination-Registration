@@ -31,7 +31,7 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
-                <a class="btn btn-header btn-round btn-lg" href="/Admin">
+                <a class="btn btn-header btn-round btn-lg" href="/manage">
                     <span class="fad fa-times-circle mr-1"></span> Cancel
                 </a>
             </div>
