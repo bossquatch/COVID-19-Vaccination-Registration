@@ -132,11 +132,11 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
-                                        <label for="stateFront">
+                                        <label for="state">
                                             State
                                         </label>
-                                        <input type="hidden" name="state" value="FL">
-                                        <select id="stateFront" name="stateFront" class="custom-select @error("state") is-invalid @enderror" disabled aria-disabled="true">
+                                        {{--<input type="hidden" name="state" value="FL">--}}
+                                        <select id="state" name="state" class="custom-select @error("state") is-invalid @enderror" aria-disabled="false">
                                             <option value="AL">Alabama</option>
                                             <option value="AK">Alaska</option>
                                             <option value="AZ">Arizona</option>
@@ -229,7 +229,7 @@
                                         <select id="occupation" name="occupation" class="custom-select @error("occupation") is-invalid @enderror">
                                             @foreach (\App\Models\Occupation::get() as $occupation)
                                                 @if($occupation->display_name != null)
-                                                    <option value="{{ $occupation->id }}" @if (old('occupation') && old('occupation') == $occupation->id) selected @endif>{{ $occupation->display_name }}</option>    
+                                                    <option value="{{ $occupation->id }}" @if (old('occupation') && old('occupation') == $occupation->id) selected @elseif((old('occupation') === null || old('occupation') == null) && $occupation->id == 19) selected @endif>{{ $occupation->display_name }}</option>    
                                                 @endif
                                             @endforeach
                                         </select>
@@ -346,7 +346,7 @@
                                     'address2': $("#address2").val(),
                                     'city': $("#city").val(),
                                     'zip': $("#zipCode").val(),
-                                    'state':'FL'
+                                    'state': $('#state').find(":selected").val()
                                 };
                         
                                 if (addrInfo.address1 != "" && addrInfo.city != "" && addrInfo.zip != ""){
@@ -369,7 +369,7 @@
                                             if (data.address.Zip4 !== undefined) {
                                                 addr += "-"+data.address.Zip4;
                                             }
-                                            text = "<b>Address was successufully validated!</b><br><b>Found address:</b> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"');$(this).hide();\">Sync Address</button>";
+                                            text = "<b>Address was successufully validated!</b><br><b>Found address:</b> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
                                             if (data.address.ReturnText !== undefined) {
                                                 text += "<br>"+data.address.ReturnText;
                                             }
@@ -389,7 +389,7 @@
                                 }
                             }
                         
-                            function syncInlineAddress(address1, address2, city, zip) {
+                            function syncInlineAddress(address1, address2, city, zip, state) {
                                 if (address1 !== undefined && address1 != 'undefined') {
                                     $("#address1").val(address1);
                                 } else {
@@ -412,6 +412,12 @@
                                     $("#zipCode").val(zip);
                                 } else {
                                     $("#zipCode").val("");
+                                }
+
+                                if (state !== undefined && state != 'undefined') {
+                                    $("#state").val(state).change();
+                                } else {
+                                    $("#state").val("FL").change();
                                 }
                             }
                         </script>
