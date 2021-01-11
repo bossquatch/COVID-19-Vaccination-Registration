@@ -60,14 +60,18 @@
                                 <div class="badge badge-outline-muted mb-2">
                                     <span class="{{ $registration->status->fa_icon }} mr-1"></span> {{ $registration->status->name }}
                                 </div>
+
+                                <p class="text-gray-dark mb-2">
+                                    Submitted: {{ Carbon\Carbon::parse($registration->submitted_at)->format('m-d-Y h:i:s A') }}
+                                </p>
                             </div>
                             <div class="col-12 text-center mb-0">
                                 <div class="row align-items-center justify-content-center">
                                 <!-- Text -->
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <h3 class="h4">Submitted at:</h3>
+                                    <h3 class="h4">Date of Birth:</h3>
                                     <p class="text-gray-dark mb-2">
-                                        {{ Carbon\Carbon::parse($registration->submitted_at)->format('m-d-Y h:i:s A') }}
+                                        {{ Carbon\Carbon::parse($registration->birth_date)->format('m/d/Y') }}
                                     </p>
                                 </div>
 
@@ -98,22 +102,22 @@
 
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <h3 class="h4">Phone Number(s):</h3>
-                                    <ul class="text-gray-dark mb-2">
+                                    <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
                                         @forelse ($registration->phones() as $phone)
-                                            <li>{{ $phone->value }}</li>
+                                            <li style="list-style-type: none;">{{ $phone->value }}</li>
                                         @empty
-                                            <li>No phone number</li>
+                                            <li style="list-style-type: none;">No phone number</li>
                                         @endforelse
                                     </ul>
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <h3 class="h4">Email(s):</h3>
-                                    <ul class="text-gray-dark mb-2">
+                                    <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
                                         @forelse ($registration->emails() as $email)
-                                            <li>{{ $email->value }}</li>
+                                            <li style="list-style-type: none;">{{ $email->value }}</li>
                                         @empty
-                                            <li>No email address</li>
+                                            <li style="list-style-type: none;">No email address</li>
                                         @endforelse
                                     </ul>
 
@@ -122,11 +126,11 @@
 
                                 <div class="col-12">
                                     <h3 class="h4">Underlying Conditions:</h3>
-                                    <ul class="text-gray-dark mb-2">
+                                    <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
                                         @forelse ($registration->conditions as $condition)
-                                            <li>{{ $condition->display_name }}</li>
+                                            <li style="list-style-type: none;">{{ $condition->display_name }}</li>
                                         @empty
-                                            <li>No underlying conditions</li>
+                                            <li style="list-style-type: none;">No underlying conditions</li>
                                         @endforelse
                                     </ul>
                                 </div>
