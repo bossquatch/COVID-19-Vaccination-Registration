@@ -21,6 +21,7 @@ class CreateRegistrationsTable extends Migration
             $table->unsignedBigInteger('race_id');
             $table->unsignedBigInteger('gender_id');
             $table->unsignedBigInteger('occupation_id');
+            $table->unsignedBigInteger('county_id');
             
             // Obtained by user account:
             $table->string('first_name');
@@ -37,6 +38,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('city',60)->nullable();
             $table->char('state',2)->nullable();
             $table->string('zip',14)->nullable();
+            $table->boolean('prefer_close_location')->default(0);
             $table->timestamp('submitted_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -64,6 +66,11 @@ class CreateRegistrationsTable extends Migration
             $table->foreign('occupation_id')
                 ->references('id')
                 ->on('occupations')
+                ->onDelete('cascade');
+
+            $table->foreign('county_id')
+                ->references('id')
+                ->on('counties')
                 ->onDelete('cascade');
         });
     }

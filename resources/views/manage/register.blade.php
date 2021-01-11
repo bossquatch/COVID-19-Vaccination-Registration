@@ -322,6 +322,41 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-5">
+                                        <label for="county">
+                                            County
+                                        </label>
+                                        <select id="county" name="county" class="custom-select @error("county") is-invalid @enderror">
+                                            @foreach (\App\Models\County::get() as $county)
+                                                <option value="{{ $county->id }}" @if (old('county') && old('county') == $county->id) selected @elseif((old('county') === null || old('county') == null) && $county->id == 53) selected @endif>{{ $county->county }}</option>    
+                                            @endforeach
+                                        </select>
+                        
+                                        @error('county')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('county') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="scheculePreference" name="scheculePreference" class="custom-control-input @error("scheculePreference") is-invalid @enderror" type="checkbox">
+                                            <label class="custom-control-label" for="scheculePreference">I prefer to get scheduled to the location closest to me instead of being scheduled to the earliest possible appointment.</label>
+                        
+                                            @error("scheculePreference")
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first("scheculePreference") }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12" style="display: none" id="addressStatusBlock"></div>
                             </div>
 

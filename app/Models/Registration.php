@@ -57,6 +57,11 @@ class Registration extends Model
         return $this->belongsTo(Gender::class, 'gender_id');
     }
 
+    public function county()
+    {
+        return $this->belongsTo(County::class, 'county_id');
+    }
+
     public function occupation()
     {
         return $this->belongsTo(Occupation::class, 'occupation_id');

@@ -19,6 +19,7 @@ class RegistrationController extends Controller
     public function submitRegistration()
     {
         $valid = request()->validate($this->validationRules());
+        $valid['scheculePreference'] = (bool) request('scheculePreference');
         $is_valid_letters = false;
         $randomletter = '';
 
@@ -64,6 +65,7 @@ class RegistrationController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
+            'county_id'=> $valid['county'],
             
             // Obtained by user account:
             'first_name'=> $user->first_name,
@@ -80,6 +82,7 @@ class RegistrationController extends Controller
             'city'=> $valid['city'],
             'state'=> $valid['state'],
             'zip'=> $valid['zip'],
+            'prefer_close_location'=> $valid['scheculePreference'],
             'submitted_at'=> Carbon::now(),
         ]);
 
@@ -102,6 +105,7 @@ class RegistrationController extends Controller
         $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
         $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
         $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
+        $valid_counties = implode(",",\App\Models\County::pluck('id')->toArray());
 
         $rules = [
             'race' => 'required|in:'.$valid_races,
@@ -112,6 +116,7 @@ class RegistrationController extends Controller
             'city' => 'required|max:60',
             'state' => 'required|max:2',
             'zip' => 'required|max:11',
+            'county' => 'required|in:'.$valid_counties,
             'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',
             'availableAgreement' =>'accepted',

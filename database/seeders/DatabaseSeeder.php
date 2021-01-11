@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ContactTypeSeeder::class,
             PhoneTypeSeeder::class,
+            CountySeeder::class,
         ]);
     }
 }
