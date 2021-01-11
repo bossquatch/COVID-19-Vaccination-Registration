@@ -84,7 +84,7 @@
 
                                 <!-- Text -->
                                 <p class="text-gray-dark mb-2">
-                                    Application #{{ Auth::user()->registration->id }}
+                                    Submitted at: {{ Carbon\Carbon::parse(Auth::user()->registration->submitted_at)->format('m-d-Y h:i:s A') }}
                                 </p>
 
                                 <p class="text-gray-dark mb-2">
