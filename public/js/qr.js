@@ -26,7 +26,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onDecode: function onDecode(decodedURL) {
-      indow.location.href = decodedURL;
+      window.location.href = decodedURL;
     }
   }
 });

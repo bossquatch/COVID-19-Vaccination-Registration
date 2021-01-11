@@ -11,7 +11,7 @@ export default {
 
     methods: {
         onDecode (decodedURL) {
-            indow.location.href = decodedURL;
+            window.location.href = decodedURL;
         }        
     }
 }
