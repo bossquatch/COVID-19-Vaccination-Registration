@@ -266,6 +266,36 @@
                                 <div class="col-12">
                                     <h2 class="mb-5">Agreements</h2>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="illAgreement" name="illAgreement" class="custom-control-input @error("illAgreement") is-invalid @enderror" type="checkbox">
+                                            <label class="custom-control-label" for="illAgreement">I am not currently ill.</label>
+                        
+                                            @error("illAgreement")
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first("illAgreement") }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox">
+                                            <label class="custom-control-label" for="availableAgreement">I will be available and present 28 days after my initial vaccination.</label>
+                        
+                                            @error("availableAgreement")
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first("availableAgreement") }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                 <div class="col-12">
                                     <div class="form-group mb-5">

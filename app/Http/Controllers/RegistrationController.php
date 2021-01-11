@@ -114,6 +114,8 @@ class RegistrationController extends Controller
             'zip' => 'required|max:11',
             'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',
+            'availableAgreement' =>'accepted',
+            'illAgreement' =>'accepted',
             'condition' =>'nullable'
         ];
 

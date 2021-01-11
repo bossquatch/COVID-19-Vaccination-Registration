@@ -63,4 +63,39 @@ class ManageController extends Controller
 
         return ['result' => $html];
     }
+
+    public function register()
+    {
+
+    }
+
+    public function submitRegistration()
+    {
+
+    }
+
+    private function validationRules()
+    {
+        $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
+        $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
+        $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
+
+        $rules = [
+            'race' => 'required|in:'.$valid_races,
+            'gender' => 'required|in:'.$valid_genders,
+            'occupation' => 'required|in:'.$valid_occupations,
+            'address1' => 'required|max:60',
+            'address2' => 'nullable|max:60',
+            'city' => 'required|max:60',
+            'state' => 'required|max:2',
+            'zip' => 'required|max:11',
+            'vaccineAgreement' => 'accepted',
+            'reactionAgreement' =>'accepted',
+            'availableAgreement' =>'accepted',
+            'illAgreement' =>'accepted',
+            'condition' =>'nullable'
+        ];
+
+        return $rules;
+    }
 }
