@@ -4,10 +4,6 @@
     {{ config('app.name', 'Laravel') }} - Read QR Code
 @endsection
 
-@section('header')
-<script src="{{ asset('js/qr.js') }}"></script>
-@endsection
-
 @section('content')
 <section class="main main-raised pt-8 pt-md-11 pb-8 pb-md-12">
     <div class="container">
@@ -44,4 +40,8 @@
         <div id="qr-reader-app" class="col-12"></div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/qr.js') }}"></script>
 @endsection
