@@ -215,21 +215,50 @@
                                 </div>
                                 <div class="col-12" style="display: none" id="addressStatusBlock"></div>
                             </div>
+
+                            <div class="row mb-6">
+                                <div class="col-12">
+                                    <h2 class="mb-5">Work</h2>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <label for="occupation">
+                                            Occupation
+                                        </label>
+                                        <select id="occupation" name="occupation" class="custom-select @error("occupation") is-invalid @enderror">
+                                            @foreach (\App\Models\Occupation::get() as $occupation)
+                                                @if($occupation->display_name != null)
+                                                    <option value="{{ $occupation->id }}" @if (old('occupation') && old('occupation') == $occupation->id) selected @endif>{{ $occupation->display_name }}</option>    
+                                                @endif
+                                            @endforeach
+                                        </select>
+                        
+                                        @error('occupation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('occupation') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         
                             <div class="row mb-6">
                                 <div class="col-12">
-                                    <h2 class="mb-5">Check All that Apply to You</h2>
+                                    <h2 class="mb-5">Check All Underlying Health Conditions that Apply to You</h2>
                                 </div>
                                 
-                                @foreach (\App\Models\Agreement::get() as $agreement)
-                                    <div class="col-12">
-                                        <div class="form-group mb-5">
-                                            <div class="custom-control custom-checkbox">
-                                                <input id="agreement{{ $agreement->phase . $agreement->phase_classification }}" name="agreement[{{$agreement->id}}]" class="custom-control-input" type="checkbox">
-                                                <label class="custom-control-label" for="agreement{{ $agreement->phase . $agreement->phase_classification }}">{{ $agreement->text }}</label>
+                                @foreach (\App\Models\Condition::get() as $condition)
+                                    @if($condition->display_name != null)
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group mb-5">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox">
+                                                    <label class="custom-control-label" for="condition{{ $condition->id }}">{{ $condition->display_name }}</label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endforeach
                             </div>
 

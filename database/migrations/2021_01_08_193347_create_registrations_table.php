@@ -20,13 +20,15 @@ class CreateRegistrationsTable extends Migration
             $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('race_id');
             $table->unsignedBigInteger('gender_id');
+            $table->unsignedBigInteger('occupation_id');
             
             // Obtained by user account:
             $table->string('first_name');
             $table->string('middle_name', 30)->nullable();
             $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('phone');
+            // replaced by 'contacts' table
+            //$table->string('email')->unique();
+            //$table->string('phone');
             $table->date('birth_date');
 
             // New Info
@@ -57,6 +59,11 @@ class CreateRegistrationsTable extends Migration
             $table->foreign('gender_id')
                 ->references('id')
                 ->on('genders')
+                ->onDelete('cascade');
+
+            $table->foreign('occupation_id')
+                ->references('id')
+                ->on('occupations')
                 ->onDelete('cascade');
         });
     }

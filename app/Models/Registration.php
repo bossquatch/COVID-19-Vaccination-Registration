@@ -27,6 +27,21 @@ class Registration extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class, 'registration_id');
+    }
+
+    public function emails()
+    {
+        return $this->contacts()->where('contact_type_id', 1);
+    }
+
+    public function phones()
+    {
+        return $this->contacts()->where('contact_type_id', 2);
+    }
+
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
@@ -42,8 +57,13 @@ class Registration extends Model
         return $this->belongsTo(Gender::class, 'gender_id');
     }
 
-    public function agreements()
+    public function occupation()
     {
-        return $this->belongsToMany(Agreement::class)->withTimestamps();
+        return $this->belongsTo(Occupation::class, 'occupation_id');
+    }
+
+    public function conditions()
+    {
+        return $this->belongsToMany(Condition::class)->withTimestamps();
     }
 }

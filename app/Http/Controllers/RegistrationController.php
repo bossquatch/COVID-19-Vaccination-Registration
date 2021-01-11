@@ -45,21 +45,33 @@ class RegistrationController extends Controller
         }
 
         $code = $randomletter . Carbon::now()->isoFormat('SSSS');
-        $agreements = array_keys($valid['agreement']);
+        $conditions = array_keys($valid['condition']);
         $user = Auth::user();
+
+        $phones = [[
+            "contact_type_id" => 2,
+            "phone_type_id" => 1,
+            "value" => $user->phone,
+        ]];
+        $emails = [[
+            "contact_type_id" => 1,
+            "value" => $user->email,
+        ]];
 
         $registration = \App\Models\Registration::create([
             'code'=> $code,
             'user_id'=> Auth::id(),
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
+            'occupation_id'=> $valid['occupation'],
             
             // Obtained by user account:
             'first_name'=> $user->first_name,
             'middle_name'=> $user->middle_name,
             'last_name'=> $user->last_name,
-            'email'=> $user->email,
-            'phone'=> $user->phone,
+            // Replaced by 'contacts' table
+            //'email'=> $user->email,
+            //'phone'=> $user->phone,
             'birth_date'=> $user->birth_date,
 
             // New Info
@@ -71,7 +83,13 @@ class RegistrationController extends Controller
             'submitted_at'=> Carbon::now(),
         ]);
 
-        $registration->agreements()->sync($agreements);
+        // Assign phones and emails
+            // add foreach loop to create all contact types
+
+        //Combine email and phones
+        $registration->contacts()->createMany(array_merge($phones,$emails));
+
+        $registration->conditions()->sync($conditions);
 
         $this->logChanges($registration, 'submitted', true);
 
@@ -83,10 +101,12 @@ class RegistrationController extends Controller
     {
         $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
         $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
+        $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
 
         $rules = [
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
+            'occupation' => 'required|in:'.$valid_occupations,
             'address1' => 'required|max:60',
             'address2' => 'nullable|max:60',
             'city' => 'required|max:60',
@@ -94,7 +114,7 @@ class RegistrationController extends Controller
             'zip' => 'required|max:11',
             'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',
-            'agreement' =>'nullable'
+            'condition' =>'nullable'
         ];
 
         return $rules;

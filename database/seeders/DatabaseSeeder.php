@@ -19,8 +19,11 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             RolesPermissionSeeder::class,
             DetailsSeeder::class,
-            AgreementsSeeder::class,
+            EssentialWorkerSeeder::class,
+            UnderlyingConditionSeeder::class,
             UserSeeder::class,
+            ContactTypeSeeder::class,
+            PhoneTypeSeeder::class,
         ]);
     }
 }
