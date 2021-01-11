@@ -27,6 +27,8 @@ Route::post('/home/register', [App\Http\Controllers\RegistrationController::clas
 Route::get('/address/validate', [App\Http\Controllers\UspsController::class, 'validateInlineAddress']);
 
 Route::get('/manage', [App\Http\Controllers\ManageController::class, 'index']);
+Route::get('/manage/register', [App\Http\Controllers\ManageController::class, 'register']);
+Route::post('/manage/register', [App\Http\Controllers\ManageController::class, 'submitRegistration']);
 Route::get('/manage/searchName', [App\Http\Controllers\ManageController::class, 'searchName']);
 Route::get('/manage/searchAddr', [App\Http\Controllers\ManageController::class, 'searchAddr']);
 Route::get('/manage/searchRegis', [App\Http\Controllers\ManageController::class, 'searchRegis']);

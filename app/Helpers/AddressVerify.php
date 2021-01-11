@@ -10,7 +10,7 @@
 
 namespace App\Helpers;
 
-class AddressVerify extends USPSBase
+class AddressVerify extends UspsBase
 {
     /**
      * @var string - the api version used for this type of call

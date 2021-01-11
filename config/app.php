@@ -58,6 +58,8 @@ return [
 
     'default_password' => env('DEFAULT_PASSWORD', ''),
 
+    'default_no_email' => env('DEFAULT_NO_EMAIL', ''),
+
     'usps_username' => env('USPS_USERNAME', ''),
 
     /*

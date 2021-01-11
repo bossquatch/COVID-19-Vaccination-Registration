@@ -34,6 +34,10 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
+                <a class="btn btn-header btn-round btn-lg" href="/manage/register">
+                    <span class="fad fa-clipboard-check mr-1"></span> Register Caller
+                </a>
+
                 <a class="btn btn-header btn-round btn-lg" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

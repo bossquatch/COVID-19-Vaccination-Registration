@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Session;
 
 class ManageController extends Controller
 {
@@ -66,12 +67,120 @@ class ManageController extends Controller
 
     public function register()
     {
-
+        return view('manage.register');
     }
 
     public function submitRegistration()
     {
+        $valid = request()->validate($this->validationRules());
+        $is_valid_letters = false;
+        $randomletter = '';
 
+        // create user
+        // check email
+        if (!isset($valid['email']) || $valid['email'] == null) {
+            $email_is_valid = false;
+            $email = $valid['firstName'].$valid['firstName'].rand().config('app.default_no_email');
+
+            while (!$email_is_valid) {
+                if (\App\Models\User::where('email', '=', $email)->count() > 0) {
+                    $email = $valid['firstName'].$valid['firstName'].rand().config('app.default_no_email');
+                } else {
+                    $email_is_valid = true;
+                }
+            }
+
+            $valid['email'] = $email;
+        }
+
+        $user = \App\Models\User::create([
+            'first_name' => $valid['firstName'],
+            'middle_name' => $valid['middleName'],
+            'last_name' => $valid['lastName'],
+            'email' => $valid['email'],
+            'phone' => $valid['phone'],
+            'birth_date' => $valid['dateOfBirth'],
+            'password' => \Illuminate\Support\Facades\Hash::make(config('app.default_password').rand()),
+        ]);
+
+        $this->logChanges($user, 'procured', false, true);
+
+        $user->assignRole('user');
+
+        // create registration
+        while(!$is_valid_letters) {
+            $randomletter = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 3);
+
+            $invalid_letter_codes = [
+                'ASS',
+                'CUM',
+                'FAG', 
+                'GAY', 
+                'GOD', 
+                'JEW',
+                'TIT',
+                'FUK',
+                'FUC',
+                'VAG',
+                'JIZ',
+            ];
+
+            if(!in_array($randomletter, $invalid_letter_codes)) { 
+                $is_valid_letters = true;
+            }
+        }
+
+        $code = $randomletter . Carbon::now()->isoFormat('SSSS');
+        $conditions = array_keys($valid['condition']);
+        //$user = Auth::user();
+
+        $phones = [[
+            "contact_type_id" => 2,
+            "phone_type_id" => 1,
+            "value" => $user->phone,
+        ]];
+        $emails = [[
+            "contact_type_id" => 1,
+            "value" => $user->email,
+        ]];
+
+        $registration = \App\Models\Registration::create([
+            'code'=> $code,
+            'user_id'=> $user->id,
+            'race_id'=> $valid['race'],
+            'gender_id'=> $valid['gender'],
+            'occupation_id'=> $valid['occupation'],
+            
+            // Obtained by user account:
+            'first_name'=> $user->first_name,
+            'middle_name'=> $user->middle_name,
+            'last_name'=> $user->last_name,
+            // Replaced by 'contacts' table
+            //'email'=> $user->email,
+            //'phone'=> $user->phone,
+            'birth_date'=> $user->birth_date,
+
+            // New Info
+            'address1'=> $valid['address1'],
+            'address2'=> $valid['address2'],
+            'city'=> $valid['city'],
+            'state'=> $valid['state'],
+            'zip'=> $valid['zip'],
+            'submitted_at'=> Carbon::now(),
+        ]);
+
+        // Assign phones and emails
+            // add foreach loop to create all contact types
+
+        //Combine email and phones
+        $registration->contacts()->createMany(array_merge($phones,$emails));
+
+        $registration->conditions()->sync($conditions);
+
+        $this->logChanges($registration, 'procured', true);
+
+        Session::flash('success', "Registration submission was successful.  Your code is: ".$code);
+        return redirect('/manage');
     }
 
     private function validationRules()
@@ -81,6 +190,12 @@ class ManageController extends Controller
         $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
 
         $rules = [
+            'firstName' => 'required|string|max:255',
+            'middleName' => 'nullable|string|max:30',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required_without:phone|nullable|string|email|max:255|unique:users',
+            'phone' => 'required_without:email|nullable|regex:/^(?=.*[0-9])[- +()0-9]+$/|max:14',
+            'dateOfBirth' => 'required|date|before:'.Carbon::now()->add(-13, 'years')->format('m-d-Y'),
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
             'occupation' => 'required|in:'.$valid_occupations,
