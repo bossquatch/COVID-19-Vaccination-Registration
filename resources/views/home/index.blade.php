@@ -230,7 +230,7 @@
 
                         <!-- Text -->
                         <p class="font-size-sm text-gray-dark mb-0">
-                            <span class="mr-1">Mon-Fri:</span> 9am - 12pm
+                            <span class="mr-1">Mon-Fri:</span> 8am - 5pm
                         </p>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
                                     <!-- Heading -->
                                     <h2 class="title">Frequently Asked Questions</h2>
                                     <!-- Text -->
-                                    <p class="sub-title">Quesions related to the Coronavirus Aid, Relief, and Economic Security (CARES) Act</p>
+                                    <p class="sub-title">Quesions related to the COVID-19 Vaccination</p>
                                 </div>
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpOne" role="button" aria-expanded="false" aria-controls="helpOne">
                                 <!-- Title -->
-                                <h3 class="collapse-title">I live outside Polk County's limits. Can I receive CARES assistance?</h3>
+                                <h3 class="collapse-title">Is there a cost to be vaccinated?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -271,7 +271,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Polk County can only provide CARES assistance to its residents.
+                                        There is no cost to be vaccinated with the health department and insurance is not required.
                                     </p>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpTwo" role="button" aria-expanded="false" aria-controls="helpTwo">
                                 <!-- Title -->
-                                <h3 class="collapse-title">If I am eligible, how much assistance can I receive?</h3>
+                                <h3 class="collapse-title">Where are the current locations to be vaccinated?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -294,7 +294,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        The maximum per-household award for the CARES program is $2,000, for rent/mortgage and/or public utilities.
+                                        DOH-Polk is scheduling vaccine appointments weekly at various locations across the county. There are no walk-in vaccine locations in Polk at this time. You will receive a testing location and time when you are called back by our staff to schedule your vaccine appointment.
                                     </p>
                                 </div>
                             </div>
@@ -303,7 +303,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpThree" role="button" aria-expanded="false" aria-controls="helpThree">
                                 <!-- Title -->
-                                <h3 class="collapse-title">What utilities are eligible for assistance?</h3>
+                                <h3 class="collapse-title">Are walk-ins accepted?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -317,7 +317,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Utility services eligible for assistance are electricity, water, wastewater (sewer), solid waste, and natural gas. Telephone service, including landline and cell phone, and internet service are not eligible.
+                                        No. Appointments are mandatory to receive a COVID-19 vaccine.
                                     </p>
                                 </div>
                             </div>
@@ -326,7 +326,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFour" role="button" aria-expanded="false" aria-controls="helpFour">
                                 <!-- Title -->
-                                <h3 class="collapse-title">I don't have all the documentation required for my application. Can I submit it later?</h3>
+                                <h3 class="collapse-title">Who is eligible for the COVID-19 Vaccine?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -340,7 +340,11 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Yes. You can save your progress and return anytime. It is vitally important you gather all required documentation before starting your application. Funds are available on a first qualified, first come, first served basis.
+                                        During this first phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations:<br>
+                                        &emsp;•	Long-term care facility residents and staff<br>
+                                        &emsp;•	Persons 65 years of age and older<br>
+                                        &emsp;•	Health care personnel with direct patient contact.<br>
+                                        &emsp;•	Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital<br>
                                     </p>
                                 </div>
                             </div>
@@ -349,7 +353,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFive" role="button" aria-expanded="false" aria-controls="helpFive">
                                 <!-- Title -->
-                                <h3 class="collapse-title">Is there a deadline to apply for assistance?</h3>
+                                <h3 class="collapse-title">Am I immune once I have received the vaccine?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -363,7 +367,11 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        The application period opens on September 15, 2020 at 8am and will close once all funds have been expended, no later than November 15, 2020.
+                                        No. The vaccine takes a few weeks for antibodies to develop. A second dose of the vaccine will need to administered 28 days after the first as a booster. We encourage you to continue following healthy prevention measures after receiving the vaccine. This includes continuing to:
+                                        &emsp;•	Wash your hands<br>
+                                        &emsp;•	Wear a mask in public<br>
+                                        &emsp;•	Continue social distancing while out in public<br>
+                                        &emsp;•	Cleaning and wiping down surfaces<br>
                                     </p>
                                 </div>
                             </div>
@@ -372,7 +380,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpSix" role="button" aria-expanded="false" aria-controls="helpSix">
                                 <!-- Title -->
-                                <h3 class="collapse-title">How many individuals/households will be awarded?</h3>
+                                <h3 class="collapse-title">How will members of the public know when appointments become available?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -386,7 +394,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        There will be a total of 5,000 individuals/households awarded assistance of $2,000.
+                                        Residents can continue monitoring the health department's website for updates regarding appointments. The website for that is <a href="Polk.FloridaHealth.gov" target="__blank">Polk.FloridaHealth.gov</a>. Residents may also call our Polk County COVID-19 vaccine hotline at 863-298-7500 to check on availability.
                                     </p>
                                 </div>
                             </div>
@@ -395,7 +403,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpSeven" role="button" aria-expanded="false" aria-controls="helpSeven">
                                 <!-- Title -->
-                                <h3 class="collapse-title">Are disabled youth eligible?</h3>
+                                <h3 class="collapse-title">How long will it take for me to get a call about a vaccine appointment?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -409,7 +417,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        No, only adults are eligible to apply.
+                                        Once your information is shared on our registrat ion list, someone will be calling you back at a future date when appointments are available. Appointments are contingent on vaccine supply . We are unsure of our future schedule. If you have an opportunity to receive a vaccine before you are called for an appointment, please feel free to go ahead and get one.
                                     </p>
                                 </div>
                             </div>
@@ -418,7 +426,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpEight" role="button" aria-expanded="false" aria-controls="helpEight">
                                 <!-- Title -->
-                                <h3 class="collapse-title">What type of documents can be used for identification?</h3>
+                                <h3 class="collapse-title">Why aren't there more appointments available?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -432,7 +440,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Valid Florida Driver's License, state-issued ID, or passport.
+                                        Quantities of the vaccine are limited, and we are in great demand. Please be assured that we are making every effort to vaccinate residents as quickly as possible based on the quantities of vaccine that are provided by the State of Florida. As availability of the vaccine grows and demand evens out, it will be easier to ensure everyone who qualifies receives an appointment.
                                     </p>
                                 </div>
                             </div>
@@ -441,7 +449,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpNine" role="button" aria-expanded="false" aria-controls="helpNine">
                                 <!-- Title -->
-                                <h3 class="collapse-title">Can someone apply if they received financial assistance through United Way CARES program?</h3>
+                                <h3 class="collapse-title">When will more appointments become available?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -455,7 +463,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Yes (United Way can serve more than 1 person per household).
+                                        DOH- Polk expects new supplies of vaccines from the State weekly. Vaccination appointments will be made available based on supply.
                                     </p>
                                 </div>
                             </div>
@@ -464,7 +472,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpTen" role="button" aria-expanded="false" aria-controls="helpTen">
                                 <!-- Title -->
-                                <h3 class="collapse-title">What if applicant doesn't have recent copy of disability statement?</h3>
+                                <h3 class="collapse-title">Which vaccine is the health department in Polk providing?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -478,7 +486,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Contact local SSA office or their website.
+                                        We are currently giving the Moderna vaccine.
                                     </p>
                                 </div>
                             </div>
@@ -487,7 +495,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpEleven" role="button" aria-expanded="false" aria-controls="helpEleven">
                                 <!-- Title -->
-                                <h3 class="collapse-title">How does a veteran get a copy of their tax abatement statement?</h3>
+                                <h3 class="collapse-title">How many doses is the Moderna vaccine?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -501,7 +509,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Contact Veteran Services: (863) 534-5200 or (800) 780-5346
+                                        The Moderna vaccine is a two-dose series separated by 28 days.
                                     </p>
                                 </div>
                             </div>
@@ -510,7 +518,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpTwelve" role="button" aria-expanded="false" aria-controls="helpTwelve">
                                 <!-- Title -->
-                                <h3 class="collapse-title">Will additional documents be required?</h3>
+                                <h3 class="collapse-title">How will I know when I should return for the second dose of the vaccine?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -524,7 +532,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        We have the right to request additional documents as needed to validate application.
+                                        Your second appointment will be scheduled after you receive your first dose, before you leave the vaccination appointment. It is important to follow the instructions exactly as they are provided to you so that the vaccine administered in the follow-up appointment is the same kind as the initial dose, and to achieve maximum effectiveness of the vaccine.
                                     </p>
                                 </div>
                             </div>
@@ -533,7 +541,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpThirteen" role="button" aria-expanded="false" aria-controls="helpThirteen">
                                 <!-- Title -->
-                                <h3 class="collapse-title">Are Polk Board of County Commissioners employees eligible?</h3>
+                                <h3 class="collapse-title">If I made the appointment as a caretaker for an elderly person, can I get the details for the follow­ up dose sent to me?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -547,7 +555,56 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Yes, if they meet the criteria.
+                                        This can be arranged at the time the appointment for the second dose is made (during the exit process). If you are not accompanying the person who is receiving the vaccine, please be sure he/she brings your contact information with them to the site, so this can be provided to the staff who will be arranging the follow-up appointment.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <!-- Toggle -->
+                            <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFourteen" role="button" aria-expanded="false" aria-controls="helpFourteen">
+                                <!-- Title -->
+                                <h3 class="collapse-title">Do I need to be a Polk County resident to be vaccinated at these appoinments?</h3>
+
+                                <!-- Metadata -->
+                                <div class="ml-auto">
+                                    <!-- Chevron -->
+                                    <span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
+                                </div>
+                            </a>
+
+                            <!-- Collapse -->
+                            <div class="collapse" id="helpFourteen" data-parent="#helpAccordionOne">
+                                <div class="py-4">
+                                    <!-- Text -->
+                                    <p class="collapse-content">
+                                        No; however, an appointment is mandatory. We do ask that those who receive their first dose of vaccine from us also be local/in county to receive their second dose from us 28 days later.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <!-- Toggle -->
+                            <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFifteen" role="button" aria-expanded="false" aria-controls="helpFifteen">
+                                <!-- Title -->
+                                <h3 class="collapse-title">What do I need to bring with me to the appointment?</h3>
+
+                                <!-- Metadata -->
+                                <div class="ml-auto">
+                                    <!-- Chevron -->
+                                    <span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
+                                </div>
+                            </a>
+
+                            <!-- Collapse -->
+                            <div class="collapse" id="helpFifteen" data-parent="#helpAccordionOne">
+                                <div class="py-4">
+                                    <!-- Text -->
+                                    <p class="collapse-content">
+                                        &emsp;•	A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)<br>
+                                        &emsp;•	Proof of your appointment (printed copy or screenshot of the confirmation email or text message)<br>
+                                        &emsp;•	Completed consent form<br>
+                                        &emsp;•	The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.<br>
                                     </p>
                                 </div>
                             </div>
