@@ -37,6 +37,8 @@
     <script>
         var csrf_token = '{{ csrf_token() }}';
     </script>
+
+    @yield('header')
 </head>
 <body class="site">
     <main class="site-content">
