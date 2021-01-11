@@ -34,12 +34,12 @@ class Registration extends Model
 
     public function emails()
     {
-        return $this->contacts()->where('contact_type_id', 1);
+        return $this->contacts()->where('contact_type_id', 1)->get();
     }
 
     public function phones()
     {
-        return $this->contacts()->where('contact_type_id', 2);
+        return $this->contacts()->where('contact_type_id', 2)->get();
     }
 
     public function status()

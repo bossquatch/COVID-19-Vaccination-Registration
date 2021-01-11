@@ -62,19 +62,23 @@
             </div>
         </div>
         <div class="row align-items-center">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-7">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     <div class="card card-body p-6">
                         <div class="row align-items-center justify-content-center">
-                            <div class="col-12 text-center mb-0">
+                            <div class="col-12 col-lg-4 text-center mb-0">
+                                {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code); !!}
+                            </div>
+                            <div class="col-12 col-lg-8 text-center mb-0">
                                 <!-- Logo -->
-                                <div class="text-primary mb-4">
+                                {{--<div class="text-primary mb-4">
                                     <span class="fad fa-user-circle fa-4x"></span>
-                                </div>
+                                </div>--}}
+                                
 
                                 <!-- Title -->
-                                <h2 class="mb-2">
+                                <h2 class="mb-2 mt-6">
                                     {{ Auth::user()->registration->first_name.' '.Auth::user()->registration->last_name }}
                                 </h2>
 
@@ -127,7 +131,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-5">
                 <!-- List -->
                 <div class="d-flex">
                     <!-- Badge -->

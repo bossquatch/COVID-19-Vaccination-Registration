@@ -37,3 +37,5 @@ Route::get('/manage/searchCode', [App\Http\Controllers\ManageController::class, 
 Route::get('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'show']);
 Route::post('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'verify']);
 Route::post('/sms/resend', [App\Http\Controllers\SmsVerificationController::class, 'resend']);
+
+Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration']);

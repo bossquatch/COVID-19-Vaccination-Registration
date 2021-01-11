@@ -65,6 +65,17 @@ class ManageController extends Controller
         return ['result' => $html];
     }
 
+    public function view_registration($user_id, $app_id, $code)
+    {
+        $regis = \App\Models\Registration::findOrFail($app_id);
+
+        if ($user_id != $regis->user_id || $code != $regis->code) {
+            abort(404);
+        }
+
+        return view('manage.registration', ['registration' => $regis]);
+    }
+
     public function register()
     {
         return view('manage.register');

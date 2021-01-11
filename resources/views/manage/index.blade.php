@@ -21,12 +21,12 @@
 
                 <!-- Heading -->
                 <h1>
-                    Review and process <span class="text-primary">online applications.</span>
+                    Review and process <span class="text-primary">online registrations.</span>
                 </h1>
 
                 <!-- Text -->
                 <p class="lead text-gray-dark mb-7 mb-md-9">
-                    Manage approvals for CARES assistance.
+                    View COVID-19 Vaccine Registrations.
                 </p>
             </div>
         </div>
