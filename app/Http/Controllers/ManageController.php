@@ -65,6 +65,11 @@ class ManageController extends Controller
         return ['result' => $html];
     }
 
+    public function qrRead()
+    {
+        return view('manage.qr');
+    }
+
     public function view_registration($user_id, $app_id, $code)
     {
         $regis = \App\Models\Registration::findOrFail($app_id);
