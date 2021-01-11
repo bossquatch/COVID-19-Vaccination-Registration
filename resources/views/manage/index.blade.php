@@ -38,6 +38,10 @@
                     <span class="fad fa-clipboard-check mr-1"></span> Register Caller
                 </a>
 
+                <a class="btn btn-header btn-round btn-lg" href="/manage/qr">
+                    <span class="fad fa-qrcode mr-1"></span> Scan QR Code
+                </a>
+
                 <a class="btn btn-header btn-round btn-lg" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
