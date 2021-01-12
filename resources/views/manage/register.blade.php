@@ -411,7 +411,7 @@
                                     <h2 class="mb-5">Agreements</h2>
                                 </div>
 
-                                <div class="col-12">
+                                {{--<div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="illAgreement" name="illAgreement" class="custom-control-input @error("illAgreement") is-invalid @enderror" type="checkbox">
@@ -424,7 +424,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
 
                                 <div class="col-12">
                                     <div class="form-group mb-5">
@@ -441,7 +441,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-12">
+                                {{--<div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="vaccineAgreement" name="vaccineAgreement" class="custom-control-input @error("vaccineAgreement") is-invalid @enderror" type="checkbox">
@@ -454,7 +454,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
 
                                 <div class="col-12">
                                     <div class="form-group mb-5">
