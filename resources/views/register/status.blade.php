@@ -79,7 +79,7 @@
 
                                 <!-- Title -->
                                 <h2 class="mb-2 mt-6">
-                                    {{ Auth::user()->registration->first_name.' '.Auth::user()->registration->last_name }}
+                                    {{ Auth::user()->registration->first_name.' '.Auth::user()->registration->last_name }}<button class="btn btn-link p-1 ml-1" type="button" title="View Registration Details" id="detailsBtn" onclick="popDetails()"><span class="fad fa-eye fa-lg"></span></button>
                                 </h2>
 
                                 <div class="badge badge-outline-muted mb-2">
@@ -105,7 +105,7 @@
                                 @else
                                 <form method="POST" action="{{ url('/sms/resend') }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('I wish to receive to text updates to this number') }}</button>.
+                                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('I wish to receive to text updates to this number.') }}</button>
                                 </form>
                                {{-- <a href="/sms/verify">
                                     I wish to receive to text updates to this number.
@@ -195,36 +195,114 @@
     </div>
 </section>
 
-{{--@if ($application->status_id == '2')
-<div class="modal fade" id="unlockModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Unlock Modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="detailModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Detail Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body p-6">
-                <div class="row mb-4">
+                <div class="row">
                     <div class="col-12 text-center">
-                        <span class="fad fa-exclamation-triangle fa-5x text-warning"></span>
+                        <span class="fad fa-user-circle fa-4x text-info"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-1">
+                    <div class="col-12 text-center mb-0">
+                        <!-- Title -->
+                        <h2 class="mb-1 mt-6">
+                            {{ Auth::user()->registration->first_name.' '.Auth::user()->registration->last_name }}
+                        </h2>
+
+                        <div class="badge badge-outline-muted mb-2">
+                            <span class="{{ Auth::user()->registration->status->fa_icon }} mr-1"></span> {{ Auth::user()->registration->status->name }}
+                        </div>
+
+                        <p class="text-gray-dark mb-2">
+                            Submitted: {{ Carbon\Carbon::parse(Auth::user()->registration->submitted_at)->format('m-d-Y h:i:s A') }}
+                        </p>
+                    </div>
+                    <div class="col-12 text-center mb-0">
+                        <div class="row align-items-center justify-content-center">
+                        <!-- Text -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="h4">Date of Birth:</h3>
+                            <p class="text-gray-dark mb-2">
+                                {{ Carbon\Carbon::parse(Auth::user()->registration->birth_date)->format('m/d/Y') }}
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="h4">Code:</h3>
+                            <p class="text-gray-dark mb-2">
+                                {{ Auth::user()->registration->code }}
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="h4">Address:</h3>
+                            <p class="text-gray-dark mb-2">
+                                @if (Auth::user()->registration->address2 != null)
+                                    {!! Auth::user()->registration->address1.' '.Auth::user()->registration->address2.'<br>'.Auth::user()->registration->city.', '.Auth::user()->registration->state.' '.Auth::user()->registration->zip !!}
+                                @else
+                                    {!! Auth::user()->registration->address1.'<br>'.Auth::user()->registration->city.', '.Auth::user()->registration->state.' '.Auth::user()->registration->zip !!}
+                                @endif
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="h4">Occupation:</h3>
+                            <p class="text-gray-dark mb-2">
+                                {{ Auth::user()->registration->occupation->display_name }}
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="h4">Phone Number(s):</h3>
+                            <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
+                                @forelse (Auth::user()->registration->phones() as $phone)
+                                    <li style="list-style-type: none;">{{ $phone->value }}</li>
+                                @empty
+                                    <li style="list-style-type: none;">No phone number</li>
+                                @endforelse
+                            </ul>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="h4">Email(s):</h3>
+                            <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
+                                @forelse (Auth::user()->registration->emails() as $email)
+                                    <li style="list-style-type: none;">{{ $email->value }}</li>
+                                @empty
+                                    <li style="list-style-type: none;">No email address</li>
+                                @endforelse
+                            </ul>
+
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <h3 class="h4">Underlying Conditions:</h3>
+                            <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
+                                @forelse (Auth::user()->registration->conditions as $condition)
+                                    <li style="list-style-type: none;">{{ $condition->display_name }}</li>
+                                @empty
+                                    <li style="list-style-type: none;">No underlying conditions</li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-12 text-center">
-                        <p class="text-gray-dark mb-5"><b>Warning!</b></p>
-                        <p class="text-gray-dark mb-5">By unlocking your application, you will be able to edit it, but you will have to re-submit your application in order for it to get processed.</p>
-                        <div class="row">
-                            <div class="col">
-                                <form action="/Application/unlock" method="post">
-                                    @csrf
-                                    <button type="submit" class="btn btn-header btn-round btn-lg">Unlock</button>
-                                </form>
-                            </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-header btn-round btn-lg" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-header btn-round btn-lg" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endif--}}
+
+<script>
+    function popDetails() {
+        $('#detailModal').modal('show');
+    }
+</script>
 @endsection
