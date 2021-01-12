@@ -116,7 +116,7 @@
                         <label for="password">
                             Password <span class="font-weight-light small">(Password length is a minimum of 8 characters)</span>
                         </label>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Enter your password">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Create your password">
 
                         @error('password')
                             <span class="invalid-feedback" role="alert">
