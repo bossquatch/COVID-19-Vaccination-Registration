@@ -76,6 +76,18 @@
             border-top-right-radius: $card-border-radius;
         }
 
+        &.card-border-lg::after {
+            border-top: $card-border-top-width-lg solid;
+            border-top-color: inherit;
+            border-bottom: calc(#{$card-border-radius} - #{$card-border-top-width-lg}) solid transparent;
+        }
+
+        &.card-border-xl::after {
+            border-top: $card-border-top-width-xl solid;
+            border-top-color: inherit;
+            border-bottom: calc(#{$card-border-radius} - #{$card-border-top-width-xl}) solid transparent;
+        }
+
         .card-body {
             padding: $card-border-body-padding;
         }

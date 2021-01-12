@@ -25,12 +25,11 @@
     flex-direction: row;
     align-items: center;
     height: $page-header-height;
-    min-height: 100vh;
+    min-height: $page-header-height;
     margin: 0;
     padding: 0;
     border: 0;
     transform: translate3d(0, 0, 0); // forces hardware acceleration
-
     &,
     .page-header-image {
         background-position: 50%;
@@ -66,7 +65,7 @@
     }
 
     &-default {
-        background-image: url("/images/register-image.jpg");
+        background-image: url("/assets/dist/images/covid19-vaccine.jpg");
     }
 }
 
