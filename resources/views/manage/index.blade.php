@@ -162,6 +162,9 @@
                                             <th>
                                                 Status
                                             </th>
+                                            <th>
+                                                {{-- Actions --}}
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody id="registrations"></tbody>

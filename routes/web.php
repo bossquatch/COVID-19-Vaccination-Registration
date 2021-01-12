@@ -38,6 +38,8 @@ Route::get('/manage/searchAddr', [App\Http\Controllers\ManageController::class, 
 Route::get('/manage/searchRegis', [App\Http\Controllers\ManageController::class, 'searchRegis']);
 Route::get('/manage/searchCode', [App\Http\Controllers\ManageController::class, 'searchCode']);
 Route::get('/manage/qr', [App\Http\Controllers\ManageController::class, 'qrRead']);
+Route::get('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'edit']);
+Route::post('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'updateRegistration']);
 
 Route::get('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'show']);
 Route::post('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'verify']);
