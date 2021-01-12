@@ -46,7 +46,10 @@ class RegistrationController extends Controller
         }
 
         $code = $randomletter . Carbon::now()->isoFormat('SSSS');
-        $conditions = array_keys($valid['condition']);
+        $conditions = [];
+        if (isset($valid['condition'])) {
+            $conditions = array_keys($valid['condition']);
+        }
         $user = Auth::user();
 
         $phones = [[
