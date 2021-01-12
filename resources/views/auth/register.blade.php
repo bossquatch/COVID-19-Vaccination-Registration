@@ -21,7 +21,7 @@
 
                 <!-- Text -->
                 <p class="mb-6 text-muted">
-                    Create an account to start COVID-19 vaccination registration process.
+                    Create an account to start the COVID-19 vaccination registration process.
                 </p>
 
                 <!-- Form -->
