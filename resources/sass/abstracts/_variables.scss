@@ -1,0 +1,284 @@
+﻿// Colors
+$black: #000;
+$black-lighter: #282828;
+
+$white: #fff;
+
+$blue-bocc: #00718e;
+$blue-bocc-original: #008aab;
+$blue-custom: #0071eb;
+$blue: $blue-custom;
+$blue-dark: darken($blue, 15%);
+
+$blue-gray: #506690;
+
+$badge-dark-soft-color: #1b2a4e;
+$badge-primary-soft-color: #6c8aec;
+$badge-secondary-soft-color: $blue-gray;
+$badge-success-soft-color: #42ba96;
+$badge-danger-soft-color: #df4759;
+$badge-warning-soft-color: #fad776;
+$badge-info-soft-color: #7c69ef;
+
+$border-faded-color: #d2d4db;
+$border-light: #f1f4f8;
+
+$box-shadow-color: rgba(32, 33, 36, 0.28);
+$box-shadow-light-color: #161c2d;
+
+$green-bocc: #398502;
+$green-bocc-original: #77c043;
+$green: $green-bocc;
+
+$yellow-bocc: #ffd400;
+
+$gray-blue: #f3f8fc;
+$gray-light: #e7ebf5;
+$gray-lighter: #f9fbfd;
+$gray-dark: #384c74;
+
+$toggle-gray: $gray-dark;
+$toggle-gray-light: lighten($toggle-gray, 15%);
+$toggle-gray-lighter: lighten($toggle-gray, 30%);
+$toggle-default-color: $toggle-gray;
+$toggle-default-bg: $toggle-gray-lighter;
+
+$facebook-blue: #3b5998;
+$twitter-blue: #1da1f2;
+$instagram-purple: #833ab4;
+$youtube-red: #f00;
+
+$gradient-map: (
+    "chill": (
+        "start-color": #09e485,
+        "end-color": #0291e3,
+        "deg": 135deg
+    ),
+    "warm": (
+        "start-color": #f2cd48,
+        "end-color": #fd803f,
+        "deg": 135deg
+    ),
+    "hot": (
+        "start-color": #f9445a,
+        "end-color": #fd803f,
+        "deg": 135deg
+    ),
+    "cold": (
+        "start-color": #8019c6,
+        "end-color": #2f93cc,
+        "deg": 135deg
+    ),
+    "calm": (
+        "start-color": #30cde2,
+        "end-color": #306efe,
+        "deg": 120deg
+    ),
+    "light": (
+        "start-color": $gray-lighter,
+        "end-color": $white,
+        "deg": 180deg
+    )
+);
+
+$button-map: (
+    "facebook": (
+        "base": $facebook-blue,
+        "text": $white
+    ),
+    "twitter": (
+        "base": $twitter-blue,
+        "text": $white
+    )
+);
+
+// Body
+$body-color: $black;
+
+// Typography
+// stylelint-disable value-keyword-case
+$native-font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+// stylelint-enable value-keyword-case
+
+$font-awesome-base: "Font Awesome 5 Pro", $native-font-stack;
+
+$font-family-base: "Open Sans", $native-font-stack;
+
+$font-size-base: 1.0625rem;
+$font-size-lg: 1.1875rem;
+$font-size-sm: 0.9375rem;
+
+$h1-font-size: $font-size-base * 2.5;
+$h2-font-size: $font-size-base * 2;
+$h3-font-size: $font-size-base * 1.75;
+$h4-font-size: $font-size-base * 1.5;
+$h5-font-size: $font-size-base * 1.25;
+$h6-font-size: $font-size-base;
+
+$headings-font-family: "Open Sans Condensed", $native-font-stack;
+$headings-font-weight: bold; // same as 700
+
+$display-font-family: "Open Sans Condensed", $native-font-stack;
+
+$display1-size: $font-size-base * 4.375;
+$display2-size: $font-size-base * 3.8125;
+$display3-size: $font-size-base * 3;
+$display4-size: $font-size-base * 2.6875;
+
+$display1-weight: normal;
+$display2-weight: normal;
+$display3-weight: normal;
+$display4-weight: normal;
+
+$display-line-height: 1.2;
+$display-letter-spacing: -0.02rem;
+
+$lead-font-size: $font-size-base + 0.25rem;
+$lead-font-weight: normal;
+
+// Headers
+$page-header-height: auto;
+$page-header-color: $white;
+
+$page-header-inner-height: 23.75rem;
+
+$page-header-filter-color: $black;
+$page-header-filter-opacity: 0.5;
+
+$page-header-title-font-size: 3.3125rem;
+$page-header-title-line-height: 1.15em;
+$page-header-title-margin-top: 1.875rem;
+$page-header-title-margin-bottom: 1.5625rem;
+$page-header-title-min-height: 2rem;
+
+$page-header-sub-title-font-size: 1.25rem; // Default: 1.125rem
+$page-header-sub-title-line-height: 1.5em;
+$page-header-sub-title-margin-top: 0.625rem;
+$page-header-sub-title-margin-bottom: 0.625rem;
+
+// Badges
+$badge-padding-y: 0.25rem;
+$badge-padding-x: 0.75rem;
+$badge-pill-padding-x: 0.75rem;
+
+$badge-font-family: $headings-font-family;
+$badge-line-height: 1;
+
+$badge-rounded-circle-px: 0.25rem;
+$badge-rounded-circle-border-radius: 10rem;
+$badge-rounded-circle-width: 1em;
+
+$badge-lg-rounded-circle-px: 0.7em;
+
+// Navbar
+$navbar-light-color: $black;
+
+// Links
+$link-color: $blue;
+$link-hover-color: $blue-dark;
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+    0: 0,
+    1: ($spacer * 0.25),
+    2: ($spacer * 0.5),
+    3: ($spacer * 0.75),
+    4: $spacer,
+    5: ($spacer * 1.5),
+    6: ($spacer * 2),
+    7: ($spacer * 2.5),
+    8: ($spacer * 3),
+    9: ($spacer * 4),
+    10: ($spacer * 5),
+    11: ($spacer * 6),
+    12: ($spacer * 8),
+    13: ($spacer * 10),
+    14: ($spacer * 12),
+    15: ($spacer * 16),
+    16: ($spacer * 25)
+);
+
+// Components
+$border-radius: 0.375rem;
+$border-width: 1px;
+
+$line-height-base: 1.6;
+$line-height-lg: 1.3;
+$line-height-sm: 1.3;
+
+// Buttons + Forms
+$input-btn-padding-y: 0.8125rem;
+$input-btn-padding-x: 1.25rem;
+$input-btn-font-size: $font-size-base;
+$input-btn-border-width: $border-width;
+$input-btn-line-height: $line-height-base;
+
+$input-btn-padding-y-sm: 0.5625rem;
+$input-btn-padding-x-sm: 1rem;
+$input-btn-font-size-sm: $font-size-sm;
+$input-btn-line-height-sm: $line-height-sm;
+
+$input-btn-padding-y-lg: 1.122rem;
+$input-btn-padding-x-lg: 1.5rem;
+$input-btn-font-size-lg: 1rem;
+$input-btn-font-size-lg: $font-size-lg;
+$input-btn-line-height-lg: $line-height-lg;
+
+// Forms
+$input-color: $black;
+$custom-select-line-height-sm: $line-height-sm;
+$custom-select-line-height-lg: $line-height-lg;
+
+// Cards
+$card-border-width: 0;
+$card-border-color: $border-light;
+$card-cap-bg: $white;
+
+$card-border-top-width: 0.125rem;
+$card-border-body-padding: 2rem;
+$card-border-icon-circle-size: 4.1875rem;
+$card-border-icon-circle-mb: 1.5rem;
+$card-border-icon-font-size: 1.875rem;
+$card-border-title-font-size: 1.1875rem;
+$card-border-title-line-height: 1.45;
+$card-border-title-mb: 0.5rem;
+
+$card-accordion-title-font-size: 1.1875rem;
+$card-accordion-title-line-height: 1.45;
+$card-accordion-title-mb: 0;
+$card-accordion-sub-title-font-size: 0.9375rem;
+$card-accordion-sub-title-line-height: 1.6;
+$card-accordion-sub-title-mb: 0;
+$card-accordion-collapse-title-mr: 1rem;
+$card-accordion-collapse-title-mb: 0;
+
+// Tables
+$table-silk-cell-px: 1rem;
+$table-silk-cell-py: 1rem;
+$table-silk-indent: 1.5rem;
+
+// Toggles
+$toggle-text-active: "Yes";
+$toggle-text-inactive: "No";
+
+$toggle-default-size: 1.5rem;
+$toggle-default-label-width: 4rem;
+$toggle-default-font-size: 0.75rem;
+
+$toggle-lg-size: 2.5rem;
+$toggle-lg-margin: 5rem;
+$toggle-lg-font-size: 1rem;
+
+$toggle-sm-size: $toggle-default-size;
+$toggle-sm-margin: 0.5rem;
+$toggle-sm-font-size: 0.55rem;
+
+$toggle-xs-size: 1rem;
+$toggle-xs-margin: 0;
+$toggle-xs-font-size: $toggle-default-font-size;
+
+// Dropdowns
+$dropdown-font-size: $font-size-sm;
+$dropdown-item-padding-y: 0.25rem;
+$dropdown-item-padding-x: 1.25rem;

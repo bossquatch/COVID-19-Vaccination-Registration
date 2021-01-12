@@ -1,0 +1,214 @@
+/*
+// ----------------------------------------
+// HTML Usage
+// ----------------------------------------
+//
+// ----------------------------------------
+// Large:
+// ----------------------------------------
+// <button type="button" class="btn btn-toggle btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+//
+// <button type="button" class="btn btn-toggle btn-lg active" data-toggle="button" aria-pressed="true" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+//
+// ----------------------------------------
+// Default:
+// ----------------------------------------
+// <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+//
+// <button type="button" class="btn btn-toggle active" data-toggle="button" aria-pressed="true" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+//
+// ----------------------------------------
+// Small:
+// ----------------------------------------
+// <button type="button" class="btn btn-toggle btn-sm" data-toggle="button" aria-pressed="false" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+//
+// <button type="button" class="btn btn-toggle btn-sm active" data-toggle="button" aria-pressed="true" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+//
+// ----------------------------------------
+// Mini / Extra Small:
+// ----------------------------------------
+// <button type="button" class="btn btn-toggle btn-xs" data-toggle="button" aria-pressed="false" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+//
+// <button type="button" class="btn btn-toggle btn-xs active" data-toggle="button" aria-pressed="true" autocomplete="off">
+// <div class="handle"></div>
+// </button>
+// ----------------------------------------
+*/
+
+// Mixin for Toggle Colors
+// Variables: $color, $bg, $active-bg
+@mixin toggle-color($color: $toggle-default-color, $bg: $toggle-default-bg, $active-bg: $primary) {
+    color: $color;
+    background: $bg;
+
+    &::before,
+    &::after {
+        color: $color;
+    }
+
+    &.active {
+        background-color: $active-bg;
+    }
+}
+
+// Mixin for Default Toggle Styles
+// Variables: $size, $margin, $color, $bg, $active-bg, $font-size
+@mixin toggle-mixin($size: $toggle-default-size, $margin: $toggle-default-label-width, $font-size: $toggle-default-font-size) {
+    position: relative;
+    margin: 0 $margin;
+    padding: 0;
+    border: none;
+    height: $size;
+    width: $size * 2;
+    border-radius: $size;
+
+    > .handle {
+        position: absolute;
+        top: ($size * 0.25) / 2;
+        left: ($size * 0.25) / 2;
+        width: $size * 0.75;
+        height: $size * 0.75;
+        border-radius: $size * 0.75;
+        background: $white;
+        transition: left 0.25s;
+    }
+
+    &.active {
+        transition: background-color 0.25s;
+
+        > .handle {
+            left: $size + (($size * 0.25) / 2);
+            transition: left 0.25s;
+        }
+
+        &::before {
+            opacity: 0.5;
+        }
+
+        &::after {
+            opacity: 1;
+        }
+    }
+
+    &:focus,
+    &.focus {
+        &,
+        &.active {
+            outline: none;
+        }
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        bottom: 0;
+        line-height: $size;
+        width: $margin;
+        text-align: center;
+        font-weight: bold;
+        font-size: $font-size;
+        text-transform: uppercase;
+        letter-spacing: 0.125rem;
+        transition: opacity 0.25s;
+    }
+
+    &::before {
+        content: $toggle-text-inactive;
+        left: -$margin;
+    }
+
+    &::after {
+        content: $toggle-text-active;
+        right: -$margin;
+        opacity: 0.5;
+    }
+
+    &.btn-sm {
+        &::before,
+        &::after {
+            color: $white;
+            line-height: $size - 0.125rem;
+            letter-spacing: 0.046875rem;
+            left: $size * 0.275;
+            width: $size * 1.55;
+        }
+
+        &::before {
+            text-align: right;
+        }
+
+        &::after {
+            text-align: left;
+            opacity: 0;
+        }
+
+        &.active {
+            &::before {
+                opacity: 0;
+            }
+
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+
+    &.btn-xs {
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+}
+
+// Apply Mixin to Different Sizes and Colors
+.btn-toggle {
+    @include toggle-mixin($size: $toggle-default-size, $margin: $toggle-default-label-width, $font-size: $toggle-default-font-size);
+    @include toggle-color($color: $toggle-default-color, $bg: $toggle-default-bg, $active-bg: $primary);
+
+    &.btn-lg {
+        @include toggle-mixin($size: $toggle-lg-size, $margin: $toggle-lg-margin, $font-size: $toggle-lg-font-size);
+    }
+
+    &.btn-sm {
+        @include toggle-mixin($size: $toggle-sm-size, $margin: $toggle-sm-margin, $font-size: $toggle-sm-font-size);
+    }
+
+    &.btn-xs {
+        @include toggle-mixin($size: $toggle-xs-size, $margin: $toggle-xs-margin, $font-size: $toggle-xs-font-size);
+    }
+
+    &.btn-toggle-secondary {
+        @include toggle-color($active-bg: $secondary);
+    }
+
+    &.btn-toggle-success {
+        @include toggle-color($active-bg: $success);
+    }
+
+    &.btn-toggle-danger {
+        @include toggle-color($active-bg: $danger);
+    }
+
+    &.btn-toggle-warning {
+        @include toggle-color($active-bg: $warning);
+    }
+
+    &.btn-toggle-info {
+        @include toggle-color($active-bg: $info);
+    }
+}

@@ -1,0 +1,21 @@
+﻿/* Sticky Footer - Keeps Footer at Bottom of Page Even with Sparse Content
+----------------------------------------------------------------------------
+ * HTML Structure:
+ * <body class="site">
+ *     <header></header>
+ *     <main class="site-content"></main>
+ *     <footer></footer>
+ * </body>
+----------------------------------------------------------------------------
+*/
+
+.site {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.site-content {
+    flex: 1 0 auto;
+}

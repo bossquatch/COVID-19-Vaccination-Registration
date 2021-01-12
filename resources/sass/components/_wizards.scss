@@ -1,0 +1,15 @@
+.wizard-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    & [data-wizard-type*="action-prev"] {
+        margin-right: auto;
+    }
+
+    & [data-wizard-type*="action-next"],
+    & [data-wizard-type*="action-submit"] {
+        margin: auto 0 auto auto;
+    }
+}

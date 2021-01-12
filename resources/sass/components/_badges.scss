@@ -1,0 +1,76 @@
+﻿.badge {
+    font-family: $badge-font-family;
+    line-height: $badge-line-height;
+    text-transform: uppercase;
+}
+
+.badge-lead {
+    letter-spacing: 0.02rem;
+}
+
+.badge-rounded-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(0.75rem + (#{$badge-rounded-circle-px} * 2));
+    padding-left: $badge-rounded-circle-px;
+    padding-right: $badge-rounded-circle-px;
+    border-radius: $badge-rounded-circle-border-radius;
+
+    &.badge-lg {
+        height: calc(#{$badge-rounded-circle-width} + (#{$badge-lg-rounded-circle-px} * 2));
+        padding-left: $badge-lg-rounded-circle-px;
+        padding-right: $badge-lg-rounded-circle-px;
+    }
+
+    > span {
+        display: block;
+        width: $badge-rounded-circle-width;
+    }
+}
+
+.badge-primary-soft {
+    background-color: rgba($badge-primary-soft-color, 0.1);
+    color: $badge-primary-soft-color;
+}
+
+.badge-secondary-soft {
+    background-color: rgba($badge-secondary-soft-color, 0.1);
+    color: $badge-secondary-soft-color;
+}
+
+.badge-dark-soft {
+    background-color: rgba($badge-dark-soft-color, 0.1);
+    color: $badge-dark-soft-color;
+}
+
+.badge-success-soft {
+    background-color: rgba($badge-success-soft-color, 0.1);
+    color: $badge-success-soft-color;
+
+    &-alt {
+        background-color: $badge-success-soft-color;
+        color: $white;
+    }
+}
+
+.badge-danger-soft {
+    background-color: rgba($badge-danger-soft-color, 0.1);
+    color: $badge-danger-soft-color;
+}
+
+.badge-warning-soft {
+    background-color: rgba($badge-warning-soft-color, 0.1);
+    color: $badge-warning-soft-color;
+}
+
+.badge-info-soft {
+    background-color: rgba($badge-info-soft-color, 0.1);
+    color: $badge-info-soft-color;
+}
+
+.badge-outline-muted {
+    background-color: $white;
+    color: $text-muted;
+    border: 1px solid $text-muted;
+}

@@ -1,0 +1,173 @@
+@extends('layouts.no-nav')
+
+@section('title')
+    Register
+@endsection
+
+@section('content')
+<section>
+    <div class="container-fluid d-flex flex-column">
+        <div class="row align-items-center justify-content-center min-vh-100">
+            <div class="col-lg-6 align-self-stretch d-none d-lg-block px-0">
+                <!-- Image -->
+                <div class="h-100 w-cover bg-cover" style="background-image: url({{ asset('images/register-image.jpg') }});"></div>
+            </div>
+
+            <div class="col-12 col-md-10 col-lg-6 px-8 px-lg-11 py-8 py-lg-11">
+                <!-- Heading -->
+                <h1 class="mb-0 font-weight-bold">
+                    Register
+                </h1>
+
+                <!-- Text -->
+                <p class="mb-6 text-muted">
+                    Create an account to start COVID-19 vaccination registration process.
+                </p>
+
+                <!-- Form -->
+                <form class="mb-6" method="POST" action="{{ route('register') }}">
+                    @csrf
+
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="firstName">
+                            First Name
+                        </label>
+                        <input id="firstName" type="text" class="form-control @error('firstName') is-invalid @enderror" name="firstName" value="{{ old('firstName') }}" required autocomplete="firstName" autofocus placeholder="Enter your first name">
+
+                        @error('firstName')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="middleName">
+                            Middle Name
+                        </label>
+                        <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Enter your middle name (leave blank if no middle name)">
+
+                        @error('middleName')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">
+                            Last Name
+                        </label>
+                        <input id="lastName" type="text" class="form-control @error('lastName') is-invalid @enderror" name="lastName" value="{{ old('lastName') }}" required autocomplete="lastName" autofocus placeholder="Enter your last name">
+
+                        @error('lastName')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">
+                            Email Address
+                        </label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="name@address.com">
+
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group mb-5">
+                        <label for="phone">
+                            Primary Phone Number
+                        </label>
+                        <input id="phone" name="phone" class="form-control @error("phone") is-invalid @enderror" type="tel" value="{{ old('phone') }}" placeholder="(XXX) XXX-XXXX" required aria-required="true">
+        
+                        @error("phone")
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first("phone") }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    
+                    <!-- Date of Birth -->
+                    <div class="form-group mb-5">
+                        <label for="dob">
+                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
+                        </label>
+                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
+        
+                        @error('dateOfBirth')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    
+
+                    <!-- Password -->
+                    <div class="form-group mb-5">
+                        <label for="password">
+                            Password <span class="font-weight-light small">(Password length is a minimum of 8 characters)</span>
+                        </label>
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Enter your password">
+
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group mb-5">
+                        <label for="password-confirm">
+                            Confirm Password
+                        </label>
+                        <input id="password-confirm" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Re-enter your password">
+                    </div>
+
+                    <!-- Submit -->
+                    <button class="btn btn-header btn-round btn-lg btn-block" type="submit">
+                        Register
+                    </button>
+                </form>
+
+                <!-- Text -->
+                <p class="mb-0 font-size-sm text-muted">
+                    Already have an account? <a class="ml-1" href="{{ route('login') }}">Log in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+$('#phone').keyup(function(e){
+        var ph = this.value.replace(/\D/g,'').substring(0,10);
+        // Backspace and Delete keys
+        var deleteKey = (e.keyCode == 8 || e.keyCode == 46);
+        var len = ph.length;
+        if(len==0){
+            ph=ph;
+        }else if(len<3){
+            ph='('+ph;
+        }else if(len==3){
+            ph = '('+ph + (deleteKey ? '' : ') ');
+        }else if(len<6){
+            ph='('+ph.substring(0,3)+') '+ph.substring(3,6);
+        }else if(len==6){
+            ph='('+ph.substring(0,3)+') '+ph.substring(3,6)+ (deleteKey ? '' : '-');
+        }else{
+            ph='('+ph.substring(0,3)+') '+ph.substring(3,6)+'-'+ph.substring(6,10);
+        }
+        this.value = ph;
+    });
+</script>
+@endsection

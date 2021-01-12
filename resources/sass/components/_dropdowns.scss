@@ -1,0 +1,21 @@
+﻿/* Modifier class to remove caret from Bootstrap dropdowns. To use, add alongside dropdown-toggle class. */
+.dropdown,
+.dropup,
+.dropleft,
+.dropright {
+    .dropdown-toggle.no-caret {
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+}
+
+.dropdown-menu {
+    .dropdown-item:focus,
+    .dropdown-item:hover {
+        background: none;
+        color: $blue;
+        text-decoration: none;
+    }
+}

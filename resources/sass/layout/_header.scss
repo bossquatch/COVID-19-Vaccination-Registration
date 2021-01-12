@@ -1,0 +1,96 @@
+﻿/*
+// ----------------------------------------
+// HTML Usage
+// ----------------------------------------
+//
+// <div class="page-header header-filter page-header-default">
+//     <div class="container">
+//         <div class="row">
+//             <div class="col-md-8 ml-auto mr-auto text-center">
+//                 <h1 class="title">Polk County CARES Program</h1>
+//                 <h4 class="sub-title">Apply for economic assistance due to the COVID-19 pandemic.</h4>
+//                 <br>
+//                 <a class="btn btn-header btn-round btn-lg" href="#">
+//                     <span class="fad fa-check mr-1"></span> Apply Now
+//                 </a>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+//
+// ----------------------------------------
+*/
+.page-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: $page-header-height;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transform: translate3d(0, 0, 0); // forces hardware acceleration
+
+    &,
+    .page-header-image {
+        background-position: 50%;
+        background-size: cover;
+    }
+
+    .title {
+        font-size: $page-header-title-font-size;
+        font-weight: bold;
+        line-height: $page-header-title-line-height;
+        text-decoration: none;
+        margin-top: $page-header-title-margin-top;
+        margin-bottom: $page-header-title-margin-bottom;
+        min-height: $page-header-title-min-height;
+    }
+
+    .sub-title {
+        font-size: $page-header-sub-title-font-size;
+        font-weight: 300;
+        line-height: $page-header-sub-title-line-height;
+        margin-top: $page-header-sub-title-margin-top;
+        margin-bottom: $page-header-sub-title-margin-bottom;
+    }
+
+    .title,
+    > .container {
+        color: $page-header-color;
+    }
+
+    &.page-header-inner {
+        height: $page-header-inner-height;
+        min-height: $page-header-inner-height;
+    }
+
+    &-default {
+        background-image: url("/images/register-image.jpg");
+    }
+}
+
+.header-filter {
+    position: relative;
+
+    &::before {
+        background: rgba($page-header-filter-color, $page-header-filter-opacity);
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
+    }
+}
