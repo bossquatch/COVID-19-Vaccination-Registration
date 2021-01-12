@@ -122,7 +122,7 @@
                                         <label for="phone">
                                             Primary Phone Number
                                         </label>
-                                        <input id="phone" name="phone" class="form-control @error("phone") is-invalid @enderror" type="tel" value="{{ old('phone') ?? (isset($registration->phones()[0]) ? $registration->phones()[0]->value : '') }}" placeholder="(XXX) XXX-XXXX">
+                                        <input id="phone" name="phone" class="form-control @error("phone") is-invalid @enderror" type="tel" value="{{ old('phone') ?? (isset($registration->phones()[0]) ? ('('.substr($registration->phones()[0]->value,0,3).') '.substr($registration->phones()[0]->value,3,3).'-'.substr($registration->phones()[0]->value,6,4)) : '') }}" placeholder="(XXX) XXX-XXXX">
                         
                                         @error("phone")
                                             <span class="invalid-feedback" role="alert">

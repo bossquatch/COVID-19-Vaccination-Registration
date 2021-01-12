@@ -104,7 +104,7 @@
                                     <h3 class="h4">Phone Number(s):</h3>
                                     <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
                                         @forelse ($registration->phones() as $phone)
-                                            <li style="list-style-type: none;">{{ $phone->value }}</li>
+                                            <li style="list-style-type: none;">{{ ('('.substr($phone->value,0,3).') '.substr($phone->value,3,3).'-'.substr($phone->value,6,4)) }}</li>
                                         @empty
                                             <li style="list-style-type: none;">No phone number</li>
                                         @endforelse

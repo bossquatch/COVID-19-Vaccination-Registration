@@ -11,12 +11,14 @@
         <div class="row">
             <div class="col-md-6">
                 <h1 class="title">Polk County COVID-19 Vaccinations</h1>
-                <p class="sub-title h4">Every landing page needs a small description after the big bold title, that's why we added this text here. Add here all the information that can make you or your product create the first impression.</p>
+                <p class="sub-title h4">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create and account and submit your personal information for a future vaccine appointment.</p>
                 <br>
                 @auth
                 <a class="btn btn-header btn-round btn-lg" href="/home">View Registration</a>
                 @else
+                @if(config('app.allow_self_service'))
                 <a class="btn btn-header btn-round btn-lg" href="/register">Register</a>
+                @endif
                 @endauth
             </div>
         </div>
@@ -185,7 +187,7 @@
 
                         <!-- Text -->
                         <p class="font-size-sm text-gray-dark mb-5">
-                            Not sure exactly what you're looking for or just want clarification? We'd be happy to chat and clear things up for you.
+                            If you aren’t sure what you’re looking for, or need clarification, you can contact our COVID-19 Vaccine Hotline.
                         </p>
 
                         <!-- Heading -->
@@ -206,6 +208,9 @@
                         <!-- Text -->
                         <p class="font-size-sm text-gray-dark mb-0">
                             <span class="mr-1">Mon-Fri:</span> 8am - 5pm
+                        </p>
+                        <p class="font-size-sm text-gray-dark mb-0">
+                            <span class="mr-1">Sat:</span> 8am - 2pm
                         </p>
                     </div>
                 </div>

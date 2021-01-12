@@ -74,7 +74,7 @@ class RegisterController extends Controller
             'middle_name' => $data['middleName'],
             'last_name' => $data['lastName'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            'phone' => preg_replace('/\D/', '', $data['phone']),
             'birth_date' => Carbon::parse($data['dateOfBirth']),
             'password' => Hash::make($data['password']),
         ]);

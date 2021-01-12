@@ -56,7 +56,7 @@ class RegistrationController extends Controller
             $phones = [[
                 "contact_type_id" => 2,
                 "phone_type_id" => 1,
-                "value" => $user->phone,
+                "value" => preg_replace('/\D/', '', $user->phone),
             ]];
         } else {
             $phones = [];

@@ -118,7 +118,7 @@ class ManageController extends Controller
             'middle_name' => $valid['middleName'],
             'last_name' => $valid['lastName'],
             'email' => $user_email,
-            'phone' => $valid['phone'],
+            'phone' => preg_replace('/\D/', '', $valid['phone']),
             'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'password' => \Illuminate\Support\Facades\Hash::make(config('app.default_password').rand()),
         ]);
@@ -161,7 +161,7 @@ class ManageController extends Controller
             $phones = [[
                 "contact_type_id" => 2,
                 "phone_type_id" => 1,
-                "value" => $user->phone,
+                "value" => preg_replace('/\D/', '', $user->phone),
             ]];
         } else {
             $phones = [];
@@ -232,7 +232,7 @@ class ManageController extends Controller
             $phones = [[
                 "contact_type_id" => 2,
                 "phone_type_id" => 1,
-                "value" => $valid['phone'],
+                "value" => preg_replace('/\D/', '', $valid['phone']),
             ]];
         } else {
             $phones = [];

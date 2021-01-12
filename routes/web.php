@@ -22,6 +22,7 @@ Route::get('/faqs' , function() {
 });
 
 Auth::routes([
+    'register' => config('app.allow_self_service'),
     'verify' => true,
 ]);
 
