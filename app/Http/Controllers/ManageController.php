@@ -228,10 +228,10 @@ class ManageController extends Controller
             'state' => 'required|max:2',
             'zip' => 'required|max:11',
             'county' => 'required|in:'.$valid_counties,
-            'vaccineAgreement' => 'accepted',
+            //'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',
             'availableAgreement' =>'accepted',
-            'illAgreement' =>'accepted',
+            //'illAgreement' =>'accepted',
             'condition' =>'nullable'
         ];
 
