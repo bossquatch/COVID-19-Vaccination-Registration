@@ -157,15 +157,23 @@ class ManageController extends Controller
         }
         //$user = Auth::user();
 
-        $phones = [[
-            "contact_type_id" => 2,
-            "phone_type_id" => 1,
-            "value" => $user->phone,
-        ]];
-        $emails = [[
-            "contact_type_id" => 1,
-            "value" => $valid['email'],
-        ]];
+        if (!empty($user->phone)) {
+            $phones = [[
+                "contact_type_id" => 2,
+                "phone_type_id" => 1,
+                "value" => $user->phone,
+            ]];
+        } else {
+            $phones = [];
+        }
+        if (!empty($valid['email'])) {
+            $emails = [[
+                "contact_type_id" => 1,
+                "value" => $valid['email'],
+            ]];
+        } else {
+            $emails = [];
+        }
 
         $registration = \App\Models\Registration::create([
             'code'=> $code,
@@ -220,15 +228,23 @@ class ManageController extends Controller
             $conditions = array_keys($valid['condition']);
         }
 
-        $phones = [[
-            "contact_type_id" => 2,
-            "phone_type_id" => 1,
-            "value" => $valid['phone'],
-        ]];
-        $emails = [[
-            "contact_type_id" => 1,
-            "value" => $valid['email'],
-        ]];
+        if (!empty($valid['phone'])) {
+            $phones = [[
+                "contact_type_id" => 2,
+                "phone_type_id" => 1,
+                "value" => $valid['phone'],
+            ]];
+        } else {
+            $phones = [];
+        }
+        if (!empty($valid['email'])) {
+            $emails = [[
+                "contact_type_id" => 1,
+                "value" => $valid['email'],
+            ]];
+        } else {
+            $emails = [];
+        }
 
         $registration->update([
             'race_id'=> $valid['race'],
@@ -258,13 +274,21 @@ class ManageController extends Controller
         // rewrite if we start allowing multiple phones and emails
         $contacts = [];
         if (count($registration->emails()) > 0) {
-            $registration->emails()[0]->update($emails[0]);
+            if (empty($emails)) { 
+                $registration->emails()[0]->delete(); 
+            } else {
+                $registration->emails()[0]->update($emails[0]);
+            }
         } else {
             $contacts = array_merge($contacts, $emails);
         }
 
         if (count($registration->phones()) > 0) {
-            $registration->phones()[0]->update($phones[0]);
+            if (empty($phones)) { 
+                $registration->phones()[0]->delete(); 
+            } else {
+                $registration->phones()[0]->update($phones[0]);
+            }
         } else {
             $contacts = array_merge($contacts, $phones);
         }

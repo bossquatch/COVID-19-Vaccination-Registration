@@ -52,11 +52,15 @@ class RegistrationController extends Controller
         }
         $user = Auth::user();
 
-        $phones = [[
-            "contact_type_id" => 2,
-            "phone_type_id" => 1,
-            "value" => $user->phone,
-        ]];
+        if (!empty($user->phone)) {
+            $phones = [[
+                "contact_type_id" => 2,
+                "phone_type_id" => 1,
+                "value" => $user->phone,
+            ]];
+        } else {
+            $phones = [];
+        }
         $emails = [[
             "contact_type_id" => 1,
             "value" => $user->email,
