@@ -513,7 +513,7 @@
                                             if (data.address.Zip4 !== undefined) {
                                                 addr += "-"+data.address.Zip4;
                                             }
-                                            text = "<b>Address was successufully validated!</b><br><b>Found address:</b> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
+                                            text = "<strong>Address was successufully validated!</strong><br><strong>Found address:</strong> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
                                             if (data.address.ReturnText !== undefined) {
                                                 text += "<br>"+data.address.ReturnText;
                                             }
