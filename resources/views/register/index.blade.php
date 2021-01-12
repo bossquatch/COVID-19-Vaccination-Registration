@@ -237,7 +237,7 @@
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="scheculePreference" name="scheculePreference" class="custom-control-input @error("scheculePreference") is-invalid @enderror" type="checkbox">
-                                            <label class="custom-control-label" for="scheculePreference">I prefer an appointment closer to my location. <i>(This may delay your appointment time.)</i></label>
+                                            <label class="custom-control-label" for="scheculePreference">I prefer an appointment closer to my location. <em>(This may delay your appointment time.)</em></label>
 
                                             @error("scheculePreference")
                                                 <span class="invalid-feedback" role="alert">
