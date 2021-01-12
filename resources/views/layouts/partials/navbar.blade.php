@@ -29,6 +29,10 @@
                                         document.getElementById('logout-form').submit();">
                             {{--<span class="fad fa-sign-out mr-1"></span> --}}Sign out
                     </a> 
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
                 @else
                 <li class="nav-item">
