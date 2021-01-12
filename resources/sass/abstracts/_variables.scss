@@ -37,6 +37,8 @@ $gray-light: #e7ebf5;
 $gray-lighter: #f9fbfd;
 $gray-dark: #384c74;
 
+$light: $gray-lighter;
+
 $toggle-gray: $gray-dark;
 $toggle-gray-light: lighten($toggle-gray, 15%);
 $toggle-gray-lighter: lighten($toggle-gray, 30%);
@@ -137,13 +139,13 @@ $lead-font-size: $font-size-base + 0.25rem;
 $lead-font-weight: normal;
 
 // Headers
-$page-header-height: auto;
+$page-header-height: 85vh;
 $page-header-color: $white;
 
 $page-header-inner-height: 23.75rem;
 
 $page-header-filter-color: $black;
-$page-header-filter-opacity: 0.5;
+$page-header-filter-opacity: 0.2;
 
 $page-header-title-font-size: 3.3125rem;
 $page-header-title-line-height: 1.15em;
@@ -172,6 +174,18 @@ $badge-lg-rounded-circle-px: 0.7em;
 
 // Navbar
 $navbar-light-color: $black;
+
+$navbar-bg-color: $white;
+$navbar-font-color: $black;
+$navbar-gutter-padding: 15px;
+$navbar-link-hover-opacity: 0.7;
+
+$navbar-transparent-font-color: $white;
+$navbar-transparent-padding-top: 1rem;
+$navbar-transparent-collapse-bg-color: $white;
+$navbar-transparent-collapse-font-color: $black;
+$navbar-transparent-link-padding: 0.9375rem;
+$navbar-transparent-link-padding-sm: 0.625rem;
 
 // Links
 $link-color: $blue;
@@ -236,6 +250,8 @@ $card-border-color: $border-light;
 $card-cap-bg: $white;
 
 $card-border-top-width: 0.125rem;
+$card-border-top-width-lg: 0.175rem;
+$card-border-top-width-xl: 0.25rem;
 $card-border-body-padding: 2rem;
 $card-border-icon-circle-size: 4.1875rem;
 $card-border-icon-circle-mb: 1.5rem;

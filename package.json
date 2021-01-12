@@ -1,5 +1,23 @@
 {
     "private": true,
+    "name": "health-scheduler-package",
+    "version": "1.0.0",
+    "description": "NPM Packages for the Health Scheduler Application",
+    "author": "Polk County Board of County Commissioners Information Technology Division",
+    "license": "ISC",
+    "browserslist": [
+        ">= 1%",
+        "last 1 major version",
+        "not dead",
+        "Chrome >= 45",
+        "Firefox >= 38",
+        "Edge >= 12",
+        "Explorer >= 10",
+        "iOS >= 9",
+        "Safari >= 9",
+        "Android >= 4.4",
+        "Opera >= 30"
+    ],
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
@@ -9,26 +27,27 @@
         "prod": "npm run production",
         "production": "mix --production"
     },
-    "devDependencies": {
-        "@fortawesome/fontawesome-pro": "^5.13.0",
-        "axios": "^0.21",
-        "bootstrap": "^4.0.0",
-        "cross-env": "^7.0",
-        "inputmask": "^5.0.3",
+    "dependencies": {
+        "vue": "^2.6.12",
+        "vue-qrcode-reader": "^2.3.16",
+        "@fortawesome/fontawesome-pro": "^5.15.1",
+        "bootstrap": "^4.5.3",
+        "chart.js": "^2.9.4",
+        "inputmask": "^5.0.5",
         "jquery": "^3.5.1",
         "jquery-validation-unobtrusive": "^3.2.11",
+        "popper.js": "^1.16.1"
+    },
+    "devDependencies": {
+        "axios": "^0.21",
+        "cross-env": "^7.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "popper.js": "^1.12",
         "postcss": "^8.1.14",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
         "vue-loader": "^15.9.6",
         "vue-template-compiler": "^2.6.11"
-    },
-    "dependencies": {
-        "vue": "^2.6.12",
-        "vue-qrcode-reader": "^2.3.16"
     }
 }
