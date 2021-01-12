@@ -6,6 +6,14 @@
     color: $navbar-font-color;
     padding: $navbar-transparent-link-padding-sm 0;
 
+    &.fixed-top {
+        height: $navbar-height;
+
+        + * {
+            margin-top: $navbar-height;
+        }
+    }
+
     .navbar-brand {
         color: inherit;
         padding: $navbar-transparent-link-padding-sm 0;

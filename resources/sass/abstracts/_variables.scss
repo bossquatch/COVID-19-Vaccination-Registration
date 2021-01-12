@@ -39,6 +39,9 @@ $gray-dark: #384c74;
 
 $light: $gray-lighter;
 
+$teal-light: #95eff2;
+$teal-dark: #49a9b6;
+
 $toggle-gray: $gray-dark;
 $toggle-gray-light: lighten($toggle-gray, 15%);
 $toggle-gray-lighter: lighten($toggle-gray, 30%);
@@ -80,6 +83,11 @@ $gradient-map: (
         "start-color": $gray-lighter,
         "end-color": $white,
         "deg": 180deg
+    ),
+    "teal": (
+        "start-color": $teal-light,
+        "end-color": $teal-dark,
+        "deg": 45deg
     )
 );
 
@@ -175,6 +183,7 @@ $badge-lg-rounded-circle-px: 0.7em;
 // Navbar
 $navbar-light-color: $black;
 
+$navbar-height: 4.375rem;
 $navbar-bg-color: $white;
 $navbar-font-color: $black;
 $navbar-gutter-padding: 15px;
