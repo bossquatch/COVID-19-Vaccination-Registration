@@ -175,6 +175,28 @@
     </div>
 </section>
 <script>
+ // Get the input field
+ var inputName = document.getElementById("searchName");
+ var inputAddr = document.getElementById("searchAddr");
+ var inputRegis = document.getElementById("searchRegis");
+ var inputCode = document.getElementById("searchCode");
+
+// Execute a function when the user releases a key on the keyboard
+inputName.addEventListener("keyup", event => { inputEnter(event, "nameBtn") }); 
+inputAddr.addEventListener("keyup", event => { inputEnter(event, "addrBtn") });
+inputRegis.addEventListener("keyup", event => { inputEnter(event, "regisBtn") }); 
+inputCode.addEventListener("keyup", event => { inputEnter(event, "codeBtn") }); 
+
+function inputEnter(event, btnid) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById(btnid).click();
+    }
+}
+
 function search(type) {
     $('#loadingModal').modal('show');
 
