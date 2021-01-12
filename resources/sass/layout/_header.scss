@@ -65,7 +65,7 @@
     }
 
     &-default {
-        background-image: url("/images/register-image.jpg");
+        background-image: url("/assets/dist/images/covid19-vaccine.jpg");
     }
 }
 
@@ -91,5 +91,14 @@
     .container {
         position: relative;
         z-index: 2;
+    }
+}
+
+.jumbotron-header {
+    color: $white;
+    margin: 0;
+
+    .title {
+        text-shadow: 3px 3px 7px $black;
     }
 }
