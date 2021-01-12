@@ -119,7 +119,7 @@ class ManageController extends Controller
             'last_name' => $valid['lastName'],
             'email' => $user_email,
             'phone' => $valid['phone'],
-            'birth_date' => $valid['dateOfBirth'],
+            'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'password' => \Illuminate\Support\Facades\Hash::make(config('app.default_password').rand()),
         ]);
 
@@ -242,7 +242,7 @@ class ManageController extends Controller
             'last_name' => $valid['lastName'],
             //'email' => $valid['email'],
             //'phone' => $valid['phone'],
-            'birth_date' => $valid['dateOfBirth'],
+            'birth_date' => Carbon::parse($valid['dateOfBirth']),
 
             // New Info
             'address1'=> $valid['address1'],

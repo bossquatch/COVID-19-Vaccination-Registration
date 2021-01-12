@@ -75,7 +75,7 @@ class RegisterController extends Controller
             'last_name' => $data['lastName'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'birth_date' => $data['dateOfBirth'],
+            'birth_date' => Carbon::parse($data['dateOfBirth']),
             'password' => Hash::make($data['password']),
         ]);
 
