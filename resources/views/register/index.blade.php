@@ -44,7 +44,7 @@
                                 <div class="col-12">
                                     <h2 class="mb-5">Demographics</h2>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
                                         <label for="gender">
@@ -52,10 +52,10 @@
                                         </label>
                                         <select id="gender" name="gender" class="custom-select @error("gender") is-invalid @enderror">
                                             @foreach (\App\Models\Gender::get() as $gender)
-                                                <option value="{{ $gender->id }}" @if (old('gender') && old('gender') == $gender->id) selected @endif>{{ $gender->name }}</option>    
+                                                <option value="{{ $gender->id }}" @if (old('gender') && old('gender') == $gender->id) selected @endif>{{ $gender->name }}</option>
                                             @endforeach
                                         </select>
-                        
+
                                         @error('gender')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('gender') }}</strong>
@@ -63,7 +63,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
                                         <label for="race">
@@ -71,10 +71,10 @@
                                         </label>
                                         <select id="race" name="race" class="custom-select @error("race") is-invalid @enderror">
                                             @foreach (\App\Models\Race::get() as $race)
-                                                <option value="{{ $race->id }}" @if (old('race') && old('race') == $race->id) selected @endif>{{ $race->name }}</option>    
+                                                <option value="{{ $race->id }}" @if (old('race') && old('race') == $race->id) selected @endif>{{ $race->name }}</option>
                                             @endforeach
                                         </select>
-                        
+
                                         @error('race')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('race') }}</strong>
@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="row mb-6">
                                 <div class="col-12">
                                     <h2 class="mb-5">Home Address</h2>
@@ -94,7 +94,7 @@
                                             Address 1
                                         </label>
                                         <input id="address1" name="address1" class="form-control @error("address1") is-invalid @enderror" type="text" value="{{ old('address1') }}" placeholder="Address 1" onchange="checkInlineAddress()">
-                        
+
                                         @error("address1")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("address1") }}</strong>
@@ -108,7 +108,7 @@
                                             Address 2
                                         </label>
                                         <input id="address2" name="address2" class="form-control @error("address2") is-invalid @enderror" type="text" value="{{ old('address2') }}" placeholder="Address 2" onchange="checkInlineAddress()">
-                        
+
                                         @error("address2")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("address2") }}</strong>
@@ -122,7 +122,7 @@
                                             City
                                         </label>
                                         <input id="city" name="city" class="form-control @error("city") is-invalid @enderror" type="text" value="{{ old('city') }}" placeholder="City" onchange="checkInlineAddress()">
-                        
+
                                         @error("city")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("city") }}</strong>
@@ -191,7 +191,7 @@
                                             <option value="WI">Wisconsin</option>
                                             <option value="WY">Wyoming</option>
                                         </select>
-                        
+
                                         @error("state")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("state") }}</strong>
@@ -205,7 +205,7 @@
                                             Zip code
                                         </label>
                                         <input id="zipCode" name="zip" class="form-control @error("zip") is-invalid @enderror" type="text" value="{{ old('zip') }}" placeholder="Zip code" onchange="checkInlineAddress()">
-                        
+
                                         @error("zip")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("zip") }}</strong>
@@ -221,10 +221,10 @@
                                         </label>
                                         <select id="county" name="county" class="custom-select @error("county") is-invalid @enderror">
                                             @foreach (\App\Models\County::get() as $county)
-                                                <option value="{{ $county->id }}" @if (old('county') && old('county') == $county->id) selected @elseif((old('county') === null || old('county') == null) && $county->id == 53) selected @endif>{{ $county->county }}</option>    
+                                                <option value="{{ $county->id }}" @if (old('county') && old('county') == $county->id) selected @elseif((old('county') === null || old('county') == null) && $county->id == 53) selected @endif>{{ $county->county }}</option>
                                             @endforeach
                                         </select>
-                        
+
                                         @error('county')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('county') }}</strong>
@@ -237,8 +237,8 @@
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="scheculePreference" name="scheculePreference" class="custom-control-input @error("scheculePreference") is-invalid @enderror" type="checkbox">
-                                            <label class="custom-control-label" for="scheculePreference">I prefer to get scheduled to the location closest to me instead of being scheduled to the earliest possible appointment.</label>
-                        
+                                            <label class="custom-control-label" for="scheculePreference">I prefer an appointment closer to my location. <i>(This may delay your appointment time.)</i></label>
+
                                             @error("scheculePreference")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("scheculePreference") }}</strong>
@@ -264,11 +264,11 @@
                                         <select id="occupation" name="occupation" class="custom-select @error("occupation") is-invalid @enderror">
                                             @foreach (\App\Models\Occupation::get() as $occupation)
                                                 @if($occupation->display_name != null)
-                                                    <option value="{{ $occupation->id }}" @if (old('occupation') && old('occupation') == $occupation->id) selected @elseif((old('occupation') === null || old('occupation') == null) && $occupation->id == 19) selected @endif>{{ $occupation->display_name }}</option>    
+                                                    <option value="{{ $occupation->id }}" @if (old('occupation') && old('occupation') == $occupation->id) selected @elseif((old('occupation') === null || old('occupation') == null) && $occupation->id == 19) selected @endif>{{ $occupation->display_name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
-                        
+
                                         @error('occupation')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('occupation') }}</strong>
@@ -277,12 +277,12 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="row mb-6">
                                 <div class="col-12">
                                     <h2 class="mb-5">Check All Underlying Health Conditions that Apply to You</h2>
                                 </div>
-                                
+
                                 @foreach (\App\Models\Condition::get() as $condition)
                                     @if($condition->display_name != null)
                                         <div class="col-12 col-lg-6">
@@ -307,7 +307,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input id="illAgreement" name="illAgreement" class="custom-control-input @error("illAgreement") is-invalid @enderror" type="checkbox">
                                             <label class="custom-control-label" for="illAgreement">I am not currently ill.</label>
-                        
+
                                             @error("illAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("illAgreement") }}</strong>
@@ -322,7 +322,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox">
                                             <label class="custom-control-label" for="availableAgreement">I will be available and present 28 days after my initial vaccination.</label>
-                        
+
                                             @error("availableAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("availableAgreement") }}</strong>
@@ -331,13 +331,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="vaccineAgreement" name="vaccineAgreement" class="custom-control-input @error("vaccineAgreement") is-invalid @enderror" type="checkbox">
                                             <label class="custom-control-label" for="vaccineAgreement">I have not received any vaccine in the past 14 days.</label>
-                        
+
                                             @error("vaccineAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("vaccineAgreement") }}</strong>
@@ -352,7 +352,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox">
                                             <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.</label>
-                        
+
                                             @error("reactionAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("reactionAgreement") }}</strong>
@@ -373,7 +373,7 @@
                                 </div>
                             </div>
                         </form>
-                        
+
                         <script type="text/javascript">
                             function checkInlineAddress() {
                                 var addrInfo = {
@@ -383,15 +383,15 @@
                                     'zip': $("#zipCode").val(),
                                     'state': $('#state').find(":selected").val()
                                 };
-                        
+
                                 if (addrInfo.address1 != "" && addrInfo.city != "" && addrInfo.zip != ""){
                                     $("#adressStatusBlock").html(
                                         "<div class='row justify-content-center'><span class='fad fa-spinner fa-pulse fa-2x'></span></div>"
                                     );
-                        
+
                                     $.get('/address/validate', addrInfo, function(data) {
                                         var type, text = "";
-                        
+
                                         if (data.hasOwnProperty('error')) {
                                             text = data.error;
                                             type = 'danger';
@@ -410,7 +410,7 @@
                                             }
                                             type = 'success';
                                         }
-                        
+
                                         $("#addressStatusBlock").html(
                                             "<div class='alert alert-"+type+"' role='alert'>"+text+"</div>"
                                         );
@@ -423,26 +423,26 @@
                                     $("#addressStatusBlock").css('display', 'block');
                                 }
                             }
-                        
+
                             function syncInlineAddress(address1, address2, city, zip, state) {
                                 if (address1 !== undefined && address1 != 'undefined') {
                                     $("#address1").val(address1);
                                 } else {
                                     $("#address1").val("");
                                 }
-                        
+
                                 if (address2 !== undefined && address2 != 'undefined') {
                                     $("#address2").val(address2);
                                 } else {
                                     $("#address2").val("");
                                 }
-                        
+
                                 if (city !== undefined && city != 'undefined') {
                                     $("#city").val(city);
                                 } else {
                                     $("#city").val("");
                                 }
-                        
+
                                 if (zip !== undefined && zip != 'undefined') {
                                     $("#zipCode").val(zip);
                                 } else {
