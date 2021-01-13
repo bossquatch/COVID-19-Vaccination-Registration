@@ -395,7 +395,7 @@
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group mb-5">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox">
+                                                    <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox" @if(old('condition') && array_key_exists($condition->id, old('condition'))) checked aria-checked="true" @endif>
                                                     <label class="custom-control-label" for="condition{{ $condition->id }}">{{ $condition->display_name }}</label>
                                                 </div>
                                             </div>
@@ -427,7 +427,7 @@
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
-                                            <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox">
+                                            <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox" @if(old('availableAgreement')) checked aria-checked="true" @endif>
                                             <label class="custom-control-label" for="availableAgreement">I will be available and present 28 days after my initial vaccination.</label>
                         
                                             @error("availableAgreement")
@@ -457,7 +457,7 @@
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
-                                            <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox">
+                                            <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox" @if(old('reactionAgreement')) checked aria-checked="true" @endif>
                                             <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.</label>
                         
                                             @error("reactionAgreement")

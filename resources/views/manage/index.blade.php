@@ -172,15 +172,16 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 text-center" id="pagination-area"></div>
         </div>
     </div>
 </section>
 <script>
- // Get the input field
- var inputName = document.getElementById("searchName");
- var inputAddr = document.getElementById("searchAddr");
- var inputRegis = document.getElementById("searchRegis");
- var inputCode = document.getElementById("searchCode");
+// Get the input field
+var inputName = document.getElementById("searchName");
+var inputAddr = document.getElementById("searchAddr");
+var inputRegis = document.getElementById("searchRegis");
+var inputCode = document.getElementById("searchCode");
 
 // Execute a function when the user releases a key on the keyboard
 inputName.addEventListener("keyup", event => { inputEnter(event, "nameBtn") }); 
@@ -201,12 +202,64 @@ function inputEnter(event, btnid) {
 function search(type) {
     $('#loadingModal').modal('show');
 
+    var val = $("#"+type).val();
+    var offset = '0';
+
+    window.sessionStorage.setItem('searchVal', val);
+    window.sessionStorage.setItem('searchOffset', offset);
+    window.sessionStorage.setItem('searchLimit', offset);
+    window.sessionStorage.setItem('searchType', type);
+
     var searchInfo = {
-        'val': $("#"+type).val()
+        'val': val,
+        'offset': parseInt(offset)
     };
 
+    setTimeout(function () {
+       	$('#loadingModal').modal('hide');
+    }, 1000);
+    makeRequest(searchInfo, type);
+}
+
+function getNext() {
+    $('#loadingModal').modal('show');
+    
+    var searchInfo = {
+        'val': window.sessionStorage.getItem('searchVal'),
+        'offset': parseInt(window.sessionStorage.getItem('searchOffset'))
+    };
+
+    setTimeout(function () {
+       	$('#loadingModal').modal('hide');
+    }, 1000);
+    makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+
+    return false;
+}
+
+function getPrev() {
+    $('#loadingModal').modal('show');
+    
+    var searchInfo = {
+        'val': window.sessionStorage.getItem('searchVal'),
+        'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit')))
+    };
+
+    setTimeout(function () {
+       	$('#loadingModal').modal('hide');
+    }, 1000);
+    makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+
+    return false;
+}
+
+function makeRequest(searchInfo, type) {
     $.get('/manage/'+type, searchInfo, function(data) {
+        // data.result, .offset, .limit, .pagination
+        window.sessionStorage.setItem('searchOffset', data.offset.toString())
+        window.sessionStorage.setItem('searchLimit', data.limit.toString())
         $("#registrations").html(data.result);
+        $("#pagination-area").html(data.pagination);
         $('#loadingModal').modal('hide');
     }, 'json');
 

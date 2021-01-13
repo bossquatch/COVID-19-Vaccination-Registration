@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Session;
+use App\Rules\AtLeastThirteen;
 
 class ManageController extends Controller
 {
@@ -39,37 +40,47 @@ class ManageController extends Controller
 
     public function searchName()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%')->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
     }
 
     public function searchAddr()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%')->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
     }
 
     public function searchRegis()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where('id', '=', request()->input('val'))->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where('id', '=', request()->input('val')), request()->input('offset')));
     }
 
     public function searchCode()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where('code', 'LIKE', '%'.request()->input('val').'%')->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where('code', 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
     }
 
-    private function searchResults($results)
+    private function searchResults($query, $offset)
     {
-        $html = '';
+        $limit = config('app.pagination_limit');
+        $total_count = $query->count();
+        $res = $query->offset($offset)->limit($limit)->get();
+        $pagination = '';
 
-        foreach($results as $res) {
-            $html .= '<tr><td>'.$res->first_name.' '.$res->last_name.'</td><td>'.$res->id.'</td><td>'.$res->code.'</td><td>'.Carbon::parse($res->submitted_at)->format('m-d-Y h:i:s A').'</td><td>'.$res->status->name.'</td><td><a href="/manage/edit/'.$res->id.'"><span class="fad fa-edit"></span></a></td></tr>';
+        if ($total_count > 0) {
+            $html = view('manage.partials.tablerow', ['results' => $res])->render();
+
+            if ($total_count > $limit) {
+                $pagination = view('manage.partials.paginationrow', ['top' => (($offset + $limit) > $total_count ? $total_count : ($offset + $limit)), 'bot' => $offset + 1, 'total' => $total_count])->render();
+            }
+        } else {
+            $html = '<td colspan="6"><div class="alert alert-warning">No registrations were found!</div></td>';
         }
 
-        if ($html == '') {
-            $html = '<td colspan="5"><div class="alert alert-warning">No registrations were found!</div></td>';
-        }
-
-        return ['result' => $html];
+        return [
+            'result' => $html,
+            'offset' => $offset + $limit, 
+            'limit' => $limit,
+            'pagination' => $pagination,
+        ];
     }
 
     public function qrRead()
@@ -316,8 +327,7 @@ class ManageController extends Controller
             'lastName' => 'required|string|max:255',
             'email' => 'required_without:phone|nullable|string|email|max:255',
             'phone' => 'required_without:email|nullable|regex:/^(?=.*[0-9])[- +()0-9]+$/|max:14',
-            //'dateOfBirth' => 'required|date|before:'.Carbon::now()->add(-13, 'years')->format('m-d-Y'),
-            'dateOfBirth' => 'required|date',
+            'dateOfBirth' => ['required','date', new AtLeastThirteen],
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
             'occupation' => 'required|in:'.$valid_occupations,
