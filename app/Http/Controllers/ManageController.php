@@ -40,37 +40,47 @@ class ManageController extends Controller
 
     public function searchName()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%')->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
     }
 
     public function searchAddr()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%')->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
     }
 
     public function searchRegis()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where('id', '=', request()->input('val'))->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where('id', '=', request()->input('val')), request()->input('offset')));
     }
 
     public function searchCode()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where('code', 'LIKE', '%'.request()->input('val').'%')->get()));
+        return response()->json($this->searchResults(\App\Models\Registration::where('code', 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
     }
 
-    private function searchResults($results)
+    private function searchResults($query, $offset)
     {
-        $html = '';
+        $limit = config('app.pagination_limit');
+        $total_count = $query->count();
+        $res = $query->offset($offset)->limit($limit)->get();
+        $pagination = '';
 
-        foreach($results as $res) {
-            $html .= '<tr><td>'.$res->first_name.' '.$res->last_name.'</td><td>'.$res->id.'</td><td>'.$res->code.'</td><td>'.Carbon::parse($res->submitted_at)->format('m-d-Y h:i:s A').'</td><td>'.$res->status->name.'</td><td><a href="/manage/edit/'.$res->id.'"><span class="fad fa-edit"></span></a></td></tr>';
+        if ($total_count > 0) {
+            $html = view('manage.partials.tablerow', ['results' => $res])->render();
+
+            if ($total_count > $limit) {
+                $pagination = view('manage.partials.paginationrow', ['top' => (($offset + $limit) > $total_count ? $total_count : ($offset + $limit)), 'bot' => $offset + 1, 'total' => $total_count])->render();
+            }
+        } else {
+            $html = '<td colspan="6"><div class="alert alert-warning">No registrations were found!</div></td>';
         }
 
-        if ($html == '') {
-            $html = '<td colspan="5"><div class="alert alert-warning">No registrations were found!</div></td>';
-        }
-
-        return ['result' => $html];
+        return [
+            'result' => $html,
+            'offset' => $offset + $limit, 
+            'limit' => $limit,
+            'pagination' => $pagination,
+        ];
     }
 
     public function qrRead()

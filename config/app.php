@@ -66,6 +66,8 @@ return [
 
     'usps_username' => env('USPS_USERNAME', ''),
 
+    'pagination_limit' => env('PAGINATION_LIMIT', 25),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
