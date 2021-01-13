@@ -80,7 +80,7 @@ class DetailsSeeder extends Seeder
         ));
         \App\Models\Race::create(array(
             'id' => '17',
-            'name'  => 'HISPANIC'
+            'name'  => 'HISPANIC OR HAITIAN ORIGIN'
         ));
 
         // Genders
