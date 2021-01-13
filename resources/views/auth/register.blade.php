@@ -71,7 +71,8 @@
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email">
-                            Email Address <span class="font-weight-light small">(At this time, each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:863-298-7500">(863) 298-7500</a>. </span>
+                            Email Address <br>
+                            <span class="font-weight-light small">(At this time, each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:863-298-7500">(863) 298-7500)</a>. </span>
                         </label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="name@address.com">
 
