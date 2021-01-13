@@ -21,6 +21,14 @@ Route::get('/faqs' , function() {
     return view('home.faqs');
 });
 
+Route::get('/privacy' , function() {
+    return view('home.privacy');
+});
+
+Route::get('/terms' , function() {
+    return view('home.terms');
+});
+
 Auth::routes([
     'register' => config('app.allow_self_service'),
     'verify' => true,
