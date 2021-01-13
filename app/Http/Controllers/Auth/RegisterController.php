@@ -56,7 +56,8 @@ class RegisterController extends Controller
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'regex:/^(?=.*[0-9])[- +()0-9]+$/', 'max:14'],
-            'dateOfBirth' => ['required', 'date', 'before:'.Carbon::now()->add(-13, 'years')->format('m-d-Y')],
+            //'dateOfBirth' => ['required', 'date', 'before:'.Carbon::now()->add(-13, 'years')->format('m-d-Y')],
+            'dateOfBirth' => ['required', 'date'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
