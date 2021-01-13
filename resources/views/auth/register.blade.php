@@ -46,7 +46,7 @@
                         <label for="middleName">
                             Middle Name
                         </label>
-                        <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Leave blank if no middle name">
+                        <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Enter middle name">
 
                         @error('middleName')
                             <span class="invalid-feedback" role="alert">
