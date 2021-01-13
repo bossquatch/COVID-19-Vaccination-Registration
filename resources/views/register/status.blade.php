@@ -66,10 +66,12 @@
                     <!-- Card -->
                     <div class="card card-body p-6">
                         <div class="row align-items-center justify-content-center">
+                            @if(config('app.always_show_qr'))
                             <div class="col-12 col-lg-4 text-center mb-0">
                                 {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code); !!}
                             </div>
-                            <div class="col-12 col-lg-8 text-center mb-0">
+                            @endif
+                            <div class="col-12 @if(config('app.always_show_qr')) col-lg-8 @endif text-center mb-0">
                                 <!-- Logo -->
                                 {{--<div class="text-primary mb-4">
                                     <span class="fad fa-user-circle fa-4x"></span>

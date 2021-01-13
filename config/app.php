@@ -62,6 +62,8 @@ return [
 
     'allow_self_service' =>env('ALLOW_SELF_SERVICE', false),
 
+    'always_show_qr' =>env('ALWAYS_SHOW_QR', false),
+
     'usps_username' => env('USPS_USERNAME', ''),
 
     /*
