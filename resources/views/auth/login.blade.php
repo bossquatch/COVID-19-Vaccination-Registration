@@ -79,9 +79,11 @@
                 </form>
 
                 <!-- Text -->
+                @if(config('app.allow_self_service'))
                 <p class="mb-0 font-size-sm text-muted">
                     Don't have an account yet? <a class="ml-1" href="{{ route('register') }}">Register</a>
                 </p>
+                @endif
             </div>
         </div>
     </div>

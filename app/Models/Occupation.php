@@ -12,6 +12,6 @@ class Occupation extends Model
     protected $guarded = [];
 
     public function registrations() {
-        return $this->hasMany(Registration::class, 'essential_worker_id');
+        return $this->hasMany(Registration::class, 'occupation_id');
     }
 }

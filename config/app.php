@@ -60,6 +60,8 @@ return [
 
     'default_no_email' => env('DEFAULT_NO_EMAIL', ''),
 
+    'allow_self_service' =>env('ALLOW_SELF_SERVICE', false),
+
     'usps_username' => env('USPS_USERNAME', ''),
 
     /*

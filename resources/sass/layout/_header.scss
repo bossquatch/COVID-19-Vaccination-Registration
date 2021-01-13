@@ -93,3 +93,12 @@
         z-index: 2;
     }
 }
+
+.jumbotron-header {
+    color: $white;
+    margin: 0;
+
+    .title {
+        text-shadow: 3px 3px 7px $black;
+    }
+}

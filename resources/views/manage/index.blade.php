@@ -6,31 +6,29 @@
 
 @section('content')
 <!-- Header -->
-<div class="page-header page-header-inner header-filter page-header-default"></div>
-
-<section class="main main-raised pt-8 pt-md-11 pb-8 pb-md-12">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 text-center">
+<div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
+    <div class="container position-relative z-1">
+        <div class="row">
+            <div class="col-12">
                 <!-- Badge -->
-                <span class="badge badge-pill badge-primary-soft mb-3">
+                <span class="badge badge-pill badge-white-teal mb-3">
                     <span class="h6 text-uppercase">
                         Manage
                     </span>
                 </span>
 
                 <!-- Heading -->
-                <h1>
-                    Review and process <span class="text-primary">online registrations.</span>
-                </h1>
+                <h2 class="title">Search Online Registrations</h2>
 
                 <!-- Text -->
-                <p class="lead text-gray-dark mb-7 mb-md-9">
-                    View COVID-19 Vaccine Registrations.
-                </p>
+                <p class="font-size-lg text-gray-dark mb-0">View COVID-19 Vaccine Registrations.</p>
             </div>
         </div>
+    </div>
+</div>
 
+<section class="main pt-8 pt-md-11 pb-8 pb-md-12">
+    <div class="container">
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
@@ -162,6 +160,9 @@
                                             <th>
                                                 Status
                                             </th>
+                                            <th>
+                                                {{-- Actions --}}
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody id="registrations"></tbody>
@@ -175,6 +176,28 @@
     </div>
 </section>
 <script>
+ // Get the input field
+ var inputName = document.getElementById("searchName");
+ var inputAddr = document.getElementById("searchAddr");
+ var inputRegis = document.getElementById("searchRegis");
+ var inputCode = document.getElementById("searchCode");
+
+// Execute a function when the user releases a key on the keyboard
+inputName.addEventListener("keyup", event => { inputEnter(event, "nameBtn") }); 
+inputAddr.addEventListener("keyup", event => { inputEnter(event, "addrBtn") });
+inputRegis.addEventListener("keyup", event => { inputEnter(event, "regisBtn") }); 
+inputCode.addEventListener("keyup", event => { inputEnter(event, "codeBtn") }); 
+
+function inputEnter(event, btnid) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById(btnid).click();
+    }
+}
+
 function search(type) {
     $('#loadingModal').modal('show');
 

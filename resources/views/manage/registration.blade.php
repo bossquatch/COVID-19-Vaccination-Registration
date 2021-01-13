@@ -6,31 +6,29 @@
 
 @section('content')
 <!-- Header -->
-<div class="page-header page-header-inner header-filter page-header-default"></div>
-
-<section class="main main-raised pt-8 pt-md-11 pb-8 pb-md-12">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 text-center">
+<div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
+    <div class="container position-relative z-1">
+        <div class="row">
+            <div class="col-12">
                 <!-- Badge -->
-                <span class="badge badge-pill badge-primary-soft mb-3">
+                <span class="badge badge-pill badge-white-teal mb-3">
                     <span class="h6 text-uppercase">
                         Registration
                     </span>
                 </span>
 
                 <!-- Heading -->
-                <h1>
-                    View an <span class="text-primary">online registration.</span>
-                </h1>
+                <h2 class="title">View an Online Registration</h2>
 
                 <!-- Text -->
-                <p class="lead text-gray-dark mb-7 mb-md-9">
-                    View a registration for the COVID-19 vaccination.
-                </p>
+                <p class="font-size-lg text-gray-dark mb-0">View a registration for a caller's COVID-19 vaccination.</p>
             </div>
         </div>
+    </div>
+</div>
 
+<section class="main pt-8 pt-md-11 pb-8 pb-md-12">
+    <div class="container">
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
@@ -104,7 +102,7 @@
                                     <h3 class="h4">Phone Number(s):</h3>
                                     <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-gray-dark mb-2">
                                         @forelse ($registration->phones() as $phone)
-                                            <li style="list-style-type: none;">{{ $phone->value }}</li>
+                                            <li style="list-style-type: none;">{{ ('('.substr($phone->value,0,3).') '.substr($phone->value,3,3).'-'.substr($phone->value,6,4)) }}</li>
                                         @empty
                                             <li style="list-style-type: none;">No phone number</li>
                                         @endforelse

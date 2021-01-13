@@ -52,11 +52,15 @@ class RegistrationController extends Controller
         }
         $user = Auth::user();
 
-        $phones = [[
-            "contact_type_id" => 2,
-            "phone_type_id" => 1,
-            "value" => $user->phone,
-        ]];
+        if (!empty($user->phone)) {
+            $phones = [[
+                "contact_type_id" => 2,
+                "phone_type_id" => 1,
+                "value" => preg_replace('/\D/', '', $user->phone),
+            ]];
+        } else {
+            $phones = [];
+        }
         $emails = [[
             "contact_type_id" => 1,
             "value" => $user->email,
@@ -120,10 +124,10 @@ class RegistrationController extends Controller
             'state' => 'required|max:2',
             'zip' => 'required|max:11',
             'county' => 'required|in:'.$valid_counties,
-            'vaccineAgreement' => 'accepted',
+            //'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',
             'availableAgreement' =>'accepted',
-            'illAgreement' =>'accepted',
+            //'illAgreement' =>'accepted',
             'condition' =>'nullable'
         ];
 

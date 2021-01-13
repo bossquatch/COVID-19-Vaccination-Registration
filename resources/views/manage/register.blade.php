@@ -6,31 +6,29 @@
 
 @section('content')
 <!-- Header -->
-<div class="page-header page-header-inner header-filter page-header-default"></div>
-
-<section class="main main-raised pt-8 pt-md-11 pb-8 pb-md-12">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 text-center">
+<div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
+    <div class="container position-relative z-1">
+        <div class="row">
+            <div class="col-12">
                 <!-- Badge -->
-                <span class="badge badge-pill badge-primary-soft mb-3">
+                <span class="badge badge-pill badge-white-teal mb-3">
                     <span class="h6 text-uppercase">
                         Register
                     </span>
                 </span>
 
                 <!-- Heading -->
-                <h1>
-                    Complete an <span class="text-primary">online registration.</span>
-                </h1>
+                <h2 class="title">Complete an Online Registration</h2>
 
                 <!-- Text -->
-                <p class="lead text-gray-dark mb-7 mb-md-9">
-                    Finish a registration for a caller's COVID-19 vaccination.
-                </p>
+                <p class="font-size-lg text-gray-dark mb-0">Finish a registration for a caller's COVID-19 vaccination.</p>
             </div>
         </div>
+    </div>
+</div>
 
+<section class="main pt-8 pt-md-11 pb-8 pb-md-12">
+    <div class="container">
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
@@ -411,7 +409,7 @@
                                     <h2 class="mb-5">Agreements</h2>
                                 </div>
 
-                                <div class="col-12">
+                                {{--<div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="illAgreement" name="illAgreement" class="custom-control-input @error("illAgreement") is-invalid @enderror" type="checkbox">
@@ -424,7 +422,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
 
                                 <div class="col-12">
                                     <div class="form-group mb-5">
@@ -441,7 +439,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-12">
+                                {{--<div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="vaccineAgreement" name="vaccineAgreement" class="custom-control-input @error("vaccineAgreement") is-invalid @enderror" type="checkbox">
@@ -454,7 +452,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
 
                                 <div class="col-12">
                                     <div class="form-group mb-5">
@@ -513,7 +511,7 @@
                                             if (data.address.Zip4 !== undefined) {
                                                 addr += "-"+data.address.Zip4;
                                             }
-                                            text = "<b>Address was successufully validated!</b><br><b>Found address:</b> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
+                                            text = "<strong>Address was successufully validated!</strong><br><strong>Found address:</strong> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
                                             if (data.address.ReturnText !== undefined) {
                                                 text += "<br>"+data.address.ReturnText;
                                             }

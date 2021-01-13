@@ -16,37 +16,77 @@ class DetailsSeeder extends Seeder
         // Races
         \App\Models\Race::create(array(
             'id' => '1',
-            'name'  => 'Caucasian'
+            'name'  => 'AMERICAN INDIAN/ALASKAN'
         ));
         \App\Models\Race::create(array(
             'id' => '2',
-            'name'  => 'Hispanic or Latino'
+            'name'  => 'ASIAN INDIAN'
         ));
         \App\Models\Race::create(array(
             'id' => '3',
-            'name'  => 'African American'
+            'name'  => 'BLACK/AFRICAN AMERICAN'
         ));
         \App\Models\Race::create(array(
             'id' => '4',
-            'name'  => 'Native American or American Indian'
+            'name'  => 'CHINESE'
         ));
         \App\Models\Race::create(array(
             'id' => '5',
-            'name'  => 'Asian or Pacific Islander'
+            'name'  => 'FILIPINO'
         ));
         \App\Models\Race::create(array(
             'id' => '6',
-            'name'  => 'Other'
+            'name'  => 'GUAMANIAN/CHARMORRO'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '7',
+            'name'  => 'HAWAIIAN'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '8',
+            'name'  => 'JAPANESE'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '9',
+            'name'  => 'KOREAN'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '10',
+            'name'  => 'SAMOAN'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '11',
+            'name'  => 'VIETNAMESE'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '12',
+            'name'  => 'WHITE'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '13',
+            'name'  => 'OTHER ASIAN'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '14',
+            'name'  => 'OTHER NONWHITE'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '15',
+            'name'  => 'OTHER PACIFIC ISLANDER'
+        ));
+        \App\Models\Race::create(array(
+            'id' => '16',
+            'name'  => 'UNKNOWN'
         ));
 
         // Genders
         \App\Models\Gender::create(array(
             'id' => '1',
-            'name'  => 'Male'
+            'name'  => 'MALE'
         ));
         \App\Models\Gender::create(array(
             'id' => '2',
-            'name'  => 'Female'
+            'name'  => 'FEMALE'
         ));
     }
 }
