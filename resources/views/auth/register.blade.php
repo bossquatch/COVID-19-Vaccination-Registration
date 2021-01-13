@@ -46,7 +46,7 @@
                         <label for="middleName">
                             Middle Name
                         </label>
-                        <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Enter your middle name (leave blank if no middle name)">
+                        <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Leave blank if no middle name">
 
                         @error('middleName')
                             <span class="invalid-feedback" role="alert">
@@ -104,7 +104,8 @@
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email">
-                            Email Address
+                            Email Address <br>
+                            <span class="font-weight-light small">(Each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:863-298-7500">(863) 298-7500)</a>. </span>
                         </label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="name@address.com">
 
