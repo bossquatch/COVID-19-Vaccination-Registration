@@ -98,8 +98,44 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-5">
+                                        <label for="suffix">
+                                            Suffix <span class="font-weight-light small">(If applicable)</span>
+                                        </label>
+                                        <select id="suffix" name="suffix" class="custom-select @error("suffix") is-invalid @enderror">
+                                            <option value="0" @if (old('suffix') && old('suffix') == '0') selected @endif></option>
+                                            @foreach (\App\Models\Suffix::get() as $suffix)
+                                                <option value="{{ $suffix->id }}" @if (old('suffix') && old('suffix') == $suffix->id) selected @endif>{{ $suffix->display_name }}</option>
+                                            @endforeach
+                                        </select>
+            
+                                        @error('suffix')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('suffix') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Date of Birth -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-5">
+                                        <label for="dob">
+                                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
+                                        </label>
+                                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
+                        
+                                        @error('dateOfBirth')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <!-- Email -->
-                                <div class="col-12">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="email">
                                             Email Address
@@ -125,22 +161,6 @@
                                         @error("phone")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("phone") }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Date of Birth -->
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="dob">
-                                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
-                                        </label>
-                                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
-                        
-                                        @error('dateOfBirth')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
                                             </span>
                                         @enderror
                                     </div>

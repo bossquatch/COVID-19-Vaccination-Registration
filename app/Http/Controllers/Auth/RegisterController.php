@@ -51,6 +51,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $valid_suffixes = '0,'.implode(",",\App\Models\Suffix::pluck('id')->toArray());
+
         return Validator::make($data, [
             'firstName' => ['required', 'string', 'max:255'],
             'middleName' => ['nullable', 'string', 'max:30'],
@@ -59,6 +61,7 @@ class RegisterController extends Controller
             'phone' => ['required', 'regex:/^(?=.*[0-9])[- +()0-9]+$/', 'max:14'],
             'dateOfBirth' => ['required', 'date', new AtLeastThirteen],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'suffix' => ['required', 'in:'.$valid_suffixes],
         ]);
     }
 
@@ -78,6 +81,7 @@ class RegisterController extends Controller
             'phone' => preg_replace('/\D/', '', $data['phone']),
             'birth_date' => Carbon::parse($data['dateOfBirth']),
             'password' => Hash::make($data['password']),
+            'suffix' => ($data['suffix'] != '0' ? $data['suffix'] : null),
         ]);
 
         $this->logChanges($user, 'created', false, true);

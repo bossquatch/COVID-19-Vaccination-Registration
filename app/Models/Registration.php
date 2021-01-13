@@ -57,6 +57,11 @@ class Registration extends Model
         return $this->belongsTo(Gender::class, 'gender_id');
     }
 
+    public function suffix()
+    {
+        return $this->belongsTo(Suffix::class, 'suffix_id');
+    }
+
     public function county()
     {
         return $this->belongsTo(County::class, 'county_id');

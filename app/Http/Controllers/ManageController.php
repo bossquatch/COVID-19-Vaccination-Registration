@@ -132,6 +132,7 @@ class ManageController extends Controller
             'phone' => preg_replace('/\D/', '', $valid['phone']),
             'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'password' => \Illuminate\Support\Facades\Hash::make(config('app.default_password').rand()),
+            'suffix' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
         ]);
 
         $this->logChanges($user, 'procured', false, true);
@@ -202,6 +203,7 @@ class ManageController extends Controller
             //'email'=> $user->email,
             //'phone'=> $user->phone,
             'birth_date'=> $user->birth_date,
+            'suffix_id' => $user->suffix_id,
 
             // New Info
             'address1'=> $valid['address1'],
@@ -270,6 +272,7 @@ class ManageController extends Controller
             //'email' => $valid['email'],
             //'phone' => $valid['phone'],
             'birth_date' => Carbon::parse($valid['dateOfBirth']),
+            'suffix' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
 
             // New Info
             'address1'=> $valid['address1'],
@@ -320,6 +323,7 @@ class ManageController extends Controller
         $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
         $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
         $valid_counties = implode(",",\App\Models\County::pluck('id')->toArray());
+        $valid_suffixes = '0,'.implode(",",\App\Models\Suffix::pluck('id')->toArray());
 
         $rules = [
             'firstName' => 'required|string|max:255',
@@ -341,7 +345,8 @@ class ManageController extends Controller
             'reactionAgreement' =>'accepted',
             'availableAgreement' =>'accepted',
             //'illAgreement' =>'accepted',
-            'condition' =>'nullable'
+            'condition' =>'nullable',
+            'suffix' => ['required', 'in:'.$valid_suffixes],
         ];
 
         return $rules;
