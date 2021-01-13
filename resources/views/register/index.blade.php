@@ -286,7 +286,7 @@
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group mb-5">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox">
+                                                    <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox" @if(old('condition') && array_key_exists($condition->id, old('condition'))) checked aria-checked="true" @endif>
                                                     <label class="custom-control-label" for="condition{{ $condition->id }}">{{ $condition->display_name }}</label>
                                                 </div>
                                             </div>
