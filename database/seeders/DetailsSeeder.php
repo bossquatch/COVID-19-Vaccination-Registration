@@ -78,6 +78,10 @@ class DetailsSeeder extends Seeder
             'id' => '16',
             'name'  => 'UNKNOWN'
         ));
+        \App\Models\Race::create(array(
+            'id' => '17',
+            'name'  => 'HISPANIC'
+        ));
 
         // Genders
         \App\Models\Gender::create(array(
