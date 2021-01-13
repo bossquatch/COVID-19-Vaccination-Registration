@@ -26,6 +26,10 @@ $border-light: #f1f4f8;
 $box-shadow-color: rgba(32, 33, 36, 0.28);
 $box-shadow-light-color: #161c2d;
 
+$btn-social-bg-color: #f3f3f9;
+$btn-social-font-color: #6c6d89;
+$btn-social-border-color: #e5e5ef;
+
 $green-bocc: #398502;
 $green-bocc-original: #77c043;
 $green: $green-bocc;
@@ -52,6 +56,8 @@ $facebook-blue: #3b5998;
 $twitter-blue: #1da1f2;
 $instagram-purple: #833ab4;
 $youtube-red: #f00;
+$google-red: #ea4335;
+$github-gray: #24292e;
 
 $gradient-map: (
     "chill": (
@@ -307,3 +313,18 @@ $toggle-xs-font-size: $toggle-default-font-size;
 $dropdown-font-size: $font-size-sm;
 $dropdown-item-padding-y: 0.25rem;
 $dropdown-item-padding-x: 1.25rem;
+
+// Footers
+$footer-light-list-links-link-color: $gray-dark;
+$footer-light-list-links-link-hover-color: $blue;
+$footer-light-nav-link-color: $gray-dark;
+$footer-light-nav-link-hover-color: $blue;
+
+$footer-light-list-links-title-font-size: 1.125rem;
+$footer-light-list-links-title-margin-bottom: 1.25rem;
+$footer-light-list-links-li-margin-bottom: 0.375rem;
+$footer-light-list-links-link-weight: 500;
+$footer-light-list-links-link-padding: 0.25rem 0;
+$footer-light-font-size-sm: 0.875rem;
+$footer-light-list-inline-margin-right: 1.25rem;
+$footer-light-nav-link-weight: 500;

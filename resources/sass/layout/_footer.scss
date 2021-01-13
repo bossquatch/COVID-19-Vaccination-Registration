@@ -54,3 +54,78 @@
         }
     }
 }
+
+.footer-light {
+    flex-shrink: 0;
+
+    .list-links {
+        .title {
+            font-size: $footer-light-list-links-title-font-size;
+            margin-bottom: $footer-light-list-links-title-margin-bottom;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            > li {
+                display: block;
+                margin-bottom: $footer-light-list-links-li-margin-bottom;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .link {
+            color: $footer-light-list-links-link-color;
+            display: block;
+            font-weight: $footer-light-list-links-link-weight;
+            padding: $footer-light-list-links-link-padding;
+            position: relative;
+            text-decoration: none;
+            transition: color 0.25s ease-in-out;
+
+            &:hover {
+                color: $footer-light-list-links-link-hover-color;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .font-size-sm {
+        font-size: $footer-light-font-size-sm;
+    }
+
+    .list-inline {
+        .list-inline-item:not(:last-child) {
+            margin-right: $footer-light-list-inline-margin-right;
+        }
+    }
+
+    .nav-link {
+        color: $footer-light-nav-link-color;
+        display: inline-block;
+        font-weight: $footer-light-nav-link-weight;
+        text-decoration: none;
+        transition: color 0.25s ease-in-out, background-color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+
+        &:hover {
+            color: $footer-light-nav-link-hover-color;
+            text-decoration: none;
+        }
+    }
+}
+
+.footer-logo {
+    background: url("https://cdn.polk.design/images/polk-sunburst.svg") 0 no-repeat transparent;
+    display: inline-block;
+    height: 0;
+    overflow: hidden;
+    padding-top: 34px;
+    position: relative;
+    width: 42px;
+}
