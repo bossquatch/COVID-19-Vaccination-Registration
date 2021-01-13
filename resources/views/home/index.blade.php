@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h1 class="title">Polk County COVID-19 Vaccinations</h1>
-                <p class="sub-title h4">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create and account and submit your personal information for a future vaccine appointment.</p>
+                <p class="sub-title h4">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
                 <br>
                 @auth
                 <a class="btn btn-header btn-round btn-lg" href="/home">View Registration</a>
