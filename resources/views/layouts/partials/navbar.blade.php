@@ -1,7 +1,8 @@
 <!-- Navigation -->
-<nav class="navbar fixed-top navbar-expand-md  @if(Request::is('/') || Request::is('faqs')) navbar-transparent navbar-color-on-scroll @endif" color-on-scroll="100">
+<nav class="navbar fixed-top navbar-expand-md  @if(Request::is('/')) navbar-transparent navbar-color-on-scroll @endif" @if(Request::is('/')) color-on-scroll="100" @endif>
     <div class="container-md">
-        <a class="navbar-brand" href="/">Polk Health</a>
+        <img src="/images/FDOH-Polk-color-logo3.png" height="58" />
+        <a class="navbar-brand ml-4" href="/">Polk Health</a>
 
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="far fa-bars"></span>

@@ -34,144 +34,17 @@
                     <div class="col-12">
                         <!-- Heading -->
                         <h2 class="h3">
-                            What is Polk County CARES?
+                            Overview
                         </h2>
 
                         <!-- Text -->
                         <p class="text-gray-dark">
-                            The Coronavirus Aid, Relief, and Economic Security Act, also known as the CARES Act, is a law meant to address the economic fallout of the COVID-19 pandemic in the United States. The Polk County CARES Program was created to assist households that have experienced a verifiable loss of income due to the impacts of the Novel Coronavirus (COVID-19), by providing rent, mortgage and/or public utilities payments to prevent eviction and homelessness as a result of the pandemic crisis.
+                            To reduce the spread of COVID-19 and its impacts on health and society, a safe and effective vaccine is the most important intervention to end the pandemic. Many of the decisions regarding who gets the COVID-19 vaccine depends on the decisions of the state and federal government. This includes the amount of vaccine Polk County will receive, when, and how.
                         </p>
-                    </div>
-                </div>
 
-                <div class="row mb-6 mb-md-8">
-                    <div class="col-12">
-                        <!-- Heading -->
-                        <h2 class="h3">
-                            Do I qualify?
-                        </h2>
-
-                        <!-- Text -->
                         <p class="text-gray-dark">
-                            You must be a resident of Polk County. Individuals and/or households may apply for financial assistance. Individuals who have lost their job or income due to the COVID-19 pandemic may be eligible for $2,000 in assistance (one per household). Below is the criteria:
+                            The state’s allocation plan is based on a phased approach while the vaccine doses are in limited supply, as they are now. Polk County is following the required prioritization set by the federal government and the State of Florida in directing the first vaccinations to high-risk health care workers and residents of long-term care facilities at the highest risk of contracting COVID-19, as well as any person over the age of 65.
                         </p>
-
-                        <!-- List -->
-                        <div class="d-flex mt-5">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                You must be a resident of Polk County
-                            </p>
-                        </div>
-                        <div class="d-flex">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                Must be at least 70 years old, OR disabled 18+ y/o and receiving social security disability benefits
-                            </p>
-                        </div>
-                        <div class="d-flex">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                Attest to reduced income or increased expenses
-                            </p>
-                        </div>
-                        <div class="d-flex">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                Have not received previous Polk CARES Individual assistance
-                            </p>
-                        </div>
-                        <div class="d-flex">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                ONE person per household (Except for dual bed apartment units)
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Heading -->
-                        <h2 class="h3">
-                            What do I need to apply?
-                        </h2>
-
-                        <!-- Text -->
-                        <p class="text-gray-dark">
-                            There are a number of items needed to verify your eligibility for the Polk County CARES Program (we reserve the right to request additional supporting documentation if case is questionable), including:
-                        </p>
-
-                        <!-- List -->
-                        <div class="d-flex mt-5">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                Government issued ID that includes birthdate (Florida ID or Driver's License, passport, etc.)
-                            </p>
-                        </div>
-                        <div class="d-flex">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                Social Security Number
-                            </p>
-                        </div>
-                        <div class="d-flex">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                Copy of SSA disability statement issued within the past 12 months (if applicable)
-                            </p>
-                        </div>
-                        <div class="d-flex">
-                            <!-- Badge -->
-                            <div class="badge badge-rounded-circle badge-success-soft mt-1 mr-4">
-                                <span class="fas fa-check"></span>
-                            </div>
-
-                            <!-- Text -->
-                            <p class="text-gray-dark">
-                                Copy of Veteran Abatement Tax Letter showing disabled (if applicable)
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>

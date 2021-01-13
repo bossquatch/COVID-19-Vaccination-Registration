@@ -6,18 +6,22 @@
 
 @section('content')
 <!-- Header -->
-<div class="page-header header-filter page-header-default">
-    <div class="container">
+<div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
+    <div class="container position-relative z-1">
         <div class="row">
-            <div class="col-md-6">
-                <h1 class="title">Polk County COVID-19 Vaccinations</h1>
-                <p class="sub-title h4">Every landing page needs a small description after the big bold title, that's why we added this text here. Add here all the information that can make you or your product create the first impression.</p>
-                <br>
-                @auth
-                <a class="btn btn-header btn-round btn-lg" href="/home">View Registration</a>
-                @else
-                <a class="btn btn-header btn-round btn-lg" href="/register">Register</a>
-                @endauth
+            <div class="col-12">
+                <!-- Badge -->
+                <span class="badge badge-pill badge-white-teal mb-3">
+                    <span class="h6 text-uppercase">
+                        Support
+                    </span>
+                </span>
+
+                <!-- Heading -->
+                <h2 class="title">Frequently Asked Questions</h2>
+
+                <!-- Text -->
+                <p class="font-size-lg text-gray-dark mb-0">Common questions related to COVID-19 vaccinations</p>
             </div>
         </div>
     </div>
@@ -31,17 +35,6 @@
                 <!-- Card Accordion -->
                 <div class="card card-accordion accordion mb-4 mb-md-5" id="helpAccordionOne">
                     <div class="list-group">
-                        <div class="list-group-item">
-                            <!-- Header -->
-                            <div class="d-flex align-items-center">
-                                <div class="mr-auto">
-                                    <!-- Heading -->
-                                    <h2 class="title">Frequently Asked Questions</h2>
-                                    <!-- Text -->
-                                    <p class="sub-title">Quesions related to the COVID-19 Vaccination</p>
-                                </div>
-                            </div>
-                        </div>
                         <div class="list-group-item">
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpOne" role="button" aria-expanded="false" aria-controls="helpOne">

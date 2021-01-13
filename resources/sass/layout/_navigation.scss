@@ -9,7 +9,7 @@
     &.fixed-top {
         height: $navbar-height;
 
-        + * {
+        &:not(.navbar-color-on-scroll) + * {
             margin-top: $navbar-height;
         }
     }
