@@ -430,7 +430,7 @@
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
-                                            <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox">
+                                            <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox" checked aria-checked="true">
                                             <label class="custom-control-label" for="availableAgreement">I will be available and present 28 days after my initial vaccination.</label>
                         
                                             @error("availableAgreement")
@@ -460,7 +460,7 @@
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
-                                            <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox">
+                                            <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox" checked aria-checked="true">
                                             <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.</label>
                         
                                             @error("reactionAgreement")
