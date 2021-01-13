@@ -9,13 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167011738-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y0RQWGNMN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
-        gtag('config', 'UA-167011738-1');
+        gtag('config', 'G-2Y0RQWGNMN');
     </script>
 
     <title>
