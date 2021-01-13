@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Session;
+use App\Rules\AtLeastThirteen;
 
 class ManageController extends Controller
 {
@@ -316,8 +317,7 @@ class ManageController extends Controller
             'lastName' => 'required|string|max:255',
             'email' => 'required_without:phone|nullable|string|email|max:255',
             'phone' => 'required_without:email|nullable|regex:/^(?=.*[0-9])[- +()0-9]+$/|max:14',
-            //'dateOfBirth' => 'required|date|before:'.Carbon::now()->add(-13, 'years')->format('m-d-Y'),
-            'dateOfBirth' => 'required|date',
+            'dateOfBirth' => ['required','date', new AtLeastThirteen],
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
             'occupation' => 'required|in:'.$valid_occupations,
