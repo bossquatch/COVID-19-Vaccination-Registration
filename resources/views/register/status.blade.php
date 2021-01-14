@@ -187,7 +187,7 @@
 
                         <!-- Text -->
                         <p class="text-gray-dark mb-0">
-                            Once scheduled, you just need to show up.
+                            Once scheduled, you need to show up.  Be sure to bring a valid ID and a completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent Form</a>.
                         </p>
                     </div>
                 </div>

@@ -122,11 +122,13 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        During this first phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations:<br>
-                                        &emsp;•	Long-term care facility residents and staff<br>
-                                        &emsp;•	Persons 65 years of age and older<br>
-                                        &emsp;•	Health care personnel with direct patient contact.<br>
-                                        &emsp;•	Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital<br>
+                                        During this first phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations:
+                                        <ul>
+                                            <li>Long-term care facility residents and staff</li>
+                                            <li>Persons 65 years of age and older</li>
+                                            <li>Health care personnel with direct patient contact.</li>
+                                            <li>Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital</li>
+                                        </ul>
                                     </p>
                                 </div>
                             </div>
@@ -150,10 +152,12 @@
                                     <!-- Text -->
                                     <p class="collapse-content">
                                         No. The vaccine takes a few weeks for antibodies to develop. A second dose of the vaccine will need to administered 28 days after the first as a booster. We encourage you to continue following healthy prevention measures after receiving the vaccine. This includes continuing to:
-                                        &emsp;•	Wash your hands<br>
-                                        &emsp;•	Wear a mask in public<br>
-                                        &emsp;•	Continue social distancing while out in public<br>
-                                        &emsp;•	Cleaning and wiping down surfaces<br>
+                                        <ul>
+                                            <li>Wash your hands</li>
+                                            <li>Wear a mask in public</li>
+                                            <li>Continue social distancing while out in public</li>
+                                            <li>Cleaning and wiping down surfaces</li>
+                                        </ul>
                                     </p>
                                 </div>
                             </div>
@@ -383,10 +387,12 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        &emsp;•	A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)<br>
-                                        &emsp;•	Proof of your appointment (printed copy or screenshot of the confirmation email or text message)<br>
-                                        &emsp;•	Completed consent form<br>
-                                        &emsp;•	The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.<br>
+                                        <ul>
+                                            <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
+                                            <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
+                                            <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
+                                            <li>The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.</li>
+                                        </ul>
                                     </p>
                                 </div>
                             </div>
