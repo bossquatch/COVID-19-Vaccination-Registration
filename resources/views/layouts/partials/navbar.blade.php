@@ -24,6 +24,12 @@
                     <a class="nav-link" href="/home">Registration</a>
                 </li>
 
+                @can('read_user')
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Administration</a>
+                </li>
+                @endcan
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault();

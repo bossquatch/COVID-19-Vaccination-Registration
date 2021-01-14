@@ -60,5 +60,14 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'verify']);
     Route::post('/sms/resend', [App\Http\Controllers\SmsVerificationController::class, 'resend']);
 
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
+    Route::get('/admin/reports', [App\Http\Controllers\AdminController::class, 'report']);
+    Route::get('/admin/new', [App\Http\Controllers\AdminController::class, 'create'])->middleware('can:create_user');
+    Route::get('/admin/{id}', [App\Http\Controllers\AdminController::class, 'edit'])->middleware('can:update_user');
+
+    Route::post('/admin', [App\Http\Controllers\AdminController::class, 'store'])->middleware('can:create_user');
+    Route::post('/admin/reset', [App\Http\Controllers\AdminController::class, 'resetPassword'])->middleware('can:update_user');
+    Route::put('/admin/{id}', [App\Http\Controllers\AdminController::class, 'update'])->middleware('can:update_user');
+
     Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration']);
 });
