@@ -18,6 +18,10 @@ Auth::routes([
     'verify' => true,
 ]);
 
+Route::get('/not-supported', function() {
+    return view('home.noie');
+});
+
 Route::group(["middleware" => "check.reset"], function() {
     Route::get('/', function () {
         return view('home.index');

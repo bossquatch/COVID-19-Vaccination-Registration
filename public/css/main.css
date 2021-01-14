@@ -34977,6 +34977,18 @@ input[type=search]::-webkit-search-results-decoration {
 .btn-social.sb-github:hover {
   background-color: #24292e;
 }
+.btn-social.sb-edge:hover {
+  background-color: #0078d7;
+}
+.btn-social.sb-chrome:hover {
+  background-color: #1aa260;
+}
+.btn-social.sb-firefox:hover {
+  background-color: #f61;
+}
+.btn-social.sb-safari:hover {
+  background-color: #00d3f9;
+}
 .btn-social > .sb-icon {
   line-height: 2.125rem;
 }
@@ -34988,6 +35000,15 @@ input[type=search]::-webkit-search-results-decoration {
 }
 .btn-social.sb-lg > .sb-icon {
   line-height: 2.625rem;
+}
+.btn-social.sb-tile {
+  border-radius: 0.75rem;
+  font-size: 5rem;
+  height: 10.75rem;
+  width: 10.75rem;
+}
+.btn-social.sb-tile > .sb-icon {
+  line-height: 10.625rem;
 }
 
 .callout {
