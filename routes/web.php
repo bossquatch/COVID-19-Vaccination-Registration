@@ -60,6 +60,8 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'verify']);
     Route::post('/sms/resend', [App\Http\Controllers\SmsVerificationController::class, 'resend']);
 
+    Route::get('/analytics', [App\Http\Controllers\AnalyticsController::class, 'index']);
+
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
     Route::get('/admin/reports', [App\Http\Controllers\AdminController::class, 'report']);
     Route::get('/admin/new', [App\Http\Controllers\AdminController::class, 'create'])->middleware('can:create_user');

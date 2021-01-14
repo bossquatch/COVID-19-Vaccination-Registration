@@ -35303,11 +35303,6 @@ input[type=search]::-webkit-search-results-decoration {
   border-color: transparent transparent #0071eb;
 }
 
-.chart {
-  position: relative;
-  height: 300px;
-}
-
 /*
     Divider with Text
     Example:
