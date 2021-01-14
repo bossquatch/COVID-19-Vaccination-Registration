@@ -203,7 +203,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Once your information is shared on our registrat ion list, someone will be calling you back at a future date when appointments are available. Appointments are contingent on vaccine supply . We are unsure of our future schedule. If you have an opportunity to receive a vaccine before you are called for an appointment, please feel free to go ahead and get one.
+                                        Once your information is shared on our registration list, someone will be calling you back at a future date when appointments are available. Appointments are contingent on vaccine supply . We are unsure of our future schedule. If you have an opportunity to receive a vaccine before you are called for an appointment, please feel free to go ahead and get one.
                                     </p>
                                 </div>
                             </div>
@@ -226,7 +226,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Quantities of the vaccine are limited, and we are in great demand. Please be assured that we are making every effort to vaccinate residents as quickly as possible based on the quantities of vaccine that are provided by the State of Florida. As availability of the vaccine grows and demand evens out, it will be easier to ensure everyone who qualifies receives an appointment.
+                                        Quantities of the vaccine are limited, and are in great demand. Please be assured that we are making every effort to vaccinate residents as quickly as possible based on the quantities of vaccine that are provided by the State of Florida. As availability of the vaccine grows and demand evens out, it will be easier to ensure everyone who qualifies receives an appointment.
                                     </p>
                                 </div>
                             </div>
@@ -249,7 +249,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        DOH- Polk expects new supplies of vaccines from the State weekly. Vaccination appointments will be made available based on supply.
+                                        DOH - Polk expects new supplies of vaccine from the State weekly. Vaccination appointments will be available based on supply.
                                     </p>
                                 </div>
                             </div>
