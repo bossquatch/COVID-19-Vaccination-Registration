@@ -1,3 +1,5 @@
+require('./bootstrap');
+
 $(document).ready(function () {
     // Check if browser is Internet Explorer
     detectIE();
@@ -49,5 +51,5 @@ $(document).ready(function () {
 
     $(window).scroll(function () {
         $('.navbar-color-on-scroll').toggleClass('navbar-transparent', $(this).scrollTop() < $('.navbar-color-on-scroll').attr("color-on-scroll"));
-    })
+    });
 });
