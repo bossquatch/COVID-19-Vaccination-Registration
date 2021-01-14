@@ -25,7 +25,7 @@
                 </p>
 
                 {{ __('Before proceeding, please check your email for a verification link.') }}
-                {{ __('Be aware, that emails to msn.com, ymail.com, yahoo.com, and aol.com may be delayed up to 20 minutes.') }}
+                {{ __('Be aware, that emails to certain providers such as msn.com, ymail.com, yahoo.com, netzero.com, and aol.com may be delayed up to 20 minutes.') }}
                <?php /*{{ __('If you did not receive the email') }},
                 <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                     @csrf

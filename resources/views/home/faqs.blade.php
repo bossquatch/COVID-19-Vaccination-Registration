@@ -409,7 +409,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Please reference this <a href="https://www.fda.gov/media/144414/download">document</a> on the Food and Drug Administration <a href="https://fda.gov">website</a>.
+                                        Please reference this <a href="https://www.fda.gov/media/144414/download">document</a> on the Food and Drug Administration <a href="https://www.fda.gov/home">website</a>.
                                     </p>
                                 </div>
                             </div>
