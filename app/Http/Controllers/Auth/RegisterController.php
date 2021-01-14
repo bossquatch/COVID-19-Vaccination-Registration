@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Rules\AtLeastThirteen;
+use App\Rules\DateParsable;
 
 class RegisterController extends Controller
 {
@@ -59,7 +60,7 @@ class RegisterController extends Controller
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'regex:/^(?=.*[0-9])[- +()0-9]+$/', 'max:14'],
-            'dateOfBirth' => ['required', 'date', new AtLeastThirteen],
+            'dateOfBirth' => ['required', 'date', new DateParsable, new AtLeastThirteen],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'suffix' => ['required', 'in:'.$valid_suffixes],
         ]);
