@@ -96,4 +96,26 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->roles->map->permissions->flatten()->pluck('name')->unique();
     }
+
+    public function suffix()
+    {
+        return $this->belongsTo(Suffix::class, 'suffix_id');
+    }
+
+    public function needsToResetPassword() 
+    {
+        return ($this->force_reset && Carbon::parse($this->force_reset)->isAfter(Carbon::now()->add(-1, 'hours')));
+    }
+
+    public function removeForceReset() 
+    {
+        $this->force_reset = null;
+        $this->save();
+    }
+
+    public function forceReset()
+    {
+        $this->force_reset = Carbon::now();
+        $this->save();
+    }
 }

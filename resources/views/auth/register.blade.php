@@ -46,7 +46,7 @@
                         <label for="middleName">
                             Middle Name
                         </label>
-                        <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Enter your middle name (leave blank if no middle name)">
+                        <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Enter middle name">
 
                         @error('middleName')
                             <span class="invalid-feedback" role="alert">
@@ -68,10 +68,44 @@
                         @enderror
                     </div>
 
+                    <!-- Date of Birth -->
+                    <div class="form-row">
+                        <div class="form-group mb-5 col-md-6">
+                            <label for="suffix">
+                                Suffix <span class="font-weight-light small">(If applicable)</span>
+                            </label>
+                            <select id="suffix" name="suffix" class="custom-select @error("suffix") is-invalid @enderror">
+                                <option value="0" @if (old('suffix') && old('suffix') == '0') selected @endif></option>
+                                @foreach (\App\Models\Suffix::get() as $suffix)
+                                    <option value="{{ $suffix->id }}" @if (old('suffix') && old('suffix') == $suffix->id) selected @endif>{{ $suffix->display_name }}</option>
+                                @endforeach
+                            </select>
+
+                            @error('suffix')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('suffix') }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-5 col-md-6">
+                            <label for="dob">
+                                Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
+                            </label>
+                            <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
+            
+                            @error('dateOfBirth')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('dateOfBirth') }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email">
-                            Email Address
+                            Email Address <br>
+                            <span class="font-weight-light small">(Each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:863-298-7500">(863) 298-7500)</a>. </span>
                         </label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="name@address.com">
 
@@ -92,20 +126,6 @@
                         @error("phone")
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first("phone") }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    
-                    <!-- Date of Birth -->
-                    <div class="form-group mb-5">
-                        <label for="dob">
-                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
-                        </label>
-                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
-        
-                        @error('dateOfBirth')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
                             </span>
                         @enderror
                     </div>

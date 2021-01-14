@@ -432,7 +432,7 @@
                     <img class="img-fluid" alt="Get it on Google Play" src="/images/google-play-badge.png" style="max-width: 155px;" />
                 </a>
             </div>
-            <div class="col-12 col-md-6 text-left text-md-center">
+            <div class="col-12 col-md-6 mb-8 text-left text-md-center">
                 <!-- Google Translate Logo -->
                 <a class="text-reset d-inline-block" href="https://translate.google.com/" title="Google Translate" target="_blank" rel="noopener">
                     <svg width="240" enable-background="new 0 0 998.1 998.3" version="1.1" viewBox="0 0 998.1 998.3" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">

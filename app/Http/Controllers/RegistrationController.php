@@ -82,6 +82,7 @@ class RegistrationController extends Controller
             //'email'=> $user->email,
             //'phone'=> $user->phone,
             'birth_date'=> $user->birth_date,
+            'suffix_id' => $user->suffix_id,
 
             // New Info
             'address1'=> $valid['address1'],

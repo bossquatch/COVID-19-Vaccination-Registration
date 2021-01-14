@@ -35,6 +35,11 @@
                 <a class="btn btn-header btn-round btn-lg" href="/manage">
                     <span class="fad fa-times-circle mr-1"></span> Cancel
                 </a>
+
+                <!-- Button -->
+                <button class="btn btn-header btn-header-danger btn-round btn-lg" data-toggle="modal" data-target="#forceResetModal">
+                    <span class="fal fa-unlock mr-1"></span> Reset Password
+                </button>
             </div>
         </div>
 
@@ -98,8 +103,44 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-5">
+                                        <label for="suffix">
+                                            Suffix <span class="font-weight-light small">(If applicable)</span>
+                                        </label>
+                                        <select id="suffix" name="suffix" class="custom-select @error("suffix") is-invalid @enderror">
+                                            <option value="0" @if (old('suffix')) @if(old('suffix') == '0') selected @endif @elseif($registration->suffix_id == null) selected @endif></option>
+                                            @foreach (\App\Models\Suffix::get() as $suffix)
+                                                <option value="{{ $suffix->id }}" @if (old('suffix')) @if(old('suffix') == $suffix->id) selected @endif @elseif($registration->suffix_id == $suffix->id) selected @endif>{{ $suffix->display_name }}</option>
+                                            @endforeach
+                                        </select>
+            
+                                        @error('suffix')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('suffix') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Date of Birth -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-5">
+                                        <label for="dob">
+                                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
+                                        </label>
+                                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') ?? $registration->birth_date }}" required aria-required="true">
+                        
+                                        @error('dateOfBirth')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <!-- Email -->
-                                <div class="col-12">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="email">
                                             Email Address
@@ -125,22 +166,6 @@
                                         @error("phone")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("phone") }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Date of Birth -->
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="dob">
-                                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
-                                        </label>
-                                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') ?? $registration->birth_date }}" required aria-required="true">
-                        
-                                        @error('dateOfBirth')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
                                             </span>
                                         @enderror
                                     </div>
@@ -594,4 +619,33 @@
         </div>
     </div>
 </section>
+
+<!-- Warning Modal -->
+<div class="modal fade" id="forceResetModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Password Reset Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-warning"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Warning!</p>
+                        <p class="text-gray-dark">Are you sure you wish to reset this user's password?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <form class="form-inline" action="/manage/forcereset" method="POST">
+                    @csrf
+                    <input type="hidden" name="user" value="{{ $registration->user_id }}">
+                    <button type="submit" class="btn btn-danger">Reset Password</button>
+                </form>
+            </div>        
+        </div>
+    </div>
+</div>
 @endsection
