@@ -104,7 +104,7 @@ class RegistrationController extends Controller
 
         $this->logChanges($registration, 'submitted', true);
 
-        Session::flash('success', "Registration submission was successful.  Your code is: ".$code);
+        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a>.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/home');
     }
 

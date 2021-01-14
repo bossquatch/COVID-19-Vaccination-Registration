@@ -10,7 +10,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-12 text-center">
-                        <p class="text-gray-dark mb-5">@if (\Session::has('success')) {{ \Session::get('success') }} @endif</p>
+                        <p class="text-gray-dark mb-5">@if (\Session::has('success')) {!! \Session::get('success') !!} @endif</p>
                         <button type="button" class="btn btn-header btn-round btn-lg" data-dismiss="modal">Ok</button>
                     </div>
                 </div>

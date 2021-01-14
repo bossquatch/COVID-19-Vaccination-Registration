@@ -33,7 +33,7 @@ class EssentialWorkerSeeder extends Seeder
 			['id' => '16', 'sector' => 'RESIDENTIAL/SHELTER FACILITIES, HOUSING AND REAL ESTATE, AND RELATED SERVICES', 'display_name' => 'Residential/Shelter Facilities, Housing And Real Estate, And Related Services', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '17', 'sector' => 'TRANSPORTATION AND LOGISTICS ', 'display_name' => 'Transportation And Logistics ', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '18', 'sector' => 'WATER AND WASTEWATER', 'display_name' => 'Water And Wastewater', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['id' => '19', 'sector' => 'OTHER NOT ON THIS LIST', 'display_name' => 'Other Not On This List', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => '19', 'sector' => 'OTHER NOT ON THIS LIST / RETIRED', 'display_name' => 'Other Not On This List / Retired', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
     }
 }

@@ -36,19 +36,13 @@
                     <span class="fad fa-clipboard-check mr-1"></span> Register Caller
                 </a>
 
+                <a class="btn btn-header btn-round btn-lg" href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">
+                    <span class="fad fa-file-medical mr-1"></span> Moderna Consent Form
+                </a>
+
                 <a class="btn btn-header btn-round btn-lg" href="/manage/qr">
                     <span class="fad fa-qrcode mr-1"></span> Scan QR Code
                 </a>
-
-                <a class="btn btn-header btn-round btn-lg" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                    <span class="fad fa-sign-out mr-1"></span> Sign out
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
             </div>
         </div>
 
