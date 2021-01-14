@@ -48,7 +48,7 @@
                                 Enter your code sent to {{ substr(Auth::user()->phone, -4) }}:
                             </label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control font-size-sm" name="code" id="code" type="number" placeholder="Enter code" aria-label="Enter code" aria-describedby="caseBtn">
+                                <input type="text" class="form-control font-size-sm" name="code" id="code" type="number" placeholder="Enter code" aria-label="Enter code" aria-describedby="caseBtn" required aria-required="true">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary font-size-sm" type="submit" id="codeBtn">
                                         Verify
