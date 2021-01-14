@@ -260,6 +260,22 @@
         background-color: $github-gray;
     }
 
+    &.sb-edge:hover {
+        background-color: $edge-blue;
+    }
+
+    &.sb-chrome:hover {
+        background-color: $chrome-green;
+    }
+
+    &.sb-firefox:hover {
+        background-color: $firefox-orange;
+    }
+
+    &.sb-safari:hover {
+        background-color: $safari-blue;
+    }
+
     > .sb-icon {
         line-height: 2.125rem;
     }
@@ -272,6 +288,17 @@
 
         > .sb-icon {
             line-height: 2.625rem;
+        }
+    }
+
+    &.sb-tile {
+        border-radius: 0.75rem;
+        font-size: 5rem;
+        height: 10.75rem;
+        width: 10.75rem;
+
+        > .sb-icon {
+            line-height: 10.625rem;
         }
     }
 }
