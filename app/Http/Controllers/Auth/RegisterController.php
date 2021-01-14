@@ -81,7 +81,7 @@ class RegisterController extends Controller
             'phone' => preg_replace('/\D/', '', $data['phone']),
             'birth_date' => Carbon::parse($data['dateOfBirth']),
             'password' => Hash::make($data['password']),
-            'suffix' => ($data['suffix'] != '0' ? $data['suffix'] : null),
+            'suffix_id' => ($data['suffix'] != '0' ? $data['suffix'] : null),
         ]);
 
         $this->logChanges($user, 'created', false, true);

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Session;
 use App\Rules\AtLeastThirteen;
+use Illuminate\Support\Facades\Validator;
 
 class ManageController extends Controller
 {
@@ -132,7 +133,7 @@ class ManageController extends Controller
             'phone' => preg_replace('/\D/', '', $valid['phone']),
             'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'password' => \Illuminate\Support\Facades\Hash::make(config('app.default_password').rand()),
-            'suffix' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
+            'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
         ]);
 
         $this->logChanges($user, 'procured', false, true);
@@ -272,7 +273,7 @@ class ManageController extends Controller
             //'email' => $valid['email'],
             //'phone' => $valid['phone'],
             'birth_date' => Carbon::parse($valid['dateOfBirth']),
-            'suffix' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
+            'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
 
             // New Info
             'address1'=> $valid['address1'],
@@ -315,6 +316,29 @@ class ManageController extends Controller
 
         Session::flash('success', "Registration edit was successful.  Your code is: ".$registration->code);
         return redirect('/manage');
+    }
+
+    public function forceResetPassword()
+    {
+        $success = false;
+        if(request()->input('user')) {
+            $user = \App\Models\User::find(request()->input('user'));
+
+            $success = ($user != null);
+            $error_msg = '404-'.$user->id;
+        } else {
+            $error_msg = '400-'.Carbon::now()->isoFormat('SSSS');
+        }
+
+        if ($success) {
+            $user->forceReset();
+            Session::flash('success', "User account password has been reset.  They will be prompted to change their password at the next login attempt within the next hour.");
+        } else {
+            $validator = Validator::make([],[]);
+            $validator->errors()->add('form', 'ERROR '.$error_msg.': The requested user could not have their password reset.');
+            return redirect()->back()->withErrors($validator->errors());
+        }
+        return redirect()->back();
     }
 
     private function validationRules()
