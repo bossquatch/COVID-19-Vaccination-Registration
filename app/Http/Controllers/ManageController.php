@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use Session;
 use App\Rules\AtLeastThirteen;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\RegistrationComplete;
+use Illuminate\Support\Facades\Mail;
+
 
 class ManageController extends Controller
 {
@@ -225,6 +228,11 @@ class ManageController extends Controller
         $registration->conditions()->sync($conditions);
 
         $this->logChanges($registration, 'procured', true);
+
+        // send email
+        if (!empty($valid['email'])) {
+            Mail::to($valid['email'])->send(new RegistrationComplete($registration));
+        }
 
         Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/manage');
