@@ -69,7 +69,8 @@
                 <div class="card mb-5">
                     <div class="card-body text-center pb-0">
                         <div class="text-primary mb-4 ml-auto mr-auto">
-                            <span class="fad fa-user-circle fa-4x"></span>
+                            {{--<span class="fad fa-user-circle fa-4x"></span>--}}
+                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower($user->email)) }}" alt="{{ $user->first_name.' '.$user->last_name }}" width="100px">
                         </div>
                         <span class="text-primary mb-2 ml-auto mr-auto js-user-name">{{ $user->first_name.' '.$user->last_name }}</span>
                         <div class="row justify-content-center">
