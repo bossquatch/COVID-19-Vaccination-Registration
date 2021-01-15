@@ -34,6 +34,83 @@
 
 <section class="main pt-8 pt-md-11 pb-8 pb-md-12">
     <div class="container">
+        <div class="row justify-content-center mb-8">
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card card-body mb-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <!-- Title -->
+                            <h2 class="h6 text-uppercase text-gray-dark mb-2">Today's Registrations</h2>
+                            <!-- Value -->
+                            <span class="h2 mb-0">{{ $registrations_today }}</span>
+                            
+                            
+                        </div>
+                        <div class="col-auto">
+                            <!-- Icon -->
+                            <span class="h2 fad fa-file-signature text-success mb-0"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-8">
+            <div class="col-12 col-lg-4">
+                <div class="card card-body mb-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <!-- Title -->
+                            <h2 class="h6 text-uppercase text-gray-dark mb-2">64 and Under</h2>
+                            <!-- Value -->
+                            <span class="h2 mb-0">{{ $registrations_young }}</span>
+                            
+                            
+                        </div>
+                        <div class="col-auto">
+                            <!-- Icon -->
+                            <span class="h2 far fa-plus text-secondary mb-0"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="card card-body mb-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <!-- Title -->
+                            <h2 class="h6 text-uppercase text-gray-dark mb-2">65 and Over</h2>
+                            <!-- Value -->
+                            <span class="h2 mb-0">{{ $registrations_old }}</span>
+                            
+                            
+                        </div>
+                        <div class="col-auto">
+                            <!-- Icon -->
+                            <span class="h2 far fa-equals text-secondary mb-0"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="card card-body mb-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <!-- Title -->
+                            <h2 class="h6 text-uppercase text-gray-dark mb-2">Total Registrations</h2>
+                            <!-- Value -->
+                            <span class="h2 mb-0">{{ $registrations_total }}</span>
+                            
+                            
+                        </div>
+                        <div class="col-auto">
+                            <!-- Icon -->
+                            <span class="h2 fad fa-users text-secondary mb-0"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card card-body mb-5">
