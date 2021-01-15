@@ -37,8 +37,12 @@
                 </a>
 
                 <!-- Button -->
-                <button class="btn btn-header btn-header-danger btn-round btn-lg" data-toggle="modal" data-target="#forceResetModal">
+                <button class="btn btn-header btn-header-warning btn-round btn-lg" data-toggle="modal" data-target="#forceResetModal">
                     <span class="fal fa-unlock mr-1"></span> Reset Password
+                </button>
+
+                <button class="btn btn-header btn-header-danger btn-round btn-lg" data-toggle="modal" data-target="#deleteModal">
+                    <span class="fad fa-trash-alt mr-1"></span> Delete Registration
                 </button>
             </div>
         </div>
@@ -643,6 +647,34 @@
                     @csrf
                     <input type="hidden" name="user" value="{{ $registration->user_id }}">
                     <button type="submit" class="btn btn-danger">Reset Password</button>
+                </form>
+            </div>        
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Delete Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Danger!</p>
+                        <p class="text-gray-dark">Are you sure you wish to delete this registration?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <form class="form-inline" action="/manage/delete/{{ $registration->id }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete Registration</button>
                 </form>
             </div>        
         </div>

@@ -54,7 +54,8 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/manage/qr', [App\Http\Controllers\ManageController::class, 'qrRead'])->middleware('can:read_vaccine');
     Route::get('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'edit'])->middleware('can:update_registration');
     Route::post('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'updateRegistration'])->middleware('can:update_registration');
-    Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword']);
+    Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword'])->middleware('can:update_registration');
+    Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
 
     Route::post('/vaccine/add', [App\Http\Controllers\VaccineController::class, 'store']);
 

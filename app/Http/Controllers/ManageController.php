@@ -350,6 +350,17 @@ class ManageController extends Controller
         return redirect()->back();
     }
 
+    public function delete($regis_id)
+    {
+        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis->delete();
+
+        $this->logChanges($regis, 'deleted', true);
+
+        Session::flash('success', "<p>Registration was successfully deleted.</p>");
+        return redirect('/manage');
+    }
+
     private function validationRules()
     {
         $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
