@@ -51,10 +51,12 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/manage/searchAddr', [App\Http\Controllers\ManageController::class, 'searchAddr']);
     Route::get('/manage/searchRegis', [App\Http\Controllers\ManageController::class, 'searchRegis']);
     Route::get('/manage/searchCode', [App\Http\Controllers\ManageController::class, 'searchCode']);
-    Route::get('/manage/qr', [App\Http\Controllers\ManageController::class, 'qrRead']);
-    Route::get('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'edit']);
-    Route::post('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'updateRegistration']);
+    Route::get('/manage/qr', [App\Http\Controllers\ManageController::class, 'qrRead'])->middleware('can:read_vaccine');
+    Route::get('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'edit'])->middleware('can:update_registration');
+    Route::post('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'updateRegistration'])->middleware('can:update_registration');
     Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword']);
+
+    Route::post('/vaccine/add', [App\Http\Controllers\VaccineController::class, 'store']);
 
     Route::get('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'show']);
     Route::post('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'verify']);
@@ -71,5 +73,5 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/admin/reset', [App\Http\Controllers\AdminController::class, 'resetPassword'])->middleware('can:update_user');
     Route::put('/admin/{id}', [App\Http\Controllers\AdminController::class, 'update'])->middleware('can:update_user');
 
-    Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration']);
+    Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_vaccine');
 });

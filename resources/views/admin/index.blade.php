@@ -128,10 +128,6 @@
         var button = el.parentElement;
         var state = button.nextElementSibling;
 
-        console.log(el);
-        console.log(button);
-        console.log(state);
-
         state.innerHTML = loadingIcon;
         state.style.display = "";
         button.style.display = "none"

@@ -76,4 +76,8 @@ class Registration extends Model
     {
         return $this->belongsToMany(Condition::class)->withTimestamps();
     }
+
+    public function vaccines() {
+        return $this->hasMany(Vaccine::class, 'registration_id');
+    }
 }
