@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use Carbon\Carbon;
 
-class AtLeastThirteen implements Rule
+class DateParsable implements Rule
 {
     /**
      * Create a new rule instance.
@@ -27,7 +27,8 @@ class AtLeastThirteen implements Rule
     public function passes($attribute, $value)
     {
         try {
-            return Carbon::parse($value)->lessThanOrEqualTo(Carbon::today()->add(-13, 'years'));
+            Carbon::parse($value); 
+            return true;
         } catch(\Exception $e) {
             return false;
         }
@@ -40,6 +41,6 @@ class AtLeastThirteen implements Rule
      */
     public function message()
     {
-        return 'The registered user must be at least 13 years of age.';
+        return 'The :attribute field must be a valid date in MM/DD/YYYY format or YYYY-MM-DD format.';
     }
 }

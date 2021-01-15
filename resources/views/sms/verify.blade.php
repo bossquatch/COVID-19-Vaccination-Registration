@@ -16,7 +16,7 @@
             <div class="col-12 col-md-10 col-lg-6 px-8 px-lg-11 py-8 py-lg-11">
                 <!-- Heading -->
                 <h1 class="mb-0 font-weight-bold">
-                    Verify Your Phone Number
+                    Verify Your SMS Capable Phone Number
                 </h1>
 
                 <!-- Text -->
@@ -48,7 +48,7 @@
                                 Enter your code sent to {{ substr(Auth::user()->phone, -4) }}:
                             </label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control font-size-sm" name="code" id="code" type="number" placeholder="Enter code" aria-label="Enter code" aria-describedby="caseBtn">
+                                <input type="text" class="form-control font-size-sm" name="code" id="code" type="number" placeholder="Enter code" aria-label="Enter code" aria-describedby="caseBtn" required aria-required="true">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary font-size-sm" type="submit" id="codeBtn">
                                         Verify

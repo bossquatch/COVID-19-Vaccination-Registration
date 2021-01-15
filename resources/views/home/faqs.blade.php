@@ -226,7 +226,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Quantities of the vaccine are limited, and are in great demand. Please be assured that we are making every effort to vaccinate residents as quickly as possible based on the quantities of vaccine that are provided by the State of Florida. As availability of the vaccine grows and demand evens out, it will be easier to ensure everyone who qualifies receives an appointment.
+                                        Quantities of the vaccine are limited and are in great demand. Please be assured that we are making every effort to vaccinate residents as quickly as possible based on the quantities of vaccine that are provided by the State of Florida. As availability of the vaccine grows and demand evens out, it will be easier to ensure everyone who qualifies receives an appointment.
                                     </p>
                                 </div>
                             </div>
@@ -249,7 +249,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        DOH - Polk expects new supplies of vaccine from the State weekly. Vaccination appointments will be available based on supply.
+                                        DOH-Polk expects new supplies of vaccine from the State weekly. Vaccination appointments will be available based on supply.
                                     </p>
                                 </div>
                             </div>

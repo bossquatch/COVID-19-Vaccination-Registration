@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Session;
 use App\Rules\AtLeastThirteen;
+use App\Rules\DateParsable;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\RegistrationComplete;
 use Illuminate\Support\Facades\Mail;
@@ -363,7 +364,7 @@ class ManageController extends Controller
             'lastName' => 'required|string|max:255',
             'email' => 'required_without:phone|nullable|string|email|max:255',
             'phone' => 'required_without:email|nullable|regex:/^(?=.*[0-9])[- +()0-9]+$/|max:14',
-            'dateOfBirth' => ['required','date', new AtLeastThirteen],
+            'dateOfBirth' => ['required','date', new DateParsable, new AtLeastThirteen],
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
             'occupation' => 'required|in:'.$valid_occupations,

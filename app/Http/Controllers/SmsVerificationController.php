@@ -70,17 +70,22 @@ class SmsVerificationController extends Controller
         }
 
         $code = $request->post('code');
-        $phone = '+1' . preg_replace('/\D/', '', $request->user()->phone);
-        $verification = $this->verify->checkVerification($phone, $code);
+        if(isset($code)) {
+            $phone = '+1' . preg_replace('/\D/', '', $request->user()->phone);
+            $verification = $this->verify->checkVerification($phone, $code);
 
-        if ($verification->isValid()) {
-            $request->user()->markPhoneAsVerified();
-            return redirect($this->redirectPath());
-        }
+            if ($verification->isValid()) {
+                $request->user()->markPhoneAsVerified();
+                return redirect($this->redirectPath());
+            }
 
-        $errors = new MessageBag();
-        foreach ($verification->getErrors() as $error) {
-            $errors->add('verification', $error);
+            $errors = new MessageBag();
+            foreach ($verification->getErrors() as $error) {
+                $errors->add('verification', $error);
+            }
+        } else {
+            $errors = new MessageBag();
+            $errors->add('verification', 'A code must be entered.');
         }
 
         return view('sms.verify')->withErrors($errors);

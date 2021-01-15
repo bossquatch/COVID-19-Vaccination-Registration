@@ -106,10 +106,10 @@
                                 @else
                                 <form method="POST" action="{{ url('/sms/resend') }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('I wish to receive to text updates to this number.') }}</button>
+                                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('I wish to receive text updates to this number.') }}</button>
                                 </form>
                                {{-- <a href="/sms/verify">
-                                    I wish to receive to text updates to this number.
+                                    I wish to receive to text updates to this number. (Requires SMS capable phone; data charges may apply.)
                                 </a>    --}}
                                 @endif
 

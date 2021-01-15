@@ -40,7 +40,10 @@
         }
 
         .navbar-collapse {
+            background-color: $navbar-transparent-collapse-bg-color;
             border-top: 1px solid $gray-200;
+            box-shadow: 0 4px 18px 0 rgba($black, 0.12), 0 7px 10px -5px rgba($black, 0.15);
+            color: $navbar-transparent-collapse-font-color;
             margin-top: $navbar-transparent-link-padding-sm;
 
             .nav-item:not(:last-of-type) {
@@ -51,7 +54,7 @@
 
     .navbar-nav .nav-item .nav-link {
         color: inherit;
-        padding: $navbar-transparent-link-padding-sm $navbar-transparent-link-padding;
+        padding: $navbar-transparent-link-padding;
 
         &:hover,
         &:focus {
@@ -77,22 +80,5 @@
         box-shadow: none;
         color: $navbar-transparent-font-color;
         padding-top: $navbar-transparent-padding-top;
-
-        @include media-breakpoint-down(sm) {
-            .navbar-collapse {
-                background-color: $navbar-transparent-collapse-bg-color;
-                box-shadow: 0 4px 18px 0 rgba($black, 0.12), 0 7px 10px -5px rgba($black, 0.15);
-                color: $navbar-transparent-collapse-font-color;
-                margin-top: $navbar-transparent-padding-top;
-
-                .nav-item:not(:last-of-type) {
-                    border-bottom: 1px solid $gray-200;
-                }
-            }
-        }
-
-        .navbar-nav .nav-item .nav-link {
-            padding: $navbar-transparent-link-padding;
-        }
     }
 }
