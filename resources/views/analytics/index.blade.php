@@ -100,39 +100,15 @@
                 stack: 'Stack 0',
                 backgroundColor: '#0071eb',
                 borderColor: '#0071eb',
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor()
-                ]
+                data: {!! json_encode($register_by_day['self']) !!}
             }, {
                 label: 'Call Center Registered',
                 stack: 'Stack 0',
                 backgroundColor: '#ffc107',
                 borderColor: '#ffc107',
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor()
-                ]
+                data: {!! json_encode($register_by_day['call-center']) !!}
             }],
-            labels: [
-                'Jan 14',
-                'Jan 15',
-                'Jan 16',
-                'Jan 17',
-                'Jan 18',
-                'Jan 19',
-                'Jan 20'
-            ],
+            labels: {!! json_encode($register_by_day['dates']) !!},
         },
         options: {
             responsive: true,
@@ -213,13 +189,7 @@
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor()
-                ],
+                data: {!! json_encode($register_by_county['counts']) !!},
                 backgroundColor: [
                     '#ffc107',
                     '#0071eb',
@@ -236,13 +206,7 @@
                 ],
                 borderWidth: 3
             }],
-            labels: [
-                'Polk',
-                'Hillsborough',
-                'Pinellas',
-                'Orange',
-                'Outside Florida'
-            ],
+            labels: {!! json_encode($register_by_county['counties']) !!}
         },
         options: {
             responsive: true,
@@ -279,13 +243,7 @@
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor()
-                ],
+                data: {!! json_encode($register_by_city['counts']) !!},
                 backgroundColor: [
                     '#ffc107',
                     '#0071eb',
@@ -302,13 +260,7 @@
                 ],
                 borderWidth: 3
             }],
-            labels: [
-                'Lakeland',
-                'Bartow',
-                'Winter Haven',
-                'Mulberry',
-                'Frostproof'
-            ],
+            labels: {!! json_encode($register_by_city['cities']) !!},
         },
         options: {
             responsive: true,
