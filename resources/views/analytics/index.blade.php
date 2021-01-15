@@ -73,7 +73,7 @@
 
                     <!-- Chart -->
                     <div class="chart">
-                        <canvas id="registrationsByCityDoughnutChart" width="300" height="300" aria-label="Registrations by City Doughnut Chart" role="img"></canvas>
+                        <canvas id="registrationsByCityBarChart" width="300" height="300" aria-label="Registrations by City Doughnut Chart" role="img"></canvas>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
 
     var regByDayStackCTX = document.getElementById('registrationsStackedBarChart');
     var regByCountyCTX = document.getElementById('registrationsByCountyDoughnutChart');
-    var regByCityCTX = document.getElementById('registrationsByCityDoughnutChart');
+    var regByCityCTX = document.getElementById('registrationsByCityBarChart');
 
     var registrationsStackedBarChart = new Chart(regByDayStackCTX, {
         type: 'bar',
@@ -263,59 +263,23 @@
         }
     });
 
-    var registrationsByCityDoughnutChart = new Chart(regByCityCTX, {
-        type: 'doughnut',
+    var registrationsByCityBarChart = new Chart(regByCityCTX, {
+        type: 'bar',
         data: {
             datasets: [{
                 data: {!! json_encode($register_by_city['counts']) !!},
-                backgroundColor: [
-                    '#ffc107',
-                    '#0071eb',
-                    '#df8c19',
-                    '#dc3545',
-                    '#398502',
-                    '#00458b',
-                    '#99ddff',
-                    '#f1e821',
-                    '#f07e74',
-                    '#fe4a49',
-                    '#555555',
-                    '#7d3780',
-                    '#398502',
-                    '#23c0ad',
-                    '#ff6600',
-                    '#daa520',
-                    '#00ff00'
-                ],
-                hoverBorderColor: [
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff',
-                    '#fff'
-                ],
-                borderWidth: 3
+                label: 'Cities in Polk',
+                backgroundColor: '#0071eb',
+                borderColor: '#0071eb'
             }],
             labels: {!! json_encode($register_by_city['cities']) !!},
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutoutPercentage: 85,
             legend: {
-                position: 'left',
+                display: false,
+                position: 'bottom',
                 labels: {
                     fontSize: 14,
                     fontColor: '#000',
@@ -324,6 +288,8 @@
                 }
             },
             tooltips: {
+                mode: 'index',
+                intersect: false,
                 displayColors: false,
                 xPadding: 16,
                 yPadding: 12,
@@ -334,9 +300,51 @@
                 footerFontSize: 10,
                 footerFontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
             },
-            animation: {
-                animateScale: true,
-                animateRotate: true
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'City',
+                        fontSize: 14,
+                        fontColor: '#000',
+                        padding: 16,
+                        fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        fontSize: 12,
+                        fontColor: '#000',
+                        fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Registrations',
+                        fontSize: 14,
+                        fontColor: '#000',
+                        padding: 16,
+                        fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                    },
+                    gridLines: {
+                        borderDash: [1, 1]
+                    },
+                    ticks: {
+                        fontSize: 12,
+                        fontColor: '#000',
+                        fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                    }
+                }]
             }
         }
     });

@@ -64,13 +64,13 @@ class AnalyticsController extends Controller
         foreach($registered_by_county_db as $county) {
             if ($county->Count >= 25 || in_array($county->County, ['Polk', 'Unknown', 'Outside of Florida'])) {
                 $registered_by_county['counts'][] = $county->Count;
-                $registered_by_county['counties'][] = $county->County;
+                $registered_by_county['counties'][] = $county->County.' ('.$county->Count.')';
             } else {
                 $other_fl_counties += $county->Count;
             }
         }
         $registered_by_county['counts'][] = $other_fl_counties;
-        $registered_by_county['counties'][] = 'Other Florida Counties';
+        $registered_by_county['counties'][] = 'Other Florida Counties ('.$other_fl_counties.')';
 
         // registrations by cities in Polk
         $registered_by_city = [
@@ -92,7 +92,7 @@ class AnalyticsController extends Controller
 
         foreach($registered_by_city_db as $city) {
             $registered_by_city['counts'][] = $city->Count;
-            $registered_by_city['cities'][] = $city->City;
+            $registered_by_city['cities'][] = $city->City.' ('.$city->Count.')';
         }
 
         return view('analytics.index', [
