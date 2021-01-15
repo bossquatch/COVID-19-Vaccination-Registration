@@ -201,6 +201,11 @@
         <div class="modal-content">
             <div class="modal-body p-6">
                 <div class="row">
+                    <div class="col-12">
+                        <a href="/edit" title="Edit Registration" class="float-right"><span class="fad fa-edit"></span></a>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-12 text-center">
                         <span class="fad fa-user-circle fa-4x text-info"></span>
                     </div>
