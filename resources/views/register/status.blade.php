@@ -76,7 +76,7 @@
                                 {{--<div class="text-primary mb-4">
                                     <span class="fad fa-user-circle fa-4x"></span>
                                 </div>--}}
-                                
+
 
                                 <!-- Title -->
                                 <h2 class="mb-2 mt-6">
@@ -115,7 +115,7 @@
 
                                 <!-- Button -->
                                {{--@if ($application->status_id != '1' && $application->status_id != '5')--}}
-                                
+
                                 {{--@else
                                 <a class="btn btn-header btn-round btn-lg" href="/Application">
                                     Continue application
@@ -202,7 +202,7 @@
             <div class="modal-body p-6">
                 <div class="row">
                     <div class="col-12">
-                        <a href="/edit" title="Edit Registration" class="float-right"><span class="fad fa-edit"></span></a>
+                        <a href="/edit" title="Edit Registration" class="float-right"><span class="fad fa-edit"></span> Change your information</a>
                     </div>
                 </div>
                 <div class="row">
