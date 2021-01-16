@@ -40,11 +40,11 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <!-- Title -->
-                            <h2 class="h6 text-uppercase text-gray-dark mb-2">Today's Registrations</h2>
+                            <h2 class="h6 text-uppercase text-gray-dark mb-2">Registered Today</h2>
                             <!-- Value -->
-                            <span class="h2 mb-0">{{ $registrations_today }}</span>
-                            
-                            
+                            <span class="h2 mb-0">{{ number_format($registrations_today,0) }}</span>
+
+
                         </div>
                         <div class="col-auto">
                             <!-- Icon -->
@@ -62,9 +62,9 @@
                             <!-- Title -->
                             <h2 class="h6 text-uppercase text-gray-dark mb-2">64 and Under</h2>
                             <!-- Value -->
-                            <span class="h2 mb-0">{{ $registrations_young }}</span>
-                            
-                            
+                            <span class="h2 mb-0">{{ number_format($registrations_young,0) }}</span>
+
+
                         </div>
                         <div class="col-auto">
                             <!-- Icon -->
@@ -80,9 +80,9 @@
                             <!-- Title -->
                             <h2 class="h6 text-uppercase text-gray-dark mb-2">65 and Over</h2>
                             <!-- Value -->
-                            <span class="h2 mb-0">{{ $registrations_old }}</span>
-                            
-                            
+                            <span class="h2 mb-0">{{ number_format($registrations_old, 0) }}</span>
+
+
                         </div>
                         <div class="col-auto">
                             <!-- Icon -->
@@ -96,11 +96,11 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <!-- Title -->
-                            <h2 class="h6 text-uppercase text-gray-dark mb-2">Total Registrations</h2>
+                            <h2 class="h6 text-uppercase text-gray-dark mb-2">Registered Total</h2>
                             <!-- Value -->
-                            <span class="h2 mb-0">{{ $registrations_total }}</span>
-                            
-                            
+                            <span class="h2 mb-0">{{ number_format($registrations_total,0) }}</span>
+
+
                         </div>
                         <div class="col-auto">
                             <!-- Icon -->

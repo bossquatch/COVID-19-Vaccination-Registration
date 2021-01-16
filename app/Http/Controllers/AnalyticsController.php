@@ -99,7 +99,7 @@ class AnalyticsController extends Controller
             'register_by_day' => $registered_by_day,
             'register_by_county' => $registered_by_county,
             'register_by_city' => $registered_by_city,
-            'registrations_today' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`submitted_at`) = CURDATE()')[0]->Count,
+            'registrations_today' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`submitted_at`) = DATE(DATE_ADD(NOW(), INTERVAL -5 HOUR))')[0]->Count,
             'registrations_total' => DB::select('SELECT COUNT(*) `Count` FROM registrations')[0]->Count,
             'registrations_old' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`birth_date`) <= DATE_SUB(CURDATE(), INTERVAL 65 YEAR)')[0]->Count,
             'registrations_young' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`birth_date`) > DATE_SUB(CURDATE(), INTERVAL 65 YEAR)')[0]->Count,
