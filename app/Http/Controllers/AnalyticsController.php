@@ -27,13 +27,13 @@ class AnalyticsController extends Controller
             'call-center' => []
         ];
         $registered_by_day_db = DB::select('
-            SELECT 
+            SELECT
                 date(r.created_at) `Date`,
                 count(*) `Count`,
-                SUM(IF(u.email like \'%@%\',1,0)) `Self Serve`,
-                SUM(IF(u.email not like \'%@%\',1,0)) `Call Center`
-            FROM 
-                registrations r 
+                SUM(IF(u.email like \'%@mg.polk.health%\',1,0)) `Self Serve`,
+                SUM(IF(u.email not like \'%@mg.polk.health%\',1,0)) `Call Center`
+            FROM
+                registrations r
                 JOIN users u ON u.id = r.user_id
             GROUP BY
                 date(r.created_at)');
