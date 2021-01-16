@@ -30,8 +30,8 @@ class AnalyticsController extends Controller
             SELECT
                 date(r.created_at) `Date`,
                 count(*) `Count`,
-                SUM(IF(u.email like \'%@mg.polk.health%\',1,0)) `Self Serve`,
-                SUM(IF(u.email not like \'%@mg.polk.health%\',1,0)) `Call Center`
+                SUM(IF(u.email not like \'%@mg.polk.health%\',1,0)) `Self Serve`,
+                SUM(IF(u.email like \'%@mg.polk.health%\',1,0)) `Call Center`
             FROM
                 registrations r
                 JOIN users u ON u.id = r.user_id
