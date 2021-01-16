@@ -35,6 +35,12 @@
                 <a class="btn btn-header btn-round btn-lg" href="/manage">
                     <span class="fad fa-times-circle mr-1"></span> Cancel
                 </a>
+
+                @can('create_vaccine')
+                <button type="button" class="btn btn-header-outline btn-round btn-lg" data-toggle="modal" data-target="#vaccineModal">
+                    <span class="fad fa-syringe mr-1"></span> Add Vaccination
+                </button>
+                @endcan
             </div>
         </div>
 
@@ -134,10 +140,35 @@
                                 </div>
                             </div>
                         </div>
+                        @can('read_vaccine')
+                            <hr>
+                            <div class="row align-items-center justify-content-center">
+                                <h3>Vaccinations</h3>
+                            </div>
+                            <div id="js-vaccine-section">
+                                @php
+                                    $no_vacs = false;
+                                @endphp
+                                @forelse ($registration->vaccines as $vaccine)
+                                    @include('vaccine.partials.info', ['vaccine' => $vaccine])
+                                @empty
+                                    @php
+                                        $no_vacs = true;
+                                    @endphp
+                                @endforelse
+                                <div id="js-no-vaccine-alert" class="alert alert-info text-center" @if (!$no_vacs) style="display: none" @endif>
+                                    This registrant has not received a vaccine.
+                                </div>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+@can('create_vaccine')
+    @include('vaccine.partials.modal', ['registration_id' => $registration->id])
+@endcan
 @endsection

@@ -40,9 +40,11 @@
                     <span class="fad fa-file-medical mr-1"></span> Moderna Consent Form
                 </a>
 
+                @can('read_vaccine')
                 <a class="btn btn-header btn-round btn-lg" href="/manage/qr">
                     <span class="fad fa-qrcode mr-1"></span> Scan QR Code
                 </a>
+                @endcan
             </div>
         </div>
 

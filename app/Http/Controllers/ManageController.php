@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,7 +83,7 @@ class ManageController extends Controller
 
         return [
             'result' => $html,
-            'offset' => $offset + $limit, 
+            'offset' => $offset + $limit,
             'limit' => $limit,
             'pagination' => $pagination,
         ];
@@ -151,9 +152,9 @@ class ManageController extends Controller
             $invalid_letter_codes = [
                 'ASS',
                 'CUM',
-                'FAG', 
-                'GAY', 
-                'GOD', 
+                'FAG',
+                'GAY',
+                'GOD',
                 'JEW',
                 'TIT',
                 'FUK',
@@ -162,7 +163,7 @@ class ManageController extends Controller
                 'JIZ',
             ];
 
-            if(!in_array($randomletter, $invalid_letter_codes)) { 
+            if(!in_array($randomletter, $invalid_letter_codes)) {
                 $is_valid_letters = true;
             }
         }
@@ -199,7 +200,7 @@ class ManageController extends Controller
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
             'county_id'=> $valid['county'],
-            
+
             // Obtained by user account:
             'first_name'=> $user->first_name,
             'middle_name'=> $user->middle_name,
@@ -274,7 +275,7 @@ class ManageController extends Controller
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
             'county_id'=> $valid['county'],
-            
+
             // Obtained by user account:
             'first_name' => $valid['firstName'],
             'middle_name' => $valid['middleName'],
@@ -298,8 +299,8 @@ class ManageController extends Controller
         // rewrite if we start allowing multiple phones and emails
         $contacts = [];
         if (count($registration->emails()) > 0) {
-            if (empty($emails)) { 
-                $registration->emails()[0]->delete(); 
+            if (empty($emails)) {
+                $registration->emails()[0]->delete();
             } else {
                 $registration->emails()[0]->update($emails[0]);
             }
@@ -308,8 +309,8 @@ class ManageController extends Controller
         }
 
         if (count($registration->phones()) > 0) {
-            if (empty($phones)) { 
-                $registration->phones()[0]->delete(); 
+            if (empty($phones)) {
+                $registration->phones()[0]->delete();
             } else {
                 $registration->phones()[0]->update($phones[0]);
             }
@@ -348,6 +349,25 @@ class ManageController extends Controller
             return redirect()->back()->withErrors($validator->errors());
         }
         return redirect()->back();
+    }
+
+    public function delete($regis_id)
+    {
+        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis->delete();
+
+//      DPC
+//        prefix the email address to avoid integrity constraint violation if the email is re-used later
+//        (soft) delete the user; I checked, the user model has softdeletes
+        $cur_user = User::findOrFail($regis->user_id);
+        $cur_user->email = rand(10000,99999) . '-' . $cur_user->email;
+        $cur_user->update();
+        $cur_user->delete();
+
+        $this->logChanges($regis, 'deleted', true);
+
+        Session::flash('success', "<p>Registration was successfully deleted.</p>");
+        return redirect('/manage');
     }
 
     private function validationRules()
