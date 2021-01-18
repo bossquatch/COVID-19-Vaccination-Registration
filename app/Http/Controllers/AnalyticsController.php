@@ -50,28 +50,52 @@ class AnalyticsController extends Controller
             'counts' => [],
             'counties' => []
         ];
+
         $registered_by_county_db = DB::select('
+            WITH top10 AS
+                (
+                        SELECT
+                            COUNT(*) AS `Count`,
+                            c.county AS `County`
+
+                        FROM
+                            registrations r
+                            JOIN counties c ON r.county_id = c.id
+                        GROUP BY
+                            c.county
+                        ORDER BY 1 DESC
+                        LIMIT 10
+                    )
+            SELECT *
+            FROM top10
+
+            UNION ALL
+
             SELECT
-                count(r.id) `Count`,
-                c.county `County`
+                count(*),
+                \'Other FL Counties\'
             FROM
                 registrations r
                 JOIN counties c ON r.county_id = c.id
-            GROUP BY
-                c.county
+            WHERE c.county NOT IN (select County from top10)
         ');
 
-        $other_fl_counties = 0;
+//        $other_fl_counties = 0;
+//        foreach($registered_by_county_db as $county) {
+//            if ($county->Count >= 25 || in_array($county->County, ['Polk', 'Unknown', 'Outside of Florida'])) {
+//                $registered_by_county['counts'][] = $county->Count;
+//                $registered_by_county['counties'][] = $county->County.' ('.$county->Count.')';
+//            } else {
+//                $other_fl_counties += $county->Count;
+//            }
+//        }
+//        $registered_by_county['counts'][] = $other_fl_counties;
+//        $registered_by_county['counties'][] = 'Other Florida Counties ('.$other_fl_counties.')';
+
         foreach($registered_by_county_db as $county) {
-            if ($county->Count >= 25 || in_array($county->County, ['Polk', 'Unknown', 'Outside of Florida'])) {
-                $registered_by_county['counts'][] = $county->Count;
-                $registered_by_county['counties'][] = $county->County.' ('.$county->Count.')';
-            } else {
-                $other_fl_counties += $county->Count;
-            }
+            $registered_by_county['counts'][] = $county->Count;
+            $registered_by_county['counties'][] = Str::of($county->County)->title().' ('.$county->Count.')';
         }
-        $registered_by_county['counts'][] = $other_fl_counties;
-        $registered_by_county['counties'][] = 'Other Florida Counties ('.$other_fl_counties.')';
 
         // registrations by cities in Polk
         $registered_by_city = [
