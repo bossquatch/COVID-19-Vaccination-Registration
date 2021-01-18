@@ -345,7 +345,7 @@
         data: {
             datasets: [{
                 data: {!! json_encode($register_by_city['counts']) !!},
-                label: 'Cities',
+                label: 'Registrations',
                 backgroundColor: '#0071eb',
                 borderColor: '#0071eb'
             }],
