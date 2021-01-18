@@ -263,7 +263,7 @@
     });
 
     var registrationsByCountyDoughnutChart = new Chart(regByCountyCTX, {
-        type: 'doughnut',
+        type: 'bar',
         data: {
             datasets: [{
                 data: {!! json_encode($register_by_county['counts']) !!},
@@ -314,13 +314,14 @@
             maintainAspectRatio: false,
             cutoutPercentage: 85,
             legend: {
-                position: 'right',
-                labels: {
-                    fontSize: 14,
-                    fontColor: '#000',
-                    padding: 16,
-                    fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
-                }
+                display: false
+                // position: 'right',
+                // labels: {
+                //     fontSize: 14,
+                //     fontColor: '#000',
+                //     padding: 16,
+                //     fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                // }
             },
             tooltips: {
                 displayColors: false,
