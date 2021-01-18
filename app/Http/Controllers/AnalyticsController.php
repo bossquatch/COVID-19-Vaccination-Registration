@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class AnalyticsController extends Controller
 {
@@ -79,20 +80,26 @@ class AnalyticsController extends Controller
         ];
         $registered_by_city_db = DB::select('
             SELECT
-                count(r.id) `Count`,
-                r.city `City`
+                upper(r.city) `City`,
+                count(*) `Count`
+
             FROM
                 registrations r
-                JOIN counties c ON r.county_id = c.id
-            WHERE
-                c.county = \'Polk\'
+
             GROUP BY
                 r.city
+
+            HAVING
+                count(*) > 99
+
+            ORDER BY
+                count(*) desc;
+
         ');
 
         foreach($registered_by_city_db as $city) {
             $registered_by_city['counts'][] = $city->Count;
-            $registered_by_city['cities'][] = $city->City.' ('.$city->Count.')';
+            $registered_by_city['cities'][] = Str::of($city->City)->title().' ('.$city->Count.')';
         }
 
         return view('analytics.index', [
