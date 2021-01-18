@@ -26,11 +26,11 @@
 
                 {{ __('Before proceeding, please check your email for a verification link.') }}
                 {{ __('Be aware, that emails to certain providers such as msn.com, ymail.com, yahoo.com, netzero.com, and aol.com may be delayed up to 20 minutes.') }}
-               <?php /*{{ __('If you did not receive the email') }},
+                {{ __('If you did not receive the email') }},
                 <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                     @csrf
                     <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                </form>*/?>
+                </form>
 
                 <div class="mb-6"></div>
                 <a class="btn btn-header btn-round btn-lg btn-block" href="{{ route('logout') }}"
