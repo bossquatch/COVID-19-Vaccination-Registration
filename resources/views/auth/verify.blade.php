@@ -16,7 +16,7 @@
             <div class="col-12 col-md-10 col-lg-6 px-8 px-lg-11 py-8 py-lg-11">
                 <!-- Heading -->
                 <h1 class="mb-0 font-weight-bold">
-                    Verify Your Email Addressd
+                    Verify Your Email Address
                 </h1>
 
                 <!-- Text -->
