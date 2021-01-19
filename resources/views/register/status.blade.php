@@ -109,15 +109,15 @@
                         </div>
                         <div class="card-footer py-0 border-top">
                             <div class="row">
-                                <div class="col-3 text-center border-right">
-                                    <button class="btn btn-link p-0" type="button" title="View Registration Details" id="detailsBtn" onclick="popDetails()">
+                                <div class="col-3 text-center border-right postion-relative">
+                                    <button class="btn btn-link p-0 stretched-link" type="button" title="View Registration Details" id="detailsBtn" onclick="popDetails()">
                                         <small><span class="fad fa-eye mr-1"></span>View</small>
                                     </button>
                                 </div>
-                                <div class="col-3 text-center border-right">
-                                    <a href="/edit" title="Edit Registration" class="btn btn-link p-0"><small><span class="fad fa-edit mr-1"></span>Edit</small></a>
+                                <div class="col-3 text-center border-right postion-relative">
+                                    <a href="/edit" title="Edit Registration" class="btn btn-link p-0 stretched-link"><small><span class="fad fa-edit mr-1"></span>Edit</small></a>
                                 </div>
-                                <div class="col-3 text-center border-right">
+                                <div class="col-3 text-center border-right postion-relative">
                                     @if (Auth::user()->sms_verified_at != null)
                                     <span class="btn btn-link p-0 disabled text-success">
                                         <small><span class="fad fa-mobile mr-1"></span>SMS Verified</small>
@@ -125,14 +125,14 @@
                                     @else
                                     <form method="POST" action="{{ url('/sms/resend') }}">
                                         @csrf
-                                        <button type="submit" class="btn btn-link p-0">
+                                        <button type="submit" class="btn btn-link p-0 stretched-link">
                                             <small><span class="fad fa-mobile mr-1"></span>Verify SMS</small>
                                         </button>
                                     </form>
                                     @endif
                                 </div>
-                                <div class="col-3 text-center">
-                                    <button class="btn btn-link p-0 text-danger" data-toggle="modal" data-target="#deleteModal">
+                                <div class="col-3 text-center postion-relative">
+                                    <button class="btn btn-link p-0 text-danger stretched-link" data-toggle="modal" data-target="#deleteModal">
                                         <small><span class="fad fa-trash-alt mr-1"></span> Delete</small>
                                     </button>
                                 </div>
