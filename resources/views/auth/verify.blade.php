@@ -25,7 +25,7 @@
                 </p>
 
                 {{ __('Before proceeding, please check your email for a verification link.') }}
-                {{ __('Be aware, that emails to certain providers such as msn.com, ymail.com, yahoo.com, netzero.com, and aol.com may be delayed up to 60 minutes.') }}
+                {{ __('Be aware, that emails to certain providers such as aol.com, ymail.com, yahoo.com, netzero.com, and msn.com may be delayed up to 60 minutes.') }}
                 {{ __(<strong>'If you did not receive the email or recieve "403 Invalid Signature"'</strong>) }},
                 <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                     @csrf
