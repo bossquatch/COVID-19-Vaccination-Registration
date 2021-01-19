@@ -46,4 +46,32 @@
         </div>
     </div>
 </section>
+
+@if (\Session::has('resent') && \Session::get('resent'))
+<div class="modal fade" id="resentModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="resent Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-check-circle fa-5x text-success"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-5">Your verification email has been resent!</p>
+                        <a href="/" class="btn btn-header btn-round btn-lg">Ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#resentModal").modal();
+    });
+</script>
+@endif
 @endsection
