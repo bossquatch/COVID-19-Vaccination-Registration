@@ -478,7 +478,7 @@
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox" @if(old('reactionAgreement')) checked aria-checked="true" @endif>
-                                            <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.</label>
+                                            <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.<br><small>(Or you have checked with your primary healthcare physician that you are safe to take the vaccine.)</small></label>
                         
                                             @error("reactionAgreement")
                                                 <span class="invalid-feedback" role="alert">
