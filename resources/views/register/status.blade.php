@@ -64,73 +64,78 @@
             <div class="col-12 col-md-7">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
-                    <div class="card card-body p-6">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-12">
-                                <button class="btn btn-link float-right text-danger text-sm p-0" data-toggle="modal" data-target="#deleteModal">
-                                    <small><span class="fad fa-trash-alt mr-1"></span> Delete Registration</small>
-                                </button>
-                            </div>
-                            @if(config('app.always_show_qr'))
-                            <div class="col-12 col-lg-4 text-center mb-0">
-                                {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code); !!}
-                            </div>
-                            @endif
-                            <div class="col-12 @if(config('app.always_show_qr')) col-lg-8 @endif text-center mb-0">
-                                <!-- Logo -->
-                                {{--<div class="text-primary mb-4">
-                                    <span class="fad fa-user-circle fa-4x"></span>
+                    <div class="card">
+                        <div class="card-body p-6">
+                            <div class="row align-items-center justify-content-center">
+                                {{--<div class="col-12">
+                                    <button class="btn btn-link float-right text-danger text-sm p-0" data-toggle="modal" data-target="#deleteModal">
+                                        <small><span class="fad fa-trash-alt mr-1"></span> Delete Registration</small>
+                                    </button>
                                 </div>--}}
-
-                                <!-- Title -->
-                                <h2 class="mb-2">
-                                    {{ Auth::user()->registration->first_name.' '.Auth::user()->registration->last_name }}<button class="btn btn-link p-1 ml-1" type="button" title="View Registration Details" id="detailsBtn" onclick="popDetails()"><span class="fad fa-eye fa-lg"></span></button>
-                                </h2>
-
-                                <div class="badge badge-outline-muted mb-2">
-                                    <span class="{{ Auth::user()->registration->status->fa_icon }} mr-1"></span> {{ Auth::user()->registration->status->name }}
+                                @if(config('app.always_show_qr'))
+                                <div class="col-12 col-lg-4 text-center mb-0">
+                                    {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code); !!}
                                 </div>
-
-                                <!-- Text -->
-                                <p class="text-gray-dark mb-2">
-                                    Submitted at: {{ Carbon\Carbon::parse(Auth::user()->registration->submitted_at)->format('m-d-Y h:i:s A') }}
-                                </p>
-
-                                <p class="text-gray-dark mb-2">
-                                    Code {{ Auth::user()->registration->code }}
-                                </p>
-
-                                <p class="text-gray-dark mb-0">
-                                    Phone number ending in: {{ substr(Auth::user()->phone, -4) }}
-                                </p>
-                                @if (Auth::user()->sms_verified_at != null)
-                                <p class="text-success">
-                                    Verified
-                                </p>
-                                @else
-                                <form method="POST" action="{{ url('/sms/resend') }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('I wish to receive text updates to this number.') }}</button>
-                                </form>
-                               {{-- <a href="/sms/verify">
-                                    I wish to receive to text updates to this number. (Requires SMS capable phone; data charges may apply.)
-                                </a>    --}}
                                 @endif
+                                <div class="col-12 @if(config('app.always_show_qr')) col-lg-8 @endif text-center mb-0">
+                                    <!-- Logo -->
+                                    {{--<div class="text-primary mb-4">
+                                        <span class="fad fa-user-circle fa-4x"></span>
+                                    </div>--}}
 
-                                <!-- Button -->
-                               {{--@if ($application->status_id != '1' && $application->status_id != '5')--}}
+                                    <!-- Title -->
+                                    <h2 class="mb-2">
+                                        {{ Auth::user()->registration->first_name.' '.Auth::user()->registration->last_name }}
+                                    </h2>
 
-                                {{--@else
-                                <a class="btn btn-header btn-round btn-lg" href="/Application">
-                                    Continue application
-                                </a>
-                                @endif--}}
+                                    <div class="badge badge-outline-muted mb-2">
+                                        <span class="{{ Auth::user()->registration->status->fa_icon }} mr-1"></span> {{ Auth::user()->registration->status->name }}
+                                    </div>
 
-                                {{--@if ($application->status_id == '2')
-                                <a class="btn btn-header btn-round btn-lg mt-2" data-toggle="modal" data-target="#unlockModal">
-                                    Unlock application
-                                </a>
-                                @endif--}}
+                                    <!-- Text -->
+                                    <p class="text-gray-dark mb-2">
+                                        Submitted at: {{ Carbon\Carbon::parse(Auth::user()->registration->submitted_at)->format('m-d-Y h:i:s A') }}
+                                    </p>
+
+                                    <p class="text-gray-dark mb-2">
+                                        Code {{ Auth::user()->registration->code }}
+                                    </p>
+
+                                    <p class="text-gray-dark mb-0">
+                                        Phone number ending in: {{ substr(Auth::user()->phone, -4) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer py-0 border-top">
+                            <div class="row">
+                                <div class="col-3 text-center border-right">
+                                    <button class="btn btn-link p-0" type="button" title="View Registration Details" id="detailsBtn" onclick="popDetails()">
+                                        <small><span class="fad fa-eye mr-1"></span>View</small>
+                                    </button>
+                                </div>
+                                <div class="col-3 text-center border-right">
+                                    <a href="/edit" title="Edit Registration" class="btn btn-link p-0"><small><span class="fad fa-edit mr-1"></span>Edit</small></a>
+                                </div>
+                                <div class="col-3 text-center border-right">
+                                    @if (Auth::user()->sms_verified_at != null)
+                                    <span class="btn btn-link p-0 disabled text-success">
+                                        <small><span class="fad fa-mobile mr-1"></span>SMS Verified</small>
+                                    </span>
+                                    @else
+                                    <form method="POST" action="{{ url('/sms/resend') }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-link p-0">
+                                            <small><span class="fad fa-mobile mr-1"></span>Verify SMS</small>
+                                        </button>
+                                    </form>
+                                    @endif
+                                </div>
+                                <div class="col-3 text-center">
+                                    <button class="btn btn-link p-0 text-danger" data-toggle="modal" data-target="#deleteModal">
+                                        <small><span class="fad fa-trash-alt mr-1"></span> Delete</small>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -204,11 +209,6 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body p-6">
-                <div class="row">
-                    <div class="col-12">
-                        <a href="/edit" title="Edit Registration" class="float-right"><span class="fad fa-edit"></span> Change your information</a>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-12 text-center">
                         <span class="fad fa-user-circle fa-4x text-info"></span>
