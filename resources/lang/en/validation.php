@@ -134,6 +134,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'reactionAgreement' => [
+            'accepted' => 'This agreement must be accepted in order to continue.  If you have had any adverse reactions to vaccines in the past, verify with your primary healthcare physician that you are safe to take the vaccine.'
+        ],
     ],
 
     /*

@@ -217,6 +217,32 @@ class RegistrationController extends Controller
         return redirect('/home');
     }
 
+    public function deleteRegistration()
+    {
+        $cur_user = Auth::user();
+        $regis = $cur_user->registration;
+        if(empty($regis)) {
+            abort(404);
+        }
+
+        $this->logChanges($regis, 'deleted', true, false, ['deleted_by_self'=>true]);
+
+        $regis->delete();
+
+//      DPC
+//        prefix the email address to avoid integrity constraint violation if the email is re-used later
+//        (soft) delete the user; I checked, the user model has softdeletes
+        //$cur_user = User::findOrFail($regis->user_id);
+        $cur_user->email = rand(10000,99999) . '-' . $cur_user->email;
+        $cur_user->update();
+        $cur_user->delete();
+
+        app(\App\Http\Controllers\Auth\LoginController::class)->inlineLogout(request());
+
+        Session::flash('success', "<p>Registration was successfully deleted.</p>");
+        return redirect('/');
+    }
+
     private function validationRules($full = false)
     {
         $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());

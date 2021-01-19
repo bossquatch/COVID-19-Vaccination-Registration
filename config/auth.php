@@ -114,4 +114,18 @@ return [
 
     'password_timeout' => 10800,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Email Verification Timeout
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the amount of minutes before an email verification
+    | times out and the user is presented with a 403 Invalid Signature error.
+    | By default, the timeout lasts for one hour.
+    |
+    */
+
+    'verification' => [
+        'expire' => env('VERIFICATION_EMAIL_TIMEOUT',60),  // in minutes
+    ],
 ];

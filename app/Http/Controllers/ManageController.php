@@ -78,7 +78,7 @@ class ManageController extends Controller
                 $pagination = view('manage.partials.paginationrow', ['top' => (($offset + $limit) > $total_count ? $total_count : ($offset + $limit)), 'bot' => $offset + 1, 'total' => $total_count])->render();
             }
         } else {
-            $html = '<td colspan="6"><div class="alert alert-warning">No registrations were found!</div></td>';
+            $html = '<td colspan="7"><div class="alert alert-warning">No registrations were found!</div></td>';
         }
 
         return [
@@ -236,6 +236,16 @@ class ManageController extends Controller
             Mail::to($valid['email'])->send(new RegistrationComplete($registration));
         }
 
+        if(request()->filled('comment')) {
+            $comment = \App\Models\Comment::create([
+                'user_id' => Auth::id(),
+                'registration_id' => $registration->id,
+                'text' => request()->input('comment'),
+            ]);
+
+            $this->logChanges($comment, 'created');
+        }
+
         Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/manage');
     }
@@ -324,6 +334,16 @@ class ManageController extends Controller
 
         $this->logChanges($registration, 'updated', true);
 
+        if(request()->filled('comment')) {
+            $comment = \App\Models\Comment::create([
+                'user_id' => Auth::id(),
+                'registration_id' => $registration->id,
+                'text' => request()->input('comment'),
+            ]);
+
+            $this->logChanges($comment, 'created');
+        }
+
         Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
         return redirect('/manage');
     }
@@ -354,6 +374,7 @@ class ManageController extends Controller
     public function delete($regis_id)
     {
         $regis = \App\Models\Registration::findOrFail($regis_id);
+        $this->logChanges($regis, 'deleted', true);
         $regis->delete();
 
 //      DPC
@@ -363,8 +384,6 @@ class ManageController extends Controller
         $cur_user->email = rand(10000,99999) . '-' . $cur_user->email;
         $cur_user->update();
         $cur_user->delete();
-
-        $this->logChanges($regis, 'deleted', true);
 
         Session::flash('success', "<p>Registration was successfully deleted.</p>");
         return redirect('/manage');

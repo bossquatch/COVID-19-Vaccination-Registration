@@ -43,6 +43,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/home/register', [App\Http\Controllers\RegistrationController::class, 'submitRegistration']);
     Route::get('/edit', [App\Http\Controllers\RegistrationController::class, 'edit']);
     Route::post('/edit', [App\Http\Controllers\RegistrationController::class, 'update']);
+    Route::delete('/home/delete', [App\Http\Controllers\RegistrationController::class, 'deleteRegistration']);
 
     Route::get('/address/validate', [App\Http\Controllers\UspsController::class, 'validateInlineAddress']);
 
@@ -58,6 +59,9 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'updateRegistration'])->middleware('can:update_registration');
     Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword'])->middleware('can:update_registration');
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
+
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
+    Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');
 
     Route::post('/vaccine/add', [App\Http\Controllers\VaccineController::class, 'store']);
 

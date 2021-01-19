@@ -1,10 +1,17 @@
 @foreach ($results as $res)
 <tr>
     <td>{{ $res->first_name.' '.$res->last_name }}</td>
-    <td>{{ $res->id }}</td>
+    @can('read_user')
+    <td>{{ $res->id }}</td>    
+    @endcan
     <td>{{ $res->code }}</td>
     <td>{{ Carbon\Carbon::parse($res->submitted_at)->format('m-d-Y h:i:s A') }}</td>
     <td>{{ $res->status->name }}</td>
+    <td class="text-center">
+        @if ($res->user->email_verified_at)
+            <span class="fad fa-badge-check text-success" title="{{ Carbon\Carbon::parse($res->user->email_verified_at)->format('m-d-Y h:i:s A') }}"></span>
+        @endif
+    </td>
     <td>
         @can('read_vaccine')
         <a href="{{ "/".$res->user_id."/".$res->id."/".$res->code }}" title="View Registration" aria-title="View Registration">

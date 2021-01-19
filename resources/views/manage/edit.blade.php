@@ -490,7 +490,7 @@
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox" checked aria-checked="true">
-                                            <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.</label>
+                                            <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.<br><small>(Or you have checked with your primary healthcare physician that you are safe to take the vaccine.)</small></label>
                         
                                             @error("reactionAgreement")
                                                 <span class="invalid-feedback" role="alert">
@@ -498,6 +498,23 @@
                                                 </span>
                                             @enderror
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="mb-5">Comments</h2>
+                                </div>
+                                @if ($registration->hasComments())
+                                    <div class="col-12" id="commentSection">
+                                        @include('manage.partials.comments', ['comments' => $registration->comments])
+                                    </div>
+                                @endif
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <label for="comment">Add New Comment</label>
+                                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>

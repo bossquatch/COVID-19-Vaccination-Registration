@@ -80,4 +80,15 @@ class Registration extends Model
     public function vaccines() {
         return $this->hasMany(Vaccine::class, 'registration_id');
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class, 'registration_id');
+    }
+
+    public function hasComments() {
+        if ($this->comments()->count() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

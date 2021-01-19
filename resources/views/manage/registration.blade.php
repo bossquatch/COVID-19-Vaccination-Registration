@@ -28,7 +28,7 @@
 </div>
 
 <section class="main pt-8 pt-md-11 pb-8 pb-md-12">
-    <div class="container">
+    <div class="container-fluid">
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
@@ -45,7 +45,7 @@
         </div>
 
         <div class="row align-items-center">
-            <div class="col-12">
+            <div class="col-12 col-lg-6 offset-lg-3">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     <div class="card card-body p-6">
@@ -164,9 +164,64 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-lg-3 mt-5 mt-lg-0">
+                <div class="card my-auto">
+                    <div class="card-body">
+                        <h3 class="card-title">Comments</h3>
+                        <div id="commentSection">
+                            @include('manage.partials.comments', ['comments' => $registration->comments])
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group mb-5">
+                                <label for="comment">Add New Comment</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div id="comment-error-text" class="text-danger text-right" role="alert" style="display: none;">
+                            <strong id="commentError"></strong>
+                        </div>
+                        <button class="btn btn-info float-right" id="newComment" data-regis-id="{{ $registration->id }}">Add Comment</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<script>
+    $('#newComment').click(function(event){
+        console.log('hit');
+        event.preventDefault();
+        console.log('hit2');
+        regisId = $(this).data('regis-id');
+        commentText = document.getElementById('comment').value;
+
+        console.log(regisId);
+        console.log(commentText);
+        if (regisId && commentText) {
+            document.getElementById('comment-error-text').style.display = "none";
+            $.post('/comments', {
+                    "_token": $('meta[name=csrf-token]').attr('content'),
+                    "regis_id": regisId,
+                    "comment": commentText
+                }, function(data) {
+                    if (data.status == 'success') {
+                        document.getElementById('comment').value = "";
+                        $('#commentSection').html(data.html);
+                    } else {
+                        CommentError();
+                    }
+            }, 'json');
+        } else {
+            CommentError();
+        }
+    });
+
+    function CommentError() {
+        document.getElementById('comment-error-text').style.display = "";
+        document.getElementById('commentError').innerHTML = "Comment must have input!";
+    }
+</script>
 
 @can('create_vaccine')
     @include('vaccine.partials.modal', ['registration_id' => $registration->id])

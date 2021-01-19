@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-group mb-5 col-md-6">
                             <label for="dob">
-                                Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
+                                Date of Birth <span class="font-weight-light small">(<strong>If you are using a mobile browser, please touch the year or arrow near the year to select correct year of date of birth.)</strong></span>
                             </label>
                             <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
             
