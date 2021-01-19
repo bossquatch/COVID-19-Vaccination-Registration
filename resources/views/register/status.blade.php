@@ -66,6 +66,11 @@
                     <!-- Card -->
                     <div class="card card-body p-6">
                         <div class="row align-items-center justify-content-center">
+                            <div class="col-12">
+                                <button class="btn btn-link float-right text-danger text-sm p-0" data-toggle="modal" data-target="#deleteModal">
+                                    <small><span class="fad fa-trash-alt mr-1"></span> Delete Registration</small>
+                                </button>
+                            </div>
                             @if(config('app.always_show_qr'))
                             <div class="col-12 col-lg-4 text-center mb-0">
                                 {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code); !!}
@@ -77,9 +82,8 @@
                                     <span class="fad fa-user-circle fa-4x"></span>
                                 </div>--}}
 
-
                                 <!-- Title -->
-                                <h2 class="mb-2 mt-6">
+                                <h2 class="mb-2">
                                     {{ Auth::user()->registration->first_name.' '.Auth::user()->registration->last_name }}<button class="btn btn-link p-1 ml-1" type="button" title="View Registration Details" id="detailsBtn" onclick="popDetails()"><span class="fad fa-eye fa-lg"></span></button>
                                 </h2>
 
@@ -302,6 +306,35 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Delete Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Danger!</p>
+                        <p class="text-gray-dark mb-0">Are you sure you wish to delete your registration?</p>
+                        <p class="text-gray-dark"><small>(This will also delete your user account.)</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <form class="form-inline" action="/home/delete/" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete Registration</button>
+                </form>
+            </div>        
         </div>
     </div>
 </div>

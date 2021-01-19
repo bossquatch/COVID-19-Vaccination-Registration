@@ -354,6 +354,7 @@ class ManageController extends Controller
     public function delete($regis_id)
     {
         $regis = \App\Models\Registration::findOrFail($regis_id);
+        $this->logChanges($regis, 'deleted', true);
         $regis->delete();
 
 //      DPC
@@ -363,8 +364,6 @@ class ManageController extends Controller
         $cur_user->email = rand(10000,99999) . '-' . $cur_user->email;
         $cur_user->update();
         $cur_user->delete();
-
-        $this->logChanges($regis, 'deleted', true);
 
         Session::flash('success', "<p>Registration was successfully deleted.</p>");
         return redirect('/manage');

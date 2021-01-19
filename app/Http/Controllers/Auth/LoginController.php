@@ -81,6 +81,17 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    public function inlineLogout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return true;
+    }
+
     private function checkForcedReset(Request $request)
     {
         $user = \App\Models\User::where($this->username(), '=', $request->input($this->username()))->first();

@@ -43,6 +43,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/home/register', [App\Http\Controllers\RegistrationController::class, 'submitRegistration']);
     Route::get('/edit', [App\Http\Controllers\RegistrationController::class, 'edit']);
     Route::post('/edit', [App\Http\Controllers\RegistrationController::class, 'update']);
+    Route::delete('/home/delete', [App\Http\Controllers\RegistrationController::class, 'deleteRegistration']);
 
     Route::get('/address/validate', [App\Http\Controllers\UspsController::class, 'validateInlineAddress']);
 
