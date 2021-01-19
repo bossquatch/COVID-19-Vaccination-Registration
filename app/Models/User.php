@@ -119,4 +119,8 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->force_reset = Carbon::now();
         $this->save();
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
 }

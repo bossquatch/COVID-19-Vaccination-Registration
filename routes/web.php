@@ -60,6 +60,9 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword'])->middleware('can:update_registration');
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
 
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
+    Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');
+
     Route::post('/vaccine/add', [App\Http\Controllers\VaccineController::class, 'store']);
 
     Route::get('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'show']);

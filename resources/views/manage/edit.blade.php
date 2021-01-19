@@ -504,6 +504,23 @@
 
                             <div class="row">
                                 <div class="col-12">
+                                    <h2 class="mb-5">Comments</h2>
+                                </div>
+                                @if ($registration->hasComments())
+                                    <div class="col-12" id="commentSection">
+                                        @include('manage.partials.comments', ['comments' => $registration->comments])
+                                    </div>
+                                @endif
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <label for="comment">Add New Comment</label>
+                                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
                                     <div class="wizard-nav">
                                         <button id="SubmitBtn" name="SubmitBtn" class="btn btn-header btn-header-success btn-round btn-lg mb-6 mb-md-0" type="submit" data-wizard-type="action-submit">
                                             Submit
