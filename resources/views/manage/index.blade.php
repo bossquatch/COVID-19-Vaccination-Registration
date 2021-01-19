@@ -144,9 +144,11 @@
                                             <th>
                                                 Name
                                             </th>
+                                            @can('read_user')
                                             <th>
                                                 Registration ID
-                                            </th>
+                                            </th>    
+                                            @endcan
                                             <th>
                                                 Registration Code
                                             </th>
@@ -155,6 +157,9 @@
                                             </th>
                                             <th>
                                                 Status
+                                            </th>
+                                            <th>
+                                                Email Verified
                                             </th>
                                             <th>
                                                 {{-- Actions --}}

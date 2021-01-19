@@ -78,7 +78,7 @@ class ManageController extends Controller
                 $pagination = view('manage.partials.paginationrow', ['top' => (($offset + $limit) > $total_count ? $total_count : ($offset + $limit)), 'bot' => $offset + 1, 'total' => $total_count])->render();
             }
         } else {
-            $html = '<td colspan="6"><div class="alert alert-warning">No registrations were found!</div></td>';
+            $html = '<td colspan="7"><div class="alert alert-warning">No registrations were found!</div></td>';
         }
 
         return [
