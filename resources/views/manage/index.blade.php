@@ -158,7 +158,7 @@
                                             <th>
                                                 Status
                                             </th>
-                                            <th>
+                                            <th class="text-center">
                                                 Email Verified
                                             </th>
                                             <th>
