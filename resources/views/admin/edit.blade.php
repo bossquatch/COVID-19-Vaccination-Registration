@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Admin Console - {{ $user->firstName.' '.$user->lastName }}
+    Admin Console - {{ $user->first_name.' '.$user->last_name }}
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
                 </span>
 
                 <!-- Heading -->
-                <h2 class="title">{{ $user->firstName.' '.$user->lastName }}</h2>
+                <h2 class="title">{{ $user->first_name.' '.$user->last_name }}</h2>
 
                 <!-- Text -->
                 <p class="font-size-lg text-gray-dark mb-0">Edit the backend user.</p>
