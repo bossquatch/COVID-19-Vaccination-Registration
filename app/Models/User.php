@@ -45,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
     */
     public function getAgeAttribute()
         {
-    return Carbon::parse($this->attributes['birthdate'])->age;
+    return Carbon::parse($this->attributes['birth_date'])->age;
         }
 
     /**
