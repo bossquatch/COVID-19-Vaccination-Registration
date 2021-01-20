@@ -91,4 +91,17 @@ class Registration extends Model
         }
         return false;
     }
+
+    /**
+    * Accessor for Age.
+    */
+    public function getAgeAttribute()
+        {
+            if ($this->birth_date != null) {
+                return Carbon::parse($this->birth_date)->age;
+            }
+            else {
+                return 'N/A';
+            }
+        }
 }
