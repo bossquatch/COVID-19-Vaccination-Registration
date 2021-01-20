@@ -401,7 +401,7 @@ class ManageController extends Controller
             'firstName' => 'required|string|max:255',
             'middleName' => 'nullable|string|max:30',
             'lastName' => 'required|string|max:255',
-            'email' => 'required_without:phone|nullable|string|email|max:255',
+            'email' => 'required_without:phone|nullable|string|email:filter|max:255',
             'phone' => 'required_without:email|nullable|regex:/^(?=.*[0-9])[- +()0-9]+$/|max:14',
             'dateOfBirth' => ['required','date', new DateParsable, new AtLeastThirteen],
             'race' => 'required|in:'.$valid_races,
