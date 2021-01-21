@@ -80,6 +80,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/admin', [App\Http\Controllers\AdminController::class, 'store'])->middleware('can:create_user');
     Route::post('/admin/reset', [App\Http\Controllers\AdminController::class, 'resetPassword'])->middleware('can:update_user');
     Route::put('/admin/{id}', [App\Http\Controllers\AdminController::class, 'update'])->middleware('can:update_user');
+    Route::delete('/admin/{id}', [App\Http\Controllers\AdminController::class, 'delete'])->middleware('can:delete_user');
 
     Route::get('/admin/tags/{id}/edit', [App\Http\Controllers\TagController::class, 'edit']);
     Route::post('/admin/tags', [App\Http\Controllers\TagController::class, 'new']);

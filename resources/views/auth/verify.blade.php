@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="mb-6"></div>
-                        <a class="btn btn-header btn-round btn-lg btn-block" href="{{ route('logout') }}"
+                        <a class="btn btn-primary btn-block" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                             Return to Main Page
