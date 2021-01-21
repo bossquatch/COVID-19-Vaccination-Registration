@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "health-scheduler-package",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "NPM Packages for the Health Scheduler Application",
     "author": "Polk County Board of County Commissioners Information Technology Division",
     "license": "ISC",
@@ -30,7 +30,7 @@
     "dependencies": {
         "vue": "^2.6.12",
         "vue-qrcode-reader": "^2.3.16",
-        "@fortawesome/fontawesome-pro": "^5.15.1",
+        "@fortawesome/fontawesome-pro": "^5.15.2",
         "bootstrap": "^4.5.3",
         "chart.js": "^2.9.4",
         "inputmask": "^5.0.5",
