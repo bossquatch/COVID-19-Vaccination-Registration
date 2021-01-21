@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Registration extends Model
 {
@@ -91,4 +92,17 @@ class Registration extends Model
         }
         return false;
     }
+
+    /**
+    * Accessor for Age.
+    */
+    public function getAgeAttribute()
+        {
+            if ($this->birth_date != null) {
+                return Carbon::parse($this->birth_date)->age;
+            }
+            else {
+                return 'N/A';
+            }
+        }
 }

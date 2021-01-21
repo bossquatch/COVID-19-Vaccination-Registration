@@ -5,85 +5,65 @@
 @endsection
 
 @section('content')
-<section>
-    <div class="container-fluid d-flex flex-column">
-        <div class="row align-items-center justify-content-center min-vh-100">
-            <div class="col-lg-6 align-self-stretch d-none d-lg-block px-0">
-                <!-- Image -->
-                <div class="h-100 w-cover bg-cover" style="background-image: url({{ asset('images/register-image.jpg') }});"></div>
-            </div>
+<!-- Page Content -->
+<section class="container d-flex justify-content-center align-items-center flex-grow-1 pt-7 pb-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-9">
+            <div class="card border-0 shadow my-5">
+                <div class="card-body py-7 px-5">
+                    <div>
+                        <h1 class="h2 text-center">Sign in</h1>
+                        <p class="font-size-xs text-muted mb-4 text-center">Sign in to your account using email and password provided during registration.</p>
 
-            <div class="col-12 col-md-10 col-lg-6 px-8 px-lg-11 py-8 py-lg-11">
-                <!-- Heading -->
-                <h1 class="mb-0 font-weight-bold">
-                    Sign in
-                </h1>
+                        <form method="POST" action="{{ route('login') }}">
+                            {{ csrf_field() }}
+                            @error('email')
+                                <span class="text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <div class="input-group-overlay form-group @error('email') border border-danger rounded @enderror">
+                                <div class="input-group-prepend-overlay"><span class="input-group-text"><span class="fal fa-envelope"></span></span></div>
+                                <input class="form-control prepended-form-control" id="email" name="email" type="email" placeholder="Email" required="" autocomplete="email" autofocus>
+                            </div>
+                            <div class="input-group-overlay cs-password-toggle form-group @error('password') border border-danger rounded @enderror">
+                                <div class="input-group-prepend-overlay"><span class="input-group-text"><span class="fal fa-lock"></span></span></div>
+                                <input class="form-control prepended-form-control" id="password" name="password" type="password" placeholder="Password" required="" autocomplete="current-password">
+                            </div>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <div class="d-flex justify-content-between align-items-center form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="remember">Keep me signed in</label>
+                                </div>
+                                @if (Route::has('password.request'))
+                                    <a class="nav-link-style font-size-xs" href="{{ route('password.request') }}">
+                                        Forgot password?
+                                    </a>
+                                @endif
+                            </div>
+                            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                        </form>
 
-                <!-- Text -->
-                <p class="mb-6 text-muted">
-                    Access your registration and status.
-                </p>
+                        @if(config('app.allow_self_service'))
+                        <p class="font-size-sm pt-4 mb-0 text-center">
+                            Don't have an account yet? <a class="font-weight-medium ml-1" href="{{ route('register') }}">Sign up</a>
+                        </p>
+                        @endif
 
-                <!-- Form -->
-                <form class="mb-6" method="POST" action="{{ route('login') }}">
-                {{ csrf_field() }}
-
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="email">
-                            Email Address
-                        </label>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="name@address.com">
-
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
-
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label for="password">
-                            Password <span class="font-weight-light small">(Password length is a minimum of 8 characters)</span>
-                        </label>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group mb-5">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                            <label class="form-check-label" for="remember">
-                                {{ __('Remember Me') }}
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Submit -->
-                    <button class="btn btn-header btn-round btn-lg btn-block" type="submit">
-                        Sign in
-                    </button>
-
-                    @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
-                </form>
-
-                <!-- Text -->
-                @if(config('app.allow_self_service'))
-                <p class="mb-0 font-size-sm text-muted">
-                    Don't have an account yet? <a class="ml-1" href="{{ route('register') }}">Register</a>
-                </p>
-                @endif
+                    {{--<div class="border-top text-center mt-5 pt-5">
+                        <p class="font-size-sm font-weight-medium text-gray-dark">Or sign in with</p>
+                        <a class="btn-social sb-facebook sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-facebook"></span></a>
+                        <a class="btn-social sb-twitter sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-twitter"></span></a>
+                        <a class="btn-social sb-instagram sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-instagram"></span></a>
+                        <a class="btn-social sb-google sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-google"></span></a>
+                    </div>--}}
+                </div>
             </div>
         </div>
     </div>

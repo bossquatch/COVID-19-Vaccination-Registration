@@ -143,7 +143,7 @@ class AdminController extends Controller
 
         if ($id == null) {
             return request()->validate([
-                'email' => 'required|max:191|email|unique:users',
+                'email' => 'required|max:191|email:filter|unique:users',
                 'firstName' => 'required|max:30',
                 'middleName' => 'nullable|max:30',
                 'lastName' => 'required|max:30',
@@ -151,7 +151,7 @@ class AdminController extends Controller
             ]);
         } else {
             return request()->validate([
-                'email' => 'required|max:191|email|unique:users,email,'.$id,
+                'email' => 'required|max:191|email:filter|unique:users,email,'.$id,
                 'firstName' => 'required|max:30',
                 'middleName' => 'nullable|max:30',
                 'lastName' => 'required|max:30',

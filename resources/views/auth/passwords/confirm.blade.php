@@ -5,59 +5,55 @@
 @endsection
 
 @section('content')
-<section>
-    <div class="container-fluid d-flex flex-column">
-        <div class="row align-items-center justify-content-center min-vh-100">
-            <div class="col-lg-6 align-self-stretch d-none d-lg-block px-0">
-                <!-- Image -->
-                <div class="h-100 w-cover bg-cover" style="background-image: url({{ asset('images/register-image.jpg') }});"></div>
-            </div>
+<!-- Page Content -->
+<section class="container d-flex justify-content-center align-items-center flex-grow-1 pt-7 pb-4">
+    <div class="row justify-content-center w-75">
+        <div class="col-12">
+            <div class="card border-0 shadow my-5">
+                <div class="card-body py-7 px-5">
+                    <div>
+                        <h1 class="h2 text-center">Confirm Password</h1>
+                        <p class="font-size-xs text-muted mb-4 text-center">Please confirm your password before continuing.</p>
 
-            <div class="col-12 col-md-10 col-lg-6 px-8 px-lg-11 py-8 py-lg-11">
-                <!-- Heading -->
-                <h1 class="mb-0 font-weight-bold">
-                    {{ __('Confirm Password') }}
-                </h1>
+                        <!-- Form -->
+                        <form class="mb-6" method="POST" action="{{ route('password.confirm') }}">
+                            @csrf
 
-                <!-- Text -->
-                <p class="mb-6 text-muted">
-                    {{ __('Please confirm your password before continuing.') }}
-                </p>
+                            <!-- Password -->
+                            <div class="form-group">
+                                <label for="password">
+                                    Password
+                                </label>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-                <!-- Form -->
-                <form class="mb-6" method="POST" action="{{ route('password.confirm') }}">
-                    @csrf
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label for="password">
-                            Password
-                        </label>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <!-- Submit -->
+                            <button class="btn btn-header btn-round btn-lg btn-block" type="submit">
+                                {{ __('Confirm Password') }}
+                            </button>
 
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                            @if (Route::has('password.request'))
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
+                            @endif
+                        </form>
+
                     </div>
-
-                    <!-- Submit -->
-                    <button class="btn btn-header btn-round btn-lg btn-block" type="submit">
-                        {{ __('Confirm Password') }}
-                    </button>
-
-                    @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
-                </form>
-
-                <!-- Text -->
-                {{--<p class="mb-0 font-size-sm text-muted">
-                    Don't have an account yet? <a class="ml-1" href="{{ route('register') }}">Register</a>
-                </p>--}}
+                    {{--<div class="border-top text-center mt-5 pt-5">
+                        <p class="font-size-sm font-weight-medium text-gray-dark">Or sign in with</p>
+                        <a class="btn-social sb-facebook sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-facebook"></span></a>
+                        <a class="btn-social sb-twitter sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-twitter"></span></a>
+                        <a class="btn-social sb-instagram sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-instagram"></span></a>
+                        <a class="btn-social sb-google sb-outline sb-lg mx-1 mb-2" href="#"><span class="sb-icon fab fa-google"></span></a>
+                    </div>--}}
+                </div>
             </div>
         </div>
     </div>

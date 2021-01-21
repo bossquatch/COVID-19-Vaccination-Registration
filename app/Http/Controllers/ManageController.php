@@ -13,6 +13,7 @@ use App\Rules\DateParsable;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\RegistrationComplete;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class ManageController extends Controller
@@ -46,22 +47,50 @@ class ManageController extends Controller
 
     public function searchName()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
+        return response()->json(
+            $this->searchResults(
+                \App\Models\User::whereHas('roles', function (Builder $query) {
+                    $query->where('name', '=', 'user');
+                })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
+                request()->input('offset')
+            )
+        );
     }
 
     public function searchAddr()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
+        return response()->json(
+            $this->searchResults(
+                \App\Models\User::whereHas('registration', function (Builder $query) {
+                    $query->where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%');
+                }), 
+                request()->input('offset')
+            )
+        );
     }
 
     public function searchRegis()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where('id', '=', request()->input('val')), request()->input('offset')));
+        return response()->json(
+            $this->searchResults(
+                \App\Models\User::whereHas('registration', function (Builder $query) {
+                    $query->where('id', '=', request()->input('val'));
+                }), 
+                request()->input('offset')
+            )
+        );
     }
 
     public function searchCode()
     {
-        return response()->json($this->searchResults(\App\Models\Registration::where('code', 'LIKE', '%'.request()->input('val').'%'), request()->input('offset')));
+        return response()->json(
+            $this->searchResults(
+                \App\Models\User::whereHas('registration', function (Builder $query) {
+                    $query->where('code', 'LIKE', '%'.request()->input('val').'%');
+                }),
+                request()->input('offset')
+            )
+        );
     }
 
     private function searchResults($query, $offset)
@@ -257,6 +286,31 @@ class ManageController extends Controller
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
 
+        $user = $registration->user;
+
+        if ($user->phone != preg_replace('/\D/', '', $valid['phone'])) {
+            $user->update([
+                'phone' => preg_replace('/\D/', '', $valid['phone']),
+            ]);
+
+            $user->forceFill([
+                'sms_capable' => 0,
+                'sms_verified_at' => null,
+            ]);
+
+            $this->logChanges($user, 'updated', false, true);
+        }
+
+        $user->update([
+            'first_name' => $valid['firstName'],
+            'middle_name' => $valid['middleName'],
+            'last_name' => $valid['lastName'],
+            'birth_date' => $valid['dateOfBirth'],
+            'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
+        ]);
+
+        $this->logChanges($user, 'updated', false, true);
+
         $conditions = [];
         if (isset($valid['condition'])) {
             $conditions = array_keys($valid['condition']);
@@ -401,7 +455,7 @@ class ManageController extends Controller
             'firstName' => 'required|string|max:255',
             'middleName' => 'nullable|string|max:30',
             'lastName' => 'required|string|max:255',
-            'email' => 'required_without:phone|nullable|string|email|max:255',
+            'email' => 'required_without:phone|nullable|string|email:filter|max:255',
             'phone' => 'required_without:email|nullable|regex:/^(?=.*[0-9])[- +()0-9]+$/|max:14',
             'dateOfBirth' => ['required','date', new DateParsable, new AtLeastThirteen],
             'race' => 'required|in:'.$valid_races,

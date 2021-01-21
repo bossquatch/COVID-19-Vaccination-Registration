@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'birth_date',
         'sms_verifed_at',
         'suffix_id',
+        'last_login',
     ];
 
     /**
@@ -39,6 +40,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    /**
+    * Accessor for Age.
+    */
+    public function getAgeAttribute()
+        {
+            if ($this->birth_date != null) {
+                return Carbon::parse($this->birth_date)->age;
+            }
+            else {
+                return 'N/A';
+            }
+        }
 
     /**
      * The attributes that should be cast to native types.
@@ -122,5 +136,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function comments() {
         return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 }

@@ -74,11 +74,18 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
     Route::get('/admin/reports', [App\Http\Controllers\AdminController::class, 'report']);
     Route::get('/admin/new', [App\Http\Controllers\AdminController::class, 'create'])->middleware('can:create_user');
+    Route::get('/admin/tags', [App\Http\Controllers\TagController::class, 'index']);
     Route::get('/admin/{id}', [App\Http\Controllers\AdminController::class, 'edit'])->middleware('can:update_user');
 
     Route::post('/admin', [App\Http\Controllers\AdminController::class, 'store'])->middleware('can:create_user');
     Route::post('/admin/reset', [App\Http\Controllers\AdminController::class, 'resetPassword'])->middleware('can:update_user');
     Route::put('/admin/{id}', [App\Http\Controllers\AdminController::class, 'update'])->middleware('can:update_user');
+
+    Route::get('/admin/tags/{id}/edit', [App\Http\Controllers\TagController::class, 'edit']);
+    Route::post('/admin/tags', [App\Http\Controllers\TagController::class, 'new']);
+    Route::post('/admin/tags/sync', [App\Http\Controllers\TagController::class, 'sync']);
+    Route::post('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'update']);
+    Route::delete('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'delete']);
 
     Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_vaccine');
 });
