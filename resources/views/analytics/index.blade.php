@@ -337,6 +337,14 @@
             animation: {
                 animateScale: true,
                 animateRotate: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 2000,
+                        min: 0
+                    }
+                }]
             }
         }
     });
