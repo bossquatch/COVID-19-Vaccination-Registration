@@ -37,10 +37,12 @@
         var csrf_token = '{{ csrf_token() }}';
     </script>
 </head>
-<body class="site">
-    <main class="site-content">
+<body class="vh-100 bg-fixed bg-login d-flex flex-column">
+    <main class="d-flex flex-column flex-grow-1">
         @yield('content')
     </main>
+
+    @include('layouts.partials.footer-transparent')
 
     @yield('scripts')
 </body>
