@@ -98,7 +98,7 @@
                                     </p>
 
                                     <p class="text-gray-dark mb-2">
-                                        Code {{ Auth::user()->registration->code }}
+                                        Code: {{ Auth::user()->registration->code }}
                                     </p>
 
                                     <p class="text-gray-dark mb-0">

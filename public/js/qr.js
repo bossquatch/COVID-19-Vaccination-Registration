@@ -140,7 +140,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col-12", attrs: { id: "qr-reader-app" } },
+    { staticClass: "bg-dark", attrs: { id: "qr-reader-app" } },
     [_c("qrcode-stream", { on: { decode: _vm.onDecode } })],
     1
   )
