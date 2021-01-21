@@ -302,3 +302,15 @@
         }
     }
 }
+
+.nav-link-style {
+    color: $nav-link-style-color;
+    display: inline-block;
+    font-weight: $nav-link-style-weight;
+    text-decoration: none;
+
+    &:hover {
+        color: $nav-link-style-hover-color;
+        text-decoration: underline;
+    }
+}
