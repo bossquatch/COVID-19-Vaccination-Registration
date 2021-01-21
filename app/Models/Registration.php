@@ -93,6 +93,10 @@ class Registration extends Model
         return false;
     }
 
+    public function invitations() {
+        return $this->hasMany(Invitation::class, 'registration_id');
+    }
+
     /**
     * Accessor for Age.
     */
