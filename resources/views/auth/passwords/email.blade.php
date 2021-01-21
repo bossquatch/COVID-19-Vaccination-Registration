@@ -40,7 +40,7 @@
                             </div>
 
                             <!-- Submit -->
-                            <button class="btn btn-header btn-round btn-lg btn-block" type="submit">
+                            <button class="btn btn-primary btn-block" type="submit">
                                 {{ __('Send Password Reset Link') }}
                             </button>
                         </form>

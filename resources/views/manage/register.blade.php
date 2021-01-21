@@ -101,7 +101,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
                                         <label for="suffix">
-                                            Suffix <span class="font-weight-light small">(If applicable)</span>
+                                            Suffix
                                         </label>
                                         <select id="suffix" name="suffix" class="custom-select @error("suffix") is-invalid @enderror">
                                             <option value="0" @if (old('suffix') && old('suffix') == '0') selected @endif></option>
@@ -109,7 +109,7 @@
                                                 <option value="{{ $suffix->id }}" @if (old('suffix') && old('suffix') == $suffix->id) selected @endif>{{ $suffix->display_name }}</option>
                                             @endforeach
                                         </select>
-            
+                                        <span class="form-text font-weight-light font-size-xs text-muted">If applicable.</span>
                                         @error('suffix')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('suffix') }}</strong>
@@ -122,10 +122,10 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
                                         <label for="dob">
-                                            Date of Birth <span class="font-weight-light small">(You must be at least 16 years of age to register)</span>
+                                            Date of Birth
                                         </label>
                                         <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
-                        
+                                        <span class="form-text font-weight-light font-size-xs text-muted">You must be at least 16 years of age to register.</span>
                                         @error('dateOfBirth')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('dateOfBirth') }}</strong>
