@@ -37,7 +37,7 @@
         var csrf_token = '{{ csrf_token() }}';
     </script>
 </head>
-<body class="vh-100 bg-fixed bg-login d-flex flex-column">
+<body class="min-vh-100 bg-fixed bg-login d-flex flex-column">
     <main class="d-flex flex-column flex-grow-1">
         @yield('content')
     </main>
