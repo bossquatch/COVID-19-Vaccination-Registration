@@ -131,7 +131,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
                                         <label for="dob">
-                                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
+                                            Date of Birth <span class="font-weight-light small">(You must be at least 16 years of age to register)</span>
                                         </label>
                                         <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') ?? $registration->birth_date }}" required aria-required="true">
                         

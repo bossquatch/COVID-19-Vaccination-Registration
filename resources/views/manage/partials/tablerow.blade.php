@@ -21,8 +21,7 @@
             @endcan
             @can('update_registration')
             <a href="/manage/edit/{{ $res->registration->id }}" title="Edit Registration" aria-title="Edit Registration">
-                <span class="fad fa-edit ml-1"></span>
-            </a>    
+                <span class="fad fa-edit ml-1"></span></a>    
             @endcan
         @else
             @can('update_registration')
