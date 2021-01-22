@@ -54,19 +54,23 @@ class EventController extends Controller
             return redirect()->back()->withErrors($val->errors())->withInput($valid);
         }
 
-        $event = Event::create([
+        // Make sure we don't have two identical events
+        $event = Event::firstOrCreate([
             'location_id' => $valid['location'],
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
             'open' => !isset($valid['manualSchedule']),
         ]);
 
-        $lot = Lot::firstOrCreate([
-            'number' => $valid['lot'],
-        ]);
+        // don't try to do anything else to the db if this is a duplicate event
+        if ($event->wasRecentlyCreated) {
+            $lot = Lot::firstOrCreate([
+                'number' => $valid['lot'],
+            ]);
 
-        $event->lots()->attach($lot->id);
-        $event->slots()->createMany($slot_times);
+            $event->lots()->attach($lot->id);
+            $event->slots()->createMany($slot_times);
+        }
 
         Session::flash('success', "Event was added.");
         return redirect('/events');
