@@ -443,6 +443,18 @@ class ManageController extends Controller
         return redirect('/manage');
     }
 
+    public function userDelete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->email = rand(10000,99999) . '-' . $user->email;
+        $user->update();
+        $this->logChanges($user, 'deleted', false, false, null, true);
+        $user->delete();
+
+        Session::flash('success', "<p>User was successfully deleted.</p>");
+        return redirect('/manage');
+    }
+
     private function validationRules()
     {
         $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
