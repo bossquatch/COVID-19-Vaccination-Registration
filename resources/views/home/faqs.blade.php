@@ -36,6 +36,59 @@
                 <div class="card card-accordion accordion mb-4 mb-md-5" id="helpAccordionOne">
                     <div class="list-group">
                         <div class="list-group-item">
+                            <span class="badge badge-pill badge-danger-soft mb-3">
+                                <span class="text-uppercase">
+                                    Update
+                                </span>
+                            </span>
+                            <!-- Toggle -->
+                            <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpSixty" role="button" aria-expanded="false" aria-controls="helpSixty">
+                                <!-- Title -->
+                                <h3 class="collapse-title">I need to be a Florida resident to be vaccinated at these appointments?</h3>
+                                <!-- Metadata -->
+                                <div class="ml-auto">
+                                    <!-- Chevron -->
+                                    <span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
+                                </div>
+                            </a>
+                            <!-- Collapse -->
+                            <div class="collapse" id="helpSixty" data-parent="#helpAccordionOne">
+                                <div class="py-4">
+                                    <!-- Text -->
+                                    <p class="collapse-content">
+                                        By <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/01/Prioritization-of-Floridans-for-Covid-19-Vaccinations.pdf">advisory</a> from the State Surgeon General and State Health Officer, Scott A. Rivkees, M.D., prior to providing the first dose of the COVID-19 vaccine to the intended recipient, every vaccine provider in Florida should ensure the recipient of the vaccine is either:
+                                    </p>
+                                    <ol class="text-gray-dark">
+                                        <li>a resident of the State of Florida able to demonstrate residency consistent with the criteria set forth in <a href="http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0381/Sections/0381.986.html">&#167 381.986(5)(b), Fla Stat.</a>; or</li>
+                                        <li>an individual present in Florida for the purpose of providing health care services involving direct contact with patients.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <!-- Toggle -->
+                            <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFourteen" role="button" aria-expanded="false" aria-controls="helpFourteen">
+                                <!-- Title -->
+                                <h3 class="collapse-title">Do I need to be a Polk County resident to be vaccinated at these appointments?</h3>
+
+                                <!-- Metadata -->
+                                <div class="ml-auto">
+                                    <!-- Chevron -->
+                                    <span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
+                                </div>
+                            </a>
+
+                            <!-- Collapse -->
+                            <div class="collapse" id="helpFourteen" data-parent="#helpAccordionOne">
+                                <div class="py-4">
+                                    <!-- Text -->
+                                    <p class="collapse-content">
+                                        No; however, an appointment is mandatory. We do ask that those who receive their first dose of vaccine from us also be local/in county to receive their second dose from us 28 days later.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpOne" role="button" aria-expanded="false" aria-controls="helpOne">
                                 <!-- Title -->
@@ -123,13 +176,13 @@
                                     <!-- Text -->
                                     <p class="collapse-content">
                                         During this first phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations:
-                                        <ul>
-                                            <li>Long-term care facility residents and staff</li>
-                                            <li>Persons 65 years of age and older</li>
-                                            <li>Health care personnel with direct patient contact.</li>
-                                            <li>Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital</li>
-                                        </ul>
                                     </p>
+                                    <ul>
+                                        <li>Long-term care facility residents and staff</li>
+                                        <li>Persons 65 years of age and older</li>
+                                        <li>Health care personnel with direct patient contact.</li>
+                                        <li>Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -152,13 +205,13 @@
                                     <!-- Text -->
                                     <p class="collapse-content">
                                         No. The vaccine takes a few weeks for antibodies to develop. A second dose of the vaccine will need to administered 28 days after the first as a booster. We encourage you to continue following healthy prevention measures after receiving the vaccine. This includes continuing to:
-                                        <ul>
-                                            <li>Wash your hands</li>
-                                            <li>Wear a mask in public</li>
-                                            <li>Continue social distancing while out in public</li>
-                                            <li>Cleaning and wiping down surfaces</li>
-                                        </ul>
                                     </p>
+                                    <ul>
+                                        <li>Wash your hands</li>
+                                        <li>Wear a mask in public</li>
+                                        <li>Continue social distancing while out in public</li>
+                                        <li>Cleaning and wiping down surfaces</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -346,29 +399,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group-item">
-                            <!-- Toggle -->
-                            <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFourteen" role="button" aria-expanded="false" aria-controls="helpFourteen">
-                                <!-- Title -->
-                                <h3 class="collapse-title">Do I need to be a Polk County resident to be vaccinated at these appoinments?</h3>
 
-                                <!-- Metadata -->
-                                <div class="ml-auto">
-                                    <!-- Chevron -->
-                                    <span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
-                                </div>
-                            </a>
-
-                            <!-- Collapse -->
-                            <div class="collapse" id="helpFourteen" data-parent="#helpAccordionOne">
-                                <div class="py-4">
-                                    <!-- Text -->
-                                    <p class="collapse-content">
-                                        No; however, an appointment is mandatory. We do ask that those who receive their first dose of vaccine from us also be local/in county to receive their second dose from us 28 days later.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                         <div class="list-group-item">
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFifteen" role="button" aria-expanded="false" aria-controls="helpFifteen">
@@ -387,13 +418,13 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        <ul>
-                                            <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
-                                            <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
-                                            <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
-                                            <li>The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.</li>
-                                        </ul>
                                     </p>
+                                    <ul>
+                                        <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
+                                        <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
+                                        <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
+                                        <li>The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
