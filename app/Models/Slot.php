@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Slot extends Model
 {
@@ -17,7 +18,7 @@ class Slot extends Model
     }
 
     public function invitations() {
-        return $this->hasMany(Invitaion::class, 'invite_status_id');
+        return $this->hasMany(Invitation::class, 'invite_status_id');
     }
 
     public function registrations() {

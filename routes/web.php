@@ -64,6 +64,11 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/locations', [App\Http\Controllers\LocationController::class, 'store'])->middleware('can:create_location');
     Route::delete('/locations/{id}', [App\Http\Controllers\LocationController::class, 'delete'])->middleware('can:delete_location');
 
+    Route::get('/events', [App\Http\Controllers\EventController::class, 'index']);
+    Route::get('/events-history', [App\Http\Controllers\EventController::class, 'history']);
+    Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->middleware('can:create_event');
+    //Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'delete'])->middleware('can:delete_event');
+
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');
 

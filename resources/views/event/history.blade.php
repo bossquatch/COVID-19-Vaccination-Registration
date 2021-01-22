@@ -4,14 +4,6 @@
     {{ config('app.name', 'Laravel') }} - Events
 @endsection
 
-@section('header')
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
-<script>
-    var availableLots = {!! json_encode($lots) !!};
-</script>
-@endsection
-
 @section('content')
 <!-- Header -->
 <div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
@@ -26,10 +18,10 @@
                 </span>
 
                 <!-- Heading -->
-                <h2 class="title">Manage Events</h2>
+                <h2 class="title">Events History</h2>
 
                 <!-- Text -->
-                <p class="font-size-lg text-gray-dark mb-0">Manage the events to distribute vaccinations.</p>
+                <p class="font-size-lg text-gray-dark mb-0">View Stats on Old Events.</p>
             </div>
         </div>
     </div>
@@ -41,13 +33,13 @@
             <div class="col-12">
                 <ul class="list-group" id="events-list">
                     <li class="list-group-item active">
-                        <h3 class="h4 d-inline align-text-top">Upcoming Event List</h3>
-                        <a href="/events-history" class="ml-2 text-white align-bottom font-italic">View History</a>
-                        @can('create_event')
+                        <h3 class="h4 d-inline align-text-top">Hisorical Event List</h3>
+                        <a href="/events" class="ml-2 text-white align-bottom font-italic">View Active</a>
+                        {{--@can('create_event')
                         <button class="btn btn-success btn-sm float-right" onclick="eventForm('')"><span class="fad fa-plus-circle mr-1"></span>Add</button>    
-                        @endcan
+                        @endcan--}}
                     </li>
-                    @can('create_event')
+                    {{--@can('create_event')
                         <li class="list-group-item" id="event-row-new" @if ($errors->isEmpty()) style="display: none;" @endif>
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-between">
@@ -57,7 +49,7 @@
                             </div>
                             @include('event.partials.form')
                         </li>    
-                    @endcan
+                    @endcan--}}
                     
                     @foreach ($events as $event)
                         <li class="list-group-item list-group-item-light">
@@ -124,7 +116,7 @@
         return false;
     }
 </script>
-@endcan--}}
+@endcan
 
 @can('create_event')
 <script type="text/javascript">
@@ -158,7 +150,6 @@
         if(val == 0) {
             time = "12" + time;
         } else if(val == 12) {
-            time = val + time
             ampm = "PM";
         } else if(val > 12) {
             time = (val - 12) + time;
@@ -174,5 +165,5 @@
         document.getElementById('event-row-new').style.display = display;
     }
 </script>
-@endcan
+@endcan--}}
 @endsection

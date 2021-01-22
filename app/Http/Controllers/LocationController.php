@@ -31,7 +31,7 @@ class LocationController extends Controller
         Location::create($valid);
 
         Session::flash('success', "Location was added.");
-        return $this->index();
+        return redirect('/locations');
     }
 
     public function delete($id)
@@ -40,7 +40,7 @@ class LocationController extends Controller
         $location->delete();
 
         Session::flash('success', "Location was removed.");
-        return $this->index();
+        return redirect('/locations');
     }
 
     private function validationRules()
