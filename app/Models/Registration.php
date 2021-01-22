@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Registration extends Model
 {
@@ -57,6 +58,11 @@ class Registration extends Model
         return $this->belongsTo(Gender::class, 'gender_id');
     }
 
+    public function suffix()
+    {
+        return $this->belongsTo(Suffix::class, 'suffix_id');
+    }
+
     public function county()
     {
         return $this->belongsTo(County::class, 'county_id');
@@ -71,4 +77,32 @@ class Registration extends Model
     {
         return $this->belongsToMany(Condition::class)->withTimestamps();
     }
+
+    public function vaccines() {
+        return $this->hasMany(Vaccine::class, 'registration_id');
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class, 'registration_id');
+    }
+
+    public function hasComments() {
+        if ($this->comments()->count() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+    * Accessor for Age.
+    */
+    public function getAgeAttribute()
+        {
+            if ($this->birth_date != null) {
+                return Carbon::parse($this->birth_date)->age;
+            }
+            else {
+                return 'N/A';
+            }
+        }
 }

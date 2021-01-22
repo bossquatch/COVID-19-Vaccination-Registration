@@ -31,7 +31,7 @@ return [
     ],
     'boolean' => 'The :attribute field must be true or false.',
     'confirmed' => 'The :attribute confirmation does not match.',
-    'date' => 'The :attribute is not a valid date.',
+    'date' => 'The :attribute is not a valid date in MM/DD/YYYY format or YYYY-MM-DD format.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
     'date_format' => 'The :attribute does not match the format :format.',
     'different' => 'The :attribute and :other must be different.',
@@ -133,6 +133,9 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+        ],
+        'reactionAgreement' => [
+            'accepted' => 'This agreement must be accepted in order to continue.  If you have had any adverse reactions to vaccines in the past, verify with your primary healthcare physician that you are safe to take the vaccine.'
         ],
     ],
 

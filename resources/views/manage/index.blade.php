@@ -6,31 +6,29 @@
 
 @section('content')
 <!-- Header -->
-<div class="page-header page-header-inner header-filter page-header-default"></div>
-
-<section class="main main-raised pt-8 pt-md-11 pb-8 pb-md-12">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 text-center">
+<div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
+    <div class="container position-relative z-1">
+        <div class="row">
+            <div class="col-12">
                 <!-- Badge -->
-                <span class="badge badge-pill badge-primary-soft mb-3">
+                <span class="badge badge-pill badge-white-teal mb-3">
                     <span class="h6 text-uppercase">
                         Manage
                     </span>
                 </span>
 
                 <!-- Heading -->
-                <h1>
-                    Review and process <span class="text-primary">online registrations.</span>
-                </h1>
+                <h2 class="title">Search Online Registrations</h2>
 
                 <!-- Text -->
-                <p class="lead text-gray-dark mb-7 mb-md-9">
-                    View COVID-19 Vaccine Registrations.
-                </p>
+                <p class="font-size-lg text-gray-dark mb-0">View COVID-19 Vaccine Registrations.</p>
             </div>
         </div>
+    </div>
+</div>
 
+<section class="main pt-8 pt-md-11 pb-8 pb-md-12">
+    <div class="container">
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
@@ -38,19 +36,15 @@
                     <span class="fad fa-clipboard-check mr-1"></span> Register Caller
                 </a>
 
+                <a class="btn btn-header btn-round btn-lg" href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">
+                    <span class="fad fa-file-medical mr-1"></span> Moderna Consent Form
+                </a>
+
+                @can('read_vaccine')
                 <a class="btn btn-header btn-round btn-lg" href="/manage/qr">
                     <span class="fad fa-qrcode mr-1"></span> Scan QR Code
                 </a>
-
-                <a class="btn btn-header btn-round btn-lg" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                    <span class="fad fa-sign-out mr-1"></span> Sign out
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+                @endcan
             </div>
         </div>
 
@@ -150,9 +144,11 @@
                                             <th>
                                                 Name
                                             </th>
+                                            @can('read_user')
                                             <th>
                                                 Registration ID
-                                            </th>
+                                            </th>    
+                                            @endcan
                                             <th>
                                                 Registration Code
                                             </th>
@@ -161,6 +157,12 @@
                                             </th>
                                             <th>
                                                 Status
+                                            </th>
+                                            <th class="text-center">
+                                                Email Verified
+                                            </th>
+                                            <th>
+                                                {{-- Actions --}}
                                             </th>
                                         </tr>
                                     </thead>
@@ -171,15 +173,54 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 text-center" id="pagination-area"></div>
         </div>
     </div>
 </section>
+
+@can('update_registration')
+<div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="User Delete Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Danger!</p>
+                        <p class="text-gray-dark mb-0">Are you sure you wish to delete this user account?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <form class="form-inline" id="userDeleteForm" action="/manage/user/" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete User</button>
+                </form>
+            </div>        
+        </div>
+    </div>
+</div>
+
 <script>
- // Get the input field
- var inputName = document.getElementById("searchName");
- var inputAddr = document.getElementById("searchAddr");
- var inputRegis = document.getElementById("searchRegis");
- var inputCode = document.getElementById("searchCode");
+    function deleteUser(id) {
+        document.getElementById("userDeleteForm").action = "/manage/user/" + id;
+        $("#deleteModal").modal('show');
+    }
+</script>
+@endcan
+
+<script>
+// Get the input field
+var inputName = document.getElementById("searchName");
+var inputAddr = document.getElementById("searchAddr");
+var inputRegis = document.getElementById("searchRegis");
+var inputCode = document.getElementById("searchCode");
 
 // Execute a function when the user releases a key on the keyboard
 inputName.addEventListener("keyup", event => { inputEnter(event, "nameBtn") }); 
@@ -200,12 +241,64 @@ function inputEnter(event, btnid) {
 function search(type) {
     $('#loadingModal').modal('show');
 
+    var val = $("#"+type).val();
+    var offset = '0';
+
+    window.sessionStorage.setItem('searchVal', val);
+    window.sessionStorage.setItem('searchOffset', offset);
+    window.sessionStorage.setItem('searchLimit', offset);
+    window.sessionStorage.setItem('searchType', type);
+
     var searchInfo = {
-        'val': $("#"+type).val()
+        'val': val,
+        'offset': parseInt(offset)
     };
 
+    setTimeout(function () {
+       	$('#loadingModal').modal('hide');
+    }, 1000);
+    makeRequest(searchInfo, type);
+}
+
+function getNext() {
+    $('#loadingModal').modal('show');
+    
+    var searchInfo = {
+        'val': window.sessionStorage.getItem('searchVal'),
+        'offset': parseInt(window.sessionStorage.getItem('searchOffset'))
+    };
+
+    setTimeout(function () {
+       	$('#loadingModal').modal('hide');
+    }, 1000);
+    makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+
+    return false;
+}
+
+function getPrev() {
+    $('#loadingModal').modal('show');
+    
+    var searchInfo = {
+        'val': window.sessionStorage.getItem('searchVal'),
+        'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit')))
+    };
+
+    setTimeout(function () {
+       	$('#loadingModal').modal('hide');
+    }, 1000);
+    makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+
+    return false;
+}
+
+function makeRequest(searchInfo, type) {
     $.get('/manage/'+type, searchInfo, function(data) {
+        // data.result, .offset, .limit, .pagination
+        window.sessionStorage.setItem('searchOffset', data.offset.toString())
+        window.sessionStorage.setItem('searchLimit', data.limit.toString())
         $("#registrations").html(data.result);
+        $("#pagination-area").html(data.pagination);
         $('#loadingModal').modal('hide');
     }, 'json');
 

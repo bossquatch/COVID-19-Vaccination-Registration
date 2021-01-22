@@ -1,5 +1,5 @@
 <template>
-    <div id="qr-reader-app" class="col-12">
+    <div id="qr-reader-app" class="bg-dark">
         <qrcode-stream @decode="onDecode" />
     </div>
 </template>

@@ -14,11 +14,19 @@
 }
 
 .font-size-lg {
-    font-size: 1.1875rem;
+    font-size: $font-size-lg;
 }
 
 .font-size-sm {
-    font-size: 0.9375rem;
+    font-size: $font-size-sm;
+}
+
+.font-size-xs {
+    font-size: $font-size-xs;
+}
+
+.font-weight-medium {
+    font-weight: 600;
 }
 
 .text-white-75 {

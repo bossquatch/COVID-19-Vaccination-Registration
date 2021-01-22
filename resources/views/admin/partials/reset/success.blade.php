@@ -1,0 +1,1 @@
+<span class="fad fa-thumbs-up text-success" title="Password successfully reset" aria-title="Password successfully reset"></span>

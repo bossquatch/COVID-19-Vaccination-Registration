@@ -25,12 +25,11 @@
     flex-direction: row;
     align-items: center;
     height: $page-header-height;
-    min-height: 100vh;
+    min-height: $page-header-height;
     margin: 0;
     padding: 0;
     border: 0;
     transform: translate3d(0, 0, 0); // forces hardware acceleration
-
     &,
     .page-header-image {
         background-position: 50%;
@@ -92,5 +91,14 @@
     .container {
         position: relative;
         z-index: 2;
+    }
+}
+
+.jumbotron-header {
+    color: $white;
+    margin: 0;
+
+    .title {
+        text-shadow: 3px 3px 7px $black;
     }
 }

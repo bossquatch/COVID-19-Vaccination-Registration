@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use App\Rules\AtLeastThirteen;
+use App\Rules\DateParsable;
 
 class RegisterController extends Controller
 {
@@ -50,14 +52,17 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $valid_suffixes = '0,'.implode(",",\App\Models\Suffix::pluck('id')->toArray());
+
         return Validator::make($data, [
             'firstName' => ['required', 'string', 'max:255'],
             'middleName' => ['nullable', 'string', 'max:30'],
             'lastName' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email:filter', 'max:255', 'unique:users'],
             'phone' => ['required', 'regex:/^(?=.*[0-9])[- +()0-9]+$/', 'max:14'],
-            'dateOfBirth' => ['required', 'date', 'before:'.Carbon::now()->add(-13, 'years')->format('m-d-Y')],
+            'dateOfBirth' => ['required', 'date', new DateParsable, new AtLeastThirteen],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'suffix' => ['required', 'in:'.$valid_suffixes],
         ]);
     }
 
@@ -74,9 +79,10 @@ class RegisterController extends Controller
             'middle_name' => $data['middleName'],
             'last_name' => $data['lastName'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
-            'birth_date' => $data['dateOfBirth'],
+            'phone' => preg_replace('/\D/', '', $data['phone']),
+            'birth_date' => Carbon::parse($data['dateOfBirth']),
             'password' => Hash::make($data['password']),
+            'suffix_id' => ($data['suffix'] != '0' ? $data['suffix'] : null),
         ]);
 
         $this->logChanges($user, 'created', false, true);

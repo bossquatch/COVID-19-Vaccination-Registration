@@ -1,0 +1,1 @@
+<span class="fas fa-spinner fa-pulse"></span>

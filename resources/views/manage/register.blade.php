@@ -6,31 +6,29 @@
 
 @section('content')
 <!-- Header -->
-<div class="page-header page-header-inner header-filter page-header-default"></div>
-
-<section class="main main-raised pt-8 pt-md-11 pb-8 pb-md-12">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 text-center">
+<div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
+    <div class="container position-relative z-1">
+        <div class="row">
+            <div class="col-12">
                 <!-- Badge -->
-                <span class="badge badge-pill badge-primary-soft mb-3">
+                <span class="badge badge-pill badge-white-teal mb-3">
                     <span class="h6 text-uppercase">
                         Register
                     </span>
                 </span>
 
                 <!-- Heading -->
-                <h1>
-                    Complete an <span class="text-primary">online registration.</span>
-                </h1>
+                <h2 class="title">Complete an Online Registration</h2>
 
                 <!-- Text -->
-                <p class="lead text-gray-dark mb-7 mb-md-9">
-                    Finish a registration for a caller's COVID-19 vaccination.
-                </p>
+                <p class="font-size-lg text-gray-dark mb-0">Finish a registration for a caller's COVID-19 vaccination.</p>
             </div>
         </div>
+    </div>
+</div>
 
+<section class="main pt-8 pt-md-11 pb-8 pb-md-12">
+    <div class="container">
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
@@ -100,8 +98,44 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-5">
+                                        <label for="suffix">
+                                            Suffix
+                                        </label>
+                                        <select id="suffix" name="suffix" class="custom-select @error("suffix") is-invalid @enderror">
+                                            <option value="0" @if (old('suffix') && old('suffix') == '0') selected @endif></option>
+                                            @foreach (\App\Models\Suffix::get() as $suffix)
+                                                <option value="{{ $suffix->id }}" @if (old('suffix') && old('suffix') == $suffix->id) selected @endif>{{ $suffix->display_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="form-text font-weight-light font-size-xs text-muted">If applicable.</span>
+                                        @error('suffix')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('suffix') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Date of Birth -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-5">
+                                        <label for="dob">
+                                            Date of Birth
+                                        </label>
+                                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
+                                        <span class="form-text font-weight-light font-size-xs text-muted">You must be at least 16 years of age to register.</span>
+                                        @error('dateOfBirth')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <!-- Email -->
-                                <div class="col-12">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="email">
                                             Email Address
@@ -127,22 +161,6 @@
                                         @error("phone")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("phone") }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Date of Birth -->
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="dob">
-                                            Date of Birth <span class="font-weight-light small">(You must be at least 13 years of age to register)</span>
-                                        </label>
-                                        <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') }}" required aria-required="true">
-                        
-                                        @error('dateOfBirth')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('dateOfBirth') }}</strong>
                                             </span>
                                         @enderror
                                     </div>
@@ -397,7 +415,7 @@
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group mb-5">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox">
+                                                    <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox" @if(old('condition') && array_key_exists($condition->id, old('condition'))) checked aria-checked="true" @endif>
                                                     <label class="custom-control-label" for="condition{{ $condition->id }}">{{ $condition->display_name }}</label>
                                                 </div>
                                             </div>
@@ -411,7 +429,7 @@
                                     <h2 class="mb-5">Agreements</h2>
                                 </div>
 
-                                <div class="col-12">
+                                {{--<div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="illAgreement" name="illAgreement" class="custom-control-input @error("illAgreement") is-invalid @enderror" type="checkbox">
@@ -424,12 +442,12 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
 
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
-                                            <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox">
+                                            <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox" @if(old('availableAgreement')) checked aria-checked="true" @endif>
                                             <label class="custom-control-label" for="availableAgreement">I will be available and present 28 days after my initial vaccination.</label>
                         
                                             @error("availableAgreement")
@@ -441,7 +459,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-12">
+                                {{--<div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="vaccineAgreement" name="vaccineAgreement" class="custom-control-input @error("vaccineAgreement") is-invalid @enderror" type="checkbox">
@@ -454,13 +472,13 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
 
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
-                                            <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox">
-                                            <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.</label>
+                                            <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox" @if(old('reactionAgreement')) checked aria-checked="true" @endif>
+                                            <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.<br><small>(Or you have checked with your primary healthcare physician that you are safe to take the vaccine.)</small></label>
                         
                                             @error("reactionAgreement")
                                                 <span class="invalid-feedback" role="alert">
@@ -468,6 +486,18 @@
                                                 </span>
                                             @enderror
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="mb-5">Comments</h2>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <label for="comment">Add New Comment</label>
+                                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -513,7 +543,7 @@
                                             if (data.address.Zip4 !== undefined) {
                                                 addr += "-"+data.address.Zip4;
                                             }
-                                            text = "<b>Address was successufully validated!</b><br><b>Found address:</b> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
+                                            text = "<strong>Address was successufully validated!</strong><br><strong>Found address:</strong> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
                                             if (data.address.ReturnText !== undefined) {
                                                 text += "<br>"+data.address.ReturnText;
                                             }

@@ -28,12 +28,12 @@ class EssentialWorkerSeeder extends Seeder
 			['id' => '11', 'sector' => 'HEALTHCARE / PUBLIC HEALTH', 'display_name' => 'Healthcare / Public Health', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '12', 'sector' => 'HYGIENE PRODUCTS AND SERVICES', 'display_name' => 'Hygiene Products And Services', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '13', 'sector' => 'LAW ENFORCEMENT, PUBLIC SAFETY, AND OTHER FIRST RESPONDERS', 'display_name' => 'Law Enforcement, Public Safety, And Other First Responders', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['id' => '14', 'sector' => 'OTHER COMMUNITY- OR GOVERNMENT-BASED OPERATIONS AND ESSENTIAL FUNCTIONS ', 'display_name' => 'Other Community- Or Government-Based Operations And Essential Functions ', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => '14', 'sector' => 'OTHER COMMUNITY OR GOVERNMENT-BASED OPERATIONS AND ESSENTIAL FUNCTIONS', 'display_name' => 'Other Community- Or Government-Based Operations And Essential Functions ', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '15', 'sector' => 'PUBLIC WORKS AND INFRASTRUCTURE SUPPORT SERVICES', 'display_name' => 'Public Works And Infrastructure Support Services', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '16', 'sector' => 'RESIDENTIAL/SHELTER FACILITIES, HOUSING AND REAL ESTATE, AND RELATED SERVICES', 'display_name' => 'Residential/Shelter Facilities, Housing And Real Estate, And Related Services', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '17', 'sector' => 'TRANSPORTATION AND LOGISTICS ', 'display_name' => 'Transportation And Logistics ', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '18', 'sector' => 'WATER AND WASTEWATER', 'display_name' => 'Water And Wastewater', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['id' => '19', 'sector' => 'OTHER NOT ON THIS LIST', 'display_name' => 'Other Not On This List', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => '19', 'sector' => 'OTHER NOT ON THIS LIST / RETIRED', 'display_name' => 'Other Not On This List / Retired', 'score' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
     }
 }
