@@ -127,7 +127,8 @@ class AdminController extends Controller
     public function delete($id)
     {
         $user = \App\Models\User::findOrFail($id);
-
+        $user->email = $user->id . rand(10000,99999) . '-' . $user->email;
+        $user->update();
         $this->logChanges($user, 'deleted', false, false, null, true);
 
         $user->delete();

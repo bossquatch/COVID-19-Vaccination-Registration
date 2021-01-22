@@ -177,6 +177,44 @@
         </div>
     </div>
 </section>
+
+@can('update_registration')
+<div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="User Delete Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Danger!</p>
+                        <p class="text-gray-dark mb-0">Are you sure you wish to delete this user account?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <form class="form-inline" id="userDeleteForm" action="/manage/user/" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete User</button>
+                </form>
+            </div>        
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteUser(id) {
+        document.getElementById("userDeleteForm").action = "/manage/user/" + id;
+        $("#deleteModal").modal('show');
+    }
+</script>
+@endcan
+
 <script>
 // Get the input field
 var inputName = document.getElementById("searchName");
