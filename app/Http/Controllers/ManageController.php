@@ -435,7 +435,7 @@ class ManageController extends Controller
 //        prefix the email address to avoid integrity constraint violation if the email is re-used later
 //        (soft) delete the user; I checked, the user model has softdeletes
         $cur_user = User::findOrFail($regis->user_id);
-        $cur_user->email = rand(10000,99999) . '-' . $cur_user->email;
+        $cur_user->email = $cur_user->id . rand(10000,99999) . '-' . $cur_user->email;
         $cur_user->update();
         $cur_user->delete();
 
@@ -446,7 +446,7 @@ class ManageController extends Controller
     public function userDelete($id)
     {
         $user = User::findOrFail($id);
-        $user->email = rand(10000,99999) . '-' . $user->email;
+        $user->email = $user->id . rand(10000,99999) . '-' . $user->email;
         $user->update();
         $this->logChanges($user, 'deleted', false, false, null, true);
         $user->delete();
