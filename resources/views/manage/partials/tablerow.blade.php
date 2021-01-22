@@ -16,12 +16,12 @@
         @if ($res->registration)
             @can('read_vaccine')
             <a href="{{ "/".$res->id."/".$res->registration->id."/".$res->registration->code }}" title="View Registration" aria-title="View Registration">
-                <span class="fad fa-eye ml-1"></span>
-            </a>
+                <span class="fad fa-eye ml-1"></span></a>
             @endcan
             @can('update_registration')
             <a href="/manage/edit/{{ $res->registration->id }}" title="Edit Registration" aria-title="Edit Registration">
-                <span class="fad fa-edit ml-1"></span></a>    
+                <span class="fad fa-edit ml-1"></span>
+            </a>    
             @endcan
         @else
             @can('update_registration')
