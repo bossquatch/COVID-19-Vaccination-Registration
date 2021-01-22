@@ -63,7 +63,7 @@
                             <div class="form-row">
                                 <div class="form-group mb-5 col-md-6">
                                     <label for="suffix">
-                                        Suffix <span class="font-weight-light small">(If applicable)</span>
+                                        Suffix
                                     </label>
                                     <select id="suffix" name="suffix" class="custom-select @error("suffix") is-invalid @enderror">
                                         <option value="0" @if (old('suffix') && old('suffix') == '0') selected @endif></option>
@@ -71,7 +71,7 @@
                                             <option value="{{ $suffix->id }}" @if (old('suffix') && old('suffix') == $suffix->id) selected @endif>{{ $suffix->display_name }}</option>
                                         @endforeach
                                     </select>
-
+                                    <span class="form-text font-weight-light font-size-xs text-muted">If applicable.</span>
                                     @error('suffix')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('suffix') }}</strong>
@@ -95,11 +95,10 @@
                             <!-- Email -->
                             <div class="form-group">
                                 <label for="email">
-                                    Email Address <br>
-                                    <span class="font-weight-light small">Each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:863-298-7500">(863) 298-7500</a>. </span>
+                                    Email Address
                                 </label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="name@address.com">
-
+                                <span class="form-text font-weight-light font-size-xs text-muted">Each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:863-298-7500">(863) 298-7500</a>.</span>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -125,10 +124,10 @@
                             <!-- Password -->
                             <div class="form-group mb-5">
                                 <label for="password">
-                                    Password <span class="font-weight-light small">(Password length is a minimum of 8 characters)</span>
+                                    Password
                                 </label>
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Create your password">
-
+                                <span class="form-text font-weight-light font-size-xs text-muted">Password length is a minimum of 8 characters.</span>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -145,7 +144,7 @@
                             </div>
 
                             <!-- Submit -->
-                            <button class="btn btn-header btn-round btn-lg btn-block" type="submit">
+                            <button class="btn btn-primary btn-block" type="submit">
                                 Register
                             </button>
                         </form>

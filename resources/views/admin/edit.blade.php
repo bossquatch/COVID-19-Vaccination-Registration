@@ -35,6 +35,12 @@
                 <a class="btn btn-header btn-round btn-lg" href="/admin">
                     <span class="fad fa-times-circle mr-1"></span> Cancel
                 </a>
+
+                @can('delete_user')
+                <button class="btn btn-header-danger btn-header btn-round btn-lg" data-toggle="modal" data-target="#deleteModal">
+                    <span class="fad fa-trash-alt mr-1"></span> Delete
+                </button>    
+                @endcan
             </div>
         </div>
 
@@ -60,4 +66,34 @@
         </div>
     </div>
 </section>
+
+@can('delete_user')
+<div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="User Delete Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Danger!</p>
+                        <p class="text-gray-dark mb-0">Are you sure you wish to delete this user account?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <form class="form-inline" action="/admin/{{ $user->id }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete User</button>
+                </form>
+            </div>        
+        </div>
+    </div>
+</div>
+@endcan
 @endsection

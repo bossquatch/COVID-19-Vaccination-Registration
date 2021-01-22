@@ -11,8 +11,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h1 class="title">Polk County COVID-19 Vaccinations</h1>
-                <p class="sub-title h4">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
-                <br>
+                <p class="sub-title h4 mb-5">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
                 @auth
                 <a class="btn btn-header btn-round btn-lg" href="/home">View Registration</a>
                 @else
@@ -20,6 +19,9 @@
                 <a class="btn btn-header btn-round btn-lg" href="/register">Register</a>
                 @endif
                 @endauth
+                <p class="font-size-xs mt-4">
+                    You must be able to provide proof of Florida residency at the time of your vaccination.  Please reference this <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/01/Prioritization-of-Floridans-for-Covid-19-Vaccinations.pdf" class="text-light font-weight-medium"><u>advisory</u></a> for more information.
+                </p>
             </div>
         </div>
     </div>

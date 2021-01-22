@@ -124,6 +124,18 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
+    public function delete($id)
+    {
+        $user = \App\Models\User::findOrFail($id);
+
+        $this->logChanges($user, 'deleted', false, false, null, true);
+
+        $user->delete();
+
+        \Session::flash('success', "User was successfully deleted.");
+        return redirect('/admin');
+    }
+
     public function resetPassword()
     {
         if (request()->input("userId")) {
