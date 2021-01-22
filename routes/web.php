@@ -60,6 +60,10 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword'])->middleware('can:update_registration');
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
 
+    Route::get('/locations', [App\Http\Controllers\LocationController::class, 'index']);
+    Route::post('/locations', [App\Http\Controllers\LocationController::class, 'store'])->middleware('can:create_location');
+    Route::delete('/locations/{id}', [App\Http\Controllers\LocationController::class, 'delete'])->middleware('can:delete_location');
+
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');
 
