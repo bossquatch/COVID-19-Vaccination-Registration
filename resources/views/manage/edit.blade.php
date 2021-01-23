@@ -687,12 +687,14 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                <form class="form-inline" action="/manage/delete/{{ $registration->id }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete Registration</button>
-                </form>
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <form class="form-inline" action="/manage/delete/{{ $registration->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete Registration</button>
+                    </form>
+                </div>
             </div>        
         </div>
     </div>

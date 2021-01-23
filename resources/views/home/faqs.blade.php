@@ -420,6 +420,7 @@
                                     <p class="collapse-content">
                                     </p>
                                     <ul>
+                                        <li>Proof of residency of the State of Florida consistent with the criteria set forth in <a href="http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0381/Sections/0381.986.html">&#167 381.986(5)(b), Fla Stat.</a>; or</li>
                                         <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
                                         <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
                                         <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
