@@ -29,6 +29,15 @@
 
 <section class="main pt-8 pt-md-11 pb-8 pb-md-12">
     <div class="container">
+        <div class="col-12">
+            <div class="text-center mb-6">
+                <!-- Button -->
+                <a class="btn btn-header btn-round btn-lg" href="/events">
+                    <span class="fas fa-arrow-left mr-1"></span>Back
+                </a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <ul class="list-group" id="locs-list">
@@ -53,7 +62,7 @@
                     @foreach ($locations as $location)
                         <li class="list-group-item list-group-item-light">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="h5 mb-1">{{ $location->name }}</h5>
+                                <h4 class="h5 mb-1">{{ $location->name }}</h4>
                                 <small>{{ $location->events()->count() . ' event(s)' }}</small>
                             </div>
                             <div class="d-flex w-100 justify-content-between">

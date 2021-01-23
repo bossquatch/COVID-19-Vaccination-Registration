@@ -45,6 +45,12 @@
                     <span class="fad fa-qrcode mr-1"></span> Scan QR Code
                 </a>
                 @endcan
+
+                @can('read_event')
+                <a class="btn btn-header btn-round btn-lg" href="/events">
+                    <span class="fad fa-calendar-day mr-1"></span> Events
+                </a>
+                @endcan
             </div>
         </div>
 

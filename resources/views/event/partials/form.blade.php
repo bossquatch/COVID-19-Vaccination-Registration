@@ -120,12 +120,12 @@
         <div class="col-12">
             <div class="form-group mb-5">
                 <div class="custom-control custom-checkbox">
-                    <input id="manualSchedule" name="manualSchedule" class="custom-control-input @error("manualSchedule") is-invalid @enderror" type="checkbox" @if(old('manualSchedule')) checked aria-checked="true" @endif>
-                    <label class="custom-control-label" for="manualSchedule">Schedule Manually</label>
+                    <input id="openAutomatically" name="openAutomatically" class="custom-control-input @error("openAutomatically") is-invalid @enderror" type="checkbox" @if(old('openAutomatically')) checked aria-checked="true" @endif>
+                    <label class="custom-control-label" for="openAutomatically">Open for Automatic Scheduling</label>
 
-                    @error("manualSchedule")
+                    @error("openAutomatically")
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first("manualSchedule") }}</strong>
+                            <strong>{{ $errors->first("openAutomatically") }}</strong>
                         </span>
                     @enderror
                 </div>

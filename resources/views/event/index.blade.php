@@ -37,6 +37,15 @@
 
 <section class="main pt-8 pt-md-11 pb-8 pb-md-12">
     <div class="container">
+        <div class="col-12">
+            <div class="text-center mb-6">
+                <!-- Button -->
+                <a class="btn btn-header btn-round btn-lg" href="/locations">
+                    <span class="fad fa-map-marker-alt mr-1"></span>Locations
+                </a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <ul class="list-group" id="events-list">
@@ -62,18 +71,18 @@
                     @foreach ($events as $event)
                         <li class="list-group-item list-group-item-light">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="h5 mb-1">{{ $event->title }}</h5>
+                                <h4 class="h5 mb-1">{{ $event->title }}</h4>
                                 <small>{{ $event->percent_filled }} scheduled</small>
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                 <div class="d-inline">
                                     <p class="mb-0 font-size-xs text-muted">{{ $event->date_held }} from {{ \Carbon\Carbon::parse($event->start_time)->format('h:i A') . ' to ' . \Carbon\Carbon::parse($event->end_time)->format('h:i A') }}</p>
-                                    <p class="my-0 font-size-xs text-muted">{{ $event->open ? 'Automatic Scheduling' : 'Closed Scheduling Only' }}</p>
+                                    <p class="my-0 font-size-xs @if($event->open) text-success @else text-danger @endif">{{ $event->open ? 'Scheduling Automatically' : 'Scheduling Closed' }}</p>
                                 </div>
                                 
-                                {{--@can('delete_event')
-                                    <a class="text-danger" href="#" onclick="deleteModal('{{ $event->id }}')"><span class="fad fa-trash-alt"></span><span class="sr-only">Delete</span></a>
-                                @endcan--}}
+                                @can('update_event')
+                                    <a class="text-info" href="/events/{{ $event->id }}" title="Event Details"><span class="fad fa-eye"></span><span class="sr-only">Event Details</span></a>
+                                @endcan
                             </div>
                         </li>
                     @endforeach
@@ -87,44 +96,6 @@
         </div>
     </div>
 </section>
-
-{{--@can('delete_event')
-<div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="event Delete Modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body pb-0 pt-6 px-6">
-                <div class="row mb-4">
-                    <div class="col-12 text-center">
-                        <span class="fad fa-exclamation-triangle fa-5x text-danger"></span>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 text-center">
-                        <p class="text-gray-dark mb-3 font-weight-bold">Danger!</p>
-                        <p class="text-gray-dark mb-0">Are you sure you wish to delete this event?</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                <form class="form-inline" id="deleteEventForm" action="/events/" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete Event</button>
-                </form>
-            </div>        
-        </div>
-    </div>
-</div>
-
-<script>
-    function deleteModal(eventId) {
-        document.getElementById('deleteEventForm').action = '/events/' + eventId;
-        $('#deleteModal').modal('show');
-        return false;
-    }
-</script>
-@endcan--}}
 
 @can('create_event')
 <script type="text/javascript">

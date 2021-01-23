@@ -191,9 +191,7 @@
 
 <script>
     $('#newComment').click(function(event){
-        console.log('hit');
         event.preventDefault();
-        console.log('hit2');
         regisId = $(this).data('regis-id');
         commentText = document.getElementById('comment').value;
 

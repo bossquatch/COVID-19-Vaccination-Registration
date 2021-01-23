@@ -38,6 +38,43 @@ class EventController extends Controller
         ]);
     }
 
+    public function read($id)
+    {
+        $event = Event::findOrFail($id);
+
+        return view('event.details', [
+            'event' => $event,
+            'lots' => Lot::get()->pluck('number')->all(),
+        ]);
+    }
+
+    public function open($id)
+    {
+        $event = Event::findOrFail($id);
+
+        $event->open = true;
+        $event->save();
+
+        Session::flash('success', "Event was opened for scheduling.");
+        return redirect('/events');
+    }
+
+    public function addLot($id)
+    {
+        $event = Event::findOrFail($id);
+        if (request()->has('lot')) {
+            $lot = Lot::firstOrCreate([
+                'number' => request()->input('lot'),
+            ]);
+
+            $event->lots()->attach($lot->id);
+
+            return json_encode(['status' => 'success', 'html' => $event->lot_numbers]);
+        } else {
+            return json_encode(['status' => 'danger']);
+        }
+    }
+
     public function store()
     {
         $valid = request()->validate($this->validationRules());
@@ -59,7 +96,7 @@ class EventController extends Controller
             'location_id' => $valid['location'],
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
-            'open' => !isset($valid['manualSchedule']),
+            'open' => isset($valid['openAutomatically']),
         ]);
 
         // don't try to do anything else to the db if this is a duplicate event
@@ -94,7 +131,7 @@ class EventController extends Controller
             'slotLength' => ['required', Rule::in(\App\Helpers\Events\SlotMachine::$validIntervals)],
             'slotCapacity' => 'required|numeric|min:0',
             'lot' => 'required|string|max:255',
-            'manualSchedule' => 'nullable',
+            'openAutomatically' => 'nullable',
         ];
     }
 }

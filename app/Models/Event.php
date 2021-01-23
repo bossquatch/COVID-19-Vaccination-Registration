@@ -24,6 +24,10 @@ class Event extends Model
         return $this->belongsToMany(Lot::class)->withTimestamps();
     }
 
+    public function getLotNumbersAttribute() {
+        return implode(", ", $this->lots()->pluck('number')->toArray());
+    }
+
     // allows $event->percent_filled
     public function getPercentFilledAttribute() {
         $filled = $capacity = 0;
