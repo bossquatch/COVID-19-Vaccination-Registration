@@ -687,7 +687,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="text-center"> 
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                     <form class="form-inline" action="/manage/delete/{{ $registration->id }}" method="POST">
                         @csrf
