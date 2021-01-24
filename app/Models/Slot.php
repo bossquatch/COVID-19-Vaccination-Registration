@@ -18,7 +18,7 @@ class Slot extends Model
     }
 
     public function invitations() {
-        return $this->hasMany(Invitation::class, 'invite_status_id');
+        return $this->hasMany(Invitation::class, 'slot_id');
     }
 
     public function registrations() {

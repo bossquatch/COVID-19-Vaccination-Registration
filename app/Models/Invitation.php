@@ -5,12 +5,55 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Invitation extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $primaryKey = ['slot_id', 'registration_id'];
+    public $incrementing = false;
+
     protected $guarded = [];
+
+    /**
+     * Set the keys for a save update query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function setKeysForSaveQuery(Builder $query)
+    {
+        $keys = $this->getKeyName();
+        if(!is_array($keys)){
+            return parent::setKeysForSaveQuery($query);
+        }
+
+        foreach($keys as $keyName){
+            $query->where($keyName, '=', $this->getKeyForSaveQuery($keyName));
+        }
+
+        return $query;
+    }
+
+    /**
+     * Get the primary key value for a save query.
+     *
+     * @param mixed $keyName
+     * @return mixed
+     */
+    protected function getKeyForSaveQuery($keyName = null)
+    {
+        if(is_null($keyName)){
+            $keyName = $this->getKeyName();
+        }
+
+        if (isset($this->original[$keyName])) {
+            return $this->original[$keyName];
+        }
+
+        return $this->getAttribute($keyName);
+    }
 
     public function registration() {
         return $this->belongsTo(Registration::class, 'registration_id');
@@ -53,6 +96,16 @@ class Invitation extends Model
     // allows $invitation->auto_contactable
     public function getAutoContactableAttribute() {
         return ($this->user->sms_verified_at || $this->user->email_verified_at);
+    }
+
+    // allows $invitation->can_sms
+    public function getCanSmsAttribute() {
+        return ($this->user->sms_verified_at);
+    }
+
+    // allows $invitation->can_email
+    public function getCanEmailAttribute() {
+        return ($this->user->email_verified_at);
     }
 
     // allows $invitation->contact_name; returns a full name, "System Automated", "Not Contacted", or "N/A"
