@@ -118,6 +118,17 @@ class EventController extends Controller
         // Will need to work out how this works and how the repurcussions will impact the system
     }
 
+    public function pendingInvites($id)
+    {
+        $event = Event::findOrFail($id);
+        $invitations = $event->pending_callbacks_query()->paginate(config('app.pagination_limit'));
+
+        return view('event.invites', [
+            'invites' => $invitations,
+            'event' => $event,
+        ]);
+    }
+
     private function validationRules()
     {
         $valid_locations = implode(",",\App\Models\Location::pluck('id')->toArray());

@@ -45,7 +45,66 @@
         </div>
 
         <div class="row align-items-center">
-            <div class="col-12 col-lg-6 offset-lg-3">
+            @if ($registration->pending_invitation)
+                @can('update_invite')
+                    <div class="col-12 col-lg-3">
+                        <div class="mb-8 mb-md-0">
+                            <div class="card mb-2">
+                                <div class="card-body p-6">
+                                    <div class="row">
+                                        <div class="col-12 d-flex align-items-center">
+                                            <span class="text-info fad fa-envelope fa-5x mx-auto"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h2 class="h4 mb-1">Pending Invite!</h2>
+                                            <p class="text-gray-dark mb-2">
+                                                Appointment Time:<br>{{ \Carbon\Carbon::parse($registration->pending_invitation->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse($registration->pending_invitation->slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse($registration->pending_invitation->slot->ending_at)->format('h:iA') }}
+                                            </p>
+                                            <p class="text-gray-dark mb-2">
+                                                Location:<br>{{ $registration->pending_invitation->event->location->address . ' ' . $registration->pending_invitation->event->location->city . ', ' . $registration->pending_invitation->event->location->state . ' ' . $registration->pending_invitation->event->location->zip }}
+                                            </p>
+                                            <p class="text-gray-dark mb-2">
+                                                Expires:<br>
+                                                @if ($registration->pending_invitation->contacted_at)
+                                                    {{ \Carbon\Carbon::parse($registration->pending_invitation->contacted_at)->addHours(config('app.invitation_expire'))->format('M d, Y h:iA') }}
+                                                @else
+                                                    @if (config('app.invitation_expire') > 24)
+                                                    {{ floor(config('app.invitation_expire') / 24) . ' day(s) from contact' }}
+                                                    @else
+                                                    {{ config('app.invitation_expire') . ' hour(s) from contact' }}    
+                                                    @endif
+                                                @endif
+                                            </p>
+
+                                            <form action="/manage/{{ $registration->id }}/invitation/accept" class="form-inline mb-1 justify-content-center" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-success">Accept</button>
+                                            </form>
+                                            <form action="/manage/{{ $registration->id }}/invitation/decline" class="form-inline mb-1 justify-content-center" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-danger">Decline</button>
+                                            </form>
+                                        
+                                            <form action="/manage/{{ $registration->id }}/invitation/phone" class="form-inline mb-1 justify-content-center" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-secondary btn-small">Left Voicemail</button>
+                                            </form>
+                                        
+                                            <form action="/manage/{{ $registration->id }}/invitation/email" class="form-inline mb-1 justify-content-center" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-secondary btn-small">Left Email</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+            @endif
+            <div class="col-12 col-lg-6 @if($registration->pending_invitation) @cannot('update_invite') offset-lg-3 @endcannot @else offset-lg-3 @endif">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     <div class="card card-body p-6">
@@ -141,7 +200,7 @@
                                 </div>
                             </div>
                         </div>
-                        @can('read_vaccine')
+                        @can('read_registration')
                             <hr>
                             <div class="row align-items-center justify-content-center">
                                 <h3>Vaccinations</h3>

@@ -14,7 +14,7 @@
     </td>
     <td>
         @if ($res->registration)
-            @can('read_vaccine')
+            @can('read_registration')
             <a href="{{ "/".$res->id."/".$res->registration->id."/".$res->registration->code }}" title="View Registration" aria-title="View Registration">
                 <span class="fad fa-eye ml-1"></span></a>
             @endcan

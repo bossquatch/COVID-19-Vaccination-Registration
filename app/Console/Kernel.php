@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            dump(config('app.auto_scheduling'));
+            //dump(config('app.auto_scheduling'));
             if (config('app.auto_scheduling')) {
                 $board = new Process(['php', 'artisan', 'scheduling:board']);
                 $judge = new Process(['php', 'artisan', 'scheduling:judge']);

@@ -101,12 +101,36 @@ class Registration extends Model
     * Accessor for Age.
     */
     public function getAgeAttribute()
-        {
-            if ($this->birth_date != null) {
-                return Carbon::parse($this->birth_date)->age;
-            }
-            else {
-                return 'N/A';
-            }
+    {
+        if ($this->birth_date != null) {
+            return Carbon::parse($this->birth_date)->age;
         }
+        else {
+            return 'N/A';
+        }
+    }
+
+    public function getPendingInvitationAttribute()
+    {
+        return $this->invitations()->whereHas('invite_status', function($query) {
+            $query->where('name', 'Awaiting Response')
+                ->orWhere('name', 'Awaiting Callback');
+        })->first();
+    }
+
+    public function getHasAppointmentAttribute()
+    {
+        return ($this->invitations()->whereHas('invite_status', function($query) {
+            $query->where('name', 'Accepted')
+                ->orWhere('name', 'Checked In');
+        })->count() > 0);
+    }
+
+    public function getAppointmentAttribute()
+    {
+        return $this->invitations()->whereHas('invite_status', function($query) {
+            $query->where('name', 'Accepted')
+                ->orWhere('name', 'Checked In');
+        })->first()->slot;
+    }
 }

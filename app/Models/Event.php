@@ -47,4 +47,25 @@ class Event extends Model
     public function getEndTimeAttribute() {
         return $this->slots()->orderBy('ending_at', 'desc')->first()->ending_at ?? 'N/A';
     }
+
+    public function getHasPendingCallbacksAttribute() {
+        return ($this->slots()->whereHas('invitations', function ($query) {
+            $query->whereHas('invite_status', function ($query) {
+                $query->where('name', 'Awaiting Callback');
+            });
+        })->count() > 0);
+    }
+
+    public function pending_callbacks_query() {
+        return $this->hasManyThrough(
+            Invitation::class,
+            Slot::class,
+            'event_id', // Foreign key on the slots table...
+            'slot_id', // Foreign key on the invitations table...
+            'id', // Local key on the events table...
+            'id' // Local key on the slots table...
+        )->whereHas('invite_status', function ($query) {
+            $query->where('name', 'Awaiting Callback');
+        });
+    }
 }

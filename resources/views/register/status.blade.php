@@ -63,6 +63,36 @@
         <div class="row align-items-center">
             <div class="col-12 col-md-7">
                 <div class="mb-8 mb-md-0">
+                    @if (Auth::user()->registration->pending_invitation)
+                        <div class="card mb-2">
+                            <div class="card-body p-6">
+                                <div class="row">
+                                    <div class="col-4 d-flex align-items-center">
+                                        <span class="text-info fad fa-envelope fa-5x mx-auto"></span>
+                                    </div>
+                                    <div class="col-8">
+                                        <h2 class="h4 mb-1">Pending Invite!</h2>
+                                        <p class="text-gray-dark mb-2">
+                                            Appointment Time: {{ \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->slot->ending_at)->format('h:iA') }}
+                                        </p>
+                                        <p class="text-gray-dark mb-2">
+                                            Location: {{ Auth::user()->registration->pending_invitation->event->location->address . ' ' . Auth::user()->registration->pending_invitation->event->location->city . ', ' . Auth::user()->registration->pending_invitation->event->location->state . ' ' . Auth::user()->registration->pending_invitation->event->location->zip }}
+                                        </p>
+                                        <div class="row justify-content-between px-4">
+                                            <form action="/home/invitation/accept" class="form-inline" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-success">Accept</button>
+                                            </form>
+                                            <form action="/home/invitation/decline" class="form-inline" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-danger">Decline</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <!-- Card -->
                     <div class="card">
                         <div class="card-body p-6">
@@ -72,12 +102,12 @@
                                         <small><span class="fad fa-trash-alt mr-1"></span> Delete Registration</small>
                                     </button>
                                 </div>--}}
-                                @if(config('app.always_show_qr'))
+                                @if(config('app.always_show_qr') || Auth::user()->registration->has_appointment)
                                 <div class="col-12 col-lg-4 text-center mb-0">
                                     {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code); !!}
                                 </div>
                                 @endif
-                                <div class="col-12 @if(config('app.always_show_qr')) col-lg-8 @endif text-center mb-0">
+                                <div class="col-12 @if(config('app.always_show_qr') || Auth::user()->registration->has_appointment) col-lg-8 @endif text-center mb-0">
                                     <!-- Logo -->
                                     {{--<div class="text-primary mb-4">
                                         <span class="fad fa-user-circle fa-4x"></span>
@@ -139,6 +169,26 @@
                             </div>
                         </div>
                     </div>
+                    @if (Auth::user()->registration->has_appointment)
+                        <div class="card mt-2">
+                            <div class="card-body p-6">
+                                <div class="row">
+                                    <div class="col-4 d-flex align-items-center">
+                                        <span class="text-success fad fa-calendar-check fa-5x mx-auto"></span>
+                                    </div>
+                                    <div class="col-8">
+                                        <h2 class="h4 mb-1">Current Appointment:</h2>
+                                        <p class="text-gray-dark mb-2">
+                                            Appointment Time: {{ \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->ending_at)->format('h:iA') }}
+                                        </p>
+                                        <p class="text-gray-dark mb-2">
+                                            Location: {{ Auth::user()->registration->appointment->event->location->address . ' ' . Auth::user()->registration->appointment->event->location->city . ', ' . Auth::user()->registration->appointment->event->location->state . ' ' . Auth::user()->registration->appointment->event->location->zip }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="col-12 col-md-5">

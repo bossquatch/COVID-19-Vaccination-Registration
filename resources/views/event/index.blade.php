@@ -79,10 +79,17 @@
                                     <p class="mb-0 font-size-xs text-muted">{{ $event->date_held }} from {{ \Carbon\Carbon::parse($event->start_time)->format('h:i A') . ' to ' . \Carbon\Carbon::parse($event->end_time)->format('h:i A') }}</p>
                                     <p class="my-0 font-size-xs @if($event->open) text-success @else text-danger @endif">{{ $event->open ? 'Scheduling Automatically' : 'Scheduling Closed' }}</p>
                                 </div>
-                                
-                                @can('update_event')
-                                    <a class="text-info" href="/events/{{ $event->id }}" title="Event Details"><span class="fad fa-eye"></span><span class="sr-only">Event Details</span></a>
-                                @endcan
+                                <div class="text-right">
+                                    @can('update_invite')
+                                        @if ($event->has_pending_callbacks)
+                                            <a class="text-warning" href="/events/{{ $event->id }}/pending" title="Registrations waiting for callback!"><span class="fad fa-bell-exclamation"></span><span class="sr-only">Pending Callbacks</span></a>   
+                                        @endif
+                                    @endcan
+
+                                    @can('update_event')
+                                        <a class="text-info" href="/events/{{ $event->id }}" title="Event Details"><span class="fad fa-eye"></span><span class="sr-only">Event Details</span></a>
+                                    @endcan
+                                </div>
                             </div>
                         </li>
                     @endforeach

@@ -45,6 +45,9 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/edit', [App\Http\Controllers\RegistrationController::class, 'update']);
     Route::delete('/home/delete', [App\Http\Controllers\RegistrationController::class, 'deleteRegistration']);
 
+    Route::post('/home/invitation/accept', [App\Http\Controllers\InvitationController::class, 'accept'])->middleware('can:create_registration');
+    Route::post('/home/invitation/decline', [App\Http\Controllers\InvitationController::class, 'decline'])->middleware('can:create_registration');
+
     Route::get('/address/validate', [App\Http\Controllers\UspsController::class, 'validateInlineAddress']);
 
     Route::get('/manage', [App\Http\Controllers\ManageController::class, 'index']);
@@ -60,6 +63,10 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword'])->middleware('can:update_registration');
     Route::delete('/manage/user/{id}', [App\Http\Controllers\ManageController::class, 'userDelete'])->middleware('can:update_registration');
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
+    Route::post('/manage/{id}/invitation/accept', [App\Http\Controllers\InvitationController::class, 'acceptCallback'])->middleware('can:update_invite');
+    Route::post('/manage/{id}/invitation/decline', [App\Http\Controllers\InvitationController::class, 'declineCallback'])->middleware('can:update_invite');
+    Route::post('/manage/{id}/invitation/phone', [App\Http\Controllers\InvitationController::class, 'leftPhone'])->middleware('can:update_invite');
+    Route::post('/manage/{id}/invitation/email', [App\Http\Controllers\InvitationController::class, 'leftEmail'])->middleware('can:update_invite');
 
     Route::get('/locations', [App\Http\Controllers\LocationController::class, 'index']);
     Route::post('/locations', [App\Http\Controllers\LocationController::class, 'store'])->middleware('can:create_location');
@@ -69,6 +76,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/events-history', [App\Http\Controllers\EventController::class, 'history']);
     Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->middleware('can:create_event');
     Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'read']);
+    Route::get('/events/{id}/pending', [App\Http\Controllers\EventController::class, 'pendingInvites'])->middleware('can:update_invite');
     //Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'delete'])->middleware('can:delete_event');
     Route::put('/events/{id}/open', [App\Http\Controllers\EventController::class, 'open']);
     Route::post('/events/{id}/lots', [App\Http\Controllers\EventController::class, 'addLot']);
