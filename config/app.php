@@ -71,6 +71,8 @@ return [
     // how long it takes for invitations to expire in hours
     'invitation_expire' => env('INVITATION_EXPIRE', 24),
 
+    'auto_scheduling' => env('AUTO_SCHEDULING', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
