@@ -8,7 +8,7 @@
     <td>{{ $res->registration->code ?? '' }}</td>
     <td>{{ $res->registration ? Carbon\Carbon::parse($res->registration->submitted_at)->format('m-d-Y') : 'No registration' }}</td>  
     <td class="text-center">
-          @if ($res->email_verified_at)
+          @if ($res->submitted_at)
           <span class="fas fa-clock text-success" title="{{ Carbon\Carbon::parse($res->registration->submitted_at)->format('m-d-Y h:i:s A') }}"></span>  
           @endif
     </td>

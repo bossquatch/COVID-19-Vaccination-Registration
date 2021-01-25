@@ -156,10 +156,10 @@
                                                 Registration Code
                                             </th>
                                             <th>
-                                                Submitted At
+                                                Submitted On
                                             </th>
                                             <th>
-                                                Submission Time
+                                                Submitted At
                                             </th>
                                             <th>
                                                 Status
