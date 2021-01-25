@@ -6,7 +6,7 @@
     <td>{{ $res->registration->id ?? '' }}</td>    
     @endcan
     <td>{{ $res->registration->code ?? '' }}</td>
-    <td><span title="{{ Carbon\Carbon::parse($res->registration->submitted_at)->format('h:i:s A') }}">{{ $res->registration ? Carbon\Carbon::parse($res->registration->submitted_at)->format('m-d-Y') : 'No registration' }}</span></td>    
+    <td><span title="{{ $res->registration ? Carbon\Carbon::parse($res->registration->submitted_at)->format('m-d-Y h:i:s A') }}">{{ $res->registration ? Carbon\Carbon::parse($res->registration->submitted_at)->format('m-d-Y') : 'No registration' }}</span></td>    
     <td>{{ $res->registration->status->name ?? 'Emailed: '.$res->email }}</td>
     <td class="text-center">
         @if ($res->email_verified_at)
