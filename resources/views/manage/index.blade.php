@@ -158,9 +158,9 @@
                                             <th>
                                                 Submitted On
                                             </th>
-                                            <th>
+                                            <!-- <th>
                                                 Submitted At
-                                            </th>
+                                            </th> -->
                                             <th>
                                                 Status
                                             </th>
