@@ -159,7 +159,7 @@
                                                 Submitted At
                                             </th>
                                             <th>
-                                            
+                                                Submission Time
                                             </th>
                                             <th>
                                                 Status
