@@ -144,6 +144,9 @@
                                             <th>
                                                 Name
                                             </th>
+                                            <th>
+                                                Date of Birth
+                                            </th>
                                             @can('read_user')
                                             <th>
                                                 Registration ID
