@@ -16,7 +16,6 @@
                         Manage
                     </span>
                 </span>
-
                 <!-- Heading -->
                 <h2 class="title">Search Online Registrations</h2>
 
