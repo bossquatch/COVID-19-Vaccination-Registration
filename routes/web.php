@@ -109,5 +109,8 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'update']);
     Route::delete('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'delete']);
 
+    Route::post('/slots/force-invite/{regis_id}', [App\Http\Controllers\SlotController::class, 'forceInvite'])->middleware('can:create_invite');
+    Route::get('/slots/{event_id}', [App\Http\Controllers\SlotController::class, 'options'])->middleware('can:create_invite');
+
     Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_vaccine');
 });

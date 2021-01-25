@@ -71,7 +71,11 @@
                                                     {{ \Carbon\Carbon::parse($registration->pending_invitation->contacted_at)->addHours(config('app.invitation_expire'))->format('M d, Y h:iA') }}
                                                 @else
                                                     @if (config('app.invitation_expire') > 24)
-                                                    {{ floor(config('app.invitation_expire') / 24) . ' day(s) from contact' }}
+                                                        @if ((config('app.invitation_expire') % 24) > 0)
+                                                        {{ floor(config('app.invitation_expire') / 24) . ' day(s) and ' . (config('app.invitation_expire') % 24) . ' hour(s) from contact' }}
+                                                        @else
+                                                        {{ floor(config('app.invitation_expire') / 24) . ' day(s) from contact' }}
+                                                        @endif
                                                     @else
                                                     {{ config('app.invitation_expire') . ' hour(s) from contact' }}    
                                                     @endif
@@ -200,6 +204,48 @@
                                 </div>
                             </div>
                         </div>
+                        @can('create_invite')
+                        @php
+                            $past_events = \App\Models\Event::where([
+                                    ['date_held', '<', DB::raw('CURDATE()')],
+                                    ['date_held', '>=', \Carbon\Carbon::today()->subDays(14)],
+                                ])->whereHas('slots', function ($query) {
+                                    $query->withCount([
+                                        'invitations as active_invitations_count' => function ($query) {
+                                            $query->whereHas('invite_status', function ($query) {
+                                                $query->whereNotIn('id', [4, 5]);
+                                            });
+                                        },
+                                    ])->having('capacity', '>', 'acivate_invitations_count');
+                                })->orderBy('date_held', 'desc')->get();
+                        @endphp
+                            <hr>
+                            <div id="forceSchedulingRow">
+                                <div class="row align-items-center justify-content-center">
+                                    <h3>Add Appointment Data for Record</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-10 mx-auto">
+                                        <div class="input-group">
+                                            <select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
+                                                <option selected>Choose Event...</option>
+                                                @foreach ($past_events as $event)
+                                                    <option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }}</option>
+                                                @endforeach
+                                            </select>
+                                            <select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">
+                                                <option selected>No available slots</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary btn-disabled" disabled type="button" id="forceSchedulingLoading" style="display: none;"><span class="fad fa-spinner fa-spin"></span></button>
+                                                <button class="btn btn-outline-success" type="button" id="forceSchedulingAdd" onclick="submitInvite()">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="forceSchedulingStatus"></div>
+                            </div>
+                        @endcan
                         @can('read_registration')
                             <hr>
                             <div class="row align-items-center justify-content-center">
@@ -247,6 +293,51 @@
         </div>
     </div>
 </section>
+
+@can('create_invite')
+    <script>
+        $('#forceSchedule').on('change', function() {
+            var eventId = this.value;
+
+            if (eventId > 0) {
+                $.get('/slots/'+eventId, {}, function(data) {
+                        if (data.status == 'success') {
+                            $('#forceSlot').html(data.html);
+                        } else {
+                            $('#forceSlot').html('<option selected>No available slots</option>');
+                        }
+                }, 'json');
+            } else {
+                $('#forceSlot').html('<option selected>No available slots</option>');
+            }
+        });
+
+        function submitInvite() {
+            document.getElementById('forceSchedulingAdd').style.display = 'none';
+            document.getElementById('forceSchedulingLoading').style.display = '';
+            var event = document.getElementById('forceSchedule').options[document.getElementById('forceSchedule').selectedIndex].value;
+            var slot = document.getElementById('forceSlot').options[document.getElementById('forceSlot').selectedIndex].value;
+
+            if (event > 0 && slot > 0) {
+                $.post('/slots/force-invite/{{ $registration->id }}', {
+                        '_token' : $('meta[name=csrf-token]').attr('content'),
+                        'event' : event,
+                        'slot' : slot,
+                    }, function(data) {
+                        document.getElementById('forceSchedulingAdd').style.display = '';
+                        document.getElementById('forceSchedulingLoading').style.display = 'none';
+                        if (data.status == 'success') {
+                            document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-success text-center">The registration was associated with the event time slot!</div>';
+                        } else {
+                            document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-danger text-center">' + data.message + '</div>';
+                        }
+                    }, 'json');
+            } else {
+                document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-danger text-center">The event and slot fields need input!</div>';
+            }
+        }
+    </script>
+@endcan
 
 <script>
     $('#newComment').click(function(event){

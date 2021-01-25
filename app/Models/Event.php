@@ -24,6 +24,17 @@ class Event extends Model
         return $this->belongsToMany(Lot::class)->withTimestamps();
     }
 
+    public function invitations() {
+        return $this->hasManyThrough(
+            Invitation::class,
+            Slot::class,
+            'event_id', // Foreign key on the slots table...
+            'slot_id', // Foreign key on the invitations table...
+            'id', // Local key on the events table...
+            'id' // Local key on the slots table...
+        );
+    }
+
     public function getLotNumbersAttribute() {
         return implode(", ", $this->lots()->pluck('number')->toArray());
     }
@@ -57,14 +68,7 @@ class Event extends Model
     }
 
     public function pending_callbacks_query() {
-        return $this->hasManyThrough(
-            Invitation::class,
-            Slot::class,
-            'event_id', // Foreign key on the slots table...
-            'slot_id', // Foreign key on the invitations table...
-            'id', // Local key on the events table...
-            'id' // Local key on the slots table...
-        )->whereHas('invite_status', function ($query) {
+        return $this->invitations()->whereHas('invite_status', function ($query) {
             $query->where('name', 'Awaiting Callback');
         });
     }
