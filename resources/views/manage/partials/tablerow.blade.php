@@ -5,7 +5,8 @@
     <td>{{ $res->registration->id ?? '' }}</td>    
     @endcan
     <td>{{ $res->registration->code ?? '' }}</td>
-    <td>{{ $res->registration ? Carbon\Carbon::parse($res->registration->submitted_at)->format('m-d-Y h:i:s A') : 'No registration' }}</td>
+    <td>{{ $res->registration ? Carbon\Carbon::parse($res->registration->submitted_at)->format('m-d-Y') : 'No registration' }}</td>
+    <td>{{ $res->registration ? Carbon\Carbon::parse($res->registration->birth_date)->format('m-d-Y') : 'No date of birth entered'}}</td>
     <td>{{ $res->registration->status->name ?? 'Emailed: '.$res->email }}</td>
     <td class="text-center">
         @if ($res->email_verified_at)
