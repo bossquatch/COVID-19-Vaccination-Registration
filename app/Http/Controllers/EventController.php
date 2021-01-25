@@ -136,6 +136,21 @@ class EventController extends Controller
         ]);
     }
 
+    public function slotInvites($event_id, $slot_id)
+    {
+        $slot = \App\Models\Slot::findOrFail($slot_id);
+        if ($slot->event_id != $event_id) { abort(404); }
+
+        $invitations = $slot->invitations()->whereHas('invite_status', function ($query) {
+                $query->whereNotIn('id', [4, 5]);
+            })->paginate(config('app.pagination_limit'));
+
+        return view('event.slotlist', [
+            'invites' => $invitations,
+            'slot' => $slot,
+        ]);
+    }
+
     private function validationRules()
     {
         $valid_locations = implode(",",\App\Models\Location::pluck('id')->toArray());

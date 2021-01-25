@@ -77,6 +77,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->middleware('can:create_event');
     Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'read']);
     Route::get('/events/{id}/pending', [App\Http\Controllers\EventController::class, 'pendingInvites'])->middleware('can:update_invite');
+    Route::get('/events/{event_id}/slots/{slot_id}', [App\Http\Controllers\EventController::class, 'slotInvites']);
     //Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'delete'])->middleware('can:delete_event');
     Route::put('/events/{id}/open', [App\Http\Controllers\EventController::class, 'open']);
     Route::post('/events/{id}/lots', [App\Http\Controllers\EventController::class, 'addLot']);

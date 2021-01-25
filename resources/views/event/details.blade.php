@@ -40,7 +40,7 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
-                <a class="btn btn-header btn-round btn-lg" href="{{ url()->previous() }}">
+                <a class="btn btn-header btn-round btn-lg" href="{{ $event->date_held < \Carbon\Carbon::today() ? '/events-history' : '/events' }}">
                     <span class="fas fa-arrow-left mr-1"></span>Back
                 </a>
             </div>
@@ -112,7 +112,7 @@
                         <h3 class="card-title">Slots</h3>
                         <div id="slotSection" class="list-group">
                             @foreach ($event->slots as $slot)
-                                <li class="list-group-item">
+                                <li class="list-group-item list-group-item-action postition-relative">
                                     @include('event.partials.slot', ['slot' => $slot])
                                 </li>
                             @endforeach
