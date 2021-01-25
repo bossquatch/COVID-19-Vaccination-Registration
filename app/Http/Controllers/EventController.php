@@ -81,6 +81,7 @@ class EventController extends Controller
 
         $carbon_date = \Carbon\Carbon::parse($valid['date']);
         $slot_times = [];
+        $lots = explode(",", $valid['lot']);
 
         try {
             $slot_machine = new \App\Helpers\Events\SlotMachine($carbon_date, (int) $valid["start"], (int) $valid["end"], $valid['slotLength'], (int) $valid['slotCapacity']);
@@ -101,11 +102,17 @@ class EventController extends Controller
 
         // don't try to do anything else to the db if this is a duplicate event
         if ($event->wasRecentlyCreated) {
-            $lot = Lot::firstOrCreate([
-                'number' => $valid['lot'],
-            ]);
-
-            $event->lots()->attach($lot->id);
+            foreach ($lots as $lot_num) {
+                // validate that the lot number is not empty
+                if (trim($lot_num) != '') {
+                    $lot = Lot::firstOrCreate([
+                        'number' => trim($lot_num),
+                    ]);
+        
+                    $event->lots()->attach($lot->id);
+                }
+            }
+            
             $event->slots()->createMany($slot_times);
         }
 

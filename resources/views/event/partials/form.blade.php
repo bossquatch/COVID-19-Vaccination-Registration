@@ -106,8 +106,8 @@
                 <label for="lot">
                     Lot Number
                 </label>
-                <input id="lot" name="lot" class="lot-input form-control @error("lot") is-invalid @enderror" type="text" value="{{ old('lot') }}" placeholder="Lot Number">
-                <span class="form-text font-weight-light font-size-xs text-muted">Additional lot numbers can be added later.</span>
+                <input id="lot" name="lot" class="lot-input form-control @error("lot") is-invalid @enderror" type="text" value="{{ old('lot') }}" placeholder="Lot Number 1, Lot Number 2, etc.">
+                <span class="form-text font-weight-light font-size-xs text-muted">Enter lot numbers as a comma-separated list.  Additional lot numbers can be added later.</span>
 
                 @error("lot")
                 <span class="invalid-feedback" role="alert">
