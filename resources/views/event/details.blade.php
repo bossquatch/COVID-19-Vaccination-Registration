@@ -40,7 +40,7 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
-                <a class="btn btn-header btn-round btn-lg" href="/events">
+                <a class="btn btn-header btn-round btn-lg" href="{{ url()->previous() }}">
                     <span class="fas fa-arrow-left mr-1"></span>Back
                 </a>
             </div>
