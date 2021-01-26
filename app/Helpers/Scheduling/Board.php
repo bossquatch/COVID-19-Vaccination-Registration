@@ -61,7 +61,7 @@ class Board
             })->where([
                 ['starting_at', '>=', $tomorrow],                                           // don't schedule for old slots
                 ['starting_at', '<', $date_limit],                                          // don't schedule too far out (avoiding registrations from getting one vac and not the other)
-            ])->orderBy('starting_at')->limit(1)->get();                                   // grab the slots starting the soonest
+            ])->orderBy('starting_at')->limit(10)->get();                                   // grab the slots starting the soonest
     }
 
     // query valid registrations
