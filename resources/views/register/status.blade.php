@@ -104,7 +104,7 @@
                                 </div>--}}
                                 @if(config('app.always_show_qr') || Auth::user()->registration->has_appointment)
                                 <div class="col-12 col-lg-4 text-center mb-0">
-                                    {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code); !!}
+                                    {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(request()->root()."/".Auth::user()->id."/".Auth::user()->registration->id."/".Auth::user()->registration->code . '?checkin=auto'); !!}
                                 </div>
                                 @endif
                                 <div class="col-12 @if(config('app.always_show_qr') || Auth::user()->registration->has_appointment) col-lg-8 @endif text-center mb-0">

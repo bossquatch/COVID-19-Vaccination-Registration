@@ -120,17 +120,24 @@ class Registration extends Model
 
     public function getHasAppointmentAttribute()
     {
-        return ($this->invitations()->whereHas('invite_status', function($query) {
-            $query->where('name', 'Accepted')
-                ->orWhere('name', 'Checked In');
-        })->count() > 0);
+        return ($this->active_invite_query()->count() > 0);
     }
 
     public function getAppointmentAttribute()
     {
+        return $this->active_invite->slot;
+    }
+
+    public function getActiveInviteAttribute()
+    {
+        return $this->active_invite_query()->first();
+    }
+
+    private function active_invite_query()
+    {
         return $this->invitations()->whereHas('invite_status', function($query) {
             $query->where('name', 'Accepted')
                 ->orWhere('name', 'Checked In');
-        })->first()->slot;
+        });
     }
 }

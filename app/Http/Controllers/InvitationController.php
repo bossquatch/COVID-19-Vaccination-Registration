@@ -83,8 +83,7 @@ class InvitationController extends Controller
         $invite->contacted_by = Auth::id();
         $invite->contacted_at = \Carbon\Carbon::now();
         $invite->contact_method_id = 1;
-        $invite->invite_status_id = 3;
-        $invite->save();
+        $this->updateInviteStatus($invite, 3);
 
         Session::flash('success', "<p>Registrant contacted via phone call on record.</p>");
         return redirect('/events/'.$invite->event->id.'/pending');
@@ -100,30 +99,85 @@ class InvitationController extends Controller
         $invite->contacted_by = Auth::id();
         $invite->contacted_at = \Carbon\Carbon::now();
         $invite->contact_method_id = 2;
-        $invite->invite_status_id = 3;
-        $invite->save();
+        $this->updateInviteStatus($invite, 3);
 
         Session::flash('success', "<p>Registrant contacted via email on record.</p>");
         return redirect('/events/'.$invite->event->id.'/pending');
     }
 
+    public function checkIn($id)
+    {
+        $registration = \App\Models\Registration::findOrFail($id);
+
+        $invite = $registration->active_invite;
+        if(!$invite) { abort(404); }
+
+        $this->updateInviteStatus($invite, 7);
+
+        Session::flash('success', "<p>Registrant was checked in.</p>");
+        return redirect()->back();
+    }
+
+    public function complete($id)
+    {
+        $registration = \App\Models\Registration::findOrFail($id);
+
+        $invite = $registration->active_invite;
+        if(!$invite) { abort(404); }
+
+        $this->updateInviteStatus($invite, 10);
+        if ($registration->status_id != 5) {
+            $this->updateRegistrationStatus($registration, 1);
+            $this->logChanges($registration, 'appointment completed', true);
+        }
+
+        Session::flash('success', "<p>Registrant was checked out.</p>");
+        return redirect('/manage');
+    }
+
+    public function turnDown($id)
+    {
+        $registration = \App\Models\Registration::findOrFail($id);
+
+        $invite = $registration->active_invite;
+        if(!$invite) { abort(404); }
+        
+        $this->runStatusUpdates($registration, 1, $invite, 9);
+        $this->logChanges($registration, 'turned down', true);
+
+        Session::flash('success', "<p>Registrant was turned down.</p>");
+        return redirect('/manage');
+    }
+
     private function acceptInvite($registration, $invite) 
     {
-        $invite->invite_status_id = 6;
-        $invite->save();
-        $registration->status_id = 3;
-        $registration->save();
+        $this->runStatusUpdates($registration, 3, $invite, 6);
 
         $this->logChanges($registration, 'invite accepted', true);
     }
     
     private function declineInvite($registration, $invite) 
     {
-        $invite->invite_status_id = 5;
-        $invite->save();
-        $registration->status_id = 1;
-        $registration->save();
+        $this->runStatusUpdates($registration, 1, $invite, 5);
 
         $this->logChanges($registration, 'invite declined', true);
+    }
+
+    private function runStatusUpdates($registration, $registration_status_id, $invite, $invite_status_id)
+    {
+        $this->updateInviteStatus($invite, $invite_status_id);
+        $this->updateRegistrationStatus($registration, $registration_status_id);
+    }
+
+    private function updateRegistrationStatus($registration, $registration_status_id)
+    {
+        $registration->status_id = $registration_status_id;
+        $registration->save();
+    }
+
+    private function updateInviteStatus($invite, $invite_status_id)
+    {
+        $invite->invite_status_id = $invite_status_id;
+        $invite->save();
     }
 }

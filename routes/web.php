@@ -67,6 +67,9 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/{id}/invitation/decline', [App\Http\Controllers\InvitationController::class, 'declineCallback'])->middleware('can:update_invite');
     Route::post('/manage/{id}/invitation/phone', [App\Http\Controllers\InvitationController::class, 'leftPhone'])->middleware('can:update_invite');
     Route::post('/manage/{id}/invitation/email', [App\Http\Controllers\InvitationController::class, 'leftEmail'])->middleware('can:update_invite');
+    Route::post('/manage/{id}/invitation/checkin', [App\Http\Controllers\InvitationController::class, 'checkIn'])->middleware('can:create_vaccine');
+    Route::post('/manage/{id}/invitation/complete', [App\Http\Controllers\InvitationController::class, 'complete'])->middleware('can:create_vaccine');
+    Route::post('/manage/{id}/invitation/turndown', [App\Http\Controllers\InvitationController::class, 'turnDown'])->middleware('can:create_vaccine');
 
     Route::get('/locations', [App\Http\Controllers\LocationController::class, 'index']);
     Route::post('/locations', [App\Http\Controllers\LocationController::class, 'store'])->middleware('can:create_location');
@@ -113,5 +116,5 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/slots/force-invite/{regis_id}', [App\Http\Controllers\SlotController::class, 'forceInvite'])->middleware('can:create_invite');
     Route::get('/slots/{event_id}', [App\Http\Controllers\SlotController::class, 'options'])->middleware('can:create_invite');
 
-    Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_vaccine');
+    Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_registration');
 });

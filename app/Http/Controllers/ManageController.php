@@ -131,6 +131,17 @@ class ManageController extends Controller
             abort(404);
         }
 
+        if (request()->input('checkin') == 'auto') {
+            if ($regis->has_appointment) {
+                $inv = $regis->active_invite;
+                if ($inv->invite_status_id == 6) {
+                    $inv->invite_status_id = 7;
+                    $inv->save();
+                    Session::flash('success', "<p>Registrant was checked in.</p>");
+                }
+            }
+        }
+
         return view('manage.registration', ['registration' => $regis]);
     }
 
