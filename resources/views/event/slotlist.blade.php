@@ -43,7 +43,42 @@
                 <div class="list-group" id="events-list">
                     <div class="list-group-item active">
                         <h3 class="h4 d-inline align-text-top">Active Invitations for {{ \Carbon\Carbon::parse($slot->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse($slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse($slot->ending_at)->format('h:iA') }}</h3>
+                        <span class="ml-2 text-white align-bottom font-italic">{{ $slot->reserved }} reserved slots</span>
+                        @can('create_invite')
+                        <button class="btn btn-success btn-sm float-right" onclick="reserveForm('')"><span class="fad fa-plus-circle mr-1"></span>Reserve Seats</button>    
+                        @endcan
                     </div>
+                    @can('create_invite')
+                        <li class="list-group-item" id="slot-row-reserve" @if ($errors->isEmpty()) style="display: none;" @endif>
+                            <div class="row justify-content-end">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="reserveForm('none')"><span class="fal fa-times mr-1"></span>Cancel</button>
+                            </div>
+                            <form action="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}/reserve" method="post">
+                                @csrf
+                                @method('PUT')
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group mb-5">
+                                            <label for="amount">
+                                                Amount to Reserve (Max: {{ $slot->capacity - $slot->active_invitation_count }})
+                                            </label>
+                                            <input type="number" name="amount" id="amount" class="form-control @error("amount") is-invalid @enderror" value="{{ old('amount') }}" min="0" max="{{ $slot->capacity - $slot->active_invitation_count }}" required aria-required="true">
+                                            @error('amount')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('amount') }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                                        <button type="submit" class="btn btn-success btn-block">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>    
+                    @endcan
                     
                     @foreach ($invites as $invite)
                         <a href="{{ "/".$invite->user->id."/".$invite->registration->id."/".$invite->registration->code }}" class="list-group-item list-group-item-action">
@@ -61,4 +96,12 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+    <script>
+        function reserveForm(display) {
+            document.getElementById('slot-row-reserve').style.display = display;
+        }
+    </script>
 @endsection

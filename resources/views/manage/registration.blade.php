@@ -154,7 +154,7 @@
                                                 $query->whereNotIn('id', [4, 5]);
                                             });
                                         },
-                                    ])->having('capacity', '>', 'acivate_invitations_count');
+                                    ])->havingRaw('`capacity` > `active_invitations_count`');
                                 })->orderBy('date_held', 'desc')->get();
                         @endphp
                             <hr>

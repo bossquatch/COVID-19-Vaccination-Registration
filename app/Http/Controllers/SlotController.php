@@ -29,7 +29,7 @@ class SlotController extends Controller
                         $query->whereNotIn('id', [4, 5]);
                     });
                 },
-            ])->having('capacity', '>', 'acivate_invitations_count')->get();
+            ])->havingRaw('`capacity` > `active_invitations_count`')->get();        // allow retroactive assigning to filled slots via reservation
 
         if ($slots->count() > 0) {
             return json_encode(['status' => 'success', 'html' => view('manage.partials.slotoptions', ['slots' => $slots])->render()]);

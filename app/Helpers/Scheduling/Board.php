@@ -22,10 +22,10 @@ class Board
     {
         // get slots
         $slots = self::stack();
-        
+        dd($slots);
         // for each slot:
         foreach ($slots as $slot) {
-            $registrations = self::evaluate(($slot->capacity - $slot->active_invitations_count), Carbon::parse($slot->starting_at)->format('Y-m-d'), $slot->id)->get();
+            $registrations = self::evaluate(($slot->capacity - ($slot->active_invitations_count + $slot->reserved)), Carbon::parse($slot->starting_at)->format('Y-m-d'), $slot->id)->get();
             $regis_ids = $registrations->pluck('id');
             $regis_keys = [];
             foreach ($regis_ids as $id) {
@@ -48,20 +48,20 @@ class Board
     {
         $tomorrow = Carbon::tomorrow();
         $date_limit = Carbon::today()->addDays(25);
-        return Slot::select('id', 'capacity', 'starting_at')
+        return Slot::select('id', 'capacity', 'reserved', 'starting_at')
             ->withCount([
                 'invitations as active_invitations_count' => function (Builder $query) {
                     $query->whereHas('invite_status', function (Builder $query) {
                         $query->whereNotIn('id', [4, 5]);
                     });
                 },
-            ])->having('capacity', '>', 'acivate_invitations_count')                        // only get slots with seats available
+            ])->havingRaw('(`capacity` - `reserved`) > `active_invitations_count`')                        // only get slots with seats available
             ->whereHas('event', function(Builder $query) {                                  // only get from open events
                 $query->where('open', true);
             })->where([
                 ['starting_at', '>=', $tomorrow],                                           // don't schedule for old slots
                 ['starting_at', '<', $date_limit],                                          // don't schedule too far out (avoiding registrations from getting one vac and not the other)
-            ])->orderBy('starting_at')->limit(10)->get();                                   // grab the slots starting the soonest
+            ])->orderBy('starting_at')->limit(1)->get();                                   // grab the slots starting the soonest
     }
 
     // query valid registrations

@@ -43,7 +43,7 @@ class Event extends Model
     public function getPercentFilledAttribute() {
         $filled = $capacity = 0;
         foreach ($this->slots as $slot) {
-            $filled += $slot->active_invitation_count;
+            $filled += $slot->active_invitation_count + $slot->reserved;
             $capacity += $slot->capacity;
         }
         return floor(($filled / $capacity) * 100) . '%';

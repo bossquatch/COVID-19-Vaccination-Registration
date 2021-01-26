@@ -19,6 +19,7 @@ class CreateSlotsTable extends Migration
             $table->timestamp('starting_at');
             $table->timestamp('ending_at')->nullable();
             $table->integer('capacity')->default(0);
+            $table->integer('reserved')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

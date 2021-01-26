@@ -10,5 +10,8 @@
     <div class="d-inline">
         <p class="mb-0 font-size-xs text-muted">Total Capacity: {{ $slot->capacity }}</p>
         <p class="my-0 font-size-xs text-muted">Total Scheduled: {{ $slot->active_invitation_count }}</p>
+        @if ($slot->reserved > 0)
+        <p class="my-0 font-size-xs text-muted">Total Reserved: {{ $slot->reserved }}</p>
+        @endif
     </div>
 </div>
