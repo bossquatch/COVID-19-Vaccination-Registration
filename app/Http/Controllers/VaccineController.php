@@ -26,7 +26,7 @@ class VaccineController extends Controller
         if (empty($inputs['registrationId'])) {
             abort(404);
         }
-        \App\Models\Registration::findOrFail($inputs['registrationId']);
+        $regis = \App\Models\Registration::findOrFail($inputs['registrationId']);
 
         $validator = Validator::make($inputs, $this->validationRules());
 
@@ -54,7 +54,19 @@ class VaccineController extends Controller
 
         $vaccine->risk_factors()->sync($inputs['risks']);
 
+        $this->checkCompleted($regis);
+
         return json_encode(['status' => 'success', 'html' => view('vaccine.partials.info', ['vaccine' => $vaccine])->render()]);
+    }
+
+    private function checkCompleted($registration)
+    {
+        if ($registration->vaccines()->count >= 2) {
+            $registration->status_id = 5;
+            $registration->save();
+
+            $this->logChanges($registration, 'completed', true);
+        }
     }
 
     private function validationRules()
