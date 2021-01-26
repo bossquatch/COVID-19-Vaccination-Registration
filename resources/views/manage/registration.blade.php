@@ -4,6 +4,16 @@
     {{ config('app.name', 'Laravel') }} - Procure Registration
 @endsection
 
+@section('header')
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
+<style>
+    .ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+@endsection
+
 @section('content')
 <!-- Header -->
 <div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
@@ -311,6 +321,6 @@
 </script>
 
 @can('create_vaccine')
-    @include('vaccine.partials.modal', ['registration_id' => $registration->id])
+    @include('vaccine.partials.modal', ['registration' => $registration])
 @endcan
 @endsection
