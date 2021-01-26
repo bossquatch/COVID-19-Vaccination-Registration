@@ -84,7 +84,7 @@ class EventController extends Controller
         $lots = explode(",", $valid['lot']);
 
         try {
-            $slot_machine = new \App\Helpers\Events\SlotMachine($carbon_date, (int) $valid["start"], (int) $valid["end"], $valid['slotLength'], (int) $valid['slotCapacity']);
+            $slot_machine = new \App\Helpers\Events\SlotMachine($carbon_date, (float) $valid["start"], (float) $valid["end"], $valid['slotLength'], (float) $valid['slotCapacity']);
             $slot_times = $slot_machine->run();
         } catch (\App\Helpers\Events\SlotMachineException $e) {
             $val = Validator::make([],[]);

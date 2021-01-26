@@ -36,7 +36,7 @@ class SlotMachine
     ];
 
     // constructor
-    public function __construct(Carbon $date, int $start_hour, int $end_hour, string $interval, int $value_per_slot)
+    public function __construct(Carbon $date, float $start_hour, float $end_hour, string $interval, float $value_per_slot)
     {
         // make sure the slot machine can accept the values
         if(!self::validate($start_hour,$end_hour, $interval)) {
@@ -99,7 +99,7 @@ class SlotMachine
     }
 
     // make sure that the slot machine can use the values given
-    protected static function validate(int $start, int $end, string $interval) {
+    protected static function validate(float $start, float $end, string $interval) {
         if($end <= $start) {
             return false;
         } else if ($interval == end(self::$validIntervals)) {

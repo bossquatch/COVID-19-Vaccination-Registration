@@ -117,8 +117,8 @@
         $('#slider').slider({
             range: true,
             min: 0,
-            max: 23,
-            step: 1,
+            max: 23.5,
+            step: 0.5,
             values: [document.getElementById('start').value, document.getElementById('end').value],
             slide: function (e, ui) {
                 document.getElementById('start').value = ui.values[0];
@@ -163,18 +163,21 @@
 
     function valToHour(val) {
         var ampm = "AM";
-        var time = ":00";
+        var hour = Math.floor(val);
+        var remainder = val-hour;
+        var minute = (remainder * 60).toString().padStart(2, '0');
+        var time = ":"+minute;
 
-        if(val == 0) {
+        if(hour == 0) {
             time = "12" + time;
-        } else if(val == 12) {
-            time = val + time
+        } else if(hour == 12) {
+            time = hour + time
             ampm = "PM";
-        } else if(val > 12) {
-            time = (val - 12) + time;
+        } else if(hour > 12) {
+            time = (hour - 12) + time;
             ampm = "PM";
         } else {
-            time = val + time;
+            time = hour + time;
         }
 
         return time + ampm;
