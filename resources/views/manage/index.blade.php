@@ -16,7 +16,6 @@
                         Manage
                     </span>
                 </span>
-
                 <!-- Heading -->
                 <h2 class="title">Search Online Registrations</h2>
 
@@ -144,6 +143,9 @@
                                             <th>
                                                 Name
                                             </th>
+                                            <th>
+                                                Date of Birth
+                                            </th>
                                             @can('read_user')
                                             <th>
                                                 Registration ID
@@ -153,7 +155,7 @@
                                                 Registration Code
                                             </th>
                                             <th>
-                                                Submitted At
+                                                Submitted On
                                             </th>
                                             <th>
                                                 Status

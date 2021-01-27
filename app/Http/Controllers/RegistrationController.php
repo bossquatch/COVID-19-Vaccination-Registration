@@ -147,7 +147,7 @@ class RegistrationController extends Controller
             'first_name' => $valid['firstName'],
             'middle_name' => $valid['middleName'],
             'last_name' => $valid['lastName'],
-            'birth_date' => $valid['dateOfBirth'],
+            'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
         ]);
 
