@@ -117,12 +117,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Suffix::class, 'suffix_id');
     }
 
-    public function needsToResetPassword() 
+    public function needsToResetPassword()
     {
         return ($this->force_reset && Carbon::parse($this->force_reset)->isAfter(Carbon::now()->add(-1, 'hours')));
     }
 
-    public function removeForceReset() 
+    public function removeForceReset()
     {
         $this->force_reset = null;
         $this->save();
@@ -141,5 +141,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
+    public function routeNotificationForTwilio($notification)
+    {
+        if ($this->sms_verified_at != NULL) {
+            return $this->phone;
+        }
+
+        return 'cannot send SMS';
     }
 }

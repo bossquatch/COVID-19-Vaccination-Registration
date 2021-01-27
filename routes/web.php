@@ -1,5 +1,8 @@
 <?php
 
+use App\Jobs\EmailInvitation;
+use App\Jobs\SMSInvitation;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Route::get('/doug', function() {
+//
+//    $user = User::find(8);
+//
+//    EmailInvitation::dispatch($user)->onQueue('emails');
+//    SMSInvitation::dispatch($user)->onQueue('sms');
+//
+//    return 'Email to ' . $user->first_name . ' completed at ' . now()->toDateTimeString();
+//
+//});
 
 Auth::routes([
     'register' => config('app.allow_self_service'),
@@ -37,6 +51,10 @@ Route::group(["middleware" => "check.reset"], function() {
 
     Route::get('/terms' , function() {
         return view('home.terms');
+    });
+
+    Route::get('/doug', function () {
+        return view('doug.notification');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
