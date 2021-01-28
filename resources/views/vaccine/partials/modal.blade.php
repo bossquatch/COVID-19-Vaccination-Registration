@@ -265,7 +265,7 @@
 <script>
 $( function () {
     $('#lotNumber').autocomplete({
-        source: {!! $registration->has_appointment ? json_encode($registration->appointment->event->lots()->pluck('number')->toArray()) : [] !!}
+        source: {!! $registration->has_appointment ? json_encode($registration->appointment->event->lots->pluck('number')->all()) : json_encode([]) !!}
     });
 });
 
