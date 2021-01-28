@@ -117,5 +117,8 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/slots/force-invite/{regis_id}', [App\Http\Controllers\SlotController::class, 'forceInvite'])->middleware('can:create_invite');
     Route::get('/slots/{event_id}', [App\Http\Controllers\SlotController::class, 'options'])->middleware('can:create_invite');
 
+    Route::get('/my-events', [App\Http\Controllers\PartnerController::class, 'index']);
+    Route::get('/my-events-history', [App\Http\Controllers\PartnerController::class, 'history']);
+
     Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_registration');
 });

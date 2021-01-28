@@ -116,18 +116,23 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 mb-5">
             <div class="form-group mb-5">
-                <div class="custom-control custom-checkbox">
-                    <input id="partnerEvent" name="partnerEvent" class="custom-control-input @error("partnerEvent") is-invalid @enderror" type="checkbox" @if(old('partnerEvent')) checked aria-checked="true" @endif>
-                    <label class="custom-control-label" for="partnerEvent">Is a Partner Event</label>
-
-                    @error("partnerEvent")
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first("partnerEvent") }}</strong>
-                        </span>
-                    @enderror
+                <strong>Partner(s) for Event</strong>
+                @foreach (\App\Models\Tag::where('is_partner', true)->get() as $tag)
+                <div class="form-group mb-1">
+                    <div class="custom-control custom-checkbox">
+                        <input value="{{ $tag->id }}" id="tag-{{ $tag->id }}" name="partners[{{ $tag->id }}]" class="custom-control-input @error("partners.".$tag->id) is-invalid @enderror" type="checkbox" @if(old('partners.'.$tag->id)) checked aria-checked="true" @endif>
+                        <label class="custom-control-label" for="tag-{{ $tag->id }}">{{ $tag->description }}</label>
+    
+                        @error("partners.".$tag->id)
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first("partners.".$tag->id) }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
+                @endforeach
             </div>
         </div>
         @can('create_invite')

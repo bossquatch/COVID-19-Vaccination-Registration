@@ -35,8 +35,16 @@ class Event extends Model
         );
     }
 
+    public function tags() {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
     public function getLotNumbersAttribute() {
         return implode(", ", $this->lots()->pluck('number')->toArray());
+    }
+
+    public function getPartnersAttribute() {
+        return implode(", ", $this->tags()->pluck('label')->toArray());
     }
 
     // allows $event->percent_filled

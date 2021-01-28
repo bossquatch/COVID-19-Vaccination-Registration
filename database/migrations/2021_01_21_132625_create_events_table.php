@@ -19,7 +19,6 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->date('date_held');
             $table->boolean('open')->default(0);
-            $table->boolean('partner_handled')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

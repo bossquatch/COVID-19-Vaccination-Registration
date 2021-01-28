@@ -58,8 +58,8 @@
                                     {{ $event->title }}
                                 </h2>
 
-                                <div class="badge @if($event->open) badge-success-soft @else badge-danger-soft @endif mb-2">
-                                    <span class="fad fa-calendar mr-1"></span> {{ $event->open ? 'Scheduling Automatically' : 'Scheduling Closed' }}
+                                <div class="badge @if($event->partner_handled) badge-info-soft @elseif($event->open) badge-success-soft @else badge-danger-soft @endif mb-2">
+                                    <span class="fad fa-calendar mr-1"></span> {{ $event->partner_handled ? $event->partners : ($event->open ? 'Scheduling Automatically' : 'Scheduling Closed') }}
                                 </div>
                                 
                                 @if (!$event->open)

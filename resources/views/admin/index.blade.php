@@ -38,7 +38,7 @@
                     <span class="fad fa-file-chart-line mr-1"></span> View PHP Reports
                 </a>
 
-                @can('update_user')
+                @can('manage_tag')
                 <a class="btn btn-header btn-round btn-lg" href="/admin/tags">
                     <span class="fad fa-tags mr-1"></span> View Tags
                 </a>    
@@ -118,12 +118,15 @@
                                 </div>
                             </div>
                             <div class="col-6 text-right">
-                                <a href="/admin/{{ $user->id }}" class="text-primary ml-auto" title="Edit User" aria-title="Edit User">
-                                    <span class="fad fa-edit"></span>
-                                </a>
-                                <a href="#" class="text-muted" title="Edit User Tags" aria-title="Edit User Tags" onclick="editTags('{{ $user->id }}')">
-                                    <span class="fas fa-cog"></span>
-                                </a>
+                                @if ($user->role == 'Red Leader')
+                                    @can('skeleton_key')
+                                    <a href="/admin/{{ $user->id }}" class="ml-auto" title="Edit User" aria-title="Edit User"><span class="fad fa-starfighter fa-rotate-270" style="--fa-secondary-opacity: 1.0; --fa-primary-color: rgb(175, 174, 174); --fa-secondary-color: red;"></span></a>    
+                                    @endcan
+                                @else
+                                <a href="/admin/{{ $user->id }}" class="text-primary ml-auto" title="Edit User" aria-title="Edit User"><span class="fad fa-edit"></span></a>    
+                                @endif
+                                
+                                <a href="#" class="text-muted" title="Edit User Tags" aria-title="Edit User Tags" onclick="editTags('{{ $user->id }}')"><span class="fas fa-cog"></span></a>
                             </div>
                         </div>
                     </div>

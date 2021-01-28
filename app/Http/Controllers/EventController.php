@@ -26,7 +26,7 @@ class EventController extends Controller
     public function index()
     {
         return view('event.index', [
-            'events' => Event::where('date_held', '>=', DB::raw('CURDATE()'))->orderBy('date_held', 'asc')->paginate(config('app.pagination_limit')),
+            'events' => Event::where('date_held', '>=', DB::raw('CURDATE()'))->orderBy('date_held', 'asc')->orderBy('created_at', 'asc')->paginate(config('app.pagination_limit')),
             'lots' => Lot::get()->pluck('number')->all(),
         ]);
     }
@@ -97,8 +97,8 @@ class EventController extends Controller
             'location_id' => $valid['location'],
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
-            'open' => (isset($valid['openAutomatically']) || isset($valid['partnerEvent']) ),
-            'partner_handled' => isset($valid['partnerEvent']),
+            'open' => (isset($valid['openAutomatically']) || isset($valid['partners']) ),
+            'partner_handled' => isset($valid['partners']),
         ]);
 
         // don't try to do anything else to the db if this is a duplicate event
@@ -115,6 +115,10 @@ class EventController extends Controller
             }
             
             $event->slots()->createMany($slot_times);
+
+            if(isset($valid['partners'])) {
+                $event->tags()->sync(array_keys($valid['partners']));
+            }
         }
 
         Session::flash('success', "Event was added.");
@@ -179,7 +183,7 @@ class EventController extends Controller
             'slotCapacity' => 'required|numeric|min:0',
             'lot' => 'required|string|max:255',
             'openAutomatically' => 'nullable',
-            'partnerEvent' => 'nullable',
+            'partners.*' => 'nullable',
         ];
     }
 }
