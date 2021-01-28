@@ -22,7 +22,7 @@ class Board
     {
         // get slots
         $slots = self::stack();
-        dd($slots);
+        
         // for each slot:
         foreach ($slots as $slot) {
             $registrations = self::evaluate(($slot->capacity - ($slot->active_invitations_count + $slot->reserved)), Carbon::parse($slot->starting_at)->format('Y-m-d'), $slot->id)->get();
