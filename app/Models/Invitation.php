@@ -108,6 +108,11 @@ class Invitation extends Model
         return ($this->user->email_verified_at);
     }
 
+    // allows $invitation->partner_handled
+    public function getPartnerHandledAttribute() {
+        return ($this->slot->partner_handled);
+    }
+
     // allows $invitation->contact_name; returns a full name, "System Automated", "Not Contacted", or "N/A"
     public function getContactNameAttribute() {
         if ($this->contact_method) {

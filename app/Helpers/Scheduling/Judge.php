@@ -27,7 +27,7 @@ class Judge
         // got through, case by case...
         foreach ($cases as $case) {
             // determine if contactable and sentence accordingly 
-            if ($case->auto_contactable) {
+            if ($case->auto_contactable && !$case->partner_handled) {
                 if(self::sendEmail($case)) {
                     $case->contact_method_id = 4;
                 }

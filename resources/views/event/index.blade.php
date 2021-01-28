@@ -81,7 +81,7 @@
                             <div class="d-flex w-100 justify-content-between">
                                 <div class="d-inline">
                                     <p class="mb-0 font-size-xs text-muted">{{ $event->date_held }} from {{ \Carbon\Carbon::parse($event->start_time)->format('h:i A') . ' to ' . \Carbon\Carbon::parse($event->end_time)->format('h:i A') }}</p>
-                                    <p class="my-0 font-size-xs @if($event->open) text-success @else text-danger @endif">{{ $event->open ? 'Scheduling Automatically' : 'Scheduling Closed' }}</p>
+                                    <p class="my-0 font-size-xs @if($event->partner_handled) text-info @elseif($event->open) text-success @else text-danger @endif">{{ $event->partner_handled ? 'Partner Handled' : ($event->open ? 'Scheduling Automatically' : 'Scheduling Closed') }}</p>
                                 </div>
                                 <div class="text-right">
                                     @can('update_invite')

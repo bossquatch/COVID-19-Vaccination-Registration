@@ -97,7 +97,8 @@ class EventController extends Controller
             'location_id' => $valid['location'],
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
-            'open' => isset($valid['openAutomatically']),
+            'open' => (isset($valid['openAutomatically']) || isset($valid['partnerEvent']) ),
+            'partner_handled' => isset($valid['partnerEvent']),
         ]);
 
         // don't try to do anything else to the db if this is a duplicate event
@@ -178,6 +179,7 @@ class EventController extends Controller
             'slotCapacity' => 'required|numeric|min:0',
             'lot' => 'required|string|max:255',
             'openAutomatically' => 'nullable',
+            'partnerEvent' => 'nullable',
         ];
     }
 }
