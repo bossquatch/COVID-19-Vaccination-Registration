@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Confirmation extends Mailable
+class Declination extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,7 +20,7 @@ class Confirmation extends Mailable
 
     public function build()
     {
-        return $this->markdown('mail.confirmation')
+        return $this->markdown('mail.declination')
             ->subject($this->topic);
     }
 }

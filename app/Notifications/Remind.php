@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Mail\Invitation;
 use App\Mail\Reminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,7 +38,7 @@ class Remind extends Notification implements ShouldQueue
 
         $emailAddress = $notifiable->user->email;
         return Mail::to($emailAddress)
-            ->send(new Reminder('Polk Health - vaccination reminder'));
+            ->send(new Reminder('Polk Health - Vaccination Reminder'));
 
     }
 

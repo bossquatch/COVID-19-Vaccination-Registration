@@ -13,6 +13,11 @@ class Postpone extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public function __construct()
+    {
+        //
+    }
+
     public function viaQueues()
     {
         return [

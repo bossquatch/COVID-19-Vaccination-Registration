@@ -41,7 +41,7 @@ class Invite extends Notification implements ShouldQueue
 
         $emailAddress = $notifiable->user->email;
         return Mail::to($emailAddress)
-            ->send(new Invitation('Polk Health - vaccination invitation'));
+            ->send(new Invitation('Polk Health - Vaccination Invitation'));
 
     }
 

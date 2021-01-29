@@ -256,6 +256,15 @@ img {
     border-top: 8px solid #e53e3e;
 }
 
+.button-purple,
+.button-doug {
+    background-color: #40155f;
+    border-bottom: 8px solid #40155f;
+    border-left: 18px solid #40155f;
+    border-right: 18px solid #40155f;
+    border-top: 8px solid #40155f;
+}
+
 /* Panels */
 
 .panel {

@@ -13,7 +13,7 @@ class Reminder extends Mailable
 
     public $topic;
 
-    public function __construct(string $topic)
+    public function __construct(String $topic)
     {
         $this->topic = $topic;
     }
