@@ -79,13 +79,20 @@
                                             Location: {{ Auth::user()->registration->pending_invitation->event->location->address . ' ' . Auth::user()->registration->pending_invitation->event->location->city . ', ' . Auth::user()->registration->pending_invitation->event->location->state . ' ' . Auth::user()->registration->pending_invitation->event->location->zip }}
                                         </p>
                                         <div class="row justify-content-between px-4">
-                                            <form action="/home/invitation/accept" class="form-inline" method="post">
+                                            <form action="/home/invitation/accept" class="form mb-3 justify-content-center" method="post">
                                                 @csrf
-                                                <button type="submit" class="btn btn-outline-success">Accept</button>
+                                                <button type="submit" class="btn btn-outline-success" aria-describedby="acceptInfo">Accept</button>
+                                                <br><p id="acceptInfo" class="form-text font-weight-light font-size-xs text-muted">I accept this invitation.</p>
                                             </form>
-                                            <form action="/home/invitation/decline" class="form-inline" method="post">
+                                            <form action="/home/invitation/postpone" class="form mb-3 justify-content-center" method="post">
                                                 @csrf
-                                                <button type="submit" class="btn btn-outline-danger">Decline</button>
+                                                <button type="submit" class="btn btn-outline-info" aria-describedby="postponeInfo">Postpone</button>
+                                                <br><p id="postponeInfo" class="form-text font-weight-light font-size-xs text-muted">I cannot attend this event but would like to be considered for future events.</p>
+                                            </form>
+                                            <form action="/home/invitation/decline" class="form mb-3 justify-content-center" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-danger" aria-describedby="declineInfo">Decline</button>
+                                                <br><p id="declineInfo" class="form-text font-weight-light font-size-xs text-muted">I am no longer interested in receiving a vaccination through this program.</p>
                                             </form>
                                         </div>
                                     </div>

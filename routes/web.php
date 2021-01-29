@@ -47,6 +47,7 @@ Route::group(["middleware" => "check.reset"], function() {
 
     Route::post('/home/invitation/accept', [App\Http\Controllers\InvitationController::class, 'accept'])->middleware('can:create_registration');
     Route::post('/home/invitation/decline', [App\Http\Controllers\InvitationController::class, 'decline'])->middleware('can:create_registration');
+    Route::post('/home/invitation/postpone', [App\Http\Controllers\InvitationController::class, 'postpone'])->middleware('can:create_registration');
 
     Route::get('/address/validate', [App\Http\Controllers\UspsController::class, 'validateInlineAddress']);
 
@@ -65,8 +66,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
     Route::post('/manage/{id}/invitation/accept', [App\Http\Controllers\InvitationController::class, 'acceptCallback'])->middleware('can:update_invite');
     Route::post('/manage/{id}/invitation/decline', [App\Http\Controllers\InvitationController::class, 'declineCallback'])->middleware('can:update_invite');
-    Route::post('/manage/{id}/invitation/phone', [App\Http\Controllers\InvitationController::class, 'leftPhone'])->middleware('can:update_invite');
-    Route::post('/manage/{id}/invitation/email', [App\Http\Controllers\InvitationController::class, 'leftEmail'])->middleware('can:update_invite');
+    Route::post('/manage/{id}/invitation/postpone', [App\Http\Controllers\InvitationController::class, 'postponeCallback'])->middleware('can:update_invite');
     Route::post('/manage/{id}/invitation/checkin', [App\Http\Controllers\InvitationController::class, 'checkIn'])->middleware('can:create_vaccine');
     Route::post('/manage/{id}/invitation/complete', [App\Http\Controllers\InvitationController::class, 'complete'])->middleware('can:create_vaccine');
     Route::post('/manage/{id}/invitation/turndown', [App\Http\Controllers\InvitationController::class, 'turnDown'])->middleware('can:create_vaccine');
