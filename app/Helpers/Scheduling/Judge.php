@@ -34,7 +34,11 @@ class Judge
                 
                 if ($case->can_sms) {
                     if(self::sendSms($case)) {
-                        $case->contact_method_id = 5;
+                        if ($case->isDirty('contact_method_id')) {
+                            $case->contact_method_id = 6;
+                        } else {
+                            $case->contact_method_id = 5;
+                        }
                     }
                 }
 
@@ -60,7 +64,7 @@ class Judge
             ->join('slots', 'invitations.slot_id', '=', 'slots.id')
             ->whereHas('invite_status', function ($query) {
                 $query->where('name', 'Assigned');
-            })->limit(self::$limit)->orderBy('slots.starting_at')->get();
+            })->orderBy('slots.starting_at')->limit(self::$limit)->get();
     }
 
     // cannot be auto contacted, queue for manual contact

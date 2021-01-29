@@ -35,6 +35,7 @@ class SchedulingLookupSeeder extends Seeder
             ['id' => 3, 'label' => 'IVR', 'is_system' => 1, 'created_at' => now(), 'updated_at' => now()],
             ['id' => 4, 'label' => 'Emailed', 'is_system' => 1, 'created_at' => now(), 'updated_at' => now()],
             ['id' => 5, 'label' => 'SMS', 'is_system' => 1, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 6, 'label' => 'Email & SMS', 'is_system' => 1, 'created_at' => now(), 'updated_at' => now()],
         ]);
 
         // Permissions Seed

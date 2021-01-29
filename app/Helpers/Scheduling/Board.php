@@ -46,7 +46,7 @@ class Board
     // build the slots stack
     protected static function stack()
     {
-        $tomorrow = Carbon::tomorrow();
+        $start_at = Carbon::now()->addHours(1);
         $date_limit = Carbon::today()->addDays(25);
         return Slot::select('id', 'capacity', 'reserved', 'starting_at')
             ->withCount([
@@ -59,7 +59,7 @@ class Board
             ->whereHas('event', function(Builder $query) {                                  // only get from open events
                 $query->where('open', true);
             })->where([
-                ['starting_at', '>=', $tomorrow],                                           // don't schedule for old slots
+                ['starting_at', '>=', $start_at],                                           // don't schedule for old slots
                 ['starting_at', '<', $date_limit],                                          // don't schedule too far out (avoiding registrations from getting one vac and not the other)
             ])->orderBy('starting_at')->limit(10)->get();                                   // grab the slots starting the soonest
     }
