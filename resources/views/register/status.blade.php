@@ -67,10 +67,10 @@
                         <div class="card mb-2">
                             <div class="card-body p-6">
                                 <div class="row">
-                                    <div class="col-4 d-flex align-items-center">
-                                        <span class="text-info fad fa-envelope fa-5x mx-auto"></span>
-                                    </div>
-                                    <div class="col-8">
+                                    <div class="col-12 text-center">
+                                        <div class="col-12 d-flex align-items-center">
+                                            <span class="text-info fad fa-envelope fa-5x mx-auto"></span>
+                                        </div>
                                         <h2 class="h4 mb-1">Pending Invite!</h2>
                                         <p class="text-gray-dark mb-2">
                                             Appointment Time: {{ \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->slot->ending_at)->format('h:iA') }}
@@ -78,7 +78,7 @@
                                         <p class="text-gray-dark mb-2">
                                             Location: {{ Auth::user()->registration->pending_invitation->event->location->address . ' ' . Auth::user()->registration->pending_invitation->event->location->city . ', ' . Auth::user()->registration->pending_invitation->event->location->state . ' ' . Auth::user()->registration->pending_invitation->event->location->zip }}
                                         </p>
-                                        <div class="row justify-content-between px-4">
+                                        <div class="row justify-content-center px-4">
                                             <form action="/home/invitation/accept" class="form mb-3 justify-content-center" method="post">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-success" aria-describedby="acceptInfo">Accept</button>
@@ -186,10 +186,10 @@
                                     <div class="col-8">
                                         <h2 class="h4 mb-1">Current Appointment:</h2>
                                         <p class="text-gray-dark mb-2">
-                                            Appointment Time: {{ \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->ending_at)->format('h:iA') }}
+                                            Appointment Time:<br>{{ \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('D m, Y') . ' ' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->ending_at)->format('h:iA') }}
                                         </p>
                                         <p class="text-gray-dark mb-2">
-                                            Location: {{ Auth::user()->registration->appointment->event->location->address . ' ' . Auth::user()->registration->appointment->event->location->city . ', ' . Auth::user()->registration->appointment->event->location->state . ' ' . Auth::user()->registration->appointment->event->location->zip }}
+                                            Location:<br>{{ Auth::user()->registration->appointment->event->location->address . ' ' . Auth::user()->registration->appointment->event->location->city . ', ' . Auth::user()->registration->appointment->event->location->state . ' ' . Auth::user()->registration->appointment->event->location->zip }}
                                         </p>
                                     </div>
                                 </div>
