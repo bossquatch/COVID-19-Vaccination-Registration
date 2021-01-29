@@ -45,14 +45,25 @@ class User extends Authenticatable implements MustVerifyEmail
     * Accessor for Age.
     */
     public function getAgeAttribute()
-        {
-            if ($this->birth_date != null) {
-                return Carbon::parse($this->birth_date)->age;
-            }
-            else {
-                return 'N/A';
-            }
+    {
+        if ($this->birth_date != null) {
+            return Carbon::parse($this->birth_date)->age;
         }
+        else {
+            return 'N/A';
+        }
+    }
+
+    public function getValidEmailAttribute()
+    {
+        if($this->email_verified_at != null) {
+
+            return true;
+
+        }
+
+        return false;
+    }
 
     /**
      * The attributes that should be cast to native types.
