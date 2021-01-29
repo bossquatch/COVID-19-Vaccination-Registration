@@ -7,19 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Confirmation extends Mailable
+class Postponement extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $topic;
 
-    public function __construct(String $topic)
+    public function __construct(string $topic)
     {
-        return $this->topic = $topic;
+        $this->topic = $topic;
     }
 
     public function build()
     {
-        return $this->markdown('mail.confirmation');
+        return $this->markdown('mail.postpone')
+            ->subject($this->topic);
     }
 }

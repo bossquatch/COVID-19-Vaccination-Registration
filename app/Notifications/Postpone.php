@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Notifications;
+
+use App\Mail\Postponement;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Mail;
+
+class Postpone extends Notification implements ShouldQueue
+{
+    use Queueable;
+
+    public function viaQueues()
+    {
+        return [
+            'mail'      => 'emails',
+            'array'     => 'database',
+//            'twilio'    => 'sms',
+        ];
+    }
+
+    public function via($notifiable)
+    {
+        // ,TwilioChannel::class
+        return ['mail','database'];
+    }
+
+    public function toMail($notifiable)
+    {
+
+        $emailAddress = $notifiable->user->email;
+        return Mail::to($emailAddress)
+            ->send(new Postponement('Polk Health - Appointment Postponed'));
+
+    }
+
+    public function toArray($notifiable)
+    {
+        return [
+            'user_id' => $notifiable->id,
+        ];
+    }
+}

@@ -1,10 +1,10 @@
 @component('mail::message')
-# Introduction
+# You are confirmed for your vaccination appointment
 
-The body of your message.
+Your appointment has been confirmed at blah
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => 'https://dev.register.polk.health/home','color' => 'doug'])
+    Login to your account
 @endcomponent
 
 Thanks,<br>
