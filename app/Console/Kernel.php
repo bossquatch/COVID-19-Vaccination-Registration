@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\BoardCommand::class,
         \App\Console\Commands\JudgeCommand::class,
         \App\Console\Commands\ParoleCommand::class,
+        \App\Console\Commands\PostEventCommand::class,
     ];
 
     /**
@@ -33,16 +34,18 @@ class Kernel extends ConsoleKernel
                 $board = new Process(['php', 'artisan', 'scheduling:board']);
                 $judge = new Process(['php', 'artisan', 'scheduling:judge']);
                 $parole = new Process(['php', 'artisan', 'scheduling:parole']);
+                $post_process = new Process(['php', 'artisan', 'scheduling:postprocess']);
 
                 // Run all scheduling processes asynchronously
                 $board->start();
                 $judge->start();
                 $parole->start();
+                $post_process->start();
 
                 // OPTIONAL: run somthing else while the processes are going
 
                 // Then we wait for the sub-processes to finish.
-                while ($board->isRunning() || $judge->isRunning() || $parole->isRunning()){
+                while ($board->isRunning() || $judge->isRunning() || $parole->isRunning() || $post_process->isRunning()){
                     sleep(1);
                 }
 
