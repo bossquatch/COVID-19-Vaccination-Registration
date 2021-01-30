@@ -154,12 +154,4 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
-    public function routeNotificationForTwilio($notification)
-    {
-        if ($this->sms_verified_at != NULL) {
-            return $this->phone;
-        }
-
-        return 'cannot send SMS';
-    }
 }

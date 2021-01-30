@@ -24,16 +24,15 @@ class Invite extends Notification implements ShouldQueue
     public function viaQueues()
     {
         return [
-            'mail'      => 'emails',
-            'array'     => 'database',
-//            'twilio'    => 'sms',
+            'mail'                  => 'emails',
+            'array'                 => 'database',
+            TwilioChannel::class    => 'sms',
         ];
     }
 
     public function via($notifiable)
     {
-        // ,TwilioChannel::class
-        return ['mail','database'];
+        return ['mail','database',TwilioChannel::class];
     }
 
     public function toMail($notifiable)
@@ -52,10 +51,10 @@ class Invite extends Notification implements ShouldQueue
         ];
     }
 
-//    public function toTwilio($notifiable)
-//    {
-//        return (new TwilioSmsMessage())
-//            ->content('hell0 {$notifiable->first_name}');
-//
-//    }
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioSmsMessage())
+            ->content('hell0 {$notifiable->first_name}');
+
+    }
 }

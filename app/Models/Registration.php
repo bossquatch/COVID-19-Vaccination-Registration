@@ -87,6 +87,20 @@ class Registration extends Model
         return $this->hasMany(Comment::class, 'registration_id');
     }
 
+    public function events() {
+        return $this->belongsToMany(Event::class)->withTimestamps();
+    }
+
+    public function assignEvent(Event $event)
+    {
+        $this->events()->attach($event);
+    }
+
+    public function unassignEvent(Event $event)
+    {
+        $this->events()->detach($event);
+    }
+
     public function hasComments() {
         if ($this->comments()->count() > 0) {
             return true;
@@ -95,12 +109,26 @@ class Registration extends Model
     }
 
     public function getAgeAttribute()
-        {
-            if ($this->birth_date != null) {
-                return Carbon::parse($this->birth_date)->age;
-            }
-            else {
-                return 'N/A';
-            }
+    {
+        if ($this->birth_date != null) {
+            return Carbon::parse($this->birth_date)->age;
         }
+        else {
+            return 'N/A';
+        }
+    }
+
+    public function getPhoneNumberAttribute()
+    {
+        $phone = '+1' . preg_replace('/\D/', '', $this->user->phone);
+        return $phone;
+    }
+
+
+//        if ($this->sms_verified_at != NULL) {
+//            return $this->phone;
+//        }
+//
+//        return 'cannot send SMS';
+
 }
