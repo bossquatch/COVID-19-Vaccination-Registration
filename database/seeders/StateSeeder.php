@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\state;
+use App\Models\State;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
