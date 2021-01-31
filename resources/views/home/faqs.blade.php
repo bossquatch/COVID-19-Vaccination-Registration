@@ -123,13 +123,13 @@
                                     <!-- Text -->
                                     <p class="collapse-content">
                                         During this first phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations:
-                                        <ul>
-                                            <li>Long-term care facility residents and staff</li>
-                                            <li>Persons 65 years of age and older</li>
-                                            <li>Health care personnel with direct patient contact.</li>
-                                            <li>Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital</li>
-                                        </ul>
                                     </p>
+                                    <ul>
+                                        <li>Long-term care facility residents and staff</li>
+                                        <li>Persons 65 years of age and older</li>
+                                        <li>Health care personnel with direct patient contact.</li>
+                                        <li>Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -152,13 +152,13 @@
                                     <!-- Text -->
                                     <p class="collapse-content">
                                         No. The vaccine takes a few weeks for antibodies to develop. A second dose of the vaccine will need to administered 28 days after the first as a booster. We encourage you to continue following healthy prevention measures after receiving the vaccine. This includes continuing to:
-                                        <ul>
-                                            <li>Wash your hands</li>
-                                            <li>Wear a mask in public</li>
-                                            <li>Continue social distancing while out in public</li>
-                                            <li>Cleaning and wiping down surfaces</li>
-                                        </ul>
                                     </p>
+                                    <ul>
+                                        <li>Wash your hands</li>
+                                        <li>Wear a mask in public</li>
+                                        <li>Continue social distancing while out in public</li>
+                                        <li>Cleaning and wiping down surfaces</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Residents can continue monitoring the health department's website for updates regarding appointments. The website for that is <a href="Polk.FloridaHealth.gov" target="__blank">Polk.FloridaHealth.gov</a>. Residents may also call our Polk County COVID-19 vaccine hotline at 863-298-7500 to check on availability.
+                                        Residents can continue monitoring the health department's website for updates regarding appointments. Here is a link: <a href="http://polk.floridahealth.gov/" target="__blank">Florida Health - Polk County</a>. Residents may also call our Polk County COVID-19 vaccine hotline at 863-298-7500 to check on availability.
                                     </p>
                                 </div>
                             </div>
@@ -350,7 +350,7 @@
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFourteen" role="button" aria-expanded="false" aria-controls="helpFourteen">
                                 <!-- Title -->
-                                <h3 class="collapse-title">Do I need to be a Polk County resident to be vaccinated at these appoinments?</h3>
+                                <h3 class="collapse-title">Do I need to be a Polk County resident to be vaccinated at these appointments?</h3>
 
                                 <!-- Metadata -->
                                 <div class="ml-auto">
@@ -386,14 +386,13 @@
                             <div class="collapse" id="helpFifteen" data-parent="#helpAccordionOne">
                                 <div class="py-4">
                                     <!-- Text -->
-                                    <p class="collapse-content">
-                                        <ul>
-                                            <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
-                                            <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
-                                            <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
-                                            <li>The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.</li>
-                                        </ul>
-                                    </p>
+                                    <p class="collapse-content"></p>
+                                    <ul>
+                                        <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
+                                        <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
+                                        <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
+                                        <li>The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
