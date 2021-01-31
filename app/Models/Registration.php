@@ -2,16 +2,31 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Carbon\Carbon;
+
 
 class Registration extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     protected $guarded = [];
+
+    protected $appends = [
+        'email_verified_at',
+        'phone_number',
+        'age'
+    ];
+
+    public function getEmailVerifiedAtAttribute()
+    {
+        $asdf = $this->user->email_verified_at;
+        return $this->attributes['email_verified_at'] == $asdf;
+    }
 
     public function AuditLogs()
     {
@@ -86,6 +101,20 @@ class Registration extends Model
         return $this->hasMany(Comment::class, 'registration_id');
     }
 
+    public function events() {
+        return $this->belongsToMany(Event::class)->withTimestamps();
+    }
+
+    public function assignEvent(Event $event)
+    {
+        $this->events()->attach($event);
+    }
+
+    public function unassignEvent(Event $event)
+    {
+        $this->events()->detach($event);
+    }
+
     public function hasComments() {
         if ($this->comments()->count() > 0) {
             return true;
@@ -93,16 +122,20 @@ class Registration extends Model
         return false;
     }
 
-    /**
-    * Accessor for Age.
-    */
     public function getAgeAttribute()
-        {
-            if ($this->birth_date != null) {
-                return Carbon::parse($this->birth_date)->age;
-            }
-            else {
-                return 'N/A';
-            }
+    {
+        if ($this->birth_date != null) {
+            return Carbon::parse($this->birth_date)->age;
         }
+        else {
+            return 'N/A';
+        }
+    }
+
+    public function getPhoneNumberAttribute()
+    {
+        $phone = '+1' . preg_replace('/\D/', '', $this->user->phone);
+        return $phone;
+    }
+
 }

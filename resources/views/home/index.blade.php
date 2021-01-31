@@ -4,6 +4,11 @@
     {{ config('app.name', 'Laravel') }}
 @endsection
 
+@section('header')
+    <script src="{{ asset('js/analytics.js') }}"></script>
+    <link href="{{ asset('css/analytics.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 <!-- Header -->
 <div class="page-header header-filter page-header-default">
@@ -49,10 +54,34 @@
                         </p>
                     </div>
                 </div>
+                <div class="row mb-6 mb-md-8">
+                    <div class="col-12">
+                        <!-- Heading -->
+                        <h2 class="h3">
+                            Statistics
+                        </h2>
+                        <div class="chart mt-6">
+                            <canvas id="regByDay" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-12 col-md-4">
                 <!-- Card -->
+                <div class="card shadow-light-lg mb-5">
+                    <div class="card-body">
+                        <!-- Heading -->
+                        <h2 class="h4">
+                            Current Status
+                        </h2>
+
+                        <!-- Text -->
+                        <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made on:</p>
+                        <span class="badge badge-pill badge-primary ml-2">{{ $currentSchedule }}</span>
+
+                    </div>
+                </div>
                 <div class="card shadow-light-lg mb-5">
                     <div class="card-body">
                         <!-- Heading -->
@@ -154,4 +183,95 @@
         </div>
     </div>
 </section>
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        var ctx = document.getElementById('regByDay').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($registrations['day']) !!},
+                datasets: [{
+                    label: 'Registrations',
+                    data: {!! json_encode($registrations['counts']) !!},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        fontSize: 14,
+                        fontColor: '#000',
+                        padding: 16,
+                        fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                    }
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    displayColors: false,
+                    xPadding: 16,
+                    yPadding: 12,
+                    titleFontSize: 14,
+                    titleFontFamily: "'Open Sans Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+                    bodyFontSize: 14,
+                    bodyFontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+                    footerFontSize: 10,
+                    footerFontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Day',
+                            fontSize: 14,
+                            fontColor: '#000',
+                            padding: 16,
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            fontSize: 12,
+                            fontColor: '#000',
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Count',
+                            fontSize: 14,
+                            fontColor: '#000',
+                            padding: 16,
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        },
+                        gridLines: {
+                            borderDash: [1, 1]
+                        },
+                        ticks: {
+                            fontSize: 12,
+                            fontColor: '#000',
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 @endsection
