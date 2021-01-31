@@ -5,12 +5,9 @@ namespace App\Notifications;
 use App\Mail\Invitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
-use NotificationChannels\Twilio\Twilio;
 use NotificationChannels\Twilio\TwilioChannel;
-use NotificationChannels\Twilio\TwilioSmsMessage;
 use Twilio\Rest\Client;
 
 class Invite extends Notification implements ShouldQueue
