@@ -126,7 +126,7 @@
                                     <form method="POST" action="{{ url('/sms/resend') }}">
                                         @csrf
                                         <button type="submit" class="btn btn-link p-0 stretched-link">
-                                            <small><span class="fad fa-mobile mr-1"></span>Verify SMS</small>
+                                            <small><span class="fad fa-mobile mr-1"></span>Verify Phone Number via Text</small>
                                         </button>
                                     </form>
                                     @endif
