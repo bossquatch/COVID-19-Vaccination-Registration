@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use NotificationChannels\Twilio\Twilio;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use Twilio\Rest\Client;
 
 class Invite extends Notification implements ShouldQueue
 {
@@ -24,9 +25,9 @@ class Invite extends Notification implements ShouldQueue
     public function viaQueues()
     {
         return [
-            'mail'                  => 'emails',
-            'array'                 => 'database',
-            TwilioChannel::class    => 'sms',
+            'mail'      => 'emails',
+            'array'     => 'database',
+            'twilio'    => 'sms',
         ];
     }
 
@@ -53,8 +54,19 @@ class Invite extends Notification implements ShouldQueue
 
     public function toTwilio($notifiable)
     {
-        return (new TwilioSmsMessage())
-            ->content('hell0 {$notifiable->first_name}');
+//        return (new TwilioSmsMessage())
+//            ->content('hell0 '.$notifiable->first_name);
+        $sid    = env('TWILIO_ACCOUNT_SID');
+        $token  = env('TWILIO_AUTH_TOKEN');
+        $twilio = new Client($sid, $token);
 
+        $message = $twilio->messages
+            ->create($notifiable->phone_number, // to
+                array(
+                    "messagingServiceSid" => "MGedc51261d5e15e1dfb7cda27912d7cca",
+                    "body" => "hell0 " . $notifiable->first_name
+                )
+            );
+        return $message->sid;
     }
 }

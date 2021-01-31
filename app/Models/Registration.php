@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 
 class Registration extends Model
@@ -13,6 +13,17 @@ class Registration extends Model
     use HasFactory, SoftDeletes, Notifiable;
 
     protected $guarded = [];
+
+
+    protected $appends = ['email_verified_at'];
+
+    public function getEmailVerifiedAtAttribute()
+    {
+
+        $asdf = $this->user->email_verified_at;
+
+        return $this->attributes['email_verified_at'] == $asdf;
+    }
 
     public function AuditLogs()
     {
