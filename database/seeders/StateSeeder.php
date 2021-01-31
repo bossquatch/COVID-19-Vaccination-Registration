@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\state;
+use App\Models\State;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +12,7 @@ class StateSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+	 *
      */
     public function run()
     {

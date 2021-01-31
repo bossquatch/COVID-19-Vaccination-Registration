@@ -5,6 +5,7 @@ return [
     'password' => env('TWILIO_PASSWORD'), // optional when using auth token
     'auth_token' => env('TWILIO_AUTH_TOKEN'), // optional when using username and password
     'account_sid' => env('TWILIO_ACCOUNT_SID'),
+	'verification_sid' => env('TWILIO_VERIFICATION_SID'),
 
     'from' => env('TWILIO_FROM'), // optional
     'alphanumeric_sender' => env('TWILIO_ALPHA_SENDER'),
