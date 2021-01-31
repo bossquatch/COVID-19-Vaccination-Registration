@@ -54,17 +54,16 @@ class Invite extends Notification implements ShouldQueue
 
     public function toTwilio($notifiable)
     {
-//        return (new TwilioSmsMessage())
-//            ->content('hell0 '.$notifiable->first_name);
+
         $sid    = env('TWILIO_ACCOUNT_SID');
         $token  = env('TWILIO_AUTH_TOKEN');
         $twilio = new Client($sid, $token);
 
         $message = $twilio->messages
-            ->create($notifiable->phone_number, // to
+            ->create($notifiable->phone_number,
                 array(
-                    "messagingServiceSid" => "MGedc51261d5e15e1dfb7cda27912d7cca",
-                    "body" => "hell0 " . $notifiable->first_name
+                    "messagingServiceSid" => env('TWILIO_SMS_SERVICE_SID'),
+                    "body" => $notifiable->first_name . ', you are invited to our next COVID-19 vaccination event. Please login to your account to accept. ' . url('/home')
                 )
             );
         return $message->sid;

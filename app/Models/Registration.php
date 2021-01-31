@@ -14,14 +14,15 @@ class Registration extends Model
 
     protected $guarded = [];
 
-
-    protected $appends = ['email_verified_at'];
+    protected $appends = [
+        'email_verified_at',
+        'phone_number',
+        'age'
+    ];
 
     public function getEmailVerifiedAtAttribute()
     {
-
         $asdf = $this->user->email_verified_at;
-
         return $this->attributes['email_verified_at'] == $asdf;
     }
 
@@ -134,12 +135,5 @@ class Registration extends Model
         $phone = '+1' . preg_replace('/\D/', '', $this->user->phone);
         return $phone;
     }
-
-
-//        if ($this->sms_verified_at != NULL) {
-//            return $this->phone;
-//        }
-//
-//        return 'cannot send SMS';
 
 }
