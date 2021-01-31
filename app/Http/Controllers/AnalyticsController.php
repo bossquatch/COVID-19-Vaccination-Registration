@@ -80,18 +80,6 @@ class AnalyticsController extends Controller
             WHERE c.county NOT IN (select County from top10)
         ');
 
-//        $other_fl_counties = 0;
-//        foreach($registered_by_county_db as $county) {
-//            if ($county->Count >= 25 || in_array($county->County, ['Polk', 'Unknown', 'Outside of Florida'])) {
-//                $registered_by_county['counts'][] = $county->Count;
-//                $registered_by_county['counties'][] = $county->County.' ('.$county->Count.')';
-//            } else {
-//                $other_fl_counties += $county->Count;
-//            }
-//        }
-//        $registered_by_county['counts'][] = $other_fl_counties;
-//        $registered_by_county['counties'][] = 'Other Florida Counties ('.$other_fl_counties.')';
-
         foreach($registered_by_county_db as $county) {
             $registered_by_county['counts'][] = $county->Count;
             $registered_by_county['counties'][] = Str::of($county->County)->title().' ('.$county->Count.')';
