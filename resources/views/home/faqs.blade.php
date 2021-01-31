@@ -233,7 +233,7 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        Residents can continue monitoring the health department's website for updates regarding appointments. The website for that is <a href="Polk.FloridaHealth.gov" target="__blank">Polk.FloridaHealth.gov</a>. Residents may also call our Polk County COVID-19 vaccine hotline at 863-298-7500 to check on availability.
+                                        Residents can continue monitoring the health department's website for updates regarding appointments. Here is a link: <a href="http://polk.floridahealth.gov/" target="__blank">Florida Health - Polk County</a>. Residents may also call our Polk County COVID-19 vaccine hotline at 863-298-7500 to check on availability.
                                     </p>
                                 </div>
                             </div>
