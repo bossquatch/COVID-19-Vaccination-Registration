@@ -156,7 +156,7 @@
                         @php
                             $past_events = \App\Models\Event::where([
                                     ['date_held', '<', DB::raw('CURDATE()')],
-                                    ['date_held', '>=', \Carbon\Carbon::today()->subDays(14)],
+                                    //['date_held', '>=', \Carbon\Carbon::today()->subDays(14)],
                                 ])->whereHas('slots', function ($query) {
                                     $query->select('id', 'event_id', 'capacity', 'deleted_at')
                                     ->withCount([
