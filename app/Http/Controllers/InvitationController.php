@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\Confirm;
+use App\Notifications\Decline;
+use App\Notifications\Postpone;
 use Session;
 
 class InvitationController extends Controller
@@ -27,6 +30,7 @@ class InvitationController extends Controller
             'text' => 'Appointment was accepted via user.',
             'system_notification' => true,
         ]);
+        $registration->notify(new Confirm());
 
         Session::flash('success', "<p>Appointment Accepted!</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a> and bring it to your appointment as well as proof of Florida residency.</p>");
         return redirect('/home');
@@ -46,6 +50,7 @@ class InvitationController extends Controller
             'text' => 'Appointment was postponed via user.',
             'system_notification' => true,
         ]);
+        $registration->notify(new Postpone());
 
         Session::flash('success', "<p>You have declined your invitation and will be returned to the wait list. We will attempt to invite you to our next event.</p>");
         return redirect('/home');  
@@ -65,6 +70,7 @@ class InvitationController extends Controller
             'text' => 'Appointment was declined via user.',
             'system_notification' => true,
         ]);
+        $registration->notify(new Decline());
 
         Session::flash('success', "<p>You have declined your invitation to any of our events and will not be contacted again for further appointments. If you would like to be placed back on the wait list at a later time please contact our call center at <a href=\"tel:863-298-7500\">(863) 534-7500</a>.</p>");
         return redirect('/home');
@@ -85,6 +91,7 @@ class InvitationController extends Controller
             'user_id' => Auth::id(),
             'text' => 'Appointment was accepted via call center.',
         ]);
+        $registration->notify(new Confirm());
 
         Session::flash('success', "<p>Appointment Accepted!</p><p>Be sure to remind the registrant to bring proof of Florida residency to their appointment.</p>");
         return redirect('/events/'.$invite->event->id.'/pending');
@@ -105,6 +112,7 @@ class InvitationController extends Controller
             'user_id' => Auth::id(),
             'text' => 'Appointment was postponed via call center.',
         ]);
+        $registration->notify(new Postpone());
 
         Session::flash('success', "<p>You have declined your invitation and will be returned to the wait list. We will attempt to invite you to our next event.</p>");
         return redirect('/events/'.$invite->event->id.'/pending');
@@ -125,6 +133,7 @@ class InvitationController extends Controller
             'user_id' => Auth::id(),
             'text' => 'Appointment was declined via call center.',
         ]);
+        $registration->notify(new Decline());
 
         Session::flash('success', "<p>You have declined your invitation to any of our events and will not be contacted again for further appointments. If you would like to be placed back on the wait list at a later time please contact our call center at <a href=\"tel:863-298-7500\">(863) 534-7500</a>.</p>");
         return redirect('/events/'.$invite->event->id.'/pending');

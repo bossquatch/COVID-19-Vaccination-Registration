@@ -13,6 +13,7 @@ use App\Mail\OpenInvitation;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Services\Twilio\Messenger;
+use App\Notifications\Invite;
 
 class Judge
 {
@@ -28,18 +29,12 @@ class Judge
         foreach ($cases as $case) {
             // determine if contactable and sentence accordingly 
             if ($case->auto_contactable && !$case->partner_handled) {
-                if(self::sendEmail($case)) {
-                    $case->contact_method_id = 4;
-                }
+                self::sendInvite($case);
                 
                 if ($case->can_sms) {
-                    if(self::sendSms($case)) {
-                        if ($case->isDirty('contact_method_id')) {
-                            $case->contact_method_id = 6;
-                        } else {
-                            $case->contact_method_id = 5;
-                        }
-                    }
+                    $case->contact_method_id = 6;
+                } else {
+                    $case->contact_method_id = 4;
                 }
 
                 if ($case->isDirty('contact_method_id')) {
@@ -89,5 +84,12 @@ class Judge
         $message = $reg->first_name . ' ' . $reg->last_name . ', your COVID-19 vaccination appointment has been scheduled.  Please sign into register.polk.health in order to accept this invitation.  This invite will expire at ' . Carbon::now()->addHours(config('app.invitation_expire'))->format("h:iA M d, Y") . '.';
         
         return $messenger->sendMessage($invitation->user->phone, $message);
+    }
+
+    // queable notifications
+    protected static function sendInvite($invitation)
+    {
+        $registration = $invitation->registration;
+        $registration->notify(new Invite());
     }
 }
