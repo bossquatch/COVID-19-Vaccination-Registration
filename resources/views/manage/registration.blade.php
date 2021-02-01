@@ -164,7 +164,7 @@
                                                 $query->whereNotIn('id', [4, 5]);
                                             });
                                         },
-                                    ])->havingRaw('`capacity` > `active_invitations_count`');
+                                    ])->havingRaw('`slots`.`capacity` > `active_invitations_count`');
                                 })->orderBy('date_held', 'desc')->get();
                         @endphp
                             <hr>
