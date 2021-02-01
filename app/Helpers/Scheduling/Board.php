@@ -55,7 +55,7 @@ class Board
                         $query->whereNotIn('id', [4, 5]);
                     });
                 },
-            ])->havingRaw('(`capacity` - `reserved`) > `active_invitations_count`')                        // only get slots with seats available
+            ])->havingRaw('(`slots`.`capacity` - `slots`.`reserved`) > `active_invitations_count`')                        // only get slots with seats available
             ->whereHas('event', function(Builder $query) {                                  // only get from open events
                 $query->where('open', true);
             })->where([
