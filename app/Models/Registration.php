@@ -174,4 +174,10 @@ class Registration extends Model
         return $phone;
     }
 
+    // allows $registration->auto_contactable
+    public function getAutoContactableAttribute() 
+    {
+        return ($this->user->sms_verified_at || $this->user->email_verified_at);
+    }
+
 }
