@@ -163,7 +163,7 @@
                                     <form method="POST" action="{{ url('/sms/resend') }}">
                                         @csrf
                                         <button type="submit" class="btn btn-link p-0 stretched-link">
-                                            <small><span class="fad fa-mobile mr-1"></span>Verify SMS</small>
+                                            <small><span class="fad fa-mobile mr-1"></span>Text Message Verify</small>
                                         </button>
                                     </form>
                                     @endif
@@ -391,7 +391,7 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Delete Registration</button>
                 </form>
-            </div>        
+            </div>
         </div>
     </div>
 </div>

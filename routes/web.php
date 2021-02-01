@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Registration;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +28,35 @@ Route::get('/not-supported', function() {
 
 Route::group(["middleware" => "check.reset"], function() {
     Route::get('/', function () {
-        return view('home.index');
+
+        // registrations by county
+        $registrations = [
+            'counts' => [],
+            'day' => []
+        ];
+
+        $regByDay = DB::select("
+            SELECT
+                DATE_FORMAT(r.submitted_at,'%m/%d/%y') `Day`,
+                count(*) `Count`
+            FROM
+                registrations r
+            WHERE
+                r.deleted_at IS NULL
+            GROUP BY
+                DATE_FORMAT(r.submitted_at,'%m/%d/%y')
+        ");
+
+        foreach($regByDay as $day) {
+            $registrations['counts'][] = $day->Count;
+            $registrations['day'][] = $day->Day;
+        }
+
+        $currentSchedule = Carbon::create(Registration::where('status_id','=',2)->max('submitted_at'));
+        return view('home.index',[
+            'currentSchedule' => $currentSchedule->format('F jS, Y'),
+            'registrations' => $registrations,
+        ]);
     });
 
     Route::get('/faqs' , function() {
@@ -37,6 +69,10 @@ Route::group(["middleware" => "check.reset"], function() {
 
     Route::get('/terms' , function() {
         return view('home.terms');
+    });
+
+    Route::get('/doug', function () {
+        return view('doug.notification');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

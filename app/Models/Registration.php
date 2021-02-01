@@ -2,16 +2,29 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
+use Illuminate\Notifications\Notifiable;
 
 class Registration extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     protected $guarded = [];
+
+    protected $appends = [
+        'email_verified_at',
+        'phone_number',
+        'age'
+    ];
+
+    public function getEmailVerifiedAtAttribute()
+    {
+        $asdf = $this->user->email_verified_at;
+        return $this->attributes['email_verified_at'] == $asdf;
+    }
 
     public function AuditLogs()
     {
@@ -86,6 +99,20 @@ class Registration extends Model
         return $this->hasMany(Comment::class, 'registration_id');
     }
 
+    public function events() {
+        return $this->belongsToMany(Event::class)->withTimestamps();
+    }
+
+    public function assignEvent(Event $event)
+    {
+        $this->events()->attach($event);
+    }
+
+    public function unassignEvent(Event $event)
+    {
+        $this->events()->detach($event);
+    }
+
     public function hasComments() {
         if ($this->comments()->count() > 0) {
             return true;
@@ -140,4 +167,11 @@ class Registration extends Model
                 ->orWhere('name', 'Checked In');
         });
     }
+
+    public function getPhoneNumberAttribute()
+    {
+        $phone = '+1' . preg_replace('/\D/', '', $this->user->phone);
+        return $phone;
+    }
+
 }

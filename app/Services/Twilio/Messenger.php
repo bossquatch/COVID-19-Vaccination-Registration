@@ -35,12 +35,12 @@ class Messenger
     public function __construct($client = null, string $verification_sid = null, string $phone = null)
     {
         if ($client === null) {
-            $sid = config('app.twilio.account_sid');
-            $token = config('app.twilio.auth_token');
+            $sid = config('twilio-notification-channel.account_sid');
+			$token = config('twilio-notification-channel.auth_token');
             $client = new Client($sid, $token);
         }
         $this->client = $client;
-        $this->verification_sid = $verification_sid ?: config('app.twilio.verification_sid');
+        $this->verification_sid = $verification_sid ?: config('twilio-notification-channel.verification_sid');
         $this->from_number = $phone ?: config('app.twilio.from_number');
     }
 
