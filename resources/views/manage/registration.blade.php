@@ -158,13 +158,14 @@
                                     ['date_held', '<', DB::raw('CURDATE()')],
                                     ['date_held', '>=', \Carbon\Carbon::today()->subDays(14)],
                                 ])->whereHas('slots', function ($query) {
-                                    $query->withCount([
+                                    $query->select('id', 'event_id', 'capacity', 'deleted_at')
+                                    ->withCount([
                                         'invitations as active_invitations_count' => function ($query) {
                                             $query->whereHas('invite_status', function ($query) {
                                                 $query->whereNotIn('id', [4, 5]);
                                             });
                                         },
-                                    ])->havingRaw('`slots`.`capacity` > `active_invitations_count`');
+                                    ])->havingRaw('`capacity` > `active_invitations_count`');
                                 })->orderBy('date_held', 'desc')->get();
                         @endphp
                             <hr>

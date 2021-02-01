@@ -22,14 +22,14 @@ class SlotController extends Controller
     {
         $event = \App\Models\Event::findOrFail($event_id);
 
-        $slots = $event->slots()
+        $slots = $event->slots()->select('id', 'event_id', 'capacity', 'deleted_at', 'starting_at', 'ending_at')
             ->withCount([
                 'invitations as active_invitations_count' => function ($query) {
                     $query->whereHas('invite_status', function ($query) {
                         $query->whereNotIn('id', [4, 5]);
                     });
                 },
-            ])->havingRaw('`slots`.`capacity` > `active_invitations_count`')->get();        // allow retroactive assigning to filled slots via reservation
+            ])->havingRaw('`capacity` > `active_invitations_count`')->get();        // allow retroactive assigning to filled slots via reservation
 
         if ($slots->count() > 0) {
             return json_encode(['status' => 'success', 'html' => view('manage.partials.slotoptions', ['slots' => $slots])->render()]);
