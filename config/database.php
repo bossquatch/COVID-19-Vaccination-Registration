@@ -142,6 +142,13 @@ return [
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
 
+        'geocode-cache' => [ // choose an appropriate name
+            'host' => env('REDIS_HOST', '192.168.10.10'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_PORT', 6379),
+            'database' => env('REDIS_GEOCODE_CACHE_DB', 2), // be sure this number differs from your other redis databases
+        ],
+
     ],
 
 ];
