@@ -180,4 +180,13 @@ class Registration extends Model
         return ($this->user->sms_verified_at || $this->user->email_verified_at);
     }
 
+    // allows $registration->can_sms
+    public function getCanSmsAttribute() {
+        return ($this->user->sms_verified_at);
+    }
+
+    // allows $registration->can_email
+    public function getCanEmailAttribute() {
+        return ($this->user->email_verified_at);
+    }
 }

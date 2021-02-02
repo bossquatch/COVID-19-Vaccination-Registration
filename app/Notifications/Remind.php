@@ -30,7 +30,15 @@ class Remind extends Notification implements ShouldQueue
 
     public function via($notifiable)
     {
-        return ['mail','database',TwilioChannel::class];
+        if ($notifiable->auto_contactable) {
+            if ($notifiable->can_sms) {
+                return ['mail','database',TwilioChannel::class];
+            } else {
+                return ['mail','database'];
+            }
+        } else {
+            return ['database'];
+        }
     }
 
     public function toMail($notifiable)
