@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -16,7 +18,9 @@ class AnalyticsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['verified', 'can:keep_inventory']);
+        $this->middleware(['verified', 'can:keep_inventory'])->except([
+            'publicAnalytics'
+        ]);
     }
 
     public function index()
@@ -124,4 +128,45 @@ class AnalyticsController extends Controller
             'registrations_young' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`birth_date`) > DATE_SUB(CURDATE(), INTERVAL 65 YEAR)')[0]->Count,
         ]);
     }
+
+    public function publicAnalytics()
+    {
+        //  check the cache for the existence of this data.  If found, use cache; if not, run the queries and store in cache
+        if (Cache::has('registrationsByDay') == false) {
+
+            $registrations = [
+                'counts' => [],
+                'day' => []
+            ];
+
+            $regByDay = DB::select("
+                SELECT
+                    DATE_FORMAT(r.submitted_at,'%m/%d/%y') `Day`,
+                    count(*) `Count`
+                FROM
+                    registrations r
+                WHERE
+                    r.deleted_at IS NULL
+                GROUP BY
+                    DATE_FORMAT(r.submitted_at,'%m/%d/%y')
+            ");
+
+            foreach ($regByDay as $day) {
+                $registrations['counts'][] = $day->Count;
+                $registrations['day'][] = $day->Day;
+            }
+
+            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
+
+            Cache::tags(['analytics'])->put('registrationsByDay', $registrations, $seconds = 600);
+            Cache::tags(['analytics'])->put('currentSchedule', $currentSchedule, $seconds = 600);
+
+        }
+
+        return view('home.index',[
+            'currentSchedule' => Cache::tags(['analytics'])->get('currentSchedule')->format('F jS, Y'),
+            'registrations' => Cache::tags(['analytics'])->get('registrationsByDay'),
+        ]);
+    }
+
 }
