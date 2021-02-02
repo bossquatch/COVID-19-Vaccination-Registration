@@ -22,9 +22,9 @@ class Remind extends Notification implements ShouldQueue
     public function viaQueues()
     {
         return [
-            'mail'      => 'emails',
-            'array'     => 'database',
-            'twilio'    => 'sms',
+            'mail'                  => 'emails',
+            'database'              => 'database',
+            TwilioChannel::class    => 'sms',
         ];
     }
 
