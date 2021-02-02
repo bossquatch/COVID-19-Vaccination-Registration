@@ -178,6 +178,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Geocoder\Laravel\Providers\GeocoderService::class,
+
 
         /*
          * Package Service Providers...
