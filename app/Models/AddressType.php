@@ -11,6 +11,6 @@ class AddressType extends Model
 
     private function address()
 	{
-		return $this->belongsTo(Address::class);
+		return $this->belongsToMany(Address::class);
 	}
 }
