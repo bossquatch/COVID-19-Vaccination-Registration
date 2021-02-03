@@ -15,6 +15,7 @@ class Slot extends Model
     const UPDATED_AT = 'updated_at';
 
     protected $guarded = [];
+    public $timestamps = false;
 
     public function event() {
         return $this->belongsTo(Event::class, 'event_id');
