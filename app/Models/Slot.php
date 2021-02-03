@@ -11,6 +11,9 @@ class Slot extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
     protected $guarded = [];
 
     public function event() {
