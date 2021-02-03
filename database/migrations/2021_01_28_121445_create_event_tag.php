@@ -57,6 +57,6 @@ class CreateEventTag extends Migration
         Schema::table('tags', function (Blueprint $table) {
             $table->dropColumn(['is_partner']);
         });
-        Schema::dropIfExists('event_tags');
+        Schema::dropIfExists('event_tag');
     }
 }
