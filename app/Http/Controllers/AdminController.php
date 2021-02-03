@@ -124,6 +124,19 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
+    public function delete($id)
+    {
+        $user = \App\Models\User::findOrFail($id);
+        $user->email = $user->id . rand(10000,99999) . '-' . $user->email;
+        $user->update();
+        $this->logChanges($user, 'deleted', false, false, null, true);
+
+        $user->delete();
+
+        \Session::flash('success', "User was successfully deleted.");
+        return redirect('/admin');
+    }
+
     public function resetPassword()
     {
         if (request()->input("userId")) {
@@ -143,7 +156,7 @@ class AdminController extends Controller
 
         if ($id == null) {
             return request()->validate([
-                'email' => 'required|max:191|email|unique:users',
+                'email' => 'required|max:191|email:filter|unique:users',
                 'firstName' => 'required|max:30',
                 'middleName' => 'nullable|max:30',
                 'lastName' => 'required|max:30',
@@ -151,7 +164,7 @@ class AdminController extends Controller
             ]);
         } else {
             return request()->validate([
-                'email' => 'required|max:191|email|unique:users,email,'.$id,
+                'email' => 'required|max:191|email:filter|unique:users,email,'.$id,
                 'firstName' => 'required|max:30',
                 'middleName' => 'nullable|max:30',
                 'lastName' => 'required|max:30',

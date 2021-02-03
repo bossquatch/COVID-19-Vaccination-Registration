@@ -76,6 +76,7 @@
                                     <h3 class="h4">Date of Birth:</h3>
                                     <p class="text-gray-dark mb-2">
                                         {{ Carbon\Carbon::parse($registration->birth_date)->format('m/d/Y') }}
+                                        {{ '(' . $registration->Age . ' years old.)'}}
                                     </p>
                                 </div>
 

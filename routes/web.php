@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Registration;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +28,35 @@ Route::get('/not-supported', function() {
 
 Route::group(["middleware" => "check.reset"], function() {
     Route::get('/', function () {
-        return view('home.index');
+
+        // registrations by county
+        $registrations = [
+            'counts' => [],
+            'day' => []
+        ];
+
+        $regByDay = DB::select("
+            SELECT
+                DATE_FORMAT(r.submitted_at,'%m/%d/%y') `Day`,
+                count(*) `Count`
+            FROM
+                registrations r
+            WHERE
+                r.deleted_at IS NULL
+            GROUP BY
+                DATE_FORMAT(r.submitted_at,'%m/%d/%y')
+        ");
+
+        foreach($regByDay as $day) {
+            $registrations['counts'][] = $day->Count;
+            $registrations['day'][] = $day->Day;
+        }
+
+        $currentSchedule = Carbon::create(Registration::where('status_id','=',2)->max('submitted_at'));
+        return view('home.index',[
+            'currentSchedule' => $currentSchedule->format('F jS, Y'),
+            'registrations' => $registrations,
+        ]);
     });
 
     Route::get('/faqs' , function() {
@@ -37,6 +69,10 @@ Route::group(["middleware" => "check.reset"], function() {
 
     Route::get('/terms' , function() {
         return view('home.terms');
+    });
+
+    Route::get('/doug', function () {
+        return view('doug.notification');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -58,6 +94,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'edit'])->middleware('can:update_registration');
     Route::post('/manage/edit/{regis_id}', [App\Http\Controllers\ManageController::class, 'updateRegistration'])->middleware('can:update_registration');
     Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword'])->middleware('can:update_registration');
+    Route::delete('/manage/user/{id}', [App\Http\Controllers\ManageController::class, 'userDelete'])->middleware('can:update_registration');
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
 
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
@@ -74,11 +111,19 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
     Route::get('/admin/reports', [App\Http\Controllers\AdminController::class, 'report']);
     Route::get('/admin/new', [App\Http\Controllers\AdminController::class, 'create'])->middleware('can:create_user');
+    Route::get('/admin/tags', [App\Http\Controllers\TagController::class, 'index']);
     Route::get('/admin/{id}', [App\Http\Controllers\AdminController::class, 'edit'])->middleware('can:update_user');
 
     Route::post('/admin', [App\Http\Controllers\AdminController::class, 'store'])->middleware('can:create_user');
     Route::post('/admin/reset', [App\Http\Controllers\AdminController::class, 'resetPassword'])->middleware('can:update_user');
     Route::put('/admin/{id}', [App\Http\Controllers\AdminController::class, 'update'])->middleware('can:update_user');
+    Route::delete('/admin/{id}', [App\Http\Controllers\AdminController::class, 'delete'])->middleware('can:delete_user');
+
+    Route::get('/admin/tags/{id}/edit', [App\Http\Controllers\TagController::class, 'edit']);
+    Route::post('/admin/tags', [App\Http\Controllers\TagController::class, 'new']);
+    Route::post('/admin/tags/sync', [App\Http\Controllers\TagController::class, 'sync']);
+    Route::post('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'update']);
+    Route::delete('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'delete']);
 
     Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_vaccine');
 });

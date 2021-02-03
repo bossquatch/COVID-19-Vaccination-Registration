@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\InvitationGranted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -31,9 +32,9 @@ class RegistrationController extends Controller
             $invalid_letter_codes = [
                 'ASS',
                 'CUM',
-                'FAG', 
-                'GAY', 
-                'GOD', 
+                'FAG',
+                'GAY',
+                'GOD',
                 'JEW',
                 'TIT',
                 'FUK',
@@ -42,7 +43,7 @@ class RegistrationController extends Controller
                 'JIZ',
             ];
 
-            if(!in_array($randomletter, $invalid_letter_codes)) { 
+            if(!in_array($randomletter, $invalid_letter_codes)) {
                 $is_valid_letters = true;
             }
         }
@@ -75,7 +76,7 @@ class RegistrationController extends Controller
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
             'county_id'=> $valid['county'],
-            
+
             // Obtained by user account:
             'first_name'=> $user->first_name,
             'middle_name'=> $user->middle_name,
@@ -146,7 +147,7 @@ class RegistrationController extends Controller
             'first_name' => $valid['firstName'],
             'middle_name' => $valid['middleName'],
             'last_name' => $valid['lastName'],
-            'birth_date' => $valid['dateOfBirth'],
+            'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
         ]);
 
@@ -174,7 +175,7 @@ class RegistrationController extends Controller
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
             'county_id'=> $valid['county'],
-            
+
             // Obtained by user account:
             'first_name' => $valid['firstName'],
             'middle_name' => $valid['middleName'],
@@ -198,8 +199,8 @@ class RegistrationController extends Controller
         // rewrite if we start allowing multiple phones and emails
         $contacts = [];
         if (count($registration->phones()) > 0) {
-            if (empty($phones)) { 
-                $registration->phones()[0]->delete(); 
+            if (empty($phones)) {
+                $registration->phones()[0]->delete();
             } else {
                 $registration->phones()[0]->update($phones[0]);
             }
@@ -233,7 +234,7 @@ class RegistrationController extends Controller
 //        prefix the email address to avoid integrity constraint violation if the email is re-used later
 //        (soft) delete the user; I checked, the user model has softdeletes
         //$cur_user = User::findOrFail($regis->user_id);
-        $cur_user->email = rand(10000,99999) . '-' . $cur_user->email;
+        $cur_user->email = $cur_user->id . rand(10000,99999) . '-' . $cur_user->email;
         $cur_user->update();
         $cur_user->delete();
 

@@ -1,5 +1,18 @@
-﻿.bg-cover {
-    background: no-repeat center center/cover;
+﻿.bg-fixed {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    &.bg-login {
+        background-image: url("/images/mohammad-alizade-4wzRuAb-KWs-unsplash.jpg"); // HTML Unsplash Reference: <span>Photo by <a href="https://unsplash.com/@mohamadaz?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">mohammad alizade</a> on <a href="https://unsplash.com/t/wallpapers?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+    }
+}
+
+.bg-cover {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .bg-squares::before,

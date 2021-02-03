@@ -7,6 +7,7 @@
 @section('header')
 <script src="{{ asset('js/analytics.js') }}"></script>
 <link href="{{ asset('css/analytics.css') }}" rel="stylesheet">
+<meta http-equiv="refresh" content="30" >
 @endsection
 
 @section('content')
@@ -337,6 +338,14 @@
             animation: {
                 animateScale: true,
                 animateRotate: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 2000,
+                        min: 0
+                    }
+                }]
             }
         }
     });

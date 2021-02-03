@@ -4,6 +4,11 @@
     {{ config('app.name', 'Laravel') }}
 @endsection
 
+@section('header')
+    <script src="{{ asset('js/analytics.js') }}"></script>
+    <link href="{{ asset('css/analytics.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 <!-- Header -->
 <div class="page-header header-filter page-header-default">
@@ -11,8 +16,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h1 class="title">Polk County COVID-19 Vaccinations</h1>
-                <p class="sub-title h4">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
-                <br>
+                <p class="sub-title h4 mb-5">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
                 @auth
                 <a class="btn btn-header btn-round btn-lg" href="/home">View Registration</a>
                 @else
@@ -20,6 +24,9 @@
                 <a class="btn btn-header btn-round btn-lg" href="/register">Register</a>
                 @endif
                 @endauth
+                <p class="font-size-xs mt-4">
+                    You must be able to provide proof of Florida residency at the time of your vaccination.  Please reference this <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/01/Prioritization-of-Floridans-for-Covid-19-Vaccinations.pdf" class="text-light font-weight-medium"><u>advisory</u></a> for more information.
+                </p>
             </div>
         </div>
     </div>
@@ -47,10 +54,34 @@
                         </p>
                     </div>
                 </div>
+                <div class="row mb-6 mb-md-8">
+                    <div class="col-12">
+                        <!-- Heading -->
+                        <h2 class="h3">
+                            Statistics
+                        </h2>
+                        <div class="chart mt-6">
+                            <canvas id="regByDay" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-12 col-md-4">
                 <!-- Card -->
+                <div class="card shadow-light-lg mb-5">
+                    <div class="card-body">
+                        <!-- Heading -->
+                        <h2 class="h4">
+                            Current Status
+                        </h2>
+
+                        <!-- Text -->
+                        <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made on:</p>
+                        <span class="badge badge-pill badge-primary ml-2">{{ $currentSchedule }}</span>
+
+                    </div>
+                </div>
                 <div class="card shadow-light-lg mb-5">
                     <div class="card-body">
                         <!-- Heading -->
@@ -152,4 +183,95 @@
         </div>
     </div>
 </section>
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        var ctx = document.getElementById('regByDay').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($registrations['day']) !!},
+                datasets: [{
+                    label: 'Registrations',
+                    data: {!! json_encode($registrations['counts']) !!},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        fontSize: 14,
+                        fontColor: '#000',
+                        padding: 16,
+                        fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                    }
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    displayColors: false,
+                    xPadding: 16,
+                    yPadding: 12,
+                    titleFontSize: 14,
+                    titleFontFamily: "'Open Sans Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+                    bodyFontSize: 14,
+                    bodyFontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+                    footerFontSize: 10,
+                    footerFontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Day',
+                            fontSize: 14,
+                            fontColor: '#000',
+                            padding: 16,
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            fontSize: 12,
+                            fontColor: '#000',
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Count',
+                            fontSize: 14,
+                            fontColor: '#000',
+                            padding: 16,
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        },
+                        gridLines: {
+                            borderDash: [1, 1]
+                        },
+                        ticks: {
+                            fontSize: 12,
+                            fontColor: '#000',
+                            fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 @endsection
