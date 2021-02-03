@@ -11,11 +11,7 @@ class Slot extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
-
     protected $guarded = [];
-    public $timestamps = false;
 
     public function event() {
         return $this->belongsTo(Event::class, 'event_id');

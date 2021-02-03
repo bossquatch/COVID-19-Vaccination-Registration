@@ -16,8 +16,8 @@ class CreateSlotsTable extends Migration
         Schema::create('slots', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('event_id');
-            $table->timestamp('starting_at');
-            $table->timestamp('ending_at')->nullable();
+            $table->dateTime('starting_at')->nullable();
+            $table->dateTime('ending_at')->nullable();
             $table->integer('capacity')->default(0);
             $table->integer('reserved')->default(0);
             $table->timestamps();
