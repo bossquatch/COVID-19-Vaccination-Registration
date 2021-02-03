@@ -202,6 +202,10 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                },
                 legend: {
                     display: true,
                     position: 'bottom',
