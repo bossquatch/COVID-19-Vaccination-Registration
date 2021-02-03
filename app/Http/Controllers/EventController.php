@@ -162,8 +162,9 @@ class EventController extends Controller
         if ($slot->event_id != $event_id) { abort(404); }
         $valid = request()->validate(['amount' => 'required|numeric|min:0|max:'.($slot->capacity - $slot->active_invitation_count)]);
 
-        $slot->reserved = $valid['amount'];
-        $slot->save();
+        $slot->update([
+            'reserved' => $valid['amount'],
+        ]);
 
         Session::flash('success', "Reserved seats in slot were set.");
         return redirect('/events/'.$slot->event_id);
