@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class AddressType extends Model
 {
     use HasFactory;
+
+    private function address()
+	{
+		return $this->belongsTo(Address::class);
+	}
 }
