@@ -12,3 +12,17 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/.idea/.gitignore
+/.idea/dataSources.xml
+/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd
+/.idea/health-scheduler.iml
+/.idea/laravel-plugin.xml
+/.idea/commandlinetools/Laravel_1_20_21__12_30_PM.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/phpunit.xml
+/.idea/sqldialects.xml
+/.idea/sshConfigs.xml
+/.idea/symfony2.xml
+/.idea/vagrant.xml
+/.idea/vcs.xml
