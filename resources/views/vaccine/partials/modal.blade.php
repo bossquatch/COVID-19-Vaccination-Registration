@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <input id="registrationId" type="hidden" value="{{ $registration_id }}">
+                    <input id="registrationId" type="hidden" value="{{ $registration->id }}">
                     <div class="row mb-6">
                         {{--<div class="col-12">
                             <h2>Caller Information</h2>
@@ -263,6 +263,12 @@
 </div>
 
 <script>
+$( function () {
+    $('#lotNumber').autocomplete({
+        source: {!! $registration->has_appointment ? json_encode($registration->appointment->event->lots->pluck('number')->all()) : json_encode([]) !!}
+    });
+});
+
 function submitVacForm() {
     loading(true);
     clearErrors();

@@ -68,6 +68,11 @@ return [
 
     'pagination_limit' => env('PAGINATION_LIMIT', 25),
 
+    // how long it takes for invitations to expire in hours
+    'invitation_expire' => env('INVITATION_EXPIRE', 24),
+
+    'auto_scheduling' => env('AUTO_SCHEDULING', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

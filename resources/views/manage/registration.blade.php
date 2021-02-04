@@ -4,6 +4,16 @@
     {{ config('app.name', 'Laravel') }} - Procure Registration
 @endsection
 
+@section('header')
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
+<style>
+    .ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+@endsection
+
 @section('content')
 <!-- Header -->
 <div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
@@ -32,7 +42,7 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
-                <a class="btn btn-header btn-round btn-lg" href="/manage">
+                <a class="btn btn-header btn-round btn-lg" href="{{ url()->previous() == url()->current() ? '/manage' : url()->previous() }}">
                     <span class="fad fa-times-circle mr-1"></span> Cancel
                 </a>
 
@@ -45,7 +55,8 @@
         </div>
 
         <div class="row align-items-center">
-            <div class="col-12 col-lg-6 offset-lg-3">
+            @include('manage.partials.appointment', ['registration' => $registration])
+            <div class="col-12 col-lg-6 @if($registration->pending_invitation || $registration->has_appointment) @cannot('update_invite') offset-lg-3 @endcannot @cannot('create_vaccine') offset-lg-3 @endcannot @else offset-lg-3 @endif">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     <div class="card card-body p-6">
@@ -141,7 +152,50 @@
                                 </div>
                             </div>
                         </div>
-                        @can('read_vaccine')
+                        @can('create_invite')
+                        @php
+                            $past_events = \App\Models\Event::where([
+                                    ['date_held', '<', DB::raw('CURDATE()')],
+                                    //['date_held', '>=', \Carbon\Carbon::today()->subDays(14)],
+                                ])->whereHas('slots', function ($query) {
+                                    $query->select('id', 'event_id', 'capacity', 'deleted_at')
+                                    ->withCount([
+                                        'invitations as active_invitations_count' => function ($query) {
+                                            $query->whereHas('invite_status', function ($query) {
+                                                $query->whereNotIn('id', [4, 5]);
+                                            });
+                                        },
+                                    ])->havingRaw('`capacity` > `active_invitations_count`');
+                                })->orderBy('date_held', 'desc')->get();
+                        @endphp
+                            <hr>
+                            <div id="forceSchedulingRow">
+                                <div class="row align-items-center justify-content-center">
+                                    <h3>Add Appointment Data for Record</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-10 mx-auto">
+                                        <div class="input-group">
+                                            <select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
+                                                <option selected>Choose Event...</option>
+                                                @foreach ($past_events as $event)
+                                                    <option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }}</option>
+                                                @endforeach
+                                            </select>
+                                            <select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">
+                                                <option selected>No available slots</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary btn-disabled" disabled type="button" id="forceSchedulingLoading" style="display: none;"><span class="fad fa-spinner fa-spin"></span></button>
+                                                <button class="btn btn-outline-success" type="button" id="forceSchedulingAdd" onclick="submitInvite()">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="forceSchedulingStatus"></div>
+                            </div>
+                        @endcan
+                        @can('read_registration')
                             <hr>
                             <div class="row align-items-center justify-content-center">
                                 <h3>Vaccinations</h3>
@@ -189,11 +243,54 @@
     </div>
 </section>
 
+@can('create_invite')
+    <script>
+        $('#forceSchedule').on('change', function() {
+            var eventId = this.value;
+
+            if (eventId > 0) {
+                $.get('/slots/'+eventId, {}, function(data) {
+                        if (data.status == 'success') {
+                            $('#forceSlot').html(data.html);
+                        } else {
+                            $('#forceSlot').html('<option selected>No available slots</option>');
+                        }
+                }, 'json');
+            } else {
+                $('#forceSlot').html('<option selected>No available slots</option>');
+            }
+        });
+
+        function submitInvite() {
+            document.getElementById('forceSchedulingAdd').style.display = 'none';
+            document.getElementById('forceSchedulingLoading').style.display = '';
+            var event = document.getElementById('forceSchedule').options[document.getElementById('forceSchedule').selectedIndex].value;
+            var slot = document.getElementById('forceSlot').options[document.getElementById('forceSlot').selectedIndex].value;
+
+            if (event > 0 && slot > 0) {
+                $.post('/slots/force-invite/{{ $registration->id }}', {
+                        '_token' : $('meta[name=csrf-token]').attr('content'),
+                        'event' : event,
+                        'slot' : slot,
+                    }, function(data) {
+                        document.getElementById('forceSchedulingAdd').style.display = '';
+                        document.getElementById('forceSchedulingLoading').style.display = 'none';
+                        if (data.status == 'success') {
+                            document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-success text-center">The registration was associated with the event time slot!</div>';
+                        } else {
+                            document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-danger text-center">' + data.message + '</div>';
+                        }
+                    }, 'json');
+            } else {
+                document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-danger text-center">The event and slot fields need input!</div>';
+            }
+        }
+    </script>
+@endcan
+
 <script>
     $('#newComment').click(function(event){
-        console.log('hit');
         event.preventDefault();
-        console.log('hit2');
         regisId = $(this).data('regis-id');
         commentText = document.getElementById('comment').value;
 
@@ -225,6 +322,6 @@
 </script>
 
 @can('create_vaccine')
-    @include('vaccine.partials.modal', ['registration_id' => $registration->id])
+    @include('vaccine.partials.modal', ['registration' => $registration])
 @endcan
 @endsection

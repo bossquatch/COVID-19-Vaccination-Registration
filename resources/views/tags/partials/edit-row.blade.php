@@ -27,7 +27,16 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-3 offset-9">
+    <div class="col-6 form-group">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="tag-is_partner-{{ $tag->id }}" placeholder="Enter tag partner" @if($tag->is_partner) checked aria-checked="true" @endif>
+            <label class="custom-control-label" for="tag-is_partner-{{ $tag->id }}">Partner</label>
+            <span class="invalid-feedback js-error-text-{{ $tag->id }}" role="alert" style="display: none;">
+                <strong id="tag-is_partner-{{ $tag->id }}-error"></strong>
+            </span>
+        </div>
+    </div>
+    <div class="col-3 offset-3">
         <button class="btn btn-primary" id="tagBtn{{ $tag->id }}" onclick="submitChanges({{ $tag->id }})">Submit</button>
         <button id="tagLoadingBtn{{ $tag->id }}" type="button" class="btn btn-secondary btn-block" disabled aria-disabled="true" style="display: none">
             <span class="fad fa-spinner fa-spin"></span>

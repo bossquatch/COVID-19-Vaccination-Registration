@@ -78,7 +78,16 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3 offset-9">
+                            <div class="col-6 form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="tag-is_partner-new" placeholder="Enter tag partner">
+                                    <label class="custom-control-label" for="tag-is_partner-new">Partner</label>
+                                    <span class="invalid-feedback js-error-text-new" role="alert" style="display: none;">
+                                        <strong id="tag-is_partner-new-error"></strong>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-3 offset-3">
                                 <button class="btn btn-primary" id="tagBtnnew" onclick="submitTag()">Submit</button>
                                 <button id="tagLoadingBtnnew" type="button" class="btn btn-secondary btn-block" disabled aria-disabled="true" style="display: none">
                                     <span class="fad fa-spinner fa-spin"></span>
@@ -184,7 +193,8 @@ function requestInfo(id) {
         '_token' : $('meta[name=csrf-token]').attr('content'),
         'label' : document.getElementById('tag-label-' + id).value,
         'description' : document.getElementById('tag-description-' + id).value,
-        'color' : document.getElementById('tag-color-' + id).value
+        'color' : document.getElementById('tag-color-' + id).value,
+        'is_partner': document.getElementById('tag-is_partner-' + id).checked ? 1 : 0
     }
 }
 
@@ -192,6 +202,7 @@ function clearInput(id) {
     document.getElementById('tag-label-' + id).value = null;
     document.getElementById('tag-description-' + id).value = null;
     document.getElementById('tag-color-' + id).value = null;
+    document.getElementById('tag-is_partner-' + id).checked = false;
 }
 
 function showErrors(errors, id) {

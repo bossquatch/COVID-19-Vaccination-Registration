@@ -69,7 +69,13 @@
 
             <select id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" required>
                 @foreach ($roles as $role)
+                    @if ($role->name == 'red_leader')
+                        @can('skeleton_key')
+                        <option value="{{ $role->name }}" @if ($userRole && $userRole->name == $role->name) selected @endif>{{ $role->label }}</option>        
+                        @endcan
+                    @else
                     <option value="{{ $role->name }}" @if ($userRole && $userRole->name == $role->name) selected @endif>{{ $role->label }}</option>
+                    @endif
                 @endforeach
             </select>
 

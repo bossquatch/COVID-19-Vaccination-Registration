@@ -120,6 +120,13 @@ class Registration extends Model
         return false;
     }
 
+    public function invitations() {
+        return $this->hasMany(Invitation::class, 'registration_id');
+    }
+
+    /**
+    * Accessor for Age.
+    */
     public function getAgeAttribute()
     {
         if ($this->birth_date != null) {
@@ -130,10 +137,56 @@ class Registration extends Model
         }
     }
 
+    public function getPendingInvitationAttribute()
+    {
+        return $this->invitations()->whereHas('invite_status', function($query) {
+            $query->where('name', 'Awaiting Response')
+                ->orWhere('name', 'Awaiting Callback');
+        })->first();
+    }
+
+    public function getHasAppointmentAttribute()
+    {
+        return ($this->active_invite_query()->count() > 0);
+    }
+
+    public function getAppointmentAttribute()
+    {
+        return $this->active_invite->slot;
+    }
+
+    public function getActiveInviteAttribute()
+    {
+        return $this->active_invite_query()->first();
+    }
+
+    private function active_invite_query()
+    {
+        return $this->invitations()->whereHas('invite_status', function($query) {
+            $query->where('name', 'Accepted')
+                ->orWhere('name', 'Checked In');
+        });
+    }
+
     public function getPhoneNumberAttribute()
     {
         $phone = '+1' . preg_replace('/\D/', '', $this->user->phone);
         return $phone;
     }
 
+    // allows $registration->auto_contactable
+    public function getAutoContactableAttribute() 
+    {
+        return ($this->user->sms_verified_at || $this->user->email_verified_at);
+    }
+
+    // allows $registration->can_sms
+    public function getCanSmsAttribute() {
+        return ($this->user->sms_verified_at);
+    }
+
+    // allows $registration->can_email
+    public function getCanEmailAttribute() {
+        return ($this->user->email_verified_at);
+    }
 }

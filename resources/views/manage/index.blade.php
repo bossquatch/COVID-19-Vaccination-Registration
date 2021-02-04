@@ -44,6 +44,12 @@
                     <span class="fad fa-qrcode mr-1"></span> Scan QR Code
                 </a>
                 @endcan
+
+                @can('read_event')
+                <a class="btn btn-header btn-round btn-lg" href="/events">
+                    <span class="fad fa-calendar-day mr-1"></span> Events
+                </a>
+                @endcan
             </div>
         </div>
 
@@ -52,7 +58,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchName" placeholder="Search for Name" aria-label="Search for Name" aria-describedby="caseBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="nameBtn" onclick="search('searchName')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="nameBtn" onclick="search('searchName')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
@@ -62,7 +68,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchAddr" placeholder="Search for Address" aria-label="Search for Address" aria-describedby="addrBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="addrBtn" onclick="search('searchAddr')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="addrBtn" onclick="search('searchAddr')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
@@ -72,7 +78,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchRegis" placeholder="Search for Registration ID" aria-label="Search for Registration ID" aria-describedby="regisBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="regisBtn" onclick="search('searchRegis')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="regisBtn" onclick="search('searchRegis')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
@@ -82,7 +88,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchCode" placeholder="Search for Registration Code" aria-label="Search for Registration Code" aria-describedby="codeBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="codeBtn" onclick="search('searchCode')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="codeBtn" onclick="search('searchCode')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
