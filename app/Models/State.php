@@ -9,10 +9,14 @@ class State extends Model
 {
     use HasFactory;
 
-
-    public function registration()
+    public function address()
     {
-        $this->belongsTo(registration::class);
+        $this->belongsTo(Address::class);
     }
+
+    public function counties()
+	{
+		return $this->hasMany(County::class);
+	}
 
 }

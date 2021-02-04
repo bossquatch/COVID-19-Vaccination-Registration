@@ -11,7 +11,12 @@ class County extends Model
 
     protected $guarded = [];
 
-    public function registrations() {
-        return $this->hasMany(Registration::class, 'county_id');
+    public function address() {
+        return $this->belongsToMany(Address::class);
     }
+
+    public function state()
+	{
+		return $this->hasOne(State::class, 'id', 'state_id');
+	}
 }
