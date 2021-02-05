@@ -49,7 +49,7 @@ class CreateLocationsTables extends Migration
 			$table->unsignedBigInteger('address_type_id');
 			$table->integer('street_number');
 			$table->string('street_name', 100);
-			$table->string('line_2', 100);
+			$table->string('line_2', 100)->nullable();
 			$table->string('locality', 100);
 			$table->unsignedBigInteger('county_id')->nullable();
 			$table->unsignedBigInteger('state_id')->nullable();

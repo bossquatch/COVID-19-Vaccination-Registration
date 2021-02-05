@@ -73,6 +73,8 @@ return [
 
     'auto_scheduling' => env('AUTO_SCHEDULING', false),
 
+    'google_maps_key' => env('GOOGLE_MAPS_API_KEY', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

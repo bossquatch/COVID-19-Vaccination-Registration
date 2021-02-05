@@ -35450,6 +35450,30 @@ input[type=search]::-webkit-search-results-decoration {
   padding-top: 2rem;
 }
 
+.animate-fade {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 5s, visibility 5s;
+}
+.animate-fade-in {
+  visibility: visible;
+  opacity: 1;
+}
+
+.pac-item {
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.pac-item-query {
+  font-size: 1rem;
+  margin-right: 0.225rem;
+}
+
+.pac-matched {
+  font-weight: bold;
+}
+
 .page {
   display: none;
 }

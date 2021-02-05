@@ -124,6 +124,10 @@ class Registration extends Model
         return $this->hasMany(Invitation::class, 'registration_id');
     }
 
+    public function address() {
+		return $this->belongsTo(Address::class, 'address_id');
+	}
+
     /**
     * Accessor for Age.
     */
@@ -188,5 +192,77 @@ class Registration extends Model
     // allows $registration->can_email
     public function getCanEmailAttribute() {
         return ($this->user->email_verified_at);
+    }
+
+    // Address Sync
+    public function syncAddress(array $inputs)
+    {
+        $inputs = [
+            'address_type_id' => 1,
+            'street_number' => $inputs['street_number'] ?? null,
+            'street_name' => $inputs['street_name'] ?? null,
+            'line_2' => $inputs['line_2'] ?? null,
+            'locality' => $inputs['locality'] ?? null,
+            'county_id' => $inputs['county'] ?? null,
+            'state_id' => $inputs['state'] ?? null,
+            'postal_code' => $inputs['postal_code'] ?? null,
+            'latitude' => $inputs['latitude'] ?? null,
+            'longitude' => $inputs['longitude'] ?? null,
+        ];
+        if ($this->address()->count() > 0) {
+            $this->address->update($inputs);
+        } else {
+            $new_addr = Address::create($inputs);
+            $this->update([
+                'address_id' => $new_addr->id,
+            ]);
+        }
+        return $this->address;
+    }
+
+    // Address Accessors
+    // address1
+    public function getAddress1Attribute() {
+        if ($this->address) {
+            return $this->address->street_number . ' ' . $this->address->street_name;
+        } else {
+            return $this->getAttributeFromArray('address1');
+        }
+    }
+
+    // address2
+    public function getAddress2Attribute() {
+        if ($this->address) {
+            return $this->address->line_2;
+        } else {
+            return $this->getAttributeFromArray('address2');
+        }
+    }
+
+    // city
+    public function getCityAttribute() {
+        if ($this->address) {
+            return $this->address->city;
+        } else {
+            return $this->getAttributeFromArray('city');
+        }
+    }
+
+    // state
+    public function getStateAttribute() {
+        if ($this->address) {
+            return $this->address->state_abbr;
+        } else {
+            return $this->getAttributeFromArray('state');
+        }
+    }
+
+    // zip
+    public function getZipAttribute() {
+        if ($this->address) {
+            return $this->address->zip_code;
+        } else {
+            return $this->getAttributeFromArray('zip');
+        }
     }
 }

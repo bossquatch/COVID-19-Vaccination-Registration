@@ -62,7 +62,9 @@ class ManageController extends Controller
         return response()->json(
             $this->searchResults(
                 \App\Models\User::whereHas('registration', function (Builder $query) {
-                    $query->where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%');
+                    $query->whereHas('address', function (Builder $query) {
+                        $query->where(DB::raw('CONCAT_WS(" ",street_number,street_name,locality,(SELECT states.abbr FROM states where states.id = addresses.state_id),postal_code)'), 'LIKE', '%'.request()->input('val').'%');
+                    });
                 }), 
                 request()->input('offset')
             )
@@ -252,14 +254,16 @@ class ManageController extends Controller
             'suffix_id' => $user->suffix_id,
 
             // New Info
-            'address1'=> $valid['address1'],
-            'address2'=> $valid['address2'],
-            'city'=> $valid['city'],
-            'state'=> $valid['state'],
-            'zip'=> $valid['zip'],
+            // 'address1'=> $valid['address1'],
+            // 'address2'=> $valid['address2'],
+            // 'city'=> $valid['city'],
+            // 'state'=> $valid['state'],
+            // 'zip'=> $valid['zip'],
             'prefer_close_location'=> $valid['scheculePreference'],
             'submitted_at'=> Carbon::now(),
         ]);
+
+        $registration->syncAddress($valid);
 
         // Assign phones and emails
             // add foreach loop to create all contact types
@@ -361,13 +365,15 @@ class ManageController extends Controller
             'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
 
             // New Info
-            'address1'=> $valid['address1'],
-            'address2'=> $valid['address2'],
-            'city'=> $valid['city'],
-            'state'=> $valid['state'],
-            'zip'=> $valid['zip'],
+            // 'address1'=> $valid['address1'],
+            // 'address2'=> $valid['address2'],
+            // 'city'=> $valid['city'],
+            // 'state'=> $valid['state'],
+            // 'zip'=> $valid['zip'],
             'prefer_close_location'=> $valid['scheculePreference'],
         ]);
+
+        $registration->syncAddress($valid);
 
         $registration->conditions()->sync($conditions);
 
@@ -472,6 +478,7 @@ class ManageController extends Controller
         $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
         $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
         $valid_counties = implode(",",\App\Models\County::pluck('id')->toArray());
+        $valid_states = implode(",",\App\Models\State::pluck('id')->toArray());
         $valid_suffixes = '0,'.implode(",",\App\Models\Suffix::pluck('id')->toArray());
 
         $rules = [
@@ -484,11 +491,19 @@ class ManageController extends Controller
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
             'occupation' => 'required|in:'.$valid_occupations,
-            'address1' => 'required|max:60',
-            'address2' => 'nullable|max:60',
-            'city' => 'required|max:60',
-            'state' => 'required|max:2',
-            'zip' => 'required|max:11',
+            //'address1' => 'required|max:60',
+            //'address2' => 'nullable|max:60',
+            //'city' => 'required|max:60',
+            'autocomplete' => 'nullable',
+            'street_number' => 'required|max:60',
+            'street_name' => 'required|max:60',
+            'line_2' => 'nullable',
+            'locality' => 'required|max:60',
+            'postal_code' => 'required|max:60',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'state' => 'required|in:'.$valid_states,
+            //'zip' => 'required|max:11',
             'county' => 'required|in:'.$valid_counties,
             //'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',

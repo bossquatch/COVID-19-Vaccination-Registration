@@ -10,6 +10,8 @@ class Address extends Model
 {
     use HasFactory, SoftDeletes;
 
+	protected $guarded = [];
+
     public function addressType()
 	{
 		return $this->hasOne(AddressType::class, 'id', 'address_type_id');

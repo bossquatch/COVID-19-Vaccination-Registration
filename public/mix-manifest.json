@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/qr.js": "/js/qr.js",
     "/js/analytics.js": "/js/analytics.js",
+    "/js/address.js": "/js/address.js",
     "/css/analytics.css": "/css/analytics.css",
     "/css/main.css": "/css/main.css"
 }

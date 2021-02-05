@@ -88,7 +88,7 @@ class LocationsSeeder extends Seeder
 			['id' => '10', 'name' => 'Clay', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '11', 'name' => 'Collier', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '12', 'name' => 'Columbia', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['id' => '13', 'name' => 'Dade', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => '13', 'name' => 'Miami-Dade', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '14', 'name' => 'Desoto', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '15', 'name' => 'Dixie', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 			['id' => '16', 'name' => 'Duval', 'state_id' => 9, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
