@@ -127,4 +127,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/my-events-history', [App\Http\Controllers\PartnerController::class, 'history']);
 
     Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_registration');
+
+    Route::post('/webhooks/email_delivered','WebhookController@emailDelivered');
+    Route::post('/webhooks/email_failed', 'WebhookController@emailFailed');
 });
