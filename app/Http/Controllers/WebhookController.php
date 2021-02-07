@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EmailHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use function Illuminate\Events\queueable;
 
@@ -13,7 +14,6 @@ class WebhookController extends Controller
     {
 
         Log::debug($request);
-
         try {
             $this->handleDelivered($request->all());
             return response('Success', 200);
@@ -62,7 +62,10 @@ class WebhookController extends Controller
         $currentEmail->event = $data['event-data']['event'];
         $currentEmail->delivery_status_code = $data['event-data']['delivery-status']['code'];
         $currentEmail->delivery_status_message = $data['event-data']['delivery-status']['message'];
-        $currentEmail->severity = $data['event-data']['severity'];
+
+        $asdf = Arr::get($data, 'event-data.severity','');
+
+        $currentEmail->severity = $asdf;
 
         $currentEmail->save();
 
