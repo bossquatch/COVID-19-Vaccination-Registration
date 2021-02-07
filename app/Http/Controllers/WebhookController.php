@@ -63,7 +63,7 @@ class WebhookController extends Controller
         $currentEmail->delivery_status_code = $data['event-data']['delivery-status']['code'];
         $currentEmail->delivery_status_message = $data['event-data']['delivery-status']['message'];
 
-        $asdf = Arr::get($data, 'event-data.severity','');
+        $asdf = Arr::get($data, 'event-data.severity',0);
 
         $currentEmail->severity = $asdf;
 
