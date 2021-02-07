@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use function Illuminate\Events\queueable;
@@ -37,28 +38,44 @@ class WebhookController extends Controller
 
     public function handleDelivered(array $data)
     {
-        if (!$this->validateWebhook($data['signature'])) {
-            throw new \Exception('Invalid signature!');
-        }
+//        if (!$this->validateWebhook($data['signature'])) {
+//            throw new \Exception('Invalid signature!');
+//        }
 
-        $event_data = $data['event-data'];
-//        $event_data = $data['user-variables'];
-        $delivered_data = [
-            'tags' => $event_data['tags'],
-            'recipient' => $event_data['recipient'],
-            'headers' => $event_data['message']['headers'],
-            'timestamp' => $event_data['timestamp'],
-        ];
-        DB::select('CALL halls.`insert_invoices`(74,"H4H0001",30,"Hello Desc",15,315,"BOM")');
-//        $insertDetails = DB::select('CALL insert_invoices(?,?,?,?,?,?,?)', [
-//            '216',
-//            $event_data['invoiceNumber'],
-//            $event_data['term'],
-//            $event_data['info'],
-//            $event_data['gst_amount'],
-//            $event_data['gross_total'],
-//            'CommonWealth Bank'
-//        ]);
+        $currentEmail = new EmailHistory();
+
+        $currentEmail->timestamp = $data['signature']['timestamp'];
+        $currentEmail->token = $data['signature']['token'];
+        $currentEmail->signature = $data['signature']['signature'];
+        $currentEmail->tags = $data['event-data']['tags'];
+        $currentEmail->registration_id = $data['event-data']['user-variables']['_RID_'];
+        $currentEmail->user_id = $data['event-data']['user-variables']['_UID_'];
+        $currentEmail->envelope_sending_ip = $data['event-data']['envelope']['sending-ip'];
+        $currentEmail->envelope_sender = $data['event-data']['envelope']['sender'];
+        $currentEmail->envelope_targets = $data['event-data']['envelope']['targets'];
+        $currentEmail->headers_to = $data['event-data']['message']['headers']['to'];
+        $currentEmail->headers_message_id = $data['event-data']['message']['headers']['message-id'];
+        $currentEmail->headers_from = $data['event-data']['message']['headers']['from'];
+        $currentEmail->headers_subject = $data['event-data']['message']['headers']['subject'];
+        $currentEmail->recipient = $data['event-data']['recipient'];
+        $currentEmail->event = $data['event-data']['event'];
+        $currentEmail->delivery_status_code = $data['event-data']['delivery-status']['code'];
+        $currentEmail->delivery_status_message = $data['event-data']['delivery-status']['message'];
+        $currentEmail->severity = $data['event-data']['severity'];
+
+        $currentEmail->save();
+
+//        $event_data = $data['event-data'];
+////        $event_data = $data['user-variables'];
+//        $delivered_data = [
+//            'tags' => $event_data['tags'],
+//            'recipient' => $event_data['recipient'],
+//            'headers' => $event_data['message']['headers'],
+//            'timestamp' => $event_data['timestamp'],
+//        ];
+
+
+
     }
 
     public function handleFailed(array $data)
