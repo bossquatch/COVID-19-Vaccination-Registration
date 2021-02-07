@@ -49,8 +49,12 @@ class WebhookController extends Controller
         $currentEmail->token = $data['signature']['token'];
         $currentEmail->signature = $data['signature']['signature'];
         $currentEmail->tags = json_encode(Arr::flatten($data['event-data']['tags']));
-        $currentEmail->registration_id = $data['event-data']['user-variables']['_RID_'];
-        $currentEmail->user_id = $data['event-data']['user-variables']['_UID_'];
+
+        $registration_id = intval(base_convert($data['event-data']['user-variables']['_RID_'],10,36));
+        $user_id = intval(base_convert($data['event-data']['user-variables']['_UID_'],10,36));
+
+        $currentEmail->registration_id = $registration_id;
+        $currentEmail->user_id = $user_id;
         $currentEmail->envelope_sending_ip = $data['event-data']['envelope']['sending-ip'];
         $currentEmail->envelope_sender = $data['event-data']['envelope']['sender'];
         $currentEmail->envelope_targets = $data['event-data']['envelope']['targets'];
