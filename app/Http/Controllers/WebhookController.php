@@ -11,14 +11,15 @@ class WebhookController extends Controller
 {
     public function emailDelivered(Request $request)
     {
-//        try {
-//            $this->handleDelivered($request->all());
-//            return response('Success', 200);
-//        } catch (Exception $ex) {
-//            return response($ex->getMessage(), 406);
-//        }
 
         Log::debug($request);
+
+        try {
+            $this->handleDelivered($request->all());
+            return response('Success', 200);
+        } catch (Exception $ex) {
+            return response($ex->getMessage(), 406);
+        }
 
     }
 
