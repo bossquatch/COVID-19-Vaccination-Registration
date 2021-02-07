@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WebhookController;
 use App\Models\Registration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -128,6 +129,6 @@ Route::group(["middleware" => "check.reset"], function() {
 
     Route::get('/{user_id}/{app_id}/{code}', [App\Http\Controllers\ManageController::class, 'view_registration'])->middleware('can:read_registration');
 
-    Route::post('/webhooks/email_delivered','WebhookController@emailDelivered');
-    Route::post('/webhooks/email_failed', 'WebhookController@emailFailed');
+    Route::post('/webhooks/email_delivered',[WebhookController::class, 'emailDelivered']);
+    Route::post('/webhooks/email_failed', [WebhookController::class,'emailFailed']);
 });
