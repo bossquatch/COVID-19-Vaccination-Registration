@@ -3,9 +3,9 @@
 
 You have been confirmed for your COVID-19 vaccination appointment.  Your appointment is at **Legoland in Winter Haven, FL** (1 Legoland Way, Winter Haven, FL 33884).  Your appointment time is **8:30 AM**.
 
-<p class="text-center">
+@component('mail::center',['css' => 'text-center'])
 ![QR Code]({{ env('CDN_URL') .'/images/qr-code-doug.png' }})
-</p>
+@endcomponent
 
 @component('mail::button', ['url' => 'https://dev.register.polk.health/home','color' => 'doug'])
     Login to your account
