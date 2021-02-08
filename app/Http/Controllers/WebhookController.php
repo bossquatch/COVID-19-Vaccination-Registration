@@ -90,18 +90,29 @@ class WebhookController extends Controller
         $timestamp = $signature['timestamp'];
         $token = $signature['token'];
         $signature = $signature['signature'];
-        //Concat timestamp and token values
+
         if (empty($timestamp) || empty($token) || empty($signature)) {
             return false;
         }
-        $api_key = $api_key ? $api_key : env('MAILGUN_SECRET');
 
-        $hmac = hash_hmac('sha256', $timestamp . $token, $api_key);
-        if (function_exists('hash_equals')) {
-            // hash_equals is constant time, but will not be introduced until PHP 5.6
-            return hash_equals($hmac, $signature);
-        } else {
-            return $hmac === $signature;
+        if(abs(time() - $timestamp) > 15) {
+            return false;
         }
+
+        $api_key = $api_key ? $api_key : config('services.mailgun.secret');
+        return hash_equals(
+                    hash_hmac(
+                        'sha256',
+                        $timestamp . $token,
+                        $api_key),
+                    $signature);
+
+//        $hmac = hash_hmac('sha256', $timestamp . $token, $api_key);
+//        if (function_exists('hash_equals')) {
+//            // hash_equals is constant time, but will not be introduced until PHP 5.6
+//            return hash_equals($hmac, $signature);
+//        } else {
+//            return $hmac === $signature;
+//        }
     }
 }
