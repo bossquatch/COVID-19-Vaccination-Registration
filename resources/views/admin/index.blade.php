@@ -38,7 +38,7 @@
                     <span class="fad fa-file-chart-line mr-1"></span> View PHP Reports
                 </a>
 
-                @can('manage_tag')
+                @can('skeleton_key')
                 <a class="btn btn-header btn-round btn-lg" href="/admin/tags">
                     <span class="fad fa-tags mr-1"></span> View Tags
                 </a>    
