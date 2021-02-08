@@ -79,7 +79,7 @@ class WebhookController extends Controller
         // Using Arr::get allows me to traverse a multidimensional array and set a default value
         // if the key is not found.  In this case, severity is not always passed as it only appears
         // when there is an error sending the email
-        $severity = Arr::get($data, 'event-data.severity',0);
+        $severity = Arr::get($data, 'event-data.severity',null);
         $currentEmail->severity = $severity;
 
         $currentEmail->save();
