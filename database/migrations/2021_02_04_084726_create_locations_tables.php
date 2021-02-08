@@ -16,10 +16,10 @@ class CreateLocationsTables extends Migration
 
 		// remove foreign key constrain from registrations table: registrations_county_id_foreign
 		// remove the county relationship from the registration model
-		Schema::table('registrations', function (Blueprint $table) {
-			$table->dropForeign('registrations_county_id_foreign');
-			$table->dropColumn('county_id');
-		});
+//		Schema::table('registrations', function (Blueprint $table) {
+//			$table->dropForeign('registrations_county_id_foreign');
+//			$table->dropColumn('county_id');
+//		});
 
 		// delete tables: address_types, addresses, counties, states
 		Schema::dropIfExists('addresses');
