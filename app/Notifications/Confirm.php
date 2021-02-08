@@ -44,8 +44,11 @@ class Confirm extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $emailAddress = $notifiable->user->email;
+        $user_id = intval(strval($notifiable->user->id),36);
+        $regId = intval(strval($notifiable->id),36);
+
         return Mail::to($emailAddress)
-            ->send(new Confirmation('Polk Health - Vaccination Confirmation'));
+            ->send(new Confirmation($user_id,$regId,'Polk Health - Appointment Confirmation'));
     }
 
     public function toArray($notifiable)

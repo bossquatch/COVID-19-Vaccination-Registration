@@ -11,16 +11,28 @@ class Confirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $topic;
+    protected $topic;
+    protected $reg_id;
+    protected $user_id;
 
-    public function __construct(String $topic)
+    public function __construct($user_id, $reg_id, $topic)
     {
         $this->topic = $topic;
+        if(trim($reg_id) <> '') {
+            $this->reg_id = $reg_id;
+        }
+
+        $this->user_id = $user_id;
     }
 
     public function build()
     {
         return $this->markdown('mail.confirmation')
-            ->subject($this->topic);
+            ->subject($this->topic)
+            ->withSwiftMessage(function($message) {
+                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. $this->reg_id .'}');
+                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. $this->user_id .'}');
+                $message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
+            });
     }
 }
