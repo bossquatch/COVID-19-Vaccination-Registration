@@ -177,7 +177,8 @@ class RegistrationController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
-            'county_id'=> $valid['county'],
+//            removed - this is part of the locations functionality now
+//            'county_id'=> $valid['county'],
 
             // Obtained by user account:
             'first_name' => $valid['firstName'],
