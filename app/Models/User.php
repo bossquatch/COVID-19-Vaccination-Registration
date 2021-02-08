@@ -143,8 +143,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
+    public function emailHistory()
+    {
+        return $this->hasMany(EmailHistory::class, 'user_id');
+    }
+
     // allows $user->auto_contactable
-    public function getAutoContactableAttribute() 
+    public function getAutoContactableAttribute()
     {
         return ($this->sms_verified_at || $this->email_verified_at);
     }
