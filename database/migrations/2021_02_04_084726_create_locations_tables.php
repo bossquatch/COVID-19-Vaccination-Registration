@@ -88,12 +88,14 @@ class CreateLocationsTables extends Migration
 
 		// add address_id (unsignedBigInteger, nullable, no default) to the registrations table=
 		Schema::table('registrations', function (Blueprint $table) {
-			$table->unsignedBigInteger('address_id')->nullable();
+			if (!Schema::hasColumn('registrations', 'address_id')) {
+				$table->unsignedBigInteger('address_id')->nullable();
 
-			$table->foreign('address_id')
-				->references('id')
-				->on('addresses')
-				->onDelete('set null');
+				$table->foreign('address_id')
+					->references('id')
+					->on('addresses')
+					->onDelete('set null');
+			}
 		});
 	}
 
@@ -105,8 +107,10 @@ class CreateLocationsTables extends Migration
 	public function down()
 	{
 		Schema::table('registrations', function (Blueprint $table) {
-			$table->dropForeign('registrations_address_id_foreign');
-			$table->dropColumn('address_id');
+			if (Schema::hasColumn('registrations', 'address_id')) {
+				$table->dropForeign('registrations_address_id_foreign');
+				$table->dropColumn('address_id');
+			}
 		});
 
 		// delete tables: address_types, addresses, counties, states

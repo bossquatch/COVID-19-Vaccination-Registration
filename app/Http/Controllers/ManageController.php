@@ -241,7 +241,7 @@ class ManageController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
-            'county_id'=> $valid['county'],
+            //'county_id'=> $valid['county'],
 
             // Obtained by user account:
             'first_name'=> $user->first_name,
@@ -353,7 +353,7 @@ class ManageController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
-            'county_id'=> $valid['county'],
+            //'county_id'=> $valid['county'],
 
             // Obtained by user account:
             'first_name' => $valid['firstName'],

@@ -186,7 +186,7 @@
                                     <div class="col-8">
                                         <h2 class="h4 mb-1">Current Appointment:</h2>
                                         <p class="text-gray-dark mb-2">
-                                            Appointment Time:<br>{{ \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('D m, Y') . ' ' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->ending_at)->format('h:iA') }}
+                                            Appointment Time:<br>{{ \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('M d, Y') . ' ' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->appointment->ending_at)->format('h:iA') }}
                                         </p>
                                         <p class="text-gray-dark mb-2">
                                             Location:<br>{{ Auth::user()->registration->appointment->event->location->address . ' ' . Auth::user()->registration->appointment->event->location->city . ', ' . Auth::user()->registration->appointment->event->location->state . ' ' . Auth::user()->registration->appointment->event->location->zip }}

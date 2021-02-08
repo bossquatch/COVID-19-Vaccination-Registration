@@ -310,7 +310,7 @@ select.read-only option{
                                         <label for="administrative_area_level_1">State</label>
                                         <select id="administrative_area_level_1" name="state" class="custom-select read-only" readonly="readonly" aria-readonly="true">
                                             @foreach (\App\Models\State::get() as $state)
-                                                <option value="{{ $state->id }}" @if (old('state')) @if(old('state') == $state->id) selected @endif @elseif($registration->address->state_id == $state->id) selected @endif>{{ $state->abbr }}</option>    
+                                                <option value="{{ $state->id }}" @if (old('state')) @if(old('state') == $state->id) selected @endif @elseif(($registration->address->state_id ?? '9') == $state->id) selected @endif>{{ $state->abbr }}</option>    
                                             @endforeach
                                         </select>
                                     </div>
@@ -326,7 +326,7 @@ select.read-only option{
                                         <label for="administrative_area_level_2">County</label>
                                         <select id="administrative_area_level_2" name="county" class="custom-select" readonly="readonly" aria-readonly="true">
                                             @foreach (\App\Models\County::get() as $county)
-                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif($registration->address->county_id == $county->id) selected @endif>{{ $county->name }}</option>    
+                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif(($registration->address->county_id ?? '53') == $county->id) selected @endif>{{ $county->name }}</option>    
                                             @endforeach
                                         </select>
                                     </div>
