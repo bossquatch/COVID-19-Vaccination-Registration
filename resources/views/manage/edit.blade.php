@@ -46,6 +46,12 @@
                     <span class="fad fa-trash-alt mr-1"></span> Delete Registration
                 </button>
                 @endcan
+
+                @can('keep_inventory')
+                <button class="btn btn-header btn-header-success btn-round btn-lg" data-toggle="modal" data-target="#completeModal">
+                    <span class="fad fa-clipboard-check mr-1"></span> Complete Registration
+                </button>
+                @endcan
             </div>
         </div>
 
@@ -672,6 +678,7 @@
     </div>
 </div>
 
+@can('delete_registration')
 <div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Delete Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -700,4 +707,36 @@
         </div>
     </div>
 </div>
+@endcan
+
+@can('keep_inventory')
+<div class="modal fade" id="completeModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Complete Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-warning"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Warning!</p>
+                        <p class="text-gray-dark">Are you sure you wish to mark this registration as complete?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <form class="form-inline" action="/manage/complete/{{ $registration->id }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-success">Complete Registration</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endcan
 @endsection

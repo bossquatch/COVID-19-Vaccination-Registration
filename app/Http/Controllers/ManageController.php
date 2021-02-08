@@ -443,6 +443,18 @@ class ManageController extends Controller
         return redirect('/manage');
     }
 
+    public function complete($regis_id)
+    {
+        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis->update([
+            'status_id' => 5,
+        ]);
+        $this->logChanges($regis, 'completed', true);
+
+        Session::flash('success', "<p>Registration was marked as completed.</p>");
+        return redirect('/manage');
+    }
+
     public function userDelete($id)
     {
         $user = User::findOrFail($id);
