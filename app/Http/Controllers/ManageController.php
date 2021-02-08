@@ -51,8 +51,9 @@ class ManageController extends Controller
             $this->searchResults(
                 \App\Models\User::whereHas('roles', function (Builder $query) {
                     $query->where('name', '=', 'user');
-                })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
-                request()->input('offset')
+                })->where(DB::raw('CONCAT_WS(" ",users.first_name,users.last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
@@ -64,7 +65,8 @@ class ManageController extends Controller
                 \App\Models\User::whereHas('registration', function (Builder $query) {
                     $query->where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%');
                 }), 
-                request()->input('offset')
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
@@ -76,7 +78,8 @@ class ManageController extends Controller
                 \App\Models\User::whereHas('registration', function (Builder $query) {
                     $query->where('id', '=', request()->input('val'));
                 }), 
-                request()->input('offset')
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
@@ -88,16 +91,17 @@ class ManageController extends Controller
                 \App\Models\User::whereHas('registration', function (Builder $query) {
                     $query->where('code', 'LIKE', '%'.request()->input('val').'%');
                 }),
-                request()->input('offset')
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
 
-    private function searchResults($query, $offset)
+    private function searchResults($query, $offset, $sort)
     {
         $limit = config('app.pagination_limit');
         $total_count = $query->count();
-        $res = $query->offset($offset)->limit($limit)->get();
+        $res = $query->join('registrations', 'users.id', '=', 'registrations.user_id')->orderBy('registrations.submitted_at', $sort ?? 'asc')->select('users.*')->offset($offset)->limit($limit)->get();
         $pagination = '';
 
         if ($total_count > 0) {
