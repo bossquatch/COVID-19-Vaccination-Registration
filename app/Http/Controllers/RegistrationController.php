@@ -254,7 +254,7 @@ class RegistrationController extends Controller
         $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
         $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
         $valid_counties = implode(",",\App\Models\County::pluck('id')->toArray());
-        $valid_state = implode(",",\App\Models\State::pluck('id')->toArray());
+        $valid_states = implode(",",\App\Models\State::pluck('id')->toArray());
 
         $rules = [
             'race' => 'required|in:'.$valid_races,
