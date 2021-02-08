@@ -14,8 +14,9 @@ class Invitation extends Mailable
     protected $topic;
     protected $reg_id;
     protected $user_id;
+    protected $userName;
 
-    public function __construct($user_id, $reg_id, $topic)
+    public function __construct($userName, $user_id, $reg_id, $topic)
     {
         $this->topic = $topic;
         if(trim($reg_id) <> '') {
@@ -23,12 +24,14 @@ class Invitation extends Mailable
         }
 
         $this->user_id = $user_id;
+        $this->userName = $userName;
     }
 
     public function build()
     {
         return $this->markdown('mail.invitation')
             ->subject($this->topic)
+            ->with('userName', $this->userName)
             ->withSwiftMessage(function($message) {
                 $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. $this->reg_id .'}');
                 $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. $this->user_id .'}');

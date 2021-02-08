@@ -1,5 +1,5 @@
 @component('mail::message')
-# Douglas, you have an appointment!
+# {{ $userName }}, you have an appointment!
 
 You have been scheduled for an appointment for your COVID-19 vaccination.  Your appointment is at **Legoland in Winter Haven, FL** (1 Legoland Way, Winter Haven, FL 33884).  Your appointment is scheduled for **8:30 AM**.
 
