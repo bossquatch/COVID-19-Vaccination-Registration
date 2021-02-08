@@ -99,7 +99,7 @@ class WebhookController extends Controller
             return false;
         }
 
-        $api_key = $api_key ? $api_key : config('services.mailgun.secret');
+        $api_key = config('services.mailgun.secret');
         return hash_equals(
                     hash_hmac(
                         'sha256',
