@@ -8,21 +8,23 @@ You have been confirmed for your COVID-19 vaccination appointment.  Here are you
 
 **Date/Time:** February 12, 2021, 8:30 AM
 @endcomponent
-
 <div class="text-center">
-**Show this QR code at the check in**
-<img src="{{ env('CDN_URL') .'/images/qr-code-doug.png' }}">
+    **Show this QR code at the check in**
 </div>
 
 <div class="text-center">
-**If you need to check your status**
+    <img src="{{ env('CDN_URL') .'/images/qr-code-doug.png' }}">
+</div>
+
+<div class="text-center">
+    **If you need to check your status**
 </div>
 @component('mail::button', ['url' => 'https://dev.register.polk.health/home','color' => 'doug'])
     Login to your account
 @endcomponent
 
 <div class="text-center">
-Or contact our call center at <a href="tel:1-863-298-7500">(863) 298-7500</a>
+    Or contact our call center at <a href="tel:1-863-298-7500">(863) 298-7500</a>
 </div>
 
 Remember, proof of Florida residency is ***required*** at your appointment.
