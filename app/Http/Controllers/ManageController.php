@@ -103,7 +103,10 @@ class ManageController extends Controller
     {
         $limit = config('app.pagination_limit');
         $total_count = $query->count();
-        $res = $query->join('registrations', 'users.id', '=', 'registrations.user_id')->orderBy('registrations.submitted_at', $sort ?? 'asc')->select('users.*')->offset($offset)->limit($limit)->get();
+        $res = $query->leftJoin('registrations', function ($join) {
+                $join->on('users.id', '=', 'registrations.user_id')
+                    ->whereNotNull('registrations.deleted_at');
+            })->orderBy('registrations.submitted_at', $sort ?? 'asc')->select('users.*')->offset($offset)->limit($limit)->get();
         $pagination = '';
 
         if ($total_count > 0) {
@@ -161,18 +164,24 @@ class ManageController extends Controller
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
         $is_valid_letters = false;
+        $send_verification = false;
         $randomletter = '';
 
         // create user
         // check email
-        $email_is_valid = false;
-        $user_email = $valid['firstName'].$valid['lastName'].rand().config('app.default_no_email');
+        if (!empty($valid['email']) && \App\Models\User::where('email', '=', $valid['email'])->count() < 1) {
+            $user_email = $valid['email'];
+            $send_verification = true;
+        } else {
+            $email_is_valid = false;
+            $user_email = $valid['firstName'].$valid['lastName'].rand().config('app.default_no_email');
 
-        while (!$email_is_valid) {
-            if (\App\Models\User::where('email', '=', $user_email)->count() > 0) {
-                $user_email = $valid['firstName'].$valid['firstName'].rand().config('app.default_no_email');
-            } else {
-                $email_is_valid = true;
+            while (!$email_is_valid) {
+                if (\App\Models\User::where('email', '=', $user_email)->count() > 0) {
+                    $user_email = $valid['firstName'].$valid['firstName'].rand().config('app.default_no_email');
+                } else {
+                    $email_is_valid = true;
+                }
             }
         }
 
@@ -185,6 +194,7 @@ class ManageController extends Controller
             'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'password' => \Illuminate\Support\Facades\Hash::make(config('app.default_password').rand()),
             'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
+            'force_reset' => Carbon::now(),
         ]);
 
         $this->logChanges($user, 'procured', false, true);
@@ -294,6 +304,10 @@ class ManageController extends Controller
             $this->logChanges($comment, 'created');
         }
 
+        if ($send_verification) {
+            $user->sendEmailVerificationNotification();
+        }
+
         Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/manage');
     }
@@ -305,7 +319,20 @@ class ManageController extends Controller
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
 
+        $send_verification = false;
+
         $user = $registration->user;
+
+        if (!empty($valid['email']) && \App\Models\User::where('email', '=', $valid['email'])->count() < 1 && strtoupper($valid['email']) != strtoupper($user->email)) {
+            $send_verification = true;
+            $user->update([
+                'email' => $valid['email'],
+                'email_verified_at' => null,
+                'force_reset' => Carbon::now(),
+            ]);
+
+            $this->logChanges($user, 'updated', false, true);
+        }
 
         if ($user->phone != preg_replace('/\D/', '', $valid['phone'])) {
             $user->update([
@@ -417,6 +444,10 @@ class ManageController extends Controller
             ]);
 
             $this->logChanges($comment, 'created');
+        }
+
+        if ($send_verification) {
+            $user->sendEmailVerificationNotification();
         }
 
         Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
