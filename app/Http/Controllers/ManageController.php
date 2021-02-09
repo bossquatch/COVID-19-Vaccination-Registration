@@ -51,7 +51,7 @@ class ManageController extends Controller
             $this->searchResults(
                 \App\Models\User::whereHas('roles', function (Builder $query) {
                     $query->where('name', '=', 'user');
-                })->where(DB::raw('CONCAT_WS(" ",users.first_name,users.last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
+                })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
                 request()->input('offset'),
                 request()->input('sort')
             )
@@ -101,7 +101,7 @@ class ManageController extends Controller
     {
         $limit = config('app.pagination_limit');
         $total_count = $query->count();
-        $res = $query->join('registrations', 'users.id', '=', 'registrations.user_id')->orderBy('registrations.submitted_at', $sort ?? 'asc')->select('users.*')->offset($offset)->limit($limit)->get();
+        $res = $query->select('*', DB::raw('(SELECT registrations.submitted_at FROM registrations WHERE registrations.user_id = users.id AND registrations.deleted_at IS NULL LIMIT 1) as submitted_at'))->orderBy('submitted_at', $sort ?? 'asc')->offset($offset)->limit($limit)->get();
         $pagination = '';
 
         if ($total_count > 0) {
