@@ -101,7 +101,10 @@ class ManageController extends Controller
     {
         $limit = config('app.pagination_limit');
         $total_count = $query->count();
-        $res = $query->join('registrations', 'users.id', '=', 'registrations.user_id')->orderBy('registrations.submitted_at', $sort ?? 'asc')->select('users.*')->offset($offset)->limit($limit)->get();
+        $res = $query->leftJoin('registrations', function ($join) {
+                $join->on('users.id', '=', 'registrations.user_id')
+                    ->whereNotNull('registrations.deleted_at');
+            })->orderBy('registrations.submitted_at', $sort ?? 'asc')->select('users.*')->offset($offset)->limit($limit)->get();
         $pagination = '';
 
         if ($total_count > 0) {
