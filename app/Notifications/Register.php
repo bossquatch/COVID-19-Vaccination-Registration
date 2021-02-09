@@ -46,7 +46,7 @@ class Register extends Notification implements ShouldQueue
 
         $emailAddress = $notifiable->user->email;
         return Mail::to($emailAddress)
-            ->send(new Registration('Polk Health - Vaccination Registration'));
+            ->send(new Registration($notifiable,'Polk Health - Vaccination Registration'));
 
     }
 

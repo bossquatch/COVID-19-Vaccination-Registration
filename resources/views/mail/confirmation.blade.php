@@ -9,7 +9,7 @@ Here are your appointment details:
 **Date/Time:** February 12, 2021, 8:30 AM
 @endcomponent
 
-<div class="text-center" markdown="1">
+<div class="text-center">
 **Show this QR code at the check in**
 </div>
 

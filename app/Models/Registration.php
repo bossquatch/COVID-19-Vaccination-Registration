@@ -126,7 +126,7 @@ class Registration extends Model
     }
 
     public function address() {
-		return $this->belongsTo(Address::class, 'address_id');
+		return $this->hasOne(Address::class, 'id', 'address_id');
 	}
 
     /**
@@ -180,7 +180,7 @@ class Registration extends Model
     }
 
     // allows $registration->auto_contactable
-    public function getAutoContactableAttribute() 
+    public function getAutoContactableAttribute()
     {
         return ($this->user->sms_verified_at || $this->user->email_verified_at);
     }
