@@ -161,7 +161,7 @@
                                                 Registration Code
                                             </th>
                                             <th>
-                                                Submitted On
+                                                Submitted On <a href="#" onclick="sortSubmission()"><span id="submission-sort-caret" class="fas fa-caret-up"></span></a>
                                             </th>
                                             <th>
                                                 Status
@@ -224,6 +224,9 @@
 @endcan
 
 <script>
+// make sure sorting is correct right off the bat
+window.sessionStorage.setItem('submissionSort', 'asc');
+
 // Get the input field
 var inputName = document.getElementById("searchName");
 var inputAddr = document.getElementById("searchAddr");
@@ -259,7 +262,8 @@ function search(type) {
 
     var searchInfo = {
         'val': val,
-        'offset': parseInt(offset)
+        'offset': parseInt(offset),
+        'sort': window.sessionStorage.getItem('submissionSort')
     };
 
     setTimeout(function () {
@@ -273,7 +277,8 @@ function getNext() {
     
     var searchInfo = {
         'val': window.sessionStorage.getItem('searchVal'),
-        'offset': parseInt(window.sessionStorage.getItem('searchOffset'))
+        'offset': parseInt(window.sessionStorage.getItem('searchOffset')),
+        'sort': window.sessionStorage.getItem('submissionSort')
     };
 
     setTimeout(function () {
@@ -289,7 +294,8 @@ function getPrev() {
     
     var searchInfo = {
         'val': window.sessionStorage.getItem('searchVal'),
-        'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit')))
+        'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit'))),
+        'sort': window.sessionStorage.getItem('submissionSort')
     };
 
     setTimeout(function () {
@@ -313,6 +319,36 @@ function makeRequest(searchInfo, type) {
     setTimeout(function () {
        	$('#loadingModal').modal('hide');
     }, 1000);
+}
+
+function sortSubmission() {
+    const caret = document.getElementById('submission-sort-caret');
+    if (window.sessionStorage.getItem('submissionSort') == 'asc') {
+        window.sessionStorage.setItem('submissionSort', 'desc');
+        caret.classList.remove('fa-caret-up');
+        caret.classList.add('fa-caret-down');
+    } else {
+        window.sessionStorage.setItem('submissionSort', 'asc');
+        caret.classList.remove('fa-caret-down');
+        caret.classList.add('fa-caret-up');
+    }
+
+    if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
+        $('#loadingModal').modal('show');
+    
+        var searchInfo = {
+            'val': window.sessionStorage.getItem('searchVal'),
+            'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))),
+            'sort': window.sessionStorage.getItem('submissionSort')
+        };
+        
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 1000);
+        makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+    }
+
+    return false;
 }
 </script>
 @endsection
