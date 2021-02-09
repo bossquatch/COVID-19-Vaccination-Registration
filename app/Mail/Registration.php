@@ -11,16 +11,19 @@ class Registration extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $topic;
+    protected $topic;
+    protected $registration;
 
-    public function __construct(string $topic)
+    public function __construct(\App\Models\Registration $registration, $topic)
     {
         $this->topic = $topic;
+        $this->registration = $registration;
     }
 
     public function build()
     {
         return $this->markdown('mail.registration')
-            ->subject($this->topic);
+            ->subject($this->topic)
+            ->with($this->registration);
     }
 }
