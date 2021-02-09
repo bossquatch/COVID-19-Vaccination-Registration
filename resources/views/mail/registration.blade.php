@@ -6,8 +6,6 @@ Now all you need to do is wait for us to schedule you an appointment.  We will c
 Your registration code is:
 **{{ $registration->code }}**
 
-{{ $registration->address->street_name }}
-
 Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
