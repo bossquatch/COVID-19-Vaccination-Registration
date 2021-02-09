@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use App\Exports\EventReport;
 use App\Rules\DateParsable;
 use App\Models\Event;
 use App\Models\Lot;
@@ -73,6 +74,13 @@ class EventController extends Controller
         } else {
             return json_encode(['status' => 'danger']);
         }
+    }
+
+    public function report($id)
+    {
+        $event = Event::findOrFail($id);
+
+        return new EventReport($event->id, $event->date_held);
     }
 
     public function store()

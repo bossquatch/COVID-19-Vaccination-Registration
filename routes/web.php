@@ -93,6 +93,7 @@ Route::group(["middleware" => "check.reset"], function() {
     //Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'delete'])->middleware('can:delete_event');
     Route::put('/events/{id}/open', [App\Http\Controllers\EventController::class, 'open']);
     Route::post('/events/{id}/lots', [App\Http\Controllers\EventController::class, 'addLot']);
+    Route::get('/events/{id}/report', [App\Http\Controllers\EventController::class, 'report']);
 
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');

@@ -92,6 +92,7 @@
 
                                     @can('update_event')
                                         <a class="text-info" href="/events/{{ $event->id }}" title="Event Details"><span class="fad fa-eye"></span><span class="sr-only">Event Details</span></a>
+                                        <a class="text-success" href="/events/{{ $event->id }}/report" title="Event Report" target="_blank" rel="noopener noreferrer"><span class="fad fa-file-download"></span><span class="sr-only">Event Report</span></a>
                                     @endcan
                                 </div>
                             </div>

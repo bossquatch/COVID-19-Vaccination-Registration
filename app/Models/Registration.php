@@ -76,10 +76,11 @@ class Registration extends Model
         return $this->belongsTo(Suffix::class, 'suffix_id');
     }
 
-    public function county()
-    {
-        return $this->belongsTo(County::class, 'county_id');
-    }
+    // depreciated
+    //public function county()
+    //{
+    //    return $this->belongsTo(County::class, 'county_id');
+    //}
 
     public function occupation()
     {
@@ -263,6 +264,19 @@ class Registration extends Model
             return $this->address->zip_code;
         } else {
             return $this->getAttributeFromArray('zip');
+        }
+    }
+
+    // county
+    public function getCountyAttribute() {
+        if ($this->address) {
+            return $this->address->county->name ?? 'Unknown';
+        } else {
+            if($this->getAttributeFromArray('county_id')) {
+                return (\App\Models\County::find($this->getAttributeFromArray('county_id'))->name ?? 'Unknown');
+            } else {
+                return 'Unknown';
+            };
         }
     }
 }
