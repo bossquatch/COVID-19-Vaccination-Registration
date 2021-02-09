@@ -60,10 +60,10 @@ class WebhookController extends Controller
         // Remember to convert these values back to their actual values. I did this to obscure the
         // actual values since they are available in the email headers.  Earlier, we converted these
         // values to base 32.
-        $registration_id = intval(base_convert($data['event-data']['user-variables']['_RID_'],10,36));
-        $user_id = intval(base_convert($data['event-data']['user-variables']['_UID_'],10,36));
-        $currentEmail->registration_id = $registration_id;
-        $currentEmail->user_id = $user_id;
+        $registration_id = Arr::get($data, 'event-data.user-variables._RID_', 0);
+        $currentEmail->registration_id = intval(base_convert($registration_id,10,36));
+        $user_id = Arr::get($data, 'event-data.user-variables._UID_', 0);
+        $currentEmail->user_id = intval(base_convert($user_id,10,36));
         // End of conversion
         $currentEmail->envelope_sending_ip = $data['event-data']['envelope']['sending-ip'];
         $currentEmail->envelope_sender = $data['event-data']['envelope']['sender'];
