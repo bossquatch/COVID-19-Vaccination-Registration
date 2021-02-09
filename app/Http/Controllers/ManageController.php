@@ -191,7 +191,6 @@ class ManageController extends Controller
             'birth_date' => Carbon::parse($valid['dateOfBirth']),
             'password' => \Illuminate\Support\Facades\Hash::make(config('app.default_password').rand()),
             'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
-            'force_reset' => Carbon::now(),
         ]);
 
         $this->logChanges($user, 'procured', false, true);
@@ -302,6 +301,7 @@ class ManageController extends Controller
         }
 
         if ($send_verification) {
+            $user->forceReset();
             $user->sendEmailVerificationNotification();
         }
 
@@ -325,7 +325,6 @@ class ManageController extends Controller
             $user->update([
                 'email' => $valid['email'],
                 'email_verified_at' => null,
-                'force_reset' => Carbon::now(),
             ]);
 
             $this->logChanges($user, 'updated', false, true);
@@ -444,6 +443,7 @@ class ManageController extends Controller
         }
 
         if ($send_verification) {
+            $user->forceReset();
             $user->sendEmailVerificationNotification();
         }
 

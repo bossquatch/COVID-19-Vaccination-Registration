@@ -96,6 +96,10 @@ class CreateLocationsTables extends Migration
 					->on('addresses')
 					->onDelete('set null');
 			}
+			if (Schema::hasColumn('registrations', 'county_id')) {
+				$table->dropForeign('registrations_county_id_foreign');
+				$table->dropColumn('county_id');
+			}
 		});
 	}
 
@@ -110,6 +114,14 @@ class CreateLocationsTables extends Migration
 			if (Schema::hasColumn('registrations', 'address_id')) {
 				$table->dropForeign('registrations_address_id_foreign');
 				$table->dropColumn('address_id');
+			}
+			if (!Schema::hasColumn('registrations', 'county_id')) {
+				$table->unsignedBigInteger('county_id')->nullable();
+
+				$table->foreign('county_id')
+					->references('id')
+					->on('counties')
+					->onDelete('set null');
 			}
 		});
 
