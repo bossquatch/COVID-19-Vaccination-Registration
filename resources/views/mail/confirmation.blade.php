@@ -1,7 +1,7 @@
 @component('mail::message')
 # {{ $userName }}, you are confirmed for your vaccination appointment
 
-You have been confirmed for your COVID-19 vaccination appointment.  Here are you appointment details:
+Here are your appointment details:
 
 @component('mail::panel')
 **Location:** Legoland, 1 Legoland Way, Winter Haven, FL 33884
@@ -9,7 +9,9 @@ You have been confirmed for your COVID-19 vaccination appointment.  Here are you
 **Date/Time:** February 12, 2021, 8:30 AM
 @endcomponent
 
-**Show this QR code at the check in**<br>
+<div class="text-center" markdown="1">
+**Show this QR code at the check in**
+</div>
 
 <div class="text-center">
     <img src="{{ env('CDN_URL') .'/images/qr-code-doug.png' }}">
@@ -17,7 +19,7 @@ You have been confirmed for your COVID-19 vaccination appointment.  Here are you
 
 **If you need to check your status**<br>
 
-@component('mail::button', ['url' => 'https://dev.register.polk.health/home','color' => 'doug'])
+@component('mail::button', ['url' => 'https://dev.register.polk.health/home','color' => 'power'])
     Login to your account
 @endcomponent
 
