@@ -24,6 +24,6 @@ class Registration extends Mailable
     {
         return $this->markdown('mail.registration')
             ->subject($this->topic)
-            ->with($this->registration);
+            ->with($this->registration->get());
     }
 }
