@@ -59,7 +59,7 @@ select.read-only option{
                 <div class="card card-border border-primary shadow-light-lg">
                     <div class="card-body">
                         <!-- Form -->
-                        <form action="/manage/register" id="RegistrationMainForm" method="post">
+                        <form action="/manage/register" id="RegistrationMainForm" method="post" onkeydown="return event.key != 'Enter';">
                             @csrf
 
                             <div class="row mb-6">
@@ -237,18 +237,18 @@ select.read-only option{
                                             Address not listed?
                                             <a id="btnCollapsedAddress" data-toggle="collapse" href="#collapsedAddress" role="button" aria-expanded="false" aria-controls="collapsedAddress">see more options</a>
                                         </span>
-                                        <input class="form-control" type="text" id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" name="autocomplete" value="{{ old('autocomplete') }}">
+                                        <input class="form-control @if ($errors->has('street_number') || $errors->has('street_name') || $errors->has('line_2') || $errors->has('locality') || $errors->has('state') || $errors->has('postal_code') || $errors->has('county')) is-invalid @endif" type="text" id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" name="autocomplete" value="{{ old('autocomplete') }}">
 
                                         @if ($errors->has('street_number') || $errors->has('street_name') || $errors->has('line_2') || $errors->has('locality') || $errors->has('state') || $errors->has('postal_code') || $errors->has('county'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>
-                                                {{ $errors->has('street_number') ? $errors->first('street_number') . '<br>' : '' }}
-                                                {{ $errors->has('street_name') ? $errors->first('street_name') . '<br>' : '' }}
-                                                {{ $errors->has('line_2') ? $errors->first('line_2') . '<br>' : '' }}
-                                                {{ $errors->has('locality') ? $errors->first('locality') . '<br>' : '' }}
-                                                {{ $errors->has('state') ? $errors->first('state') . '<br>' : '' }}
-                                                {{ $errors->has('postal_code') ? $errors->first('postal_code') . '<br>' : '' }}
-                                                {{ $errors->has('county') ? $errors->first('county') . '<br>' : '' }}
+                                                {!! $errors->has('street_number') ? $errors->first('street_number') . '<br>' : '' !!}
+                                                {!! $errors->has('street_name') ? $errors->first('street_name') . '<br>' : '' !!}
+                                                {!! $errors->has('line_2') ? $errors->first('line_2') . '<br>' : '' !!}
+                                                {!! $errors->has('locality') ? $errors->first('locality') . '<br>' : '' !!}
+                                                {!! $errors->has('state') ? $errors->first('state') . '<br>' : '' !!}
+                                                {!! $errors->has('postal_code') ? $errors->first('postal_code') . '<br>' : '' !!}
+                                                {!! $errors->has('county') ? $errors->first('county') . '<br>' : '' !!}
                                             </strong>
                                         </span>
                                         @endif
