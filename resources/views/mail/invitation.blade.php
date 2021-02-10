@@ -7,7 +7,7 @@ Your appointment is scheduled for **{{ $registration->invitations->last()->slot-
 
 Please log into the COVID-19 vaccination registration website to accept your appointment. This offer will expire **{{ $registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H')) }}**. Expires in {{ config('app.invitation_expire') }} hours.
 
-@component('mail::button', ['url' => {{ config('app.url').'/home' }}])
+@component('mail::button', ['url' => 'https://dev.register.polk.health/home'])
     Login
 @endcomponent
 
