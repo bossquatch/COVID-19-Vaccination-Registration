@@ -26,7 +26,7 @@ class ElevenDigits implements Rule
     public function passes($attribute, $value)
     {
         if (isset($value)) {
-            return strlen(preg_replace('/\D/', '', $value)) == 11;
+            return strlen(preg_replace('/\D/', '', $value)) >= 10;      // THIS WAS CHANGED; first event they had and an NDC with 10 digits instead of eleven...
         } else {
             return false;
         }
@@ -39,6 +39,6 @@ class ElevenDigits implements Rule
      */
     public function message()
     {
-        return 'The :attribute field must be 11 digits long.';
+        return 'The :attribute field must at least 10 digits long.';
     }
 }
