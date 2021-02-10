@@ -12,42 +12,36 @@ class Invitation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $topic;
     protected $registration;
-
-    /*
-    protected $reg_id;
-    protected $user_id;
-    protected $userName;
-    */
-
-    /*
-    public function __construct($userName, $user_id, $reg_id, $topic)
-    {
-        $this->topic = $topic;
-        if(trim($reg_id) <> '') {
-            $this->reg_id = $reg_id;
-        }
-
-        $this->user_id = $user_id;
-        $this->userName = $userName;
-    }
-    */
+    protected $topic;
 
     public function __construct($registration, $topic)
     {
-        $this->topic = $topic;
         $this->registration = $registration;
+        $this->topic = $topic;
     }
 
     public function build()
     {
         return $this->markdown('mail.invitation')
             ->subject($this->topic)
-            ->with('registration', $this->registration)
+            ->with([
+                'suffixId' => $this->registration->suffix_id,
+                'suffix' => $this->registration->suffix->display_name,
+                'firstName' => $this->registration->first_name,
+                'lastName' => $this->registration->last_name,
+                'locationName' => $this->registration->invitations->last()->slot->event->location->name,
+                'locationAddress' => $this->registration->invitations->last()->slot->event->location->address,
+                'locationCity' => $this->registration->invitations->last()->slot->event->location->city,
+                'locationState' => $this->registration->invitations->last()->slot->event->location->state,
+                'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
+                'slotStart' => $this->registration->invitations->last()->slot->starting_at,
+                'slotEnd' => $this->registration->invitations->last()->slot->ending_at,
+                'invitationExpires' => $this->registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H'))
+            ])
             ->withSwiftMessage(function($message) {
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. $this->registration->id .'}');
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. $this->registration->user_id .'}');
+                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
+                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '.$this->registration->user_id.'}');
                 $message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
             });
     }
