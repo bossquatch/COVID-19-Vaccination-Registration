@@ -15,14 +15,8 @@ Your appointment is scheduled for:
 
 Please log into the COVID-19 vaccination registration website to accept your appointment. This offer will expire **{{ $invitationExpires }}**.
 
-@isset($actionText)
 @component('mail::button', ['url' => $actionUrl, 'color' => 'primary'])
 {{ $actionText }}
-@endcomponent
-@endisset
-
-@component('mail::button', ['url' => config('app.url')])
-Login
 @endcomponent
 
 Remember, proof of Florida residency is ***required*** at your appointment.
@@ -30,10 +24,8 @@ Remember, proof of Florida residency is ***required*** at your appointment.
 Thanks,<br>
 {{ config('app.name') }}
 
-@isset($actionText)
 @component('mail::subcopy')
 If you’re having trouble clicking the "{{ $actionText }}" button, copy and paste the URL below into your web browser:
 [{{ $actionUrl }}]({{ $actionUrl }})
 @endcomponent
-@endisset
 @endcomponent
