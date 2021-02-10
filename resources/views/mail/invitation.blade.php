@@ -5,7 +5,7 @@ You have been scheduled for an appointment for your COVID-19 vaccination. Your a
 
 Your appointment is scheduled for **{{ $registration->invitations->last()->slot->starting_at.' to '.$registration->invitations->last()->slot->ending_at }}**.
 
-Please log into the COVID-19 vaccination registration website to accept your appointment. This offer will expire **{{ $registration->invitations->last()->contacted_at->add(config('app.invitation_expire').'H') }}**.
+Please log into the COVID-19 vaccination registration website to accept your appointment. This offer will expire **{{ $registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H')) }}**. Expires in {{ config('app.invitation_expire') }} hours.
 
 @component('mail::button', ['url' => '{{ config('app.url').'/home' }}'])
     Login
