@@ -231,11 +231,11 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #2b61ae;
-    border-bottom: 8px solid #2b61ae;
-    border-left: 18px solid #2b61ae;
-    border-right: 18px solid #2b61ae;
-    border-top: 8px solid #2b61ae;
+    background-color: #2d3748;
+    border-bottom: 8px solid #2d3748;
+    border-left: 18px solid #2d3748;
+    border-right: 18px solid #2d3748;
+    border-top: 8px solid #2d3748;
 }
 
 .button-green,
@@ -254,24 +254,6 @@ img {
     border-left: 18px solid #e53e3e;
     border-right: 18px solid #e53e3e;
     border-top: 8px solid #e53e3e;
-}
-
-.button-purple,
-.button-doug {
-    background-color: #5e238c;
-    border-bottom: 8px solid #5e238c;
-    border-left: 18px solid #5e238c;
-    border-right: 18px solid #5e238c;
-    border-top: 8px solid #5e238c;
-}
-
-.button-orange,
-.button-power {
-    background-color: #b14a2c;
-    border-bottom: 8px solid #b14a2c;
-    border-left: 18px solid #b14a2c;
-    border-right: 18px solid #b14a2c;
-    border-top: 8px solid #b14a2c;
 }
 
 /* Panels */
@@ -304,8 +286,4 @@ img {
 
 .break-all {
     word-break: break-all;
-}
-
-.text-center {
-    text-align: center;
 }
