@@ -16,7 +16,6 @@ class Invitation extends Model
 
     protected $guarded = [];
 
-
     protected $dates = [
         'contacted_at',
         'created_at',
