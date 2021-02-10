@@ -103,6 +103,7 @@
                         <!-- Title -->
                         <h2 class="h5 mb-0">
                             Registrations
+                            <small class="font-weight-light font-size-sm text-muted ml-3">Filtered by status: <span id="status-filter-desc" class="font-italic">All</span></small>
                         </h2>
 
                         {{--<!-- Tabs -->
@@ -142,7 +143,7 @@
                     <div id="applications-tablist-content" class="tab-content">
                         <div id="all" class="tab-pane show active">
                             <!-- Table -->
-                            <div class="table-responsive">
+                            <div class="{{--table-responsive--}}">
                                 <table class="table table-silk">
                                     <thead>
                                         <tr>
@@ -164,7 +165,19 @@
                                                 Submitted On <a href="#" onclick="sortSubmission()"><span id="submission-sort-caret" class="fas fa-caret-up"></span></a>
                                             </th>
                                             <th>
-                                                Status
+                                                Status 
+                                                <div class="dropdown d-inline">
+                                                    <a class="text-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span id="status-filter-btn" class="fas fa-filter"></span>
+                                                    </a>
+                                                  
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="#" onclick="filterStatus('All')">All</a> 
+                                                        @foreach (\App\Models\Status::all() as $status)
+                                                            <a class="dropdown-item" href="#" onclick="filterStatus('{{ $status->name }}')">{{ $status->name }}</a>      
+                                                        @endforeach
+                                                    </div>
+                                                </div>
                                             </th>
                                             <th class="text-center">
                                                 Email Verified
@@ -226,6 +239,7 @@
 <script>
 // make sure sorting is correct right off the bat
 window.sessionStorage.setItem('submissionSort', 'asc');
+window.sessionStorage.setItem('statusFilter', 'All');
 
 // Get the input field
 var inputName = document.getElementById("searchName");
@@ -260,11 +274,7 @@ function search(type) {
     window.sessionStorage.setItem('searchLimit', offset);
     window.sessionStorage.setItem('searchType', type);
 
-    var searchInfo = {
-        'val': val,
-        'offset': parseInt(offset),
-        'sort': window.sessionStorage.getItem('submissionSort')
-    };
+    var searchInfo = createSearchInfo(val, parseInt(offset));
 
     setTimeout(function () {
        	$('#loadingModal').modal('hide');
@@ -275,11 +285,7 @@ function search(type) {
 function getNext() {
     $('#loadingModal').modal('show');
     
-    var searchInfo = {
-        'val': window.sessionStorage.getItem('searchVal'),
-        'offset': parseInt(window.sessionStorage.getItem('searchOffset')),
-        'sort': window.sessionStorage.getItem('submissionSort')
-    };
+    var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
 
     setTimeout(function () {
        	$('#loadingModal').modal('hide');
@@ -292,11 +298,7 @@ function getNext() {
 function getPrev() {
     $('#loadingModal').modal('show');
     
-    var searchInfo = {
-        'val': window.sessionStorage.getItem('searchVal'),
-        'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit'))),
-        'sort': window.sessionStorage.getItem('submissionSort')
-    };
+    var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit'))));
 
     setTimeout(function () {
        	$('#loadingModal').modal('hide');
@@ -336,11 +338,7 @@ function sortSubmission() {
     if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
         $('#loadingModal').modal('show');
     
-        var searchInfo = {
-            'val': window.sessionStorage.getItem('searchVal'),
-            'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))),
-            'sort': window.sessionStorage.getItem('submissionSort')
-        };
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
         
         setTimeout(function () {
             $('#loadingModal').modal('hide');
@@ -349,6 +347,34 @@ function sortSubmission() {
     }
 
     return false;
+}
+
+function filterStatus(filter) {
+    //const caret = document.getElementById('submission-sort-caret');
+    window.sessionStorage.setItem('statusFilter', filter);
+    document.getElementById('status-filter-desc').innerHTML = filter;
+
+    if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
+        $('#loadingModal').modal('show');
+    
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
+        
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 1000);
+        makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+    }
+
+    return false;
+}
+
+function createSearchInfo(val, offset) {
+    return {
+        'val': val,
+        'offset': offset,
+        'sort': window.sessionStorage.getItem('submissionSort'),
+        'filter': window.sessionStorage.getItem('statusFilter')
+    };
 }
 </script>
 @endsection
