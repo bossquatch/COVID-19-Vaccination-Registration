@@ -52,6 +52,9 @@ class VaccineController extends Controller
             'giver_lname' => $inputs['giverLastName'],
         ]);
 
+        if (!isset($inputs['risks'])) {
+            $inputs['risks'] = [];
+        }
         $vaccine->risk_factors()->sync($inputs['risks']);
 
         $this->checkCompleted($regis);
@@ -61,7 +64,7 @@ class VaccineController extends Controller
 
     private function checkCompleted($registration)
     {
-        if ($registration->vaccines()->count >= 2) {
+        if ($registration->vaccines()->count() >= 2) {
             $registration->status_id = 5;
             $registration->save();
 
