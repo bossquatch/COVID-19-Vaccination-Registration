@@ -67,6 +67,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::delete('/manage/user/{id}', [App\Http\Controllers\ManageController::class, 'userDelete'])->middleware('can:update_registration');
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
     Route::put('/manage/complete/{regis_id}', [App\Http\Controllers\ManageController::class, 'complete'])->middleware('can:keep_inventory');
+    Route::put('/manage/waitlist/{regis_id}', [App\Http\Controllers\ManageController::class, 'waitlist'])->middleware('can:keep_inventory');
 
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');
