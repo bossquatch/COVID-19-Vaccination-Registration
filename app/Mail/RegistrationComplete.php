@@ -17,7 +17,7 @@ class RegistrationComplete extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param Registration $registration
      */
     public function __construct(Registration $registration)
     {
