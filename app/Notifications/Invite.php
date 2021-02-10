@@ -43,15 +43,10 @@ class Invite extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-
         $emailAddress = $notifiable->user->email;
-        $user_id = intval(strval($notifiable->user->id),36);
-        $regId = intval(strval($notifiable->id),36);
-        $userName = $notifiable->first_name;
 
         return Mail::to($emailAddress)
-            ->send(new Invitation($userName, $user_id, $regId,'Polk Health - Vaccination Invitation'));
-
+            ->send(new Invitation($notifiable, 'Polk Health - Vaccination Invitation'));
     }
 
     public function toArray($notifiable)
@@ -63,7 +58,6 @@ class Invite extends Notification implements ShouldQueue
 
     public function toTwilio($notifiable)
     {
-
         $sid    = env('TWILIO_ACCOUNT_SID');
         $token  = env('TWILIO_AUTH_TOKEN');
         $twilio = new Client($sid, $token);

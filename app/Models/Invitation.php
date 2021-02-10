@@ -16,6 +16,14 @@ class Invitation extends Model
 
     protected $guarded = [];
 
+
+    protected $dates = [
+        'contacted_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     /**
      * Set the keys for a save update query.
      *
