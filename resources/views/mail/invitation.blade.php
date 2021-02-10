@@ -4,7 +4,9 @@
 You have been scheduled for an appointment for your COVID-19 vaccination. Your appointment is at:
 
 @component('mail::panel')
-{{ $locationName.'<br>'.$locationAddress.'<br>'.$locationCity.', '.$locationState.' '.$locationZip }}
+{{ $locationName }}<br>
+{{ $locationAddress }}<br>
+{{ $locationCity.', '.$locationState.' '.$locationZip }}
 @endcomponent
 
 Your appointment is scheduled for:
@@ -25,7 +27,7 @@ Thanks,<br>
 {{ config('app.name') }}
 
 @component('mail::subcopy')
-If you’re having trouble clicking the "{{ $actionText }}" button, copy and paste the URL below into your web browser:
+If you’re having trouble clicking the "{{ $actionText }}" button, copy and paste the URL into your web browser:
 [{{ $actionUrl }}]({{ $actionUrl }})
 @endcomponent
 @endcomponent
