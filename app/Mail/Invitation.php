@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use DateInterval;
 use App\Models\Registration;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
