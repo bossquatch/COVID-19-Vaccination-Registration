@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ElevenDigits;
+use Illuminate\Support\Facades\Auth;
 
 class VaccineController extends Controller
 {
@@ -50,6 +51,7 @@ class VaccineController extends Controller
             'giver_fname' => $inputs['giverFirstName'],
             'giver_creds' => $inputs['giverCreds'],
             'giver_lname' => $inputs['giverLastName'],
+            'user_id' => Auth::id(),
         ]);
 
         if (!isset($inputs['risks'])) {
