@@ -12,7 +12,6 @@ class WebhookController extends Controller
 {
     public function emailDelivered(Request $request)
     {
-        Log::debug($request);
         try {
             $this->handleDelivered($request->all());
             return response('Success', 200);
@@ -23,7 +22,6 @@ class WebhookController extends Controller
 
     public function emailFailed(Request $request)
     {
-        Log::debug($request);
         try {
             $this->handleFailed($request->all());
             return response('Success', 200);
