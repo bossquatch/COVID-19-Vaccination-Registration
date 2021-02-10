@@ -515,6 +515,18 @@ class ManageController extends Controller
         return redirect('/manage');
     }
 
+    public function waitlist($regis_id)
+    {
+        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis->update([
+            'status_id' => 1,
+        ]);
+        $this->logChanges($regis, 'returned', true);
+
+        Session::flash('success', "<p>Registration was returned to the waitlist.</p>");
+        return redirect('/manage');
+    }
+
     public function userDelete($id)
     {
         $user = User::findOrFail($id);

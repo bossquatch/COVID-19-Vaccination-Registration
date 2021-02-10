@@ -66,6 +66,12 @@ select.read-only option{
                 <button class="btn btn-header btn-header-success btn-round btn-lg" data-toggle="modal" data-target="#completeModal">
                     <span class="fad fa-clipboard-check mr-1"></span> Complete Registration
                 </button>
+
+                @if($registration->status_id == 2)
+                <button class="btn btn-header-outline btn-round btn-lg" data-toggle="modal" data-target="#waitlistModal">
+                    <span class="fad fa-clipboard-list mr-1"></span> Return to Waitlist
+                </button>
+                @endif
                 @endcan
             </div>
         </div>
@@ -611,6 +617,37 @@ select.read-only option{
         </div>
     </div>
 </div>
+
+@if($registration->status_id == 2)
+<div class="modal fade" id="waitlistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Waitlist Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-warning"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Warning!</p>
+                        <p class="text-gray-dark">Are you sure you wish to return this registration to the waitlist?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <form class="form-inline" action="/manage/waitlist/{{ $registration->id }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-warning">Return to Waitlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 @endcan
 @endsection
 
