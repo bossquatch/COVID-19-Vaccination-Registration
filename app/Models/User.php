@@ -92,6 +92,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Registration::class, 'user_id');
     }
 
+    public function vaccines()
+    {
+        return $this->hasMany(Vaccine::class, 'user_id');
+    }
+
     // roles and permissions
     public function roles()
     {
