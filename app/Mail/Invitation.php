@@ -26,8 +26,8 @@ class Invitation extends Mailable
         return $this->markdown('mail.invitation')
             ->subject($this->topic)
             ->with([
-                'suffixId' => $this->registration->suffix_id,
-                'suffix' => $this->registration->suffix->display_name,
+                'suffix' => $this->registration->suffix,
+                'suffixDisplay' => $this->registration->suffix ? $this->registration->suffix->display_name : '',
                 'firstName' => $this->registration->first_name,
                 'lastName' => $this->registration->last_name,
                 'locationName' => $this->registration->invitations->last()->slot->event->location->name,
