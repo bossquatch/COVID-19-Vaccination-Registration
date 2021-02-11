@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use SimpleSoftwareIO\QrCode\Facades;
 
 class Confirmation extends Mailable
 {
@@ -36,7 +37,7 @@ class Confirmation extends Mailable
                 'locationState' => $this->registration->invitations->last()->slot->event->location->state,
                 'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
                 'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
-                'qrCode' => 'resources\views\register\status.blade.php'
+                'qrCode' => QrCode::format('png')->merge('https://cdn.polk.design/images/polk-logo-email.png', 0.3, true)->generate('test')
             ])
             ->withSwiftMessage(function($message) {
                 $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
