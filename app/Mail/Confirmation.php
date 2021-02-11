@@ -38,7 +38,8 @@ class Confirmation extends Mailable
                 'locationCity' => $this->registration->invitations->last()->slot->event->location->city,
                 'locationState' => $this->registration->invitations->last()->slot->event->location->state,
                 'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
-                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A')
+                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
+                'png' => $this->png
             ])
             ->withSwiftMessage(function($message) {
                 $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
