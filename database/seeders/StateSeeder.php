@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\state;
+use App\Models\State;
+use App\Models\Address;
+use App\Models\AddressType;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +14,7 @@ class StateSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+	 *
      */
     public function run()
     {
@@ -69,5 +72,18 @@ class StateSeeder extends Seeder
             ['id' => '51', 'name' => 'Puerto Rico', 'abbr' => 'PR', 'capital' => 'San Juan','created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['id' => '52', 'name' => 'Washington, D.C.', 'abbr' => 'DC', 'capital' => '','created_at' => Carbon::now(), 'updated_at' => Carbon::now()]
         ]);
+
+		addressType::insert([
+			['id' => 1, 'type' => 'Primary Residence', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => 2, 'type' => 'Alternate Residence', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => 3, 'type' => 'Business', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => 4, 'type' => 'General', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+		]);
+
+		address::insert([
+			['id' => 1, 'line_1' => '123 Main St.', 'line_2' => 'Apt. 321', 'city' => 'Bartow', 'county_id' => 53, 'state_id' => 9, 'zip_code' => '33830', 'latitude' => 27.896335, 'longitude' => -81.852736, 'address_type_id' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['id' => 2, 'line_1' => '303 W. Church St.', 'line_2' => '', 'city' => 'Bartow', 'county_id' => 53, 'state_id' => 9, 'zip_code' => '33830', 'latitude' => 27.899161, 'longitude' => -81.845741, 'address_type_id' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+
+		]);
     }
 }

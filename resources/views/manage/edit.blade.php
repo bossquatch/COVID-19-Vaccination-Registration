@@ -41,9 +41,23 @@
                     <span class="fal fa-unlock mr-1"></span> Reset Password
                 </button>
 
+                @can('delete_registration')
                 <button class="btn btn-header btn-header-danger btn-round btn-lg" data-toggle="modal" data-target="#deleteModal">
                     <span class="fad fa-trash-alt mr-1"></span> Delete Registration
                 </button>
+                @endcan
+
+                @can('keep_inventory')
+                <button class="btn btn-header btn-header-success btn-round btn-lg" data-toggle="modal" data-target="#completeModal">
+                    <span class="fad fa-clipboard-check mr-1"></span> Complete Registration
+                </button>
+
+                @if($registration->status_id == 2)
+                <button class="btn btn-header-outline btn-round btn-lg" data-toggle="modal" data-target="#waitlistModal">
+                    <span class="fad fa-clipboard-list mr-1"></span> Return to Waitlist
+                </button>
+                @endif
+                @endcan
             </div>
         </div>
 
@@ -118,7 +132,7 @@
                                                 <option value="{{ $suffix->id }}" @if (old('suffix')) @if(old('suffix') == $suffix->id) selected @endif @elseif($registration->suffix_id == $suffix->id) selected @endif>{{ $suffix->display_name }}</option>
                                             @endforeach
                                         </select>
-            
+
                                         @error('suffix')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('suffix') }}</strong>
@@ -134,7 +148,7 @@
                                             Date of Birth <span class="font-weight-light small">(You must be at least 16 years of age to register)</span>
                                         </label>
                                         <input id="dob" name="dateOfBirth" class="form-control @error("dateOfBirth") is-invalid @enderror" type="date" value="{{ old('dateOfBirth') ?? $registration->birth_date }}" required aria-required="true">
-                        
+
                                         @error('dateOfBirth')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('dateOfBirth') }}</strong>
@@ -166,7 +180,7 @@
                                             Primary Phone Number
                                         </label>
                                         <input id="phone" name="phone" class="form-control @error("phone") is-invalid @enderror" type="tel" value="{{ old('phone') ?? (isset($registration->phones()[0]) ? ('('.substr($registration->phones()[0]->value,0,3).') '.substr($registration->phones()[0]->value,3,3).'-'.substr($registration->phones()[0]->value,6,4)) : '') }}" placeholder="(XXX) XXX-XXXX">
-                        
+
                                         @error("phone")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("phone") }}</strong>
@@ -180,7 +194,7 @@
                                 <div class="col-12">
                                     <h2 class="mb-5">Demographics</h2>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
                                         <label for="gender">
@@ -188,10 +202,10 @@
                                         </label>
                                         <select id="gender" name="gender" class="custom-select @error("gender") is-invalid @enderror">
                                             @foreach (\App\Models\Gender::get() as $gender)
-                                                <option value="{{ $gender->id }}" @if (old('gender')) @if(old('gender') == $gender->id) selected @endif @elseif($registration->gender_id == $gender->id) selected @endif>{{ $gender->name }}</option>    
+                                                <option value="{{ $gender->id }}" @if (old('gender')) @if(old('gender') == $gender->id) selected @endif @elseif($registration->gender_id == $gender->id) selected @endif>{{ $gender->name }}</option>
                                             @endforeach
                                         </select>
-                        
+
                                         @error('gender')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('gender') }}</strong>
@@ -199,7 +213,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-6">
                                     <div class="form-group mb-5">
                                         <label for="race">
@@ -207,10 +221,10 @@
                                         </label>
                                         <select id="race" name="race" class="custom-select @error("race") is-invalid @enderror">
                                             @foreach (\App\Models\Race::get() as $race)
-                                                <option value="{{ $race->id }}" @if (old('race')) @if(old('race') == $race->id) selected @endif @elseif($registration->race_id == $race->id) selected @endif>{{ $race->name }}</option>    
+                                                <option value="{{ $race->id }}" @if (old('race')) @if(old('race') == $race->id) selected @endif @elseif($registration->race_id == $race->id) selected @endif>{{ $race->name }}</option>
                                             @endforeach
                                         </select>
-                        
+
                                         @error('race')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('race') }}</strong>
@@ -219,7 +233,7 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="row mb-6">
                                 <div class="col-12">
                                     <h2 class="mb-5">Home Address</h2>
@@ -230,7 +244,7 @@
                                             Address 1
                                         </label>
                                         <input id="address1" name="address1" class="form-control @error("address1") is-invalid @enderror" type="text" value="{{ old('address1') ?? $registration->address1 }}" placeholder="Address 1" onchange="checkInlineAddress()">
-                        
+
                                         @error("address1")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("address1") }}</strong>
@@ -244,7 +258,7 @@
                                             Address 2
                                         </label>
                                         <input id="address2" name="address2" class="form-control @error("address2") is-invalid @enderror" type="text" value="{{ old('address2') ?? $registration->address2 }}" placeholder="Address 2" onchange="checkInlineAddress()">
-                        
+
                                         @error("address2")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("address2") }}</strong>
@@ -258,7 +272,7 @@
                                             City
                                         </label>
                                         <input id="city" name="city" class="form-control @error("city") is-invalid @enderror" type="text" value="{{ old('city') ?? $registration->city }}" placeholder="City" onchange="checkInlineAddress()">
-                        
+
                                         @error("city")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("city") }}</strong>
@@ -327,7 +341,7 @@
                                             <option value="WI" @if($registration->state == "WI") selected @endif>Wisconsin</option>
                                             <option value="WY" @if($registration->state == "WY") selected @endif>Wyoming</option>
                                         </select>
-                        
+
                                         @error("state")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("state") }}</strong>
@@ -341,7 +355,7 @@
                                             Zip code
                                         </label>
                                         <input id="zipCode" name="zip" class="form-control @error("zip") is-invalid @enderror" type="text" value="{{ old('zip') ?? $registration->zip }}" placeholder="Zip code" onchange="checkInlineAddress()">
-                        
+
                                         @error("zip")
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first("zip") }}</strong>
@@ -357,10 +371,10 @@
                                         </label>
                                         <select id="county" name="county" class="custom-select @error("county") is-invalid @enderror">
                                             @foreach (\App\Models\County::get() as $county)
-                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif($registration->county_id == $county->id) selected @endif>{{ $county->county }}</option>    
+                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif($registration->county_id == $county->id) selected @endif>{{ $county->county }}</option>
                                             @endforeach
                                         </select>
-                        
+
                                         @error('county')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('county') }}</strong>
@@ -374,7 +388,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input id="scheculePreference" name="scheculePreference" class="custom-control-input @error("scheculePreference") is-invalid @enderror" type="checkbox" @if ($registration->prefer_close_location) checked aria-checked="true" @endif>
                                             <label class="custom-control-label" for="scheculePreference">I prefer to get scheduled to the location closest to me instead of being scheduled to the earliest possible appointment.</label>
-                        
+
                                             @error("scheculePreference")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("scheculePreference") }}</strong>
@@ -400,11 +414,11 @@
                                         <select id="occupation" name="occupation" class="custom-select @error("occupation") is-invalid @enderror">
                                             @foreach (\App\Models\Occupation::get() as $occupation)
                                                 @if($occupation->display_name != null)
-                                                    <option value="{{ $occupation->id }}" @if (old('occupation')) @if(old('occupation') == $occupation->id) selected @endif @elseif($registration->occupation_id == $occupation->id) selected @endif>{{ $occupation->display_name }}</option>    
+                                                    <option value="{{ $occupation->id }}" @if (old('occupation')) @if(old('occupation') == $occupation->id) selected @endif @elseif($registration->occupation_id == $occupation->id) selected @endif>{{ $occupation->display_name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
-                        
+
                                         @error('occupation')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('occupation') }}</strong>
@@ -413,12 +427,12 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="row mb-6">
                                 <div class="col-12">
                                     <h2 class="mb-5">Check All Underlying Health Conditions that Apply to You</h2>
                                 </div>
-                                
+
                                 @php
                                     $regis_conditions = $registration->conditions()->pluck('id')->toArray();
                                 @endphp
@@ -446,7 +460,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input id="illAgreement" name="illAgreement" class="custom-control-input @error("illAgreement") is-invalid @enderror" type="checkbox">
                                             <label class="custom-control-label" for="illAgreement">I am not currently ill.</label>
-                        
+
                                             @error("illAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("illAgreement") }}</strong>
@@ -461,7 +475,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input id="availableAgreement" name="availableAgreement" class="custom-control-input @error("availableAgreement") is-invalid @enderror" type="checkbox" checked aria-checked="true">
                                             <label class="custom-control-label" for="availableAgreement">I will be available and present 28 days after my initial vaccination.</label>
-                        
+
                                             @error("availableAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("availableAgreement") }}</strong>
@@ -470,13 +484,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 {{--<div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
                                             <input id="vaccineAgreement" name="vaccineAgreement" class="custom-control-input @error("vaccineAgreement") is-invalid @enderror" type="checkbox">
                                             <label class="custom-control-label" for="vaccineAgreement">I have not received any vaccine in the past 14 days.</label>
-                        
+
                                             @error("vaccineAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("vaccineAgreement") }}</strong>
@@ -491,7 +505,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input id="reactionAgreement" name="reactionAgreement" class="custom-control-input @error("reactionAgreement") is-invalid @enderror" type="checkbox" checked aria-checked="true">
                                             <label class="custom-control-label" for="reactionAgreement">I have not had any adverse reactions directly caused by a vaccine before.<br><small>(Or you have checked with your primary healthcare physician that you are safe to take the vaccine.)</small></label>
-                        
+
                                             @error("reactionAgreement")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("reactionAgreement") }}</strong>
@@ -529,7 +543,7 @@
                                 </div>
                             </div>
                         </form>
-                        
+
                         <script type="text/javascript">
                             function checkInlineAddress() {
                                 var addrInfo = {
@@ -539,15 +553,15 @@
                                     'zip': $("#zipCode").val(),
                                     'state': $('#state').find(":selected").val()
                                 };
-                        
+
                                 if (addrInfo.address1 != "" && addrInfo.city != "" && addrInfo.zip != ""){
                                     $("#adressStatusBlock").html(
                                         "<div class='row justify-content-center'><span class='fad fa-spinner fa-pulse fa-2x'></span></div>"
                                     );
-                        
+
                                     $.get('/address/validate', addrInfo, function(data) {
                                         var type, text = "";
-                        
+
                                         if (data.hasOwnProperty('error')) {
                                             text = data.error;
                                             type = 'danger';
@@ -566,7 +580,7 @@
                                             }
                                             type = 'success';
                                         }
-                        
+
                                         $("#addressStatusBlock").html(
                                             "<div class='alert alert-"+type+"' role='alert'>"+text+"</div>"
                                         );
@@ -579,26 +593,26 @@
                                     $("#addressStatusBlock").css('display', 'block');
                                 }
                             }
-                        
+
                             function syncInlineAddress(address1, address2, city, zip, state) {
                                 if (address1 !== undefined && address1 != 'undefined') {
                                     $("#address1").val(address1);
                                 } else {
                                     $("#address1").val("");
                                 }
-                        
+
                                 if (address2 !== undefined && address2 != 'undefined') {
                                     $("#address2").val(address2);
                                 } else {
                                     $("#address2").val("");
                                 }
-                        
+
                                 if (city !== undefined && city != 'undefined') {
                                     $("#city").val(city);
                                 } else {
                                     $("#city").val("");
                                 }
-                        
+
                                 if (zip !== undefined && zip != 'undefined') {
                                     $("#zipCode").val(zip);
                                 } else {
@@ -665,11 +679,12 @@
                     <input type="hidden" name="user" value="{{ $registration->user_id }}">
                     <button type="submit" class="btn btn-danger">Reset Password</button>
                 </form>
-            </div>        
+            </div>
         </div>
     </div>
 </div>
 
+@can('delete_registration')
 <div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Delete Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -694,8 +709,71 @@
                         <button type="submit" class="btn btn-danger">Delete Registration</button>
                     </form>
                 </div>
-            </div>        
+            </div>
         </div>
     </div>
 </div>
+@endcan
+
+@can('keep_inventory')
+<div class="modal fade" id="completeModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Complete Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-warning"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Warning!</p>
+                        <p class="text-gray-dark">Are you sure you wish to mark this registration as complete?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <form class="form-inline" action="/manage/complete/{{ $registration->id }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-success">Complete Registration</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if($registration->status_id == 2)
+<div class="modal fade" id="waitlistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Waitlist Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body pb-0 pt-6 px-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-warning"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="text-gray-dark mb-3 font-weight-bold">Warning!</p>
+                        <p class="text-gray-dark">Are you sure you wish to return this registration to the waitlist?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <form class="form-inline" action="/manage/waitlist/{{ $registration->id }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-warning">Return to Waitlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+@endcan
 @endsection

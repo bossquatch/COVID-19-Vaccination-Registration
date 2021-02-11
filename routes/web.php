@@ -27,37 +27,7 @@ Route::get('/not-supported', function() {
 });
 
 Route::group(["middleware" => "check.reset"], function() {
-    Route::get('/', function () {
-
-        // registrations by county
-        $registrations = [
-            'counts' => [],
-            'day' => []
-        ];
-
-        $regByDay = DB::select("
-            SELECT
-                DATE_FORMAT(r.submitted_at,'%m/%d/%y') `Day`,
-                count(*) `Count`
-            FROM
-                registrations r
-            WHERE
-                r.deleted_at IS NULL
-            GROUP BY
-                DATE_FORMAT(r.submitted_at,'%m/%d/%y')
-        ");
-
-        foreach($regByDay as $day) {
-            $registrations['counts'][] = $day->Count;
-            $registrations['day'][] = $day->Day;
-        }
-
-        $currentSchedule = Carbon::create(Registration::where('status_id','=',2)->max('submitted_at'));
-        return view('home.index',[
-            'currentSchedule' => $currentSchedule->format('F jS, Y'),
-            'registrations' => $registrations,
-        ]);
-    });
+    Route::get('/', [App\Http\Controllers\AnalyticsController::class,'publicAnalytics']);
 
     Route::get('/faqs' , function() {
         return view('home.faqs');
@@ -96,6 +66,8 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/forcereset', [App\Http\Controllers\ManageController::class, 'forceResetPassword'])->middleware('can:update_registration');
     Route::delete('/manage/user/{id}', [App\Http\Controllers\ManageController::class, 'userDelete'])->middleware('can:update_registration');
     Route::delete('/manage/delete/{regis_id}', [App\Http\Controllers\ManageController::class, 'delete'])->middleware('can:update_registration');
+    Route::put('/manage/complete/{regis_id}', [App\Http\Controllers\ManageController::class, 'complete'])->middleware('can:keep_inventory');
+    Route::put('/manage/waitlist/{regis_id}', [App\Http\Controllers\ManageController::class, 'waitlist'])->middleware('can:keep_inventory');
 
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');

@@ -52,7 +52,8 @@ class ManageController extends Controller
                 \App\Models\User::whereHas('roles', function (Builder $query) {
                     $query->where('name', '=', 'user');
                 })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
-                request()->input('offset')
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
@@ -64,7 +65,8 @@ class ManageController extends Controller
                 \App\Models\User::whereHas('registration', function (Builder $query) {
                     $query->where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%');
                 }), 
-                request()->input('offset')
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
@@ -76,7 +78,8 @@ class ManageController extends Controller
                 \App\Models\User::whereHas('registration', function (Builder $query) {
                     $query->where('id', '=', request()->input('val'));
                 }), 
-                request()->input('offset')
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
@@ -88,16 +91,17 @@ class ManageController extends Controller
                 \App\Models\User::whereHas('registration', function (Builder $query) {
                     $query->where('code', 'LIKE', '%'.request()->input('val').'%');
                 }),
-                request()->input('offset')
+                request()->input('offset'),
+                request()->input('sort')
             )
         );
     }
 
-    private function searchResults($query, $offset)
+    private function searchResults($query, $offset, $sort)
     {
         $limit = config('app.pagination_limit');
         $total_count = $query->count();
-        $res = $query->offset($offset)->limit($limit)->get();
+        $res = $query->select('*', DB::raw('(SELECT registrations.submitted_at FROM registrations WHERE registrations.user_id = users.id AND registrations.deleted_at IS NULL LIMIT 1) as submitted_at'))->orderBy('submitted_at', $sort ?? 'asc')->offset($offset)->limit($limit)->get();
         $pagination = '';
 
         if ($total_count > 0) {
@@ -440,6 +444,30 @@ class ManageController extends Controller
         $cur_user->delete();
 
         Session::flash('success', "<p>Registration was successfully deleted.</p>");
+        return redirect('/manage');
+    }
+
+    public function complete($regis_id)
+    {
+        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis->update([
+            'status_id' => 5,
+        ]);
+        $this->logChanges($regis, 'completed', true);
+
+        Session::flash('success', "<p>Registration was marked as completed.</p>");
+        return redirect('/manage');
+    }
+
+    public function waitlist($regis_id)
+    {
+        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis->update([
+            'status_id' => 1,
+        ]);
+        $this->logChanges($regis, 'returned', true);
+
+        Session::flash('success', "<p>Registration was returned to the waitlist.</p>");
         return redirect('/manage');
     }
 

@@ -38,8 +38,8 @@ class CreateAddressesTable extends Migration
             $table->unsignedBigInteger('county_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
             $table->string('zip_code', 25)->nullable();
-            $table->float('latitude',18,15)->nullable();
-            $table->float('longitude',18,15)->nullable();
+            $table->decimal('latitude',10,8)->nullable();
+            $table->decimal('longitude',11,8)->nullable();
             $table->unsignedBigInteger('address_type_id');
             $table->timestamps();
             $table->softDeletes();
