@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Confirmation extends Mailable
 {
@@ -14,11 +15,13 @@ class Confirmation extends Mailable
 
     protected $registration;
     protected $topic;
+    protected $png;
 
     public function __construct($registration, $topic)
     {
         $this->registration = $registration;
         $this->topic = $topic;
+        $this->png = base64_encode(QrCode::format('png')->size(150)->generate('test'));
     }
 
     public function build()
