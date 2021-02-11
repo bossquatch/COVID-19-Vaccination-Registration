@@ -56,6 +56,8 @@ return [
 
     'organization' => env('APP_ORG', 'Polk County'),
 
+    'organization_url' => env('APP_ORG_URL', 'https://www.polk-county.net'),
+
     'asset_url' => env('ASSET_URL', null),
 
     'cdn_url' => env('CDN_URL', 'https://cdn.polk.design'),

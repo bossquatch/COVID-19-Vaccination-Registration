@@ -177,6 +177,11 @@ img {
     text-decoration: underline;
 }
 
+.footer .logo {
+    display: block;
+    margin-bottom: 8px;
+}
+
 /* Tables */
 
 .table table {

@@ -25,6 +25,9 @@
 {{-- Footer --}}
 @slot('footer')
 @component('mail::footer')
+<a href="{{ config('app.organization_url') }}" title="{{ config('app.organization') }}" class="logo">
+<img src="{{ config('mail.organization_logo') }}" class="logo" alt="{{ config('mail.organization_logo_alt') }}">
+</a>
 © {{ date('Y') }} {{ config('app.organization') }}. @lang('All rights reserved.')
 @endcomponent
 @endslot
