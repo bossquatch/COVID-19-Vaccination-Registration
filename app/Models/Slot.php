@@ -13,6 +13,14 @@ class Slot extends Model
 
     protected $guarded = [];
 
+    protected $dates = [
+        'starting_at',
+        'ending_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     public function event() {
         return $this->belongsTo(Event::class, 'event_id');
     }

@@ -27,6 +27,8 @@ class Invitation extends Mailable
         return $this->markdown('mail.invitation')
             ->subject($this->topic)
             ->with([
+                'actionText' => 'Login to my account',
+                'actionUrl' => config('app.url').'/home',
                 'suffix' => $this->registration->suffix,
                 'suffixDisplay' => $this->registration->suffix ? $this->registration->suffix->display_name : '',
                 'firstName' => $this->registration->first_name,
@@ -36,9 +38,8 @@ class Invitation extends Mailable
                 'locationCity' => $this->registration->invitations->last()->slot->event->location->city,
                 'locationState' => $this->registration->invitations->last()->slot->event->location->state,
                 'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
-                'slotStart' => $this->registration->invitations->last()->slot->starting_at,
-                'slotEnd' => $this->registration->invitations->last()->slot->ending_at,
-                'invitationExpires' => $this->registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H'))
+                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
+                'invitationExpires' => $this->registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H'))->format('M j, Y g:i A')
             ])
             ->withSwiftMessage(function($message) {
                 $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
