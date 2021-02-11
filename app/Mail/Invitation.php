@@ -27,7 +27,7 @@ class Invitation extends Mailable
         return $this->markdown('mail.invitation')
             ->subject($this->topic)
             ->with([
-                'actionText' => 'Login',
+                'actionText' => 'Login to my account',
                 'actionUrl' => config('app.url').'/home',
                 'suffix' => $this->registration->suffix,
                 'suffixDisplay' => $this->registration->suffix ? $this->registration->suffix->display_name : '',

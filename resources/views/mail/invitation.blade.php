@@ -3,16 +3,11 @@
 
 You have been scheduled for an appointment for your COVID-19 vaccination. Your appointment is at:
 
-@component('mail::panel')
-{{ $locationName }}<br>
+@component('mail::code')
+<span class="token string">{{ $locationName }}</span><br>
+<span class="token punctuation">{{ $apptDate }}</span><br>
 {{ $locationAddress }}<br>
 {{ $locationCity.', '.$locationState.' '.$locationZip }}
-@endcomponent
-
-Your appointment is scheduled for:
-
-@component('mail::panel')
-{{ $apptDate }}
 @endcomponent
 
 Please log into the COVID-19 vaccination registration website to accept your appointment. This offer will expire **{{ $invitationExpires }}**.
