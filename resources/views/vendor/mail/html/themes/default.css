@@ -282,6 +282,43 @@ img {
     padding-bottom: 0;
 }
 
+/* Codeblocks */
+
+.code {
+    margin: 21px 0;
+}
+
+.code-content {
+    background-color: #1f2937;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.code-content p {
+    color: #fff;
+}
+
+.token.comment {
+    color: #9ca3af;
+}
+
+.token.keyword,
+.token.operator {
+    color: #22d3ee;
+}
+
+.token.function {
+    color: #e879f9;
+}
+
+.token.punctuation {
+    color: #bae6fd;
+}
+
+.token.string {
+    color: #bef264;
+}
+
 /* Utilities */
 
 .break-all {
