@@ -58,6 +58,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'cdn_url' => env('CDN_URL', 'https://cdn.polk.design'),
+
     'default_password' => env('DEFAULT_PASSWORD', ''),
 
     'default_no_email' => env('DEFAULT_NO_EMAIL', ''),
