@@ -28,7 +28,7 @@ blockquote {
 }
 
 a {
-    color: #3869d4;
+    color: #0071eb;
 }
 
 a img {
@@ -37,26 +37,31 @@ a img {
 
 /* Typography */
 
-h1 {
-    color: #3d4852;
+h1,
+h2,
+h3,
+.h1,
+.h2,
+.h3 {
+    color: #111827;
+    font-weight: bold;
+    margin-top: 0;
+    text-align: left;
+}
+
+h1,
+.h1 {
     font-size: 18px;
-    font-weight: bold;
-    margin-top: 0;
-    text-align: left;
 }
 
-h2 {
+h2,
+.h2 {
     font-size: 16px;
-    font-weight: bold;
-    margin-top: 0;
-    text-align: left;
 }
 
-h3 {
+h3,
+.h3 {
     font-size: 14px;
-    font-weight: bold;
-    margin-top: 0;
-    text-align: left;
 }
 
 p {
