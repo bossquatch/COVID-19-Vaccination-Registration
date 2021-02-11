@@ -15,11 +15,13 @@ class Confirmation extends Mailable
 
     protected $registration;
     protected $topic;
+    protected $qrCode;
 
     public function __construct($registration, $topic)
     {
         $this->registration = $registration;
         $this->topic = $topic;
+        $this->qrCode = QrCode::format('png')->merge('https://cdn.polk.design/images/polk-logo-email.png', 0.3, true)->generate('test');
     }
 
     public function build()
@@ -36,8 +38,7 @@ class Confirmation extends Mailable
                 'locationCity' => $this->registration->invitations->last()->slot->event->location->city,
                 'locationState' => $this->registration->invitations->last()->slot->event->location->state,
                 'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
-                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
-                'qrCode' => QrCode::format('png')->merge('https://cdn.polk.design/images/polk-logo-email.png', 0.3, true)->generate('test')
+                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A')
             ])
             ->withSwiftMessage(function($message) {
                 $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
