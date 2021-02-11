@@ -2,8 +2,7 @@
 {{-- Header --}}
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
-Laravel
-{{-- config('app.name') --}}
+<img src="https://cdn.polk.design/images/florida-doh-polk-logo-email.png" class="logo" alt="Florida Department of Health Polk County Logo">
 @endcomponent
 @endslot
 
