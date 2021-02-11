@@ -21,11 +21,6 @@ class Board
     // fulfill task
     public static function run()
     {
-        $test = self::evaluate(100, Carbon::today(), 0)->get();
-        dump($test);
-        dump($test->pluck('id'));
-        dd(Registration::whereNotIn('id', $test->pluck('id'))->get());
-
         // get slots
         $slots = self::stack();
         
