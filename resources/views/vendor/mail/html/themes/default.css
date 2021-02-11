@@ -178,8 +178,7 @@ img {
 }
 
 .footer .logo {
-    display: block;
-    margin-bottom: 8px;
+    display: inline-block;
 }
 
 /* Tables */
