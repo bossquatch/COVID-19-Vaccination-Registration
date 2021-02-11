@@ -285,17 +285,20 @@ img {
 /* Codeblocks */
 
 .code {
-    margin: 21px 0;
+    margin: 24px 0;
 }
 
 .code-content {
     background-color: #1f2937;
     border-radius: 12px;
-    padding: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 14px 18px;
 }
 
 .code-content p {
     color: #fff;
+    margin: 0;
 }
 
 .token.comment {

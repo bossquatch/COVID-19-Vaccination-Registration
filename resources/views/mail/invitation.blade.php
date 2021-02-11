@@ -5,8 +5,8 @@ You have been scheduled for an appointment for your COVID-19 vaccination. Your a
 
 @component('mail::code')
 <span class="token string">{{ $locationName }}</span><br>
-<span class="token keyword">{{ $locationAddress }}</span><br>
-{{ $apptDate }}<br>
+<span class="token punctuation">{{ $apptDate }}</span><br>
+{{ $locationAddress }}<br>
 {{ $locationCity.', '.$locationState.' '.$locationZip }}
 @endcomponent
 
