@@ -16,7 +16,7 @@ class Confirm extends Notification implements ShouldQueue
 
     public function __construct()
     {
-        //
+        
     }
 
     public function viaQueues()
@@ -44,12 +44,9 @@ class Confirm extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $emailAddress = $notifiable->user->email;
-        $user_id = intval(strval($notifiable->user->id),36);
-        $regId = intval(strval($notifiable->id),36);
-        $userName = $notifiable->first_name;
 
         return Mail::to($emailAddress)
-            ->send(new Confirmation($userName, $user_id, $regId, 'Polk Health - Appointment Confirmation'));
+            ->send(new Confirmation($notifiable, 'Polk Health - Appointment Confirmation'));
     }
 
     public function toArray($notifiable)
@@ -59,10 +56,8 @@ class Confirm extends Notification implements ShouldQueue
         ];
     }
 
-
     public function toTwilio($notifiable)
     {
-
         $sid    = env('TWILIO_ACCOUNT_SID');
         $token  = env('TWILIO_AUTH_TOKEN');
         $twilio = new Client($sid, $token);

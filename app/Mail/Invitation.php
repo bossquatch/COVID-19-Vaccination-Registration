@@ -33,12 +33,6 @@ class Invitation extends Mailable
                 'suffixDisplay' => $this->registration->suffix ? $this->registration->suffix->display_name : '',
                 'firstName' => $this->registration->first_name,
                 'lastName' => $this->registration->last_name,
-                'locationName' => $this->registration->invitations->last()->slot->event->location->name,
-                'locationAddress' => $this->registration->invitations->last()->slot->event->location->address,
-                'locationCity' => $this->registration->invitations->last()->slot->event->location->city,
-                'locationState' => $this->registration->invitations->last()->slot->event->location->state,
-                'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
-                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
                 'invitationExpires' => $this->registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H'))->format('M j, Y g:i A')
             ])
             ->withSwiftMessage(function($message) {

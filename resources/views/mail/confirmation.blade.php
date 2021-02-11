@@ -1,29 +1,18 @@
 @component('mail::message')
-# {{ $userName }}, you are confirmed for your vaccination appointment
+# {{ $suffix ? $firstName.' '.$lastName.', '.$suffixDisplay : $firstName.' '.$lastName }}, you are confirmed for your vaccination appointment!
 
 Here are your appointment details:
 
-@component('mail::panel')
-**Location:** Legoland, 1 Legoland Way, Winter Haven, FL 33884
-
-**Date/Time:** February 12, 2021, 8:30 AM
+@component('mail::code')
+<span class="token string">{{ $locationName }}</span><br>
+<span class="token punctuation">{{ $apptDate }}</span><br>
+{{ $locationAddress }}<br>
+{{ $locationCity.', '.$locationState.' '.$locationZip }}
 @endcomponent
 
-<div class="text-center">
-**Show this QR code at the check in**
-</div>
+**Show this QR code at check-in:**
 
-<div class="text-center">
-    <img src="{{ env('CDN_URL') .'/images/qr-code-doug.png' }}">
-</div>
-
-**If you need to check your status**<br>
-
-@component('mail::button', ['url' => 'https://dev.register.polk.health/home','color' => 'power'])
-    Login to your account
-@endcomponent
-
-Or contact our call center at <a href="tel:1-863-298-7500">(863) 298-7500</a><br>
+<img src="{!! $message->embedData(QrCode::format('png')->generate({{ $qrCode }}), 'QrCode.png', 'image/png') !!}">
 
 Remember, proof of Florida residency is ***required*** at your appointment.
 
