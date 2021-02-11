@@ -129,6 +129,11 @@ class Registration extends Model
 		return $this->hasOne(Address::class, 'id', 'address_id');
 	}
 
+	public function emailHistory()
+    {
+        return $this->hasMany(EmailHistory::class, 'registration_id', 'id');
+    }
+
     /**
     * Accessor for Age.
     */

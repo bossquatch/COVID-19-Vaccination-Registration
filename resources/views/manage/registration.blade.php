@@ -216,6 +216,27 @@
                                 </div>
                             </div>
                         @endcan
+                        @can('read_registration')
+                            <hr>
+                            <div class="row align-items-center justify-content-center">
+                                <h3>Email History</h3>
+                            </div>
+                            <div id="js-email-history-section">
+                                @php
+                                    $no_email_history = false;
+                                @endphp
+                                @forelse ($registration->emailHistory as $email_history)
+                                    @include('manage.partials.email_history', ['email_history' => $email_history])
+                                @empty
+                                    @php
+                                        $no_email_history = true;
+                                    @endphp
+                                @endforelse
+                                <div id="js-no-email-history-alert" class="alert alert-info text-center" @if (!$no_email_history) style="display: none" @endif>
+                                    This registrant has no email history.
+                                </div>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>
