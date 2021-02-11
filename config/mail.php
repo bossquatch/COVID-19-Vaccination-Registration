@@ -106,4 +106,6 @@ return [
         ],
     ],
 
+    'logo' => env('MAIL_LOGO', null),
+
 ];

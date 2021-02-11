@@ -2,7 +2,11 @@
 {{-- Header --}}
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
-<img scr="{{ config('app.cdn_url') }}/images/florida-doh-polk-logo-email.png" class="logo" alt="Florida Department of Health Polk County Logo">
+@if(config('mail.logo'))
+<img scr="{{ url(config('mail.logo')) }}" class="logo" alt="Florida Department of Health Polk County Logo">
+@else
+{{ config('app.name') }}
+@endif
 @endcomponent
 @endslot
 
