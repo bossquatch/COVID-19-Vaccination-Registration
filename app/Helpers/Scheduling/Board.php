@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Slot;
 use App\Models\Registration;
+use App\Models\Address;
 use App\Models\Invitation;
 use Carbon\Carbon;
 
@@ -20,6 +21,11 @@ class Board
     // fulfill task
     public static function run()
     {
+        $test = self::evaluate(100, Carbon::today(), 0)->get();
+        dump($test);
+        dump($test->pluck('id'));
+        dd(Registration::whereNotIn('id', $test->pluck('id'))->get());
+
         // get slots
         $slots = self::stack();
         
@@ -68,6 +74,61 @@ class Board
     protected static function evaluate($capacity, $date, $slot)
     {
         $age_limit = Carbon::today()->subYears(65);
+
+        // new and "improved" process with address grouping
+        $address_ids = Registration::select('address_id')
+            ->withCount('vaccines as received_vaccines_count')
+            ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
+            ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
+                $query->where('name', '=', 'In Wait List');
+            })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
+                $query->whereRaw('DATEDIFF("' . $date . '", date_given) < 26')
+                    ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
+            })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
+                $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
+            })->where([    
+                ['birth_date', '<=', $age_limit],                                       // only grab age group
+            ])->orderBy('received_vaccines_count', 'desc')                              // prioritize those who need a second vaccine
+            ->orderBy('submitted_at', 'asc')                                            // FIFO the registrants
+            ->limit($capacity)->pluck('address_id');
+
+        $addresses = Address::select('id')
+            ->whereIn(DB::raw("CONCAT(COALESCE(`street_number`, ''),COALESCE(`street_name`, ''),COALESCE(`line_2`, ''))"), function ($query) use ($address_ids) {
+                $query->selectRaw("CONCAT(COALESCE(`addr`.`street_number`, ''),COALESCE(`addr`.`street_name`, ''),COALESCE(`addr`.`line_2`, '')) as `concat_address`")->from('addresses as addr')->whereIn('id', $address_ids);
+            })->orderBy(DB::raw("CONCAT(COALESCE(`street_number`, ''),COALESCE(`street_name`, ''),COALESCE(`line_2`, ''))"))
+            ->limit($capacity)
+            ->pluck('id');
+
+        return Registration::select('id', 'status_id', 'submitted_at')
+            ->addSelect(['addr' => Address::selectRaw("CONCAT(COALESCE(`street_number`, ''),COALESCE(`street_name`, ''),COALESCE(`line_2`, '')) as `concat_address`")
+                ->whereColumn('addresses.id', 'registrations.address_id')
+                ->limit(1)])
+            ->withCount('vaccines as received_vaccines_count')
+            ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
+            ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
+                $query->where('name', '=', 'In Wait List');
+            })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
+                $query->whereRaw('DATEDIFF("' . $date . '", date_given) < 26')
+                    ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
+            })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
+                $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
+            })->where([    
+                ['birth_date', '<=', $age_limit],                                       // only grab age group
+            ])->where(function ($query) use ($addresses) {
+                $query->whereIn('address_id', $addresses)
+                    ->orWhereNull('address_id');
+            })->orderBy('received_vaccines_count', 'desc')                              // prioritize those who need a second vaccine
+            ->orderBy(
+                Address::selectRaw("CONCAT(COALESCE(`street_number`, ''),COALESCE(`street_name`, ''),COALESCE(`line_2`, '')) as `concat_address`")
+                    ->whereColumn('addresses.id', 'registrations.address_id')
+                    ->limit(1),
+                'asc'
+            )->orderBy('submitted_at', 'asc')                                            // FIFO the registrants
+            ->limit($capacity);
+
+
+        // previous query (no address grouping)
+        /*
         return Registration::select('id', 'status_id')
             ->withCount('vaccines as received_vaccines_count')
             ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
@@ -83,5 +144,6 @@ class Board
             ])->orderBy('received_vaccines_count', 'desc')                              // prioritize those who need a second vaccine
             ->orderBy('submitted_at', 'asc')                                            // FIFO the registrants
             ->limit($capacity);
+            */
     }
 }
