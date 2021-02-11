@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'organization' => env('APP_ORG', 'Polk County'),
+
     'asset_url' => env('ASSET_URL', null),
 
     'default_password' => env('DEFAULT_PASSWORD', ''),
