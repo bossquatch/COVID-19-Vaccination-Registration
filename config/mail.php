@@ -108,4 +108,6 @@ return [
 
     'logo' => env('MAIL_LOGO', null),
 
+    'logo_alt' => env('MAIL_LOGO_ALT', null),
+
 ];

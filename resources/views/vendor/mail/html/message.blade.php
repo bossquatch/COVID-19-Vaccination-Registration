@@ -3,7 +3,7 @@
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
 @if(config('mail.logo'))
-<img scr="{{ url(config('mail.logo')) }}" class="logo" alt="Florida Department of Health Polk County Logo">
+<img src="{{ config('mail.logo') }}" class="logo" alt="{{ config('mail.logo_alt') }}">
 @else
 {{ config('app.name') }}
 @endif
