@@ -12,7 +12,7 @@ Here are your appointment details:
 
 **Show this QR code at check-in:**
 
-<img src="{{ $qrCode }}">
+<img src="{{!! SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->merge('https://cdn.polk.design/images/polk-logo-email.png', 0.3, true)->generate('test') !!}}">
 
 Remember, proof of Florida residency is ***required*** at your appointment.
 
