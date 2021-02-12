@@ -43,11 +43,10 @@ class Postpone extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-
         $emailAddress = $notifiable->user->email;
-        return Mail::to($emailAddress)
-            ->send(new Postponement('Polk Health - Appointment Postponed'));
 
+        return Mail::to($emailAddress)
+            ->send(new Postponement($notifiable, 'Polk Health - Appointment Postponed'));
     }
 
     public function toArray($notifiable)
@@ -57,10 +56,8 @@ class Postpone extends Notification implements ShouldQueue
         ];
     }
 
-
     public function toTwilio($notifiable)
     {
-
         $sid    = env('TWILIO_ACCOUNT_SID');
         $token  = env('TWILIO_AUTH_TOKEN');
         $twilio = new Client($sid, $token);
