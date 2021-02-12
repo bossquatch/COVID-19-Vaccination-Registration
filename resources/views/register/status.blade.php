@@ -73,7 +73,7 @@
                                         </div>
                                         <h2 class="h4 mb-1">Pending Invite!</h2>
                                         <p class="text-gray-dark mb-2">
-                                            Appointment Time: {{ \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->slot->ending_at)->format('h:iA') }}
+                                            Appointment Time: {{ \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse(Auth::user()->registration->pending_invitation->slot->starting_at)->format('h:iA') }}
                                         </p>
                                         <p class="text-gray-dark mb-2">
                                             Location: {{ Auth::user()->registration->pending_invitation->event->location->address . ' ' . Auth::user()->registration->pending_invitation->event->location->city . ', ' . Auth::user()->registration->pending_invitation->event->location->state . ' ' . Auth::user()->registration->pending_invitation->event->location->zip }}

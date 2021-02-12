@@ -13,7 +13,7 @@
                             <div class="col-12 text-center">
                                 <h2 class="h4 mb-1">Pending Invite!</h2>
                                 <p class="text-gray-dark mb-2">
-                                    Appointment Time:<br>{{ \Carbon\Carbon::parse($registration->pending_invitation->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse($registration->pending_invitation->slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse($registration->pending_invitation->slot->ending_at)->format('h:iA') }}
+                                    Appointment Time:<br>{{ \Carbon\Carbon::parse($registration->pending_invitation->event->date_held)->format('M d, Y') . ' ' . \Carbon\Carbon::parse($registration->pending_invitation->slot->starting_at)->format('h:iA') }}
                                 </p>
                                 <p class="text-gray-dark mb-2">
                                     Location:<br>{{ $registration->pending_invitation->event->location->address . ' ' . $registration->pending_invitation->event->location->city . ', ' . $registration->pending_invitation->event->location->state . ' ' . $registration->pending_invitation->event->location->zip }}
