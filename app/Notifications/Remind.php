@@ -43,11 +43,10 @@ class Remind extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-
         $emailAddress = $notifiable->user->email;
-        return Mail::to($emailAddress)
-            ->send(new Reminder('Polk Health - Vaccination Reminder'));
 
+        return Mail::to($emailAddress)
+            ->send(new Confirmation($notifiable, 'Polk Health - Appointment Reminder'));
     }
 
     public function toArray($notifiable)
@@ -57,10 +56,8 @@ class Remind extends Notification implements ShouldQueue
         ];
     }
 
-
     public function toTwilio($notifiable)
     {
-
         $sid    = env('TWILIO_ACCOUNT_SID');
         $token  = env('TWILIO_AUTH_TOKEN');
         $twilio = new Client($sid, $token);
