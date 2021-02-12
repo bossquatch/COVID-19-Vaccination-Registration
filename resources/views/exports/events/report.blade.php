@@ -26,6 +26,7 @@
         <th>Risk Factors</th>
         <th>Given By Name</th>
         <th>Given by Credentials</th>
+        <th>Registration ID</th>
     </tr>
     </thead>
     <tbody>
@@ -59,6 +60,7 @@
             <td>{{ $vaccine->risk_factors()->count() > 0 ? implode(';', $vaccine->risk_factors->pluck('name')->all()) : 'UNKNOWN' }}</td>                                                      {{--<th>Risk Factors</th>--}}
             <td>{{ ($vaccine->giver_lname && $vaccine->giver_fname) ? $vaccine->giver_lname . ', ' . $vaccine->giver_fname : $vaccine->giver_lname . $vaccine->giver_fname }}</td>             {{--<th>Given By Name</th>--}}
             <td>{{ $vaccine->giver_creds ?? '' }}</td>                                                                                                                                         {{--<th>Given by Credentials</th>--}}
+            <td>{{ $registration->id }}</td>                                                                                                                                                   {{--<th>Registration ID</th>--}}
         </tr>
     @endforeach
     </tbody>
