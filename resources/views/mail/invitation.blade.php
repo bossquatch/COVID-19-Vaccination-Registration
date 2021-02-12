@@ -5,15 +5,15 @@ Please log into the COVID-19 vaccination registration website to accept your app
 
 This offer will expire:
 
-<div style="padding-bottom: 8px;">
 @component('mail::code')
-<span class="token warning">{{ $invitationExpires }}</span>
+<span class="token yellow">{{ $invitationExpires }}</span>
 @endcomponent
-</div>
 
+<p style="margin-bottom: 0;">
 @component('mail::button', ['url' => $actionUrl, 'color' => 'primary'])
 {{ $actionText }}
 @endcomponent
+</p>
 
 Remember, proof of Florida residency is ***required*** at your appointment.
 

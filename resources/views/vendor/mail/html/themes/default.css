@@ -306,28 +306,27 @@ img {
     margin: 0;
 }
 
-.token.comment {
+.token.grey {
     color: #9ca3af;
 }
 
-.token.keyword,
-.token.operator {
+.token.blue {
     color: #22d3ee;
 }
 
-.token.function {
+.token.pink {
     color: #e879f9;
 }
 
-.token.punctuation {
+.token.light-blue {
     color: #bae6fd;
 }
 
-.token.string {
+.token.green {
     color: #bef264;
 }
 
-.token.warning {
+.token.yellow {
     color: #fde047;
 }
 

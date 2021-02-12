@@ -4,16 +4,16 @@
 Here are your appointment details:
 
 @component('mail::code')
-<span class="token string">{{ $locationName }}</span><br>
-<span class="token punctuation">{{ $apptDate }}</span><br>
+<span class="token green">{{ $locationName }}</span><br>
+<span class="token light-blue">{{ $apptDate }}</span><br>
 {{ $locationAddress }}<br>
 {{ $locationCity.', '.$locationState.' '.$locationZip }}
 @endcomponent
 
 <div class="text-center">
-Your registration code is:<br>
+<p>Your registration code is:</p>
 {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(config('app.url').'/'.$userId.'/'.$regId.'/'.$code.'?checkin=auto'); !!}
-**<span class="text-center">{{ $code }}</span>**
+<p><strong>{{ $code }}</strong></p>
 </div>
 
 For quick check-in, log into the COVID-19 vaccination registration website and show your QR Code.
