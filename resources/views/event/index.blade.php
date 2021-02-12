@@ -86,13 +86,13 @@
                                 <div class="text-right">
                                     @can('update_invite')
                                         @if ($event->has_pending_callbacks)
-                                            <a class="text-warning" href="/events/{{ $event->id }}/pending" title="Registrations waiting for callback!"><span class="fad fa-bell-exclamation"></span><span class="sr-only">Pending Callbacks</span></a>   
+                                            <a class="text-warning" href="/events/{{ $event->id }}/pending" title="Registrations waiting for callback!"><span class="fad fa-bell-exclamation fa-lg"></span><span class="sr-only">Pending Callbacks</span></a>   
                                         @endif
                                     @endcan
 
                                     @can('update_event')
-                                        <a class="text-info" href="/events/{{ $event->id }}" title="Event Details"><span class="fad fa-eye"></span><span class="sr-only">Event Details</span></a>
-                                        <a class="text-success" href="/events/{{ $event->id }}/report" title="Event Report" target="_blank" rel="noopener noreferrer"><span class="fad fa-file-download"></span><span class="sr-only">Event Report</span></a>
+                                        <a class="text-info" href="/events/{{ $event->id }}" title="Event Details"><span class="fad fa-eye fa-lg"></span><span class="sr-only">Event Details</span></a>
+                                        <a class="text-success" href="/events/{{ $event->id }}/report" title="Event Report" target="_blank" rel="noopener noreferrer"><span class="fad fa-file-download fa-lg"></span><span class="sr-only">Event Report</span></a>
                                     @endcan
                                 </div>
                             </div>
