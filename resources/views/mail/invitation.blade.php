@@ -5,11 +5,11 @@ Please log into the COVID-19 vaccination registration website to accept your app
 
 This offer will expire:
 
+<div style="padding-bottom: 8px;">
 @component('mail::code')
 <span class="token warning">{{ $invitationExpires }}</span>
 @endcomponent
-
-<br>
+</div>
 
 @component('mail::button', ['url' => $actionUrl, 'color' => 'primary'])
 {{ $actionText }}
