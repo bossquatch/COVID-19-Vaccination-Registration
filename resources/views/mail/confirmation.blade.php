@@ -11,8 +11,10 @@ Here are your appointment details:
 @endcomponent
 
 Your registration code is:
+<div class="text-center">
 {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(config('app.url').'/'.$userId.'/'.$regId.'/'.$code.'?checkin=auto'); !!}
 **{{ $code }}**
+</div>
 
 For quick check-in, log into the COVID-19 vaccination registration website and show your QR Code.
 
