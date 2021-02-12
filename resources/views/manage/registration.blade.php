@@ -76,9 +76,19 @@
                                     <span class="{{ $registration->status->fa_icon }} mr-1"></span> {{ $registration->status->name }}
                                 </div>
 
+                                @can('keep_inventory')
+                                <div class="input-group col-12 col-md-6 mx-auto mb-2">
+                                    <div class="input-group-prepend">
+                                        <label for="submitted-at" class="input-group-text" id="submitted-at-desc">Submitted At:</label>
+                                    </div>
+                                    <input type="date" class="form-control" id="submitted-at" data-id="{{ $registration->id }}" aria-describedby="submitted-at-desc" value="{{ Carbon\Carbon::parse($registration->submitted_at)->format('Y-m-d') }}">
+                                </div>                                
+                                @else
                                 <p class="text-gray-dark mb-2">
                                     Submitted: {{ Carbon\Carbon::parse($registration->submitted_at)->format('m-d-Y h:i:s A') }}
-                                </p>
+                                </p>    
+                                @endcan
+                                
                             </div>
                             <div class="col-12 text-center mb-0">
                                 <div class="row align-items-center justify-content-center">
@@ -307,6 +317,46 @@
             }
         }
     </script>
+@endcan
+
+@can('keep_inventory')
+<script>
+    document.getElementById("submitted-at").addEventListener('focusout', function() {
+        let field = this;
+        let newVal = field.value;
+        let regis = field.dataset.id;
+        if (newVal != '') {
+            submitDateBorder(field, 'danger');
+            $.post('/manage/update-submission-date', {
+                    "_token": $('meta[name=csrf-token]').attr('content'),
+                    "regis_id": regis,
+                    "new_date": newVal
+                }, function(data) {
+                    if (data.status == 'success') {
+                        submitDateBorder(field, 'success');
+                    }
+            }, 'json');
+        } else {
+            submitDateBorder(field, 'danger');
+        }
+    });
+
+    function submitDateBorder(ele, borderType) {
+        let oldType = 'danger';
+        if (borderType == oldType) {
+            oldType = 'success';
+        }
+        if (!ele.classList.contains('border')) {
+            ele.classList.add('border');
+        }
+        if (ele.classList.contains('border-' + oldType)) {
+            ele.classList.remove('border-' + oldType);
+        }
+        if (!ele.classList.contains('border-' + borderType)) {
+            ele.classList.add('border-' + borderType);
+        }
+    }
+</script>
 @endcan
 
 <script>

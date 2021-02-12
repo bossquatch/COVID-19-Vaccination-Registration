@@ -79,6 +79,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/{id}/invitation/turndown', [App\Http\Controllers\InvitationController::class, 'turnDown'])->middleware('can:create_vaccine');
     Route::put('/manage/complete/{regis_id}', [App\Http\Controllers\ManageController::class, 'complete'])->middleware('can:keep_inventory');
     Route::put('/manage/waitlist/{regis_id}', [App\Http\Controllers\ManageController::class, 'waitlist'])->middleware('can:keep_inventory');
+    Route::post('/manage/update-submission-date', [App\Http\Controllers\ManageController::class, 'updateSubmissionDate'])->middleware('can:keep_inventory');
 
     Route::get('/locations', [App\Http\Controllers\LocationController::class, 'index']);
     Route::post('/locations', [App\Http\Controllers\LocationController::class, 'store'])->middleware('can:create_location');

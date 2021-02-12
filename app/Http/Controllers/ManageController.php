@@ -539,6 +539,29 @@ class ManageController extends Controller
         return redirect('/manage');
     }
 
+    public function updateSubmissionDate()
+    {
+        // validate registration
+        $inputs = request()->all();
+
+        if (empty($inputs['regis_id']) || empty($inputs['new_date'])) {
+            abort(404);
+        }
+        $regis = \App\Models\Registration::findOrFail($inputs['regis_id']);
+
+        try {
+            $regis->update([
+                'submitted_at' => Carbon::parse($inputs['new_date']) ?? $regis->submitted_at,
+            ]);
+
+            $this->logChanges($regis, 'updated submission date', true);
+
+            return json_encode(['status' => 'success']);
+        } catch(\Exception $e) {
+            return json_encode(['status' => 'failure', 'description' => 'issue when adding date into registration']);
+        }
+    }
+
     private function validationRules()
     {
         $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
