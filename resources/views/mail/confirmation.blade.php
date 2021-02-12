@@ -10,11 +10,11 @@ Here are your appointment details:
 {{ $locationCity.', '.$locationState.' '.$locationZip }}
 @endcomponent
 
-<span class="text-center">Your registration code is:</span>
+<p class="text-center">Your registration code is:</p>
 <div class="text-center">
 {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate(config('app.url').'/'.$userId.'/'.$regId.'/'.$code.'?checkin=auto'); !!}
 </div>
-<span class="h2 text-center">{{ $code }}</span>
+<p class="h2 text-center">{{ $code }}</p>
 
 For quick check-in, log into the COVID-19 vaccination registration website and show your QR Code.
 
