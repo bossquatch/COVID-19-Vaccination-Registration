@@ -327,6 +327,10 @@ img {
     color: #bef264;
 }
 
+.token.warning {
+    color: #fde047;
+}
+
 /* Utilities */
 
 .break-all {
