@@ -46,7 +46,7 @@ class Remind extends Notification implements ShouldQueue
         $emailAddress = $notifiable->user->email;
 
         return Mail::to($emailAddress)
-            ->send(new Confirmation($notifiable, 'Polk Health - Appointment Reminder'));
+            ->send(new Reminder($notifiable, 'Polk Health - Appointment Reminder'));
     }
 
     public function toArray($notifiable)
