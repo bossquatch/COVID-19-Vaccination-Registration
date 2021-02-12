@@ -17,7 +17,7 @@ use App\Notifications\Invite;
 
 class Judge
 {
-    protected static $limit = 100;
+    protected static $limit = 300;
 
     // fulfill task
     public static function run()

@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
-        $schedule->command(RunSchedulingCommands::class)->everyMinute();
+        $schedule->command(RunSchedulingCommands::class)->everyFiveMinutes();
         // $schedule->command('inspire')->hourly();
     }
 
