@@ -158,7 +158,8 @@ class InvitationController extends Controller
         $invite = $registration->active_invite;
         if(!$invite) { abort(404); }
 
-        $this->updateInviteStatus($invite, 7);
+        $this->runStatusUpdates($registration, 4, $invite, 7);
+        $this->logChanges($registration, 'registrant checked in', true);
 
         Session::flash('success', "<p>Registrant was checked in.</p>");
         return redirect()->back();
