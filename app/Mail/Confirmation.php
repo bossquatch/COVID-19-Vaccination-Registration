@@ -26,6 +26,8 @@ class Confirmation extends Mailable
         return $this->markdown('mail.confirmation')
             ->subject($this->topic)
             ->with([
+                'actionText' => 'Login to my account',
+                'actionUrl' => config('app.url').'/home',
                 'suffix' => $this->registration->suffix,
                 'suffixDisplay' => $this->registration->suffix ? $this->registration->suffix->display_name : '',
                 'firstName' => $this->registration->first_name,
@@ -35,7 +37,8 @@ class Confirmation extends Mailable
                 'locationCity' => $this->registration->invitations->last()->slot->event->location->city,
                 'locationState' => $this->registration->invitations->last()->slot->event->location->state,
                 'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
-                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A')
+                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
+                'code' => $this->registration->code
             ])
             ->withSwiftMessage(function($message) {
                 $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');

@@ -10,8 +10,14 @@ Here are your appointment details:
 {{ $locationCity.', '.$locationState.' '.$locationZip }}
 @endcomponent
 
-**Show this QR code at check-in:**
-{!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate("https://www.youtube.com/embed/TKQyPfN6s88"); !!}
+Your registration code is:
+**{{ $code }}**
+
+For quick check-in, log into the COVID-19 vaccination registration website and show your QR Code.
+
+@component('mail::button', ['url' => $actionUrl, 'color' => 'primary'])
+{{ $actionText }}
+@endcomponent
 
 Remember, proof of Florida residency is ***required*** at your appointment.
 
