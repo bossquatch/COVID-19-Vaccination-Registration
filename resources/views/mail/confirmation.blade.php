@@ -11,7 +11,7 @@ Here are your appointment details:
 @endcomponent
 
 **Show this QR code at check-in:**
-<img src="data:image/png;base64, {!! base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(100)->generate('QrCode as PNG image!')) !!}">
+{!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(150)->generate("https://www.youtube.com/embed/TKQyPfN6s88"); !!}
 
 Remember, proof of Florida residency is ***required*** at your appointment.
 
