@@ -19,7 +19,7 @@
 					<p class="sub-title h4 mb-5">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
 					<div class="alert alert-danger mt-6 mb-6" role="alert">
 						<h4 class="alert-heading">Site Maintenance</h4>
-						<p>Please excuse the disruption. We are working hard to improve <span class="text-decoration-underline fw-bold">your</span> portal.</p>
+						<p>Please excuse the disruption. We are working hard to improve <i class="text-decoration-underline fw-bold">your</i> portal.</p>
 						<hr>
 						<p class="mb-0">Estimated completion time is 9:00PM February 14, 2021</p>
 					</div>
