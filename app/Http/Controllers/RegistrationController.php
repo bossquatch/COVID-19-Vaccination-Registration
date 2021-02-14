@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -108,6 +109,8 @@ class RegistrationController extends Controller
         $registration->conditions()->sync($conditions);
 
         $this->logChanges($registration, 'submitted', true);
+
+        $registration->notify(new Register());
 
         Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a>.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/home');
