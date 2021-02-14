@@ -14,7 +14,7 @@ class Registration extends Mailable
     protected $topic;
     protected $current_registration;
 
-    public function __construct(\App\Models\Registration $current_registration, $topic)
+    public function __construct($current_registration, $topic)
     {
         $this->topic = $topic;
         $this->current_registration = $current_registration;
