@@ -41,8 +41,8 @@ class Testing extends Mailable
         return $this->markdown('mail.test')
             ->subject($this->topic)
             ->withSwiftMessage(function($message) {
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. $this->reg_id .'}');
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. $this->user_id .'}');
+                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. intval(strval($this->reg_id),36) .'}');
+                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. intval(strval($this->user_id),36) .'}');
                 $message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
             });
     }

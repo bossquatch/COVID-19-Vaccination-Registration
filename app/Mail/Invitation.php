@@ -27,17 +27,17 @@ class Invitation extends Mailable
         return $this->markdown('mail.invitation')
             ->subject($this->topic)
             ->with([
-                'actionText' => 'Login to my account',
-                'actionUrl' => config('app.url').'/home',
-                'suffix' => $this->registration->suffix,
-                'suffixDisplay' => $this->registration->suffix ? $this->registration->suffix->display_name : '',
-                'firstName' => $this->registration->first_name,
-                'lastName' => $this->registration->last_name,
+                'actionText' 		=> 'Login to my account',
+                'actionUrl' 		=> config('app.url').'/home',
+                'suffix' 			=> $this->registration->suffix,
+                'suffixDisplay' 	=> $this->registration->suffix ? $this->registration->suffix->display_name : '',
+                'firstName' 		=> $this->registration->first_name,
+                'lastName' 			=> $this->registration->last_name,
                 'invitationExpires' => $this->registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H'))->format('M j, Y g:i A')
             ])
             ->withSwiftMessage(function($message) {
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '.$this->registration->user_id.'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. intval(strval($this->registration->id),36) .'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. intval(strval($this->registration->user_id),36) .'}');
                 $message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
             });
     }

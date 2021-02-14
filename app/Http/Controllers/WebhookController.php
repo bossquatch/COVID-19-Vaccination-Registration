@@ -58,7 +58,7 @@ class WebhookController extends Controller
         $currentEmail->tags = json_encode(Arr::flatten($data['event-data']['tags']));
         // Remember to convert these values back to their actual values. I did this to obscure the
         // actual values since they are available in the email headers.  Earlier, we converted these
-        // values to base 32.
+        // values to base 36.
         $registration_id = Arr::get($data, 'event-data.user-variables._RID_', 0);
         $currentEmail->registration_id = intval(base_convert($registration_id,10,36));
         $user_id = Arr::get($data, 'event-data.user-variables._UID_', 0);

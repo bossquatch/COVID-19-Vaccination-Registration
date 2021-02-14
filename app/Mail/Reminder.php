@@ -43,8 +43,8 @@ class Reminder extends Mailable
                 'regId' => $this->registration->id
             ])
             ->withSwiftMessage(function($message) {
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
-                $message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '.$this->registration->user_id.'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. intval(strval($this->registration->id),36) .'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. intval(strval($this->registration->user_id),36) .'}');
                 $message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
             });
     }
