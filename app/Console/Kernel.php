@@ -29,7 +29,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('horizon:snapshot')->everyFiveMinutes();
+        $schedule->command('horizon:snapshot')
+			->everyFiveMinutes()
+			->onOneServer()
+			->withoutOverlapping();
         $schedule->command(RunSchedulingCommands::class)
 			->everyFiveMinutes()
 			->onOneServer()
