@@ -29,7 +29,7 @@ class Test extends Notification implements ShouldQueue
         $regId = $notifiable->id;
 
         return Mail::to($emailAddress)
-            ->send(new Testing($user_id,$regId,'TEST123'));
+            ->send(new Testing($notifiable, $user_id, $regId, 'TEST123'));
     }
 
     public function toArray($notifiable)

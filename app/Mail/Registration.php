@@ -28,7 +28,7 @@ class Registration extends Mailable
 			->withSwiftMessage(function($message) {
 				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. intval(strval($this->current_registration->id),36) .'}');
 				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. intval(strval($this->current_registration->user_id),36) .'}');
-				$message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'Register');
 			});
     }
 }
