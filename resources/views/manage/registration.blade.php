@@ -82,13 +82,13 @@
                                         <label for="submitted-at" class="input-group-text" id="submitted-at-desc">Submitted At:</label>
                                     </div>
                                     <input type="date" class="form-control" id="submitted-at" data-id="{{ $registration->id }}" aria-describedby="submitted-at-desc" value="{{ Carbon\Carbon::parse($registration->submitted_at)->format('Y-m-d') }}">
-                                </div>                                
+                                </div>
                                 @else
                                 <p class="text-gray-dark mb-2">
                                     Submitted: {{ Carbon\Carbon::parse($registration->submitted_at)->format('m-d-Y h:i:s A') }}
-                                </p>    
+                                </p>
                                 @endcan
-                                
+
                             </div>
                             <div class="col-12 text-center mb-0">
                                 <div class="row align-items-center justify-content-center">
@@ -222,7 +222,7 @@
                                     @endphp
                                 @endforelse
                                 <div id="js-no-vaccine-alert" class="alert alert-info text-center" @if (!$no_vacs) style="display: none" @endif>
-                                    This registrant has not received a vaccine.
+                                    {{ ucwords(strtolower($registration->first_name)) }} has not received a vaccine.
                                 </div>
                             </div>
                         @endcan
@@ -232,19 +232,31 @@
                                 <h3>Email History</h3>
                             </div>
                             <div id="js-email-history-section">
-                                @php
-                                    $no_email_history = false;
-                                @endphp
-                                @forelse ($registration->emailHistory as $email_history)
-                                    @include('manage.partials.email_history', ['email_history' => $email_history])
-                                @empty
-                                    @php
-                                        $no_email_history = true;
-                                    @endphp
-                                @endforelse
-                                <div id="js-no-email-history-alert" class="alert alert-info text-center" @if (!$no_email_history) style="display: none" @endif>
-                                    This registrant has no email history.
-                                </div>
+
+								<table class="table table-sm font-size-xs table-hover">
+									<thead>
+										<tr class="">
+											<th scope="col">Date Sent</th>
+											<th scope="col">Recipient</th>
+											<th scope="col">Subject</th>
+											<th scope="col">Status</th>
+										</tr>
+									</thead>
+									<tbody>
+									@forelse ($registration->emailHistory as $email_history)
+										<tr class="{{ $email_history->event == 'delivered' ? 'alert-info' : 'alert-danger' }}">
+											<td scope="row">{{ Carbon\Carbon::createFromTimestamp($email_history->timestamp)->isoFormat('M/D/YY h:mm:ss a') }}</td>
+											<td>{{ $email_history->headers_to }}</td>
+											<td>{{ $email_history->headers_subject }}</td>
+											<td title="{{ $email_history->delivery_status_message . ' ' . $email_history->severity }}">{{ ucfirst($email_history->event) }}</td>
+										</tr>
+									@empty
+										<tr class="alert-warning mt-6 mb-6">
+											<td colspan="5" class="text-center font-size-lg alert-warning">No email history found</td>
+										</tr>
+									@endforelse
+									</tbody>
+								</table>
                             </div>
                         @endcan
                     </div>
