@@ -243,7 +243,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									@forelse ($registration->emailHistory as $email_history)
+									@forelse ($registration->user->emailHistory as $email_history)
 										<tr class="{{ $email_history->event == 'delivered' ? 'alert-info' : 'alert-danger' }}">
 											<td scope="row">{{ Carbon\Carbon::createFromTimestamp($email_history->timestamp)->isoFormat('M/D/YY h:mm:ss a') }}</td>
 											<td>{{ $email_history->headers_to }}</td>
