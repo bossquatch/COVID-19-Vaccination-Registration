@@ -69,7 +69,7 @@ return [
                 'ERROR_FOR_DIVISION_BY_ZERO',
                 //'NO_AUTO_CREATE_USER',
                 'NO_ENGINE_SUBSTITUTION'
-            ],    
+            ],
         ],
 
         'pgsql' => [
@@ -152,7 +152,7 @@ return [
         ],
 
         'geocode-cache' => [ // choose an appropriate name
-            'host' => env('REDIS_HOST', '192.168.10.10'),
+            'host' => env('REDIS_HOST', '127.0.0.1'),
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_GEOCODE_CACHE_DB', '2'), // be sure this number differs from your other redis databases
