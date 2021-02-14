@@ -248,7 +248,7 @@
 											<td scope="row">{{ Carbon\Carbon::createFromTimestamp($email_history->timestamp)->isoFormat('M/D/YY h:mm:ss a') }}</td>
 											<td>{{ $email_history->headers_to }}</td>
 											<td>{{ $email_history->headers_subject }}</td>
-											<td title="{{ $email_history->delivery_status_message . ' ' . $email_history->severity }}">{{ ucfirst($email_history->event) }}</td>
+											<td data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $email_history->delivery_status_message . ' ' . $email_history->severity }}">{{ ucfirst($email_history->event) }}</td>
 										</tr>
 									@empty
 										<tr class="alert-warning mt-6 mb-6">
