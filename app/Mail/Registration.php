@@ -12,22 +12,22 @@ class Registration extends Mailable
     use Queueable, SerializesModels;
 
     protected $topic;
-    protected $registration;
+    protected $current_registration;
 
-    public function __construct(\App\Models\Registration $registration, $topic)
+    public function __construct(\App\Models\Registration $current_registration, $topic)
     {
         $this->topic = $topic;
-        $this->registration = $registration;
+        $this->current_registration = $current_registration;
     }
 
     public function build()
     {
         return $this->markdown('mail.registration')
             ->subject($this->topic)
-            ->with('registration', $this->registration)
+            ->with('registration', $this->current_registration)
 			->withSwiftMessage(function($message) {
-				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
-				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '.$this->registration->user_id.'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->current_registration->id.'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '.$this->current_registration->user_id.'}');
 				$message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
 			});
     }
