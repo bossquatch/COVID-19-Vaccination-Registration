@@ -24,6 +24,11 @@ class Registration extends Mailable
     {
         return $this->markdown('mail.registration')
             ->subject($this->topic)
-            ->with('registration', $this->registration);
+            ->with('registration', $this->registration)
+			->withSwiftMessage(function($message) {
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '.$this->registration->id.'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '.$this->registration->user_id.'}');
+				$message->getHeaders()->addTextHeader('X-Mailgun-Tag', 'DPC-TEST');
+			});
     }
 }
