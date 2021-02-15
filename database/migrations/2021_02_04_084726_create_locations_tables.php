@@ -184,11 +184,11 @@ class CreateLocationsTables extends Migration
 
 		// add address_id (unsignedBigInteger, nullable, no default) to the registrations table=
 		Schema::table('registrations', function (Blueprint $table) {
-			$table->unsignedBigInteger('county_id')->nullable();
+			$table->unsignedBigInteger('address_id')->nullable();
 
-			$table->foreign('county_id')
+			$table->foreign('address_id')
 				->references('id')
-				->on('counties')
+				->on('addresses')
 				->onDelete('set null');
 		});
 	}
