@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Notifications\InvitationGranted;
+use App\Models\Registration;
+use App\Notifications\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -21,6 +22,14 @@ class RegistrationController extends Controller
 
     public function submitRegistration()
     {
+
+    	$user = Auth::user();
+
+    	// check for existing registration. There is an issue where 0.7% of the time a user registers twice.
+		if(Registration::where('user_id', $user->id)->count() != 0) {
+			return redirect('/home');
+		}
+
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
         $is_valid_letters = false;
@@ -53,7 +62,6 @@ class RegistrationController extends Controller
         if (isset($valid['condition'])) {
             $conditions = array_keys($valid['condition']);
         }
-        $user = Auth::user();
 
         if (!empty($user->phone)) {
             $phones = [[
@@ -75,7 +83,8 @@ class RegistrationController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
-            'county_id'=> $valid['county'],
+//  removed and replaced by locations
+//            'county_id'=> $valid['county'],
 
             // Obtained by user account:
             'first_name'=> $user->first_name,
@@ -88,14 +97,16 @@ class RegistrationController extends Controller
             'suffix_id' => $user->suffix_id,
 
             // New Info
-            'address1'=> $valid['address1'],
-            'address2'=> $valid['address2'],
-            'city'=> $valid['city'],
-            'state'=> $valid['state'],
-            'zip'=> $valid['zip'],
+            //'address1'=> $valid['address1'],
+            //'address2'=> $valid['address2'],
+            //'city'=> $valid['city'],
+            //'state'=> $valid['state'],
+            //'zip'=> $valid['zip'],
             'prefer_close_location'=> $valid['scheculePreference'],
             'submitted_at'=> Carbon::now(),
         ]);
+
+        $registration->syncAddress($valid);
 
         // Assign phones and emails
             // add foreach loop to create all contact types
@@ -106,6 +117,8 @@ class RegistrationController extends Controller
         $registration->conditions()->sync($conditions);
 
         $this->logChanges($registration, 'submitted', true);
+
+		$registration->notify(new Register());
 
         Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a>.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/home');
@@ -174,7 +187,8 @@ class RegistrationController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
-            'county_id'=> $valid['county'],
+//            removed - this is part of the locations functionality now
+//            'county_id'=> $valid['county'],
 
             // Obtained by user account:
             'first_name' => $valid['firstName'],
@@ -186,13 +200,15 @@ class RegistrationController extends Controller
             'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
 
             // New Info
-            'address1'=> $valid['address1'],
-            'address2'=> $valid['address2'],
-            'city'=> $valid['city'],
-            'state'=> $valid['state'],
-            'zip'=> $valid['zip'],
+            //'address1'=> $valid['address1'],
+            //'address2'=> $valid['address2'],
+            //'city'=> $valid['city'],
+            //'state'=> $valid['state'],
+            //'zip'=> $valid['zip'],
             'prefer_close_location'=> $valid['scheculePreference'],
         ]);
+
+        $registration->syncAddress($valid);
 
         $registration->conditions()->sync($conditions);
 
@@ -250,16 +266,25 @@ class RegistrationController extends Controller
         $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
         $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
         $valid_counties = implode(",",\App\Models\County::pluck('id')->toArray());
+        $valid_states = implode(",",\App\Models\State::pluck('id')->toArray());
 
         $rules = [
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
             'occupation' => 'required|in:'.$valid_occupations,
-            'address1' => 'required|max:60',
-            'address2' => 'nullable|max:60',
-            'city' => 'required|max:60',
-            'state' => 'required|max:2',
-            'zip' => 'required|max:11',
+            //'address1' => 'required|max:60',
+            //'address2' => 'nullable|max:60',
+            //'city' => 'required|max:60',
+            'autocomplete' => 'nullable',
+            'street_number' => 'required|max:60',
+            'street_name' => 'required|max:60',
+            'line_2' => 'nullable',
+            'locality' => 'required|max:60',
+            'postal_code' => 'required|max:60',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'state' => 'required|in:'.$valid_states,
+            //'zip' => 'required|max:11',
             'county' => 'required|in:'.$valid_counties,
             //'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',

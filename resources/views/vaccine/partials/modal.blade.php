@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <input id="registrationId" type="hidden" value="{{ $registration_id }}">
+                    <input id="registrationId" type="hidden" value="{{ $registration->id }}">
                     <div class="row mb-6">
                         {{--<div class="col-12">
                             <h2>Caller Information</h2>
@@ -94,9 +94,9 @@
                                     Expiration Date
                                 </label>
                                 <div id="expDate" class="input-group">
-                                    <input id="expDateMonth" type="number" min="1" max="12" class="form-control" placeholder="Month (MM)">
+                                    <input id="expDateMonth" type="number" min="1" max="12" class="form-control" placeholder="Month (MM)" value="{{ \Carbon\Carbon::now()->addMonth()->format('m') }}">
                                     <span class="input-group-text" style="border-radius: 0;">/</span>
-                                    <input id="expDateYear" type="number" min="2021" class="form-control" placeholder="Year (YYYY)">
+                                    <input id="expDateYear" type="number" min="2021" class="form-control" placeholder="Year (YYYY)" value="2021">
                                 </div>
 
                                 <div class="text-danger js-error-text" role="alert" style="display: none; font-size: 80%;">
@@ -128,7 +128,7 @@
                                 </label>
                                 <select id="injectionSite" class="custom-select">
                                     @foreach (\App\Models\InjectionSite::get() as $site)
-                                        <option value="{{ $site->id }}">{{ $site->abbrev }}</option>    
+                                        <option value="{{ $site->id }}" @if($site->abbrev == "LD") selected @endif>{{ $site->abbrev }}</option>    
                                     @endforeach
                                 </select>
                 
@@ -145,7 +145,7 @@
                                 </label>
                                 <select id="injectionRoute" class="custom-select">
                                     @foreach (\App\Models\InjectionRoute::get() as $route)
-                                        <option value="{{ $route->id }}">{{ $route->abbrev }}</option>    
+                                        <option value="{{ $route->id }}" @if($route->abbrev == "IM") selected @endif>{{ $route->abbrev }}</option>    
                                     @endforeach
                                 </select>
                 
@@ -263,6 +263,12 @@
 </div>
 
 <script>
+$( function () {
+    $('#lotNumber').autocomplete({
+        source: {!! $registration->has_appointment ? json_encode($registration->appointment->event->lots->pluck('number')->all()) : json_encode([]) !!}
+    });
+});
+
 function submitVacForm() {
     loading(true);
     clearErrors();

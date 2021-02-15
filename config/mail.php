@@ -101,10 +101,17 @@ return [
 
     'markdown' => [
         'theme' => 'default',
-
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    'logo' => env('MAIL_LOGO', null),
+
+    'logo_alt' => env('MAIL_LOGO_ALT', null),
+
+    'organization_logo' => env('MAIL_ORG_LOGO', null),
+
+    'organization_logo_alt' => env('MAIL_ORG_LOGO_ALT', null),
 
 ];

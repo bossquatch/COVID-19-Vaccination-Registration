@@ -15,9 +15,10 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'domain' 				=> env('MAILGUN_DOMAIN'),
+        'secret' 				=> env('MAILGUN_SECRET'),
+        'endpoint' 				=> env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+		'webhook_signing_key' 	=> env('MAIL_WEBHOOK_SIGNING_KEY'),
     ],
 
     'postmark' => [
@@ -28,6 +29,11 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    ],
+
+    'google' => [
+        'maps_key'   => env('GOOGLE_MAPS_API_KEY'),
+        'maps_locale'   => env('GOOGLE_MAPS_LOCALE'),
     ],
 
 ];

@@ -13,7 +13,7 @@ class Contact extends Model
 
     public function registration()
     {
-        return $this->belongsTo(Regisration::class, 'registration_id');
+        return $this->belongsTo(Registration::class, 'registration_id');
     }
 
     public function contact_type()

@@ -104,7 +104,6 @@
                         Google Translate
                     </span>
                 </span>
-
                     <!-- Heading -->
                     <h2>
                         Google Translate available on Chrome, iOS and Android.

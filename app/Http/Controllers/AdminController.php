@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -85,6 +86,8 @@ class AdminController extends Controller
         // Fail check, will look into what to do with public users
         if ($userRole != null && $userRole->name == 'user') {
             abort(404);
+        } else if ($userRole != null && $userRole->name == 'red_leader' && !Auth::user()->permissions()->contains('skeleton_key')) {
+            abort(420);
         }
 
         return view('admin.edit', [

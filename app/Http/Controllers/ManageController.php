@@ -53,7 +53,8 @@ class ManageController extends Controller
                     $query->where('name', '=', 'user');
                 })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
                 request()->input('offset'),
-                request()->input('sort')
+                request()->input('sort'),
+                request()->input('filter')
             )
         );
     }
@@ -63,10 +64,13 @@ class ManageController extends Controller
         return response()->json(
             $this->searchResults(
                 \App\Models\User::whereHas('registration', function (Builder $query) {
-                    $query->where(DB::raw('CONCAT_WS(" ",address1,address2,city,state,zip)'), 'LIKE', '%'.request()->input('val').'%');
+                    $query->whereHas('address', function (Builder $query) {
+                        $query->where(DB::raw('CONCAT_WS(" ",street_number,street_name,locality,(SELECT states.abbr FROM states where states.id = addresses.state_id),postal_code)'), 'LIKE', '%'.request()->input('val').'%');
+                    });
                 }), 
                 request()->input('offset'),
-                request()->input('sort')
+                request()->input('sort'),
+                request()->input('filter')
             )
         );
     }
@@ -79,7 +83,8 @@ class ManageController extends Controller
                     $query->where('id', '=', request()->input('val'));
                 }), 
                 request()->input('offset'),
-                request()->input('sort')
+                request()->input('sort'),
+                request()->input('filter')
             )
         );
     }
@@ -92,14 +97,22 @@ class ManageController extends Controller
                     $query->where('code', 'LIKE', '%'.request()->input('val').'%');
                 }),
                 request()->input('offset'),
-                request()->input('sort')
+                request()->input('sort'),
+                request()->input('filter')
             )
         );
     }
 
-    private function searchResults($query, $offset, $sort)
+    private function searchResults($query, $offset, $sort, $filter)
     {
         $limit = config('app.pagination_limit');
+        if ($filter != 'All') {
+            $query = $query->whereHas('registration', function (Builder $query) use ($filter) {
+                    $query->whereHas('status', function (Builder $query) use ($filter) {
+                            $query->where('name', '=', $filter);
+                        });
+                });
+        }
         $total_count = $query->count();
         $res = $query->select('*', DB::raw('(SELECT registrations.submitted_at FROM registrations WHERE registrations.user_id = users.id AND registrations.deleted_at IS NULL LIMIT 1) as submitted_at'))->orderBy('submitted_at', $sort ?? 'asc')->offset($offset)->limit($limit)->get();
         $pagination = '';
@@ -135,6 +148,17 @@ class ManageController extends Controller
             abort(404);
         }
 
+        if (request()->input('checkin') == 'auto') {
+            if ($regis->has_appointment) {
+                $inv = $regis->active_invite;
+                if ($inv->invite_status_id == 6) {
+                    $inv->invite_status_id = 7;
+                    $inv->save();
+                    Session::flash('success', "<p>Registrant was checked in.</p>");
+                }
+            }
+        }
+
         return view('manage.registration', ['registration' => $regis]);
     }
 
@@ -148,18 +172,24 @@ class ManageController extends Controller
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
         $is_valid_letters = false;
+        $send_verification = false;
         $randomletter = '';
 
         // create user
         // check email
-        $email_is_valid = false;
-        $user_email = $valid['firstName'].$valid['lastName'].rand().config('app.default_no_email');
+        if (!empty($valid['email']) && \App\Models\User::where('email', '=', $valid['email'])->count() < 1) {
+            $user_email = $valid['email'];
+            $send_verification = true;
+        } else {
+            $email_is_valid = false;
+            $user_email = $valid['firstName'].$valid['lastName'].rand().config('app.default_no_email');
 
-        while (!$email_is_valid) {
-            if (\App\Models\User::where('email', '=', $user_email)->count() > 0) {
-                $user_email = $valid['firstName'].$valid['firstName'].rand().config('app.default_no_email');
-            } else {
-                $email_is_valid = true;
+            while (!$email_is_valid) {
+                if (\App\Models\User::where('email', '=', $user_email)->count() > 0) {
+                    $user_email = $valid['firstName'].$valid['firstName'].rand().config('app.default_no_email');
+                } else {
+                    $email_is_valid = true;
+                }
             }
         }
 
@@ -232,7 +262,7 @@ class ManageController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
-            'county_id'=> $valid['county'],
+            //'county_id'=> $valid['county'],
 
             // Obtained by user account:
             'first_name'=> $user->first_name,
@@ -245,14 +275,16 @@ class ManageController extends Controller
             'suffix_id' => $user->suffix_id,
 
             // New Info
-            'address1'=> $valid['address1'],
-            'address2'=> $valid['address2'],
-            'city'=> $valid['city'],
-            'state'=> $valid['state'],
-            'zip'=> $valid['zip'],
+            // 'address1'=> $valid['address1'],
+            // 'address2'=> $valid['address2'],
+            // 'city'=> $valid['city'],
+            // 'state'=> $valid['state'],
+            // 'zip'=> $valid['zip'],
             'prefer_close_location'=> $valid['scheculePreference'],
             'submitted_at'=> Carbon::now(),
         ]);
+
+        $registration->syncAddress($valid);
 
         // Assign phones and emails
             // add foreach loop to create all contact types
@@ -279,6 +311,11 @@ class ManageController extends Controller
             $this->logChanges($comment, 'created');
         }
 
+        if ($send_verification) {
+            $user->forceReset();
+            $user->sendEmailVerificationNotification();
+        }
+
         Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/manage');
     }
@@ -290,7 +327,19 @@ class ManageController extends Controller
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
 
+        $send_verification = false;
+
         $user = $registration->user;
+
+        if (!empty($valid['email']) && \App\Models\User::where('email', '=', $valid['email'])->count() < 1 && strtoupper($valid['email']) != strtoupper($user->email)) {
+            $send_verification = true;
+            $user->update([
+                'email' => $valid['email'],
+                'email_verified_at' => null,
+            ]);
+
+            $this->logChanges($user, 'updated', false, true);
+        }
 
         if ($user->phone != preg_replace('/\D/', '', $valid['phone'])) {
             $user->update([
@@ -342,7 +391,7 @@ class ManageController extends Controller
             'race_id'=> $valid['race'],
             'gender_id'=> $valid['gender'],
             'occupation_id'=> $valid['occupation'],
-            'county_id'=> $valid['county'],
+            //'county_id'=> $valid['county'],
 
             // Obtained by user account:
             'first_name' => $valid['firstName'],
@@ -354,13 +403,15 @@ class ManageController extends Controller
             'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
 
             // New Info
-            'address1'=> $valid['address1'],
-            'address2'=> $valid['address2'],
-            'city'=> $valid['city'],
-            'state'=> $valid['state'],
-            'zip'=> $valid['zip'],
+            // 'address1'=> $valid['address1'],
+            // 'address2'=> $valid['address2'],
+            // 'city'=> $valid['city'],
+            // 'state'=> $valid['state'],
+            // 'zip'=> $valid['zip'],
             'prefer_close_location'=> $valid['scheculePreference'],
         ]);
+
+        $registration->syncAddress($valid);
 
         $registration->conditions()->sync($conditions);
 
@@ -400,6 +451,11 @@ class ManageController extends Controller
             ]);
 
             $this->logChanges($comment, 'created');
+        }
+
+        if ($send_verification) {
+            $user->forceReset();
+            $user->sendEmailVerificationNotification();
         }
 
         Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
@@ -483,12 +539,36 @@ class ManageController extends Controller
         return redirect('/manage');
     }
 
+    public function updateSubmissionDate()
+    {
+        // validate registration
+        $inputs = request()->all();
+
+        if (empty($inputs['regis_id']) || empty($inputs['new_date'])) {
+            abort(404);
+        }
+        $regis = \App\Models\Registration::findOrFail($inputs['regis_id']);
+
+        try {
+            $regis->update([
+                'submitted_at' => Carbon::parse($inputs['new_date']) ?? $regis->submitted_at,
+            ]);
+
+            $this->logChanges($regis, 'updated submission date', true);
+
+            return json_encode(['status' => 'success']);
+        } catch(\Exception $e) {
+            return json_encode(['status' => 'failure', 'description' => 'issue when adding date into registration']);
+        }
+    }
+
     private function validationRules()
     {
         $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
         $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
         $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
         $valid_counties = implode(",",\App\Models\County::pluck('id')->toArray());
+        $valid_states = implode(",",\App\Models\State::pluck('id')->toArray());
         $valid_suffixes = '0,'.implode(",",\App\Models\Suffix::pluck('id')->toArray());
 
         $rules = [
@@ -501,11 +581,19 @@ class ManageController extends Controller
             'race' => 'required|in:'.$valid_races,
             'gender' => 'required|in:'.$valid_genders,
             'occupation' => 'required|in:'.$valid_occupations,
-            'address1' => 'required|max:60',
-            'address2' => 'nullable|max:60',
-            'city' => 'required|max:60',
-            'state' => 'required|max:2',
-            'zip' => 'required|max:11',
+            //'address1' => 'required|max:60',
+            //'address2' => 'nullable|max:60',
+            //'city' => 'required|max:60',
+            'autocomplete' => 'nullable',
+            'street_number' => 'required|max:60',
+            'street_name' => 'required|max:60',
+            'line_2' => 'nullable',
+            'locality' => 'required|max:60',
+            'postal_code' => 'required|max:60',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'state' => 'required|in:'.$valid_states,
+            //'zip' => 'required|max:11',
             'county' => 'required|in:'.$valid_counties,
             //'vaccineAgreement' => 'accepted',
             'reactionAgreement' =>'accepted',

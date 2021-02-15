@@ -17,6 +17,11 @@ class Vaccine extends Model
         return $this->belongsTo(Regisration::class, 'registration_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function risk_factors()
     {
         return $this->belongsToMany(RiskFactor::class)->withTimestamps();

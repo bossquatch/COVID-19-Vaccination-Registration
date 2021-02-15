@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+//use App\Mail\Verification;
+use App\Notifications\Verify;
+//use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,6 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'sms_verifed_at',
         'suffix_id',
         'last_login',
+        'email_verified_at',
     ];
 
     /**
@@ -40,6 +44,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+
+    // override Laravel's built-in email verification
+	public function sendEmailVerificationNotification()
+	{
+		$this->notify(new Verify());
+	}
 
     /**
     * Accessor for Age.
@@ -89,6 +100,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function registration()
     {
         return $this->hasOne(Registration::class, 'user_id');
+    }
+
+    public function vaccines()
+    {
+        return $this->hasMany(Vaccine::class, 'user_id');
     }
 
     // roles and permissions
@@ -141,5 +157,26 @@ class User extends Authenticatable implements MustVerifyEmail
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
+    public function emailHistory()
+    {
+        return $this->hasMany(EmailHistory::class, 'user_id');
+    }
+
+    // allows $user->auto_contactable
+    public function getAutoContactableAttribute()
+    {
+        return ($this->sms_verified_at || $this->email_verified_at);
+    }
+
+    // allows $user->can_sms
+    public function getCanSmsAttribute() {
+        return ($this->sms_verified_at);
+    }
+
+    // allows $user->can_email
+    public function getCanEmailAttribute() {
+        return ($this->email_verified_at);
     }
 }

@@ -56,32 +56,31 @@ class AnalyticsController extends Controller
         ];
 
         $registered_by_county_db = DB::select('
-            WITH top10 AS
+                WITH top10 AS
                 (
-                        SELECT
-                            COUNT(*) AS `Count`,
-                            c.county AS `County`
+                    SELECT
+                        COUNT(*) AS `Count`,
+                        c.name AS `County`
+                    FROM
+                        registrations r
+                        JOIN addresses a ON r.address_id = a.id
+                        JOIN counties c ON a.county_id = c.id
+                    GROUP BY c.id
+                    ORDER BY 1 DESC LIMIT 10
+                )
 
-                        FROM
-                            registrations r
-                            JOIN counties c ON r.county_id = c.id
-                        GROUP BY
-                            c.county
-                        ORDER BY 1 DESC
-                        LIMIT 10
-                    )
-            SELECT *
-            FROM top10
+                SELECT * FROM top10
 
-            UNION ALL
+                UNION ALL
 
-            SELECT
+                SELECT
                 count(*),
                 \'Other FL Counties\'
-            FROM
+                FROM
                 registrations r
-                JOIN counties c ON r.county_id = c.id
-            WHERE c.county NOT IN (select County from top10)
+                JOIN addresses a ON r.address_id = a.id
+                JOIN counties c ON a.county_id = c.id
+                WHERE c.name NOT IN (select County from top10)
         ');
 
         foreach($registered_by_county_db as $county) {

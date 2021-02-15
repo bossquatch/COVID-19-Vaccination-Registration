@@ -15,4 +15,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class)->withTimestamps();
+    }
 }

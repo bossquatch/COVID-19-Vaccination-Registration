@@ -38,7 +38,7 @@
                     <span class="fad fa-file-chart-line mr-1"></span> View PHP Reports
                 </a>
 
-                @can('update_user')
+                @can('skeleton_key')
                 <a class="btn btn-header btn-round btn-lg" href="/admin/tags">
                     <span class="fad fa-tags mr-1"></span> View Tags
                 </a>    
@@ -95,7 +95,7 @@
                     <div class="card-body text-center pb-0">
                         <div class="text-primary mb-4 ml-auto mr-auto">
                             {{--<span class="fad fa-user-circle fa-4x"></span>--}}
-                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower($user->email)) }}?d=robohash" alt="{{ $user->first_name.' '.$user->last_name }}" width="100px">
+                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower($user->email)) }}?d=robohash&r=g" alt="{{ $user->first_name.' '.$user->last_name }}" width="100px">
                         </div>
                         <span class="text-primary mb-2 ml-auto mr-auto js-user-name">{{ $user->first_name.' '.$user->last_name }}</span>
                         <div class="row justify-content-center">
@@ -118,12 +118,15 @@
                                 </div>
                             </div>
                             <div class="col-6 text-right">
-                                <a href="/admin/{{ $user->id }}" class="text-primary ml-auto" title="Edit User" aria-title="Edit User">
-                                    <span class="fad fa-edit"></span>
-                                </a>
-                                <a href="#" class="text-muted" title="Edit User Tags" aria-title="Edit User Tags" onclick="editTags('{{ $user->id }}')">
-                                    <span class="fas fa-cog"></span>
-                                </a>
+                                @if ($user->role == 'Red Leader')
+                                    @can('skeleton_key')
+                                    <a href="/admin/{{ $user->id }}" class="ml-auto" title="Edit User" aria-title="Edit User"><span class="fad fa-starfighter fa-rotate-270" style="--fa-secondary-opacity: 1.0; --fa-primary-color: rgb(175, 174, 174); --fa-secondary-color: red;"></span></a>    
+                                    @endcan
+                                @else
+                                <a href="/admin/{{ $user->id }}" class="text-primary ml-auto" title="Edit User" aria-title="Edit User"><span class="fad fa-edit"></span></a>    
+                                @endif
+                                
+                                <a href="#" class="text-muted" title="Edit User Tags" aria-title="Edit User Tags" onclick="editTags('{{ $user->id }}')"><span class="fas fa-cog"></span></a>
                             </div>
                         </div>
                     </div>
