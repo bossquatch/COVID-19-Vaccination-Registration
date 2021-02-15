@@ -20,6 +20,13 @@ class Verify extends Notification implements ShouldQueue
 		//
 	}
 
+	public function viaQueues()
+	{
+		return [
+			'mail' => 'emails',
+		];
+	}
+
 	public function via($notifiable)
 	{
 		return ['mail'];
