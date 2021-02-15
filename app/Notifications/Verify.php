@@ -2,18 +2,16 @@
 
 namespace App\Notifications;
 
-use App\Mail\Testing;
 use App\Mail\Verification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
-class Verify extends Notification
+class Verify extends Notification implements ShouldQueue
 {
 	use Queueable;
 
@@ -39,24 +37,6 @@ class Verify extends Notification
 			->send(new Verification($notifiable, $url, $userName, $user_id,'Please verify your email address'));
 	}
 
-	/**
-	 * Get the array representation of the notification.
-	 *
-	 * @param  mixed  $notifiable
-	 * @return array
-	 */
-	public function toArray($notifiable)
-	{
-		return [
-			//
-		];
-	}
-
-	/*
-   * Build the verification URL
-   *
-   * @return URL
-   */
 	protected function verificationUrl($notifiable)
 	{
 		return URL::temporarySignedRoute(
