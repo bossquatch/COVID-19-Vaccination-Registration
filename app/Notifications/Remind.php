@@ -66,7 +66,7 @@ class Remind extends Notification implements ShouldQueue
             ->create($notifiable->phone_number,
                 array(
                     "messagingServiceSid" => env('TWILIO_SMS_SERVICE_SID'),
-                    "body" => $notifiable->first_name . ', don\'t forget your upcoming vaccination appointment on .'
+                    "body" => $notifiable->first_name . ', don\'t forget your upcoming vaccination appointment tomorrow.  Expect delays early as we get things set up.'
                 )
             );
         return $message->sid;

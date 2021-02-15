@@ -35,6 +35,17 @@ class VaccineController extends Controller
             return json_encode(['status' => 'failed', 'errors' => $validator->errors()]);
         }
 
+        if ($inputs['giver'] != null) {
+            $vac = \App\Models\User::findOrFail($inputs['giver']);
+            $inputs['giverFirstName'] = $vac->first_name;
+            $inputs['giverCreds'] = $vac->creds;
+            $inputs['giverLastName'] = $vac->last_name;
+        } else {
+            $inputs['giverFirstName'] = null;
+            $inputs['giverCreds'] = null;
+            $inputs['giverLastName'] = null;
+        }
+
         $vaccine = \App\Models\Vaccine::create([
             'registration_id' => $inputs['registrationId'],
             'vaccine_type_id' => $inputs['vaccineName'],
@@ -81,6 +92,7 @@ class VaccineController extends Controller
         $valid_sites = implode(",",\App\Models\InjectionSite::pluck('id')->toArray());
         $valid_routes = implode(",",\App\Models\InjectionRoute::pluck('id')->toArray());
         $valid_eligs = implode(",",\App\Models\Eligibility::pluck('id')->toArray());
+        $valid_givers = implode(",",\App\Models\User::whereHas('roles', function($query) { $query->where('name', '=', 'vac'); })->pluck('id')->toArray());
 
         $rules = [
             'registrationId' => ['required'],
@@ -96,9 +108,10 @@ class VaccineController extends Controller
             'injectionRoute' => ['required', 'in:'.$valid_routes],
             'eligibility' => ['required', 'in:'.$valid_eligs],
             'risks' => ['nullable'],
-            'giverCreds' => ['nullable', 'string', 'max:255'],
-            'giverLastName' => ['nullable', 'string', 'max:255'],
-            'giverFirstName' => ['nullable', 'string', 'max:255'],
+            'giver' => ['nullable', 'in:'.$valid_givers]
+            //'giverCreds' => ['nullable', 'string', 'max:255'],
+            //'giverLastName' => ['nullable', 'string', 'max:255'],
+            //'giverFirstName' => ['nullable', 'string', 'max:255'],
         ];
 
         return $rules;
