@@ -6,6 +6,8 @@
 .env
 .env.backup
 .env.old
+.env.prod
+.env.dev
 .phpunit.result.cache
 .editorconfig
 dump.rdb
