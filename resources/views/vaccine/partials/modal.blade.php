@@ -94,7 +94,7 @@
                                     Expiration Date
                                 </label>
                                 <div id="expDate" class="input-group">
-                                    <input id="expDateMonth" type="number" min="1" max="12" class="form-control" placeholder="Month (MM)" value="{{ \Carbon\Carbon::now()->addMonth()->format('m') }}">
+                                    <input id="expDateMonth" type="number" min="1" max="12" class="form-control" placeholder="Month (MM)" value="{{ (int) \Carbon\Carbon::now()->addMonth()->format('m') }}">
                                     <span class="input-group-text" style="border-radius: 0;">/</span>
                                     <input id="expDateYear" type="number" min="2021" class="form-control" placeholder="Year (YYYY)" value="2021">
                                 </div>
@@ -193,6 +193,25 @@
                             <span class="h6 mb-5">Giver Information</span>
                         </div>
 
+                        <div class="col-12">
+                            <div class="form-group mb-5">
+                                <label for="giver">
+                                    Vaccinator
+                                </label>
+                                <select id="giver" class="custom-select">
+                                    <option value="">N/A</option>    
+                                    @foreach (\App\Models\User::whereHas('roles', function($query) { $query->where('name', '=', 'vac'); })->get() as $el)
+                                        <option value="{{ $el->id }}" @if(Auth::id() == $el->id) selected @endif>{{ $el->creds . ' ' . $el->first_name . ' ' . $el->last_name }}</option>    
+                                    @endforeach
+                                </select>
+                
+                                <span class="invalid-feedback js-error-text" role="alert" style="display: none;">
+                                    <strong id="giverError"></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        {{--
                         <div class="col-12 col-md-4 col-lg-2">
                             <div class="form-group">
                                 <label for="giverCreds">
@@ -231,6 +250,7 @@
                                 </span>
                             </div>
                         </div>
+                        --}}
 
                         {{--<div class="col-12 col-md-6">
                             <div class="form-group mb-5">
@@ -316,9 +336,10 @@ function requestInfo() {
         'injectionRoute' : document.getElementById('injectionRoute').options[document.getElementById('injectionRoute').selectedIndex].value,
         'eligibility' : document.getElementById('eligibility').options[document.getElementById('eligibility').selectedIndex].value,
         'risks' : getRisks(),
-        'giverCreds' : document.getElementById('giverCreds').value,
-        'giverLastName' : document.getElementById('giverLastName').value,
-        'giverFirstName' : document.getElementById('giverFirstName').value
+        'giver' : document.getElementById('giver').options[document.getElementById('giver').selectedIndex].value
+        //'giverCreds' : document.getElementById('giverCreds').value,
+        //'giverLastName' : document.getElementById('giverLastName').value,
+        //'giverFirstName' : document.getElementById('giverFirstName').value
     }
 }
 
@@ -347,9 +368,9 @@ function clearInput() {
     document.getElementById('expDateMonth').value = null;
     document.getElementById('expDateYear').value = null;
     document.getElementById('visPubDate').value = null;
-    document.getElementById('giverCreds').value = null;
-    document.getElementById('giverLastName').value = null;
-    document.getElementById('giverFirstName').value = null;
+    //document.getElementById('giverCreds').value = null;
+    //document.getElementById('giverLastName').value = null;
+    //document.getElementById('giverFirstName').value = null;
 
     var checkboxes = document.getElementsByClassName('js-risk');
     for (var i=0; i<checkboxes.length; i++) {

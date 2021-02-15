@@ -63,6 +63,11 @@ class AdminController extends Controller
             $user->middle_name = null;
         }
         $user->last_name = $submitted['lastName'];
+        if (array_key_exists('credentials', $submitted)) {
+            $user->creds = $submitted['credentials'];
+        } else {
+            $user->creds = null;
+        }
         $user->password = Hash::make(Str::random(12));
         $user->email_verified_at = now();
         $user->save();
@@ -117,6 +122,11 @@ class AdminController extends Controller
             $user->middle_name = null;
         }
         $user->last_name = $submitted['lastName'];
+        if (array_key_exists('credentials', $submitted)) {
+            $user->creds = $submitted['credentials'];
+        } else {
+            $user->creds = null;
+        }
         $user->roles()->sync(\App\Models\Role::whereName($submitted['role'])->firstOrFail());
 
         $user->save();
@@ -163,6 +173,7 @@ class AdminController extends Controller
                 'firstName' => 'required|max:30',
                 'middleName' => 'nullable|max:30',
                 'lastName' => 'required|max:30',
+                'credentials' => 'nullable|max:30',
                 'role' => 'required|in:'.$valid_roles,
             ]);
         } else {
@@ -171,6 +182,7 @@ class AdminController extends Controller
                 'firstName' => 'required|max:30',
                 'middleName' => 'nullable|max:30',
                 'lastName' => 'required|max:30',
+                'credentials' => 'nullable|max:30',
                 'role' => 'required|in:'.$valid_roles,
             ]);
         }
