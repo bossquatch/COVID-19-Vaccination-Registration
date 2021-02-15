@@ -40,28 +40,28 @@
     @yield('header')
 </head>
 <body class="site">
-    @if (config('app.env') != 'prod' && config('app.env') != 'production')
-    <div class="fixed-top alert alert-warning alert-dismissible fade show mb-0" role="alert" style="z-index: 1031;" id="test-env-warning">
-        <span class="fad fa-exclamation-triangle"></span></strong>Warning!</strong> This is a testing environment and <strong>not</strong> the <a href="https://register.polk.health/">real website</a>.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+{{--    @if (config('app.env') != 'prod' && config('app.env') != 'production')--}}
+{{--    <div class="fixed-top alert alert-warning alert-dismissible fade show mb-0" role="alert" style="z-index: 1031;" id="test-env-warning">--}}
+{{--        <span class="fad fa-exclamation-triangle"></span></strong>Warning!</strong> This is a testing environment and <strong>not</strong> the <a href="https://register.polk.health/">real website</a>.--}}
+{{--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--            <span aria-hidden="true">&times;</span>--}}
+{{--        </button>--}}
+{{--    </div>--}}
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            setTimeout(function () {
-                var warning = document.getElementById('test-env-warning');
-                if (typeof(warning) != 'undefined' && warning != null) {
-                    warning.classList.remove('show');
-                    setTimeout(function () {
-                        document.getElementById('test-env-warning').remove();
-                    }, 1000);
-                }
-            }, 5000);
-        });
-    </script>
-    @endif
+{{--    <script>--}}
+{{--        document.addEventListener("DOMContentLoaded", function(event) {--}}
+{{--            setTimeout(function () {--}}
+{{--                var warning = document.getElementById('test-env-warning');--}}
+{{--                if (typeof(warning) != 'undefined' && warning != null) {--}}
+{{--                    warning.classList.remove('show');--}}
+{{--                    setTimeout(function () {--}}
+{{--                        document.getElementById('test-env-warning').remove();--}}
+{{--                    }, 1000);--}}
+{{--                }--}}
+{{--            }, 5000);--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--    @endif--}}
 
     @include('layouts.partials.navbar')
 
