@@ -35,13 +35,9 @@ class Verify extends Notification implements ShouldQueue
 	public function toMail($notifiable)
 	{
 
-//		$emailAddress 	= $notifiable->email;
 		$userName 		= $notifiable->first_name;
 		$user_id 		= $notifiable->id;
 		$url 			= $this->verificationUrl($notifiable);
-//
-//		return Mail::to($emailAddress)
-//			->send(new Verification($notifiable, $url, $userName, $user_id,'Please verify your email address'));
 
 		return (new Verification($notifiable, $url, $userName, $user_id,'Please verify your email address'))
 			->to($notifiable->email);

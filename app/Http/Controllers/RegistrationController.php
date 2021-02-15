@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Registration;
 use App\Notifications\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,14 @@ class RegistrationController extends Controller
 
     public function submitRegistration()
     {
+
+    	$user = Auth::user();
+
+    	// check for existing registration. There is an issue where 0.7% of the time a user registers twice.
+		if(Registration::where('user_id', $user->id)->count() != 0) {
+			return redirect('/home');
+		}
+
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
         $is_valid_letters = false;
@@ -53,7 +62,6 @@ class RegistrationController extends Controller
         if (isset($valid['condition'])) {
             $conditions = array_keys($valid['condition']);
         }
-        $user = Auth::user();
 
         if (!empty($user->phone)) {
             $phones = [[
