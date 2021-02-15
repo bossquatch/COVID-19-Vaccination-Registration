@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,7 +52,7 @@ class ManageController extends Controller
             $this->searchResults(
                 \App\Models\User::whereHas('roles', function (Builder $query) {
                     $query->where('name', '=', 'user');
-                })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'), 
+                })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'),
                 request()->input('offset'),
                 request()->input('sort'),
                 request()->input('filter')
@@ -67,7 +68,7 @@ class ManageController extends Controller
                     $query->whereHas('address', function (Builder $query) {
                         $query->where(DB::raw('CONCAT_WS(" ",street_number,street_name,locality,(SELECT states.abbr FROM states where states.id = addresses.state_id),postal_code)'), 'LIKE', '%'.request()->input('val').'%');
                     });
-                }), 
+                }),
                 request()->input('offset'),
                 request()->input('sort'),
                 request()->input('filter')
@@ -81,7 +82,7 @@ class ManageController extends Controller
             $this->searchResults(
                 \App\Models\User::whereHas('registration', function (Builder $query) {
                     $query->where('id', '=', request()->input('val'));
-                }), 
+                }),
                 request()->input('offset'),
                 request()->input('sort'),
                 request()->input('filter')
@@ -455,7 +456,7 @@ class ManageController extends Controller
 
         if ($send_verification) {
             $user->forceReset();
-            $user->sendEmailVerificationNotification();
+			$registration->notify(new Register());
         }
 
         Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
