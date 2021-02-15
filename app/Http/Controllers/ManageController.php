@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Notifications\Register;
+use App\Notifications\Verify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,6 @@ use Session;
 use App\Rules\AtLeastThirteen;
 use App\Rules\DateParsable;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\RegistrationComplete;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -299,7 +299,8 @@ class ManageController extends Controller
 
         // send email
         if (!empty($valid['email'])) {
-            Mail::to($valid['email'])->send(new RegistrationComplete($registration));
+//            Mail::to($valid['email'])->send(new RegistrationComplete($registration));
+			$registration->notify(new Register());
         }
 
         if(request()->filled('comment')) {
@@ -314,7 +315,8 @@ class ManageController extends Controller
 
         if ($send_verification) {
             $user->forceReset();
-            $user->sendEmailVerificationNotification();
+//            $user->sendEmailVerificationNotification();
+			$user->notify(new Verify());
         }
 
         Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
@@ -456,7 +458,7 @@ class ManageController extends Controller
 
         if ($send_verification) {
             $user->forceReset();
-			$registration->notify(new Register());
+			$user->notify(new Verify());
         }
 
         Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
