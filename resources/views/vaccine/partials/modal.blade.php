@@ -287,6 +287,8 @@ $( function () {
     $('#lotNumber').autocomplete({
         source: {!! $registration->has_appointment ? json_encode($registration->appointment->event->lots->pluck('number')->all()) : json_encode([]) !!}
     });
+
+    document.getElementById('ndc').value = window.sessionStorage.getItem("session_ndc");
 });
 
 function submitVacForm() {
@@ -294,10 +296,8 @@ function submitVacForm() {
     clearErrors();
 
     var postInfo = requestInfo();
-    console.log(postInfo);
 
     $.post('/vaccine/add', postInfo, function(data) {
-        console.log(data);
         loading(false);
         if (data.status == 'success') {
             document.getElementById('js-no-vaccine-alert').style.display = 'none';
@@ -321,6 +321,7 @@ function loading(is) {
 }
 
 function requestInfo() {
+    window.sessionStorage.setItem('session_ndc', document.getElementById('ndc').value);
     return {
         '_token' : $('meta[name=csrf-token]').attr('content'),
         'registrationId' : document.getElementById('registrationId').value,
@@ -364,9 +365,9 @@ function clearInput() {
 
     document.getElementById('dateGiven').value = today;
     document.getElementById('lotNumber').value = null;
-    document.getElementById('ndc').value = null;
-    document.getElementById('expDateMonth').value = null;
-    document.getElementById('expDateYear').value = null;
+    //document.getElementById('ndc').value = null;
+    //document.getElementById('expDateMonth').value = null;
+    //document.getElementById('expDateYear').value = null;
     document.getElementById('visPubDate').value = null;
     //document.getElementById('giverCreds').value = null;
     //document.getElementById('giverLastName').value = null;
