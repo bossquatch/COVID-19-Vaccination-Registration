@@ -21,7 +21,7 @@
                         <h4 class="alert-heading">Site Maintenance</h4>
                         <p>Please excuse the disruption. We are working hard to improve <i class="text-decoration-underline fw-bold">your</i> portal.</p>
                         <hr>
-                        <p class="mb-0">Estimated completion time is 12:01AM February 15, 2021</p>
+                        <p class="mb-0">Estimated completion time is 01:01AM February 15, 2021</p>
                     </div>
                     <p class="font-size-xs mt-4">
                         You must be able to provide proof of Florida residency at the time of your vaccination.  Please reference this <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/01/Prioritization-of-Floridans-for-Covid-19-Vaccinations.pdf" class="text-light font-weight-medium"><u>advisory</u></a> for more information.
