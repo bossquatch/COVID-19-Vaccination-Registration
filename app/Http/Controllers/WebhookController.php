@@ -85,8 +85,6 @@ class WebhookController extends Controller
 
     private function validateWebhook(array $signature, $api_key = null): bool
     {
-        // disable for now... cannot seem to get the verification to work
-        return true;
 
         $timestamp = $signature['timestamp'];
         $token = $signature['token'];
@@ -100,7 +98,7 @@ class WebhookController extends Controller
             return false;
         }
 
-        $api_key = config('services.mailgun.secret');
+        $api_key = config('services.mailgun.webhook_signing_key');
         return hash_equals(
                     hash_hmac(
                         'sha256',

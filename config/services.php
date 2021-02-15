@@ -15,9 +15,10 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'domain' 				=> env('MAILGUN_DOMAIN'),
+        'secret' 				=> env('MAILGUN_SECRET'),
+        'endpoint' 				=> env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+		'webhook_signing_key' 	=> env('MAIL_WEBHOOK_SIGNING_KEY'),
     ],
 
     'postmark' => [
