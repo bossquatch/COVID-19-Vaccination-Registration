@@ -11,7 +11,7 @@ use Illuminate\Console\Command;
 class PolkAddress extends Command
 {
 
-    protected $signature = 'polk:address';
+    protected $signature = 'polk:address {limit=1000}';
 
     protected $description = 'Add geocoding (latitude and longitude) to each address model';
 
@@ -25,7 +25,7 @@ class PolkAddress extends Command
 		$this->info("Starting address geocode...");
 		$unsyncable = 0;
 		//$list = Registration::take(10)->get();
-		$list = Registration::whereNull('address_id')->get();
+		$list = Registration::whereNull('address_id')->limit($this->argument('limit'))->get();
 		$geocoder = app('geocoder')->doNotCache();
 		$errors = [];
 
