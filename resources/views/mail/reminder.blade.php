@@ -1,7 +1,9 @@
 @component('mail::message')
 # {{ $suffix ? $firstName.' '.$lastName.', '.$suffixDisplay : $firstName.' '.$lastName }}, you have an upcoming vaccination appointment!
 
-This is a friendly reminder that you have an upcoming vaccination appointment. Here are your appointment details:
+This is a friendly reminder that you have an upcoming vaccination appointment. Please expect delays early as we work to get set up.
+
+Here are your appointment details:
 
 @component('mail::code')
 <span class="token green">{{ $locationName }}</span><br>

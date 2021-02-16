@@ -26,21 +26,21 @@ class Reminder extends Mailable
         return $this->markdown('mail.reminder')
             ->subject($this->topic)
             ->with([
-                'actionText' => 'Login to my account',
-                'actionUrl' => config('app.url').'/home',
-                'suffix' => $this->registration->suffix,
-                'suffixDisplay' => $this->registration->suffix ? $this->registration->suffix->display_name : '',
-                'firstName' => $this->registration->first_name,
-                'lastName' => $this->registration->last_name,
-                'locationName' => $this->registration->invitations->last()->slot->event->location->name,
-                'locationAddress' => $this->registration->invitations->last()->slot->event->location->address,
-                'locationCity' => $this->registration->invitations->last()->slot->event->location->city,
-                'locationState' => $this->registration->invitations->last()->slot->event->location->state,
-                'locationZip' => $this->registration->invitations->last()->slot->event->location->zip,
-                'apptDate' => $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
-                'code' => $this->registration->code,
-                'userId' => $this->registration->user_id,
-                'regId' => $this->registration->id
+                'actionText' 		=> 'Login to my account',
+                'actionUrl' 		=> config('app.url').'/home',
+                'suffix' 			=> $this->registration->suffix,
+                'suffixDisplay' 	=> $this->registration->suffix ? $this->registration->suffix->display_name : '',
+                'firstName' 		=> $this->registration->first_name,
+                'lastName' 			=> $this->registration->last_name,
+                'locationName' 		=> $this->registration->invitations->last()->slot->event->location->name,
+                'locationAddress' 	=> $this->registration->invitations->last()->slot->event->location->address,
+                'locationCity' 		=> $this->registration->invitations->last()->slot->event->location->city,
+                'locationState' 	=> $this->registration->invitations->last()->slot->event->location->state,
+                'locationZip' 		=> $this->registration->invitations->last()->slot->event->location->zip,
+                'apptDate' 			=> $this->registration->invitations->last()->slot->starting_at->format('M j, Y g:i A'),
+                'code' 				=> $this->registration->code,
+                'userId' 			=> $this->registration->user_id,
+                'regId' 			=> $this->registration->id
             ])
             ->withSwiftMessage(function($message) {
 				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. intval(strval($this->registration->id),36) .'}');
