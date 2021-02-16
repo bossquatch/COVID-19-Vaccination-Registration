@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-//use App\Mail\Verification;
 use App\Notifications\Reset;
 use App\Notifications\Verify;
-//use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,7 +58,6 @@ class User extends Authenticatable implements MustVerifyEmail
 	{
 
 		$url = Config::get('app.url') . '/reset-password?token='.$token;
-
 		$this->notify(new Reset($url));
 	}
 
