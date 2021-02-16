@@ -45,6 +45,10 @@ class PolkAddress extends Command
 					throw new \Exception;
 				}
 
+				if (!$returnData) {
+					throw new \Exception;
+				}
+
 				$validData = [
 					'street_number' => $returnData->getStreetNumber() ?? null,
 					'street_name' => $returnData->getStreetName() ?? null,
