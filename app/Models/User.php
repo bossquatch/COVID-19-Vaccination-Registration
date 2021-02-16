@@ -57,7 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
 	public function sendPasswordResetNotification($token)
 	{
 
-		$url = Config::get('app.url') . '/reset-password?token='.$token;
+		$url = Config::get('app.url') . '/password/reset?token='.$token;
 		$this->notify(new Reset($url));
 	}
 

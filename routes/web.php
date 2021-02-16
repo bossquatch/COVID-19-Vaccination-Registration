@@ -42,10 +42,6 @@ Route::group(["middleware" => "check.reset"], function() {
         return view('home.terms');
     });
 
-    Route::get('/doug', function () {
-        return view('doug.notification');
-    });
-
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::post('/home/register', [App\Http\Controllers\RegistrationController::class, 'submitRegistration']);
     Route::get('/edit', [App\Http\Controllers\RegistrationController::class, 'edit']);
