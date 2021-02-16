@@ -3,6 +3,7 @@
 namespace App\Models;
 
 //use App\Mail\Verification;
+use App\Notifications\Reset;
 use App\Notifications\Verify;
 //use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -53,7 +54,16 @@ class User extends Authenticatable implements MustVerifyEmail
 		$this->notify(new Verify());
 	}
 
-    /**
+	// override Laravel's built-in password reset
+	public function sendPasswordResetNotification($token)
+	{
+
+		$url = Config::get('app.url') . '/reset-password?token='.$token;
+
+		$this->notify(new Reset($url));
+	}
+
+	/**
     * Accessor for Age.
     */
     public function getAgeAttribute()
