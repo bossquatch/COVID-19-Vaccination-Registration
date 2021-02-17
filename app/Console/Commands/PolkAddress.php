@@ -11,17 +11,16 @@ use Illuminate\Console\Command;
 class PolkAddress extends Command
 {
 
-    protected $signature = 'polk:address {limit=1000}';
+	protected $signature = 'polk:address {limit=1000}';
+	protected $description = 'Add geocoding (latitude and longitude) to each address model';
 
-    protected $description = 'Add geocoding (latitude and longitude) to each address model';
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function handle()
-    {
+	public function handle()
+	{
 		$this->info("Starting address geocode...");
 		$unsyncable = 0;
 		//$list = Registration::take(10)->get();
@@ -30,13 +29,12 @@ class PolkAddress extends Command
 		$errors = [];
 
 		$bar = $this->output->createProgressBar($list->count());
-        $bar->start();
+		$bar->start();
 
 		foreach ($list as $item) {
 
 			try {
 				$searchString = $item->address1 . ', ' . $item->city . ', ' . $item->state . ', ' . $item->zip;
-				
 				$returnObj = $geocoder->geocode($searchString)->get();
 
 				if ($returnObj) {
@@ -80,8 +78,9 @@ class PolkAddress extends Command
 			$this->error("Following registration IDs had issues:");
 			$this->error(implode(",", $errors));
 		}
-        return 0;
-    }
+
+		return 0;
+	}
 
 	public function getIdByName($model, $field, $name, $default)
 	{
