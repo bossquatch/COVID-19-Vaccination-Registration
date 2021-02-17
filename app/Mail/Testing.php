@@ -15,13 +15,14 @@ class Testing extends Mailable
     protected $topic;
     protected $reg_id;
     protected $user_id;
+	private $notifiable;
 
-    /**
+	/**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user_id, $reg_id, $topic)
+    public function __construct($notifiable,$user_id, $reg_id, $topic)
     {
         $this->topic = $topic;
         if(trim($reg_id) <> '') {
@@ -29,7 +30,8 @@ class Testing extends Mailable
         }
 
         $this->user_id = $user_id;
-    }
+		$this->notifiable = $notifiable;
+	}
 
     /**
      * Build the message.
