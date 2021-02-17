@@ -11,7 +11,7 @@ use Illuminate\Console\Command;
 class PolkAddress extends Command
 {
 
-    protected $signature = 'polk:address {limit=1000,start=135068}';
+    protected $signature = 'polk:address {limit=1000} {start=135068}';
 
     protected $description = 'Add geocoding (latitude and longitude) to each address model';
 
