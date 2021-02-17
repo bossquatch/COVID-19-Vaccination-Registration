@@ -70,6 +70,7 @@ class SlotController extends Controller
             ]);
             $registration->status_id = 3;
             $registration->save();
+            $registration->notify(new Confirm());
         } else {
             $registration->invitations()->create([
                 'slot_id' => $slot->id,
