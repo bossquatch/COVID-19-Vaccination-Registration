@@ -80,7 +80,6 @@ class PolkAddress extends Command
 			$this->error("Following registration IDs had issues:");
 			$this->error(implode(",", $errors));
 		}
-
 		return 0;
 	}
 
