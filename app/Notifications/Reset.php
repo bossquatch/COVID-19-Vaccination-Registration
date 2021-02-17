@@ -12,11 +12,12 @@ class Reset extends Notification implements ShouldQueue
 {
     use Queueable;
 
-	protected $url;
+	protected $data;
+	private $token;
 
-    public function __construct($url)
+	public function __construct($data)
     {
-        $this->url = $url;
+        $this->token = $data;
     }
 
 	public function viaQueues()
@@ -34,7 +35,10 @@ class Reset extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
 
-		$url = $this->url;
+		$url = url(config('app_url') . route('password.reset', [
+				'token'	=> $this->token,
+				'email' => $notifiable->getEmailForPasswordReset(),
+			], false));
 
 		return (new ResetPassword($notifiable, $url,'Reset your password'))
 			->to($notifiable->email);
