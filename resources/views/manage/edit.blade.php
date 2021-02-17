@@ -256,6 +256,11 @@ select.read-only option{
                                 <div class="col-12 mb-3">
                                     <div class="form-group">
                                         <label for="autocomplete">Address search</label>
+                                        {{--@if (!$registration->address)
+                                        <span class="text-danger small ml-1">
+                                            Please update address with Google selection.
+                                        </span>                                            
+                                        @endif--}}
                                         <span id="addressMoreOptions" class="animate-fade text-muted small ml-1">
                                             Address not listed?
                                             <a id="btnCollapsedAddress" data-toggle="collapse" href="#collapsedAddress" role="button" aria-expanded="false" aria-controls="collapsedAddress">see more options</a>
@@ -674,6 +679,16 @@ function initAutocomplete() {
   autocomplete.setFields(["address_component", "geometry"]);
 
   autocomplete.addListener("place_changed", fillInAddress);
+
+  {{--@if(!$registration->address)
+    document.getElementById("autocomplete").value = "{{ $registration->address1 . ' ' . $registration->city . ', ' . $registration->state }}";
+    document.getElementById("autocomplete").focus();
+    document.getElementById("autocomplete").scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center"
+    });
+  @endif--}}
 }
 
 function fillInAddress() {

@@ -89,8 +89,9 @@ return [
         ],
 
         "geocode" => [
-            'driver' => 'redis',
+            'driver' => env('CACHE_DRIVER', 'file'),
             'connection' => 'geocode-cache',
+            'path' => storage_path('framework/cache/data'),
         ],
 
     ],

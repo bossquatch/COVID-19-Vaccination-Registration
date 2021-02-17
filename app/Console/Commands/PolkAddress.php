@@ -12,7 +12,6 @@ class PolkAddress extends Command
 {
 
 	protected $signature = 'polk:address {limit=1000}';
-
 	protected $description = 'Add geocoding (latitude and longitude) to each address model';
 
 	public function __construct()
@@ -36,7 +35,6 @@ class PolkAddress extends Command
 
 			try {
 				$searchString = $item->address1 . ', ' . $item->city . ', ' . $item->state . ', ' . $item->zip;
-
 				$returnObj = $geocoder->geocode($searchString)->get();
 
 				if ($returnObj) {
@@ -80,6 +78,7 @@ class PolkAddress extends Command
 			$this->error("Following registration IDs had issues:");
 			$this->error(implode(",", $errors));
 		}
+
 		return 0;
 	}
 
