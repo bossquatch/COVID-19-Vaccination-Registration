@@ -196,6 +196,27 @@ class InvitationController extends Controller
         return redirect('/manage');
     }
 
+    public function remove()
+    {
+        $inputs = request()->all();
+        if (!isset($inputs['registration_id']) || !isset($inputs['slot_id'])) {
+            abort(404);
+        }
+
+        $registration = \App\Models\Registration::findOrFail($inputs['registration_id']);
+        $invite = $registration->invitations()->where('slot_id', '=', $inputs['slot_id'])->firstOrFail();
+
+        $invite->forceDelete();
+
+        if (!($registration->pending_invitation || $registration->has_appointment) && $registration->status_id != 10) {
+            $this->updateRegistrationStatus($registration, 1);
+        }
+        $this->logChanges($registration, 'invite removed', true, false, ['slot_id' => $inputs['slot_id']]);
+
+        Session::flash('success', "<p>Invitation was removed.</p>");
+        return redirect()->back();
+    }
+
     private function acceptInvite($registration, $invite) 
     {
         $this->runStatusUpdates($registration, 3, $invite, 6);

@@ -54,9 +54,9 @@
             </div>
         </div>
 
-        <div class="row align-items-center">
+        <div class="row align-items-top">
             @include('manage.partials.appointment', ['registration' => $registration])
-            <div class="col-12 col-lg-6 @if($registration->pending_invitation || $registration->has_appointment) @cannot('update_invite') offset-lg-3 @endcannot @cannot('create_vaccine') offset-lg-3 @endcannot @else offset-lg-3 @endif">
+            <div class="col-12 col-lg-6 @if($registration->pending_invitation || $registration->has_appointment) @cannot('update_invite') offset-lg-3 @endcannot @cannot('create_vaccine') offset-lg-3 @endcannot @else @cannot('keep_inventory') offset-lg-3 @endcannot @endif">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     <div class="card card-body p-6">

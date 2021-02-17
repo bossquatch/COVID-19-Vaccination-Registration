@@ -54,6 +54,7 @@
                         </div>
                     </div>
                 </div>
+                @include('manage.partials.invitations', ['registration' => $registration])
             </div>
         </div>
     @endcan
@@ -107,6 +108,15 @@
                     </div>
                 </div>
             </div>
+            @include('manage.partials.invitations', ['registration' => $registration])
         </div>
     </div>
+@else
+    @can('keep_inventory')
+        <div class="col-12 col-lg-3">
+            <div class="mb-8 mb-md-0">
+                @include('manage.partials.invitations', ['registration' => $registration])
+            </div>
+        </div>
+    @endcan
 @endif
