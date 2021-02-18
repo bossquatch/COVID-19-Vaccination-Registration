@@ -6,14 +6,14 @@
 
 @section('content')
 <!-- Page Content -->
-<section class="container d-flex justify-content-center align-items-center flex-grow-1 pt-7 pb-4">
+<section class="container d-flex justify-content-center align-items-center flex-grow-1 py-7">
     <div class="row justify-content-center">
         <div class="col-12 col-md-9">
             <div class="card border-0 shadow my-5">
                 <div class="card-body py-7 px-5">
                     <div>
                         <h1 class="font-size-4xl font-weight-extrabold tracking-tight mb-5">
-                            <span class="d-block">One more step!</span>
+                            <span class="d-block">Almost there!</span>
                             <span class="d-block text-primary">Verify your email address.</span>
                         </h1>
 
