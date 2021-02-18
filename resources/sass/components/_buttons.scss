@@ -314,3 +314,72 @@
         text-decoration: underline;
     }
 }
+
+/*
+// ----------------------------------------
+// HTML Usage
+// ----------------------------------------
+//
+// ----------------------------------------
+// Default:
+// ----------------------------------------
+// <div class="custom-btn-group mb-3">
+//   <div class="btn-group-item font-weight-medium font-size-sm">
+//     <input type="radio" id="injectionSite-LD" value="LD" name="injectionSite">
+//     <label for="injectionSite-LD">
+//       LD
+//     </label>
+//   </div>
+//   <div class="btn-group-item font-weight-medium font-size-sm">
+//     <input type="radio" id="injectionSite-RD" value="RD" name="injectionSite">
+//     <label for="injectionSite-RD">
+//       RD
+//     </label>
+//   </div>
+// </div>
+//
+// ----------------------------------------
+*/
+.custom-btn-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  
+    .btn-group-item {
+      &:not(:last-of-type) {
+        margin-right: $custom-btn-group-mr;
+      }
+  
+      input[type="radio"],
+      input[type="checkbox"] {
+        display: none;
+      }
+  
+      input[type="radio"] + label,
+      input[type="radio"]:not(checked) + label,
+      input[type="checkbox"] + label,
+      input[type="checkbox"]:not(checked) + label {
+        background: $gray-100;
+        padding: $custom-btn-group-input-padding;
+        margin-bottom: $custom-btn-group-input-mb;
+        border: solid 1px $gray-100;
+        border-radius: $border-radius;
+        text-align: center;
+        transition: $custom-btn-group-input-transition-time ease all;
+        cursor: pointer;
+        user-select: none;
+        --tw-ring-offset-shadow: 0 0 #000;
+        --tw-ring-shadow: 0 0 #000;
+        --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+      }
+  
+      input[type="radio"]:checked + label,
+      input[type="checkbox"]:checked + label {
+        position: relative;
+        border: solid 1px $blue;
+        background: $blue;
+        color: $white;
+      }
+    }
+  }
