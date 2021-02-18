@@ -45,8 +45,12 @@
     font-size: $font-size-xs;
 }
 
+.font-weight-extrabold {
+    font-weight: $font-weight-extrabold;
+}
+
 .font-weight-medium {
-    font-weight: 600;
+    font-weight: $font-weight-medium;
 }
 
 .tracking-tight {
