@@ -12,30 +12,26 @@
             <div class="card border-0 shadow my-5">
                 <div class="card-body py-7 px-5">
                     <div>
-                        <h1 class="h2 text-center">Verify Your Email Address</h1>
-                        <p class="font-size-xs text-muted mb-4 text-center">Access your registration and status.</p>
+                        <h1 class="h2 font-weight-bolder tracking-tight font-size-4xl mb-5">
+                            <span class="d-block">One more step!</span>
+                            <span class="d-block text-primary">Verify your email address.</span>
+                        </h1>
 
-                        <div class="text-center">
-                            {{ __('Before proceeding, please check your email for a verification link.') }}
-                            {{ __('Be aware, that emails to certain providers such as aol.com, ymail.com, yahoo.com, netzero.com, and msn.com may be delayed up to 60 minutes.') }}
-                            {{ __('If you did not receive the email or recieve "403 Invalid Signature"') }},
-                            <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                            </form>
-                        </div>
+                        <p>
+                            We have sent an email to<br>
+                            <span class="font-weight-bold">{{ $notification->email }}</span>.
+                        </p>
 
-                        <div class="mb-6"></div>
-                        <a class="btn btn-primary btn-block" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                            Return to Main Page
-                        </a>
+                        <p>
+                            You need to verify your email to continue. If you have not received the verification email, please check your "Spam" or "Bulk Email" folder. You can also click the resend button below to have another email sent to you.
+                        </p>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form method="POST" action="{{ route('verification.resend') }}">
                             @csrf
+                            <button type="submit" class="btn btn-primary btn-block mt-5 mb-4">Resend verification email</button>
                         </form>
 
+                        <p class="text-muted font-size-sm mb-0"><small>* Verification emails expire in {{ \Carbon\CarbonInterval::minutes(config(auth.verification.expire))->cascade()->forHumans(); }}.</small></p>
                     </div>
                     {{--<div class="border-top text-center mt-5 pt-5">
                         <p class="font-size-sm font-weight-medium text-gray-dark">Or sign in with</p>

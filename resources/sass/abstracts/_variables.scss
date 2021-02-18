@@ -125,9 +125,20 @@ $font-awesome-base: "Font Awesome 5 Pro", $native-font-stack;
 $font-family-base: "Open Sans", $native-font-stack;
 
 $font-size-base: 1.0625rem;
+$font-size-4xl: 2.25rem;
+$font-size-3xl: 1.875rem;
+$font-size-2xl: 1.5rem;
+$font-size-xl: 1.25rem;
 $font-size-lg: 1.1875rem;
 $font-size-sm: 0.9375rem;
 $font-size-xs: 0.8125rem;
+
+$line-height-4xl: 2.5rem;
+$line-height-3xl: 2.25rem;
+$line-height-2xl: 2rem;
+$line-height-xl: 1.75rem;
+
+$tracking-tight: -0.025em;
 
 $h1-font-size: $font-size-base * 2.5;
 $h2-font-size: $font-size-base * 2;
