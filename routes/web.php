@@ -72,9 +72,9 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/manage/{id}/invitation/accept', [App\Http\Controllers\InvitationController::class, 'acceptCallback'])->middleware('can:update_invite');
     Route::post('/manage/{id}/invitation/decline', [App\Http\Controllers\InvitationController::class, 'declineCallback'])->middleware('can:update_invite');
     Route::post('/manage/{id}/invitation/postpone', [App\Http\Controllers\InvitationController::class, 'postponeCallback'])->middleware('can:update_invite');
-    Route::post('/manage/{id}/invitation/checkin', [App\Http\Controllers\InvitationController::class, 'checkIn'])->middleware('can:create_vaccine');
-    Route::post('/manage/{id}/invitation/complete', [App\Http\Controllers\InvitationController::class, 'complete'])->middleware('can:create_vaccine');
-    Route::post('/manage/{id}/invitation/turndown', [App\Http\Controllers\InvitationController::class, 'turnDown'])->middleware('can:create_vaccine');
+    Route::post('/manage/{id}/invitation/checkin', [App\Http\Controllers\InvitationController::class, 'checkIn'])->middleware('can:check_in');
+    Route::post('/manage/{id}/invitation/complete', [App\Http\Controllers\InvitationController::class, 'complete'])->middleware('can:check_in');
+    Route::post('/manage/{id}/invitation/turndown', [App\Http\Controllers\InvitationController::class, 'turnDown'])->middleware('can:check_in');
     Route::delete('/manage/invitation/remove', [App\Http\Controllers\InvitationController::class, 'remove'])->middleware('can:keep_inventory');
     Route::put('/manage/complete/{regis_id}', [App\Http\Controllers\ManageController::class, 'complete'])->middleware('can:keep_inventory');
     Route::put('/manage/waitlist/{regis_id}', [App\Http\Controllers\ManageController::class, 'waitlist'])->middleware('can:keep_inventory');

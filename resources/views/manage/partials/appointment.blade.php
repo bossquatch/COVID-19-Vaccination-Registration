@@ -82,7 +82,7 @@
                                 Location:<br>{{ $registration->appointment->event->location->address . ' ' . $registration->appointment->event->location->city . ', ' . $registration->appointment->event->location->state . ' ' . $registration->appointment->event->location->zip }}
                             </p>
                             
-                            @can('create_vaccine')
+                            @can('check_in')
                             @if ($registration->active_invite->invite_status->name == "Accepted")
                                 <form action="/manage/{{ $registration->id }}/invitation/checkin" class="form-inline mb-1 justify-content-center" method="post">
                                     @csrf
