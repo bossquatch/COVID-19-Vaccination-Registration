@@ -13,6 +13,26 @@
     line-height: $custom-select-line-height-sm;
 }
 
+.font-size-4xl {
+    font-size: $font-size-4xl;
+    line-height: $line-height-4xl;
+}
+
+.font-size-3xl {
+    font-size: $font-size-3xl;
+    line-height: $line-height-3xl;
+}
+
+.font-size-2xl {
+    font-size: $font-size-2xl;
+    line-height: $line-height-2xl;
+}
+
+.font-size-xl {
+    font-size: $font-size-xl;
+    line-height: $line-height-xl;
+}
+
 .font-size-lg {
     font-size: $font-size-lg;
 }
@@ -27,6 +47,10 @@
 
 .font-weight-medium {
     font-weight: 600;
+}
+
+.tracking-tight {
+    letter-spacing: $tracking-tight;
 }
 
 .text-white-75 {
