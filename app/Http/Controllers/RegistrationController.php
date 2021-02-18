@@ -103,7 +103,10 @@ class RegistrationController extends Controller
             //'state'=> $valid['state'],
             //'zip'=> $valid['zip'],
             'prefer_close_location'=> $valid['scheculePreference'],
-            'submitted_at'=> Carbon::now(),
+			// had to change this to match the account creation date as we had some who created their account but
+			// did not finish their registration
+			'submitted_at' => $user->created_at,
+//            'submitted_at'=> Carbon::now(),
         ]);
 
         $registration->syncAddress($valid);
