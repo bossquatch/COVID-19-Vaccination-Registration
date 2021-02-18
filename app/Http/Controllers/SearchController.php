@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
@@ -27,7 +28,8 @@ class SearchController extends Controller
                 })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'),
                 request()->input('offset'),
                 request()->input('sort'),
-                request()->input('filter')
+                request()->input('filter'),
+                request()->input('showDeleted')
             )
         );
     }
@@ -43,7 +45,8 @@ class SearchController extends Controller
                 }),
                 request()->input('offset'),
                 request()->input('sort'),
-                request()->input('filter')
+                request()->input('filter'),
+                request()->input('showDeleted')
             )
         );
     }
@@ -57,7 +60,8 @@ class SearchController extends Controller
                 }),
                 request()->input('offset'),
                 request()->input('sort'),
-                request()->input('filter')
+                request()->input('filter'),
+                request()->input('showDeleted')
             )
         );
     }
@@ -71,12 +75,13 @@ class SearchController extends Controller
                 }),
                 request()->input('offset'),
                 request()->input('sort'),
-                request()->input('filter')
+                request()->input('filter'),
+                request()->input('showDeleted')
             )
         );
     }
 
-    private function searchResults($query, $offset, $sort, $filter)
+    private function searchResults($query, $offset, $sort, $filter, $withTrashed)
     {
         $limit = config('app.pagination_limit');
         if ($filter != 'All') {
@@ -85,6 +90,9 @@ class SearchController extends Controller
                             $query->where('name', '=', $filter);
                         });
                 });
+        }
+        if ($withTrashed && (Auth::user()->permissions()->contains('keep_inventory') || Auth::user()->permissions()->contains('skeleton_key'))) {
+            $query = $query->withTrashed();
         }
         $total_count = $query->count();
         $res = $query->select('*', DB::raw('(SELECT registrations.submitted_at FROM registrations WHERE registrations.user_id = users.id AND registrations.deleted_at IS NULL LIMIT 1) as submitted_at'))->orderBy('submitted_at', $sort ?? 'asc')->offset($offset)->limit($limit)->get();

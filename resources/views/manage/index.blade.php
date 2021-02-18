@@ -106,6 +106,14 @@
                             <small class="font-weight-light font-size-sm text-muted ml-3">Filtered by status: <span id="status-filter-desc" class="font-italic">All</span></small>
                         </h2>
 
+                        @can('keep_inventory')
+                        <div class="ml-auto custom-control custom-switch font-size-sm">
+                            <input type="checkbox" class="custom-control-input" id="show-deleted" onchange="showDeleted();">
+                            <label class="custom-control-label text-muted" for="show-deleted">Show Deleted Accounts</label>
+                        </div>
+                        @endcan
+                        
+
                         {{--<!-- Tabs -->
                         <ul id="applications-tablist" class="nav nav-tabs ml-auto" role="tablist">
                             <li class="nav-item">
@@ -240,6 +248,7 @@
 // make sure sorting is correct right off the bat
 window.sessionStorage.setItem('submissionSort', 'asc');
 window.sessionStorage.setItem('statusFilter', 'All');
+window.sessionStorage.setItem('showDeleted', false);
 
 // Get the input field
 var inputName = document.getElementById("searchName");
@@ -368,12 +377,31 @@ function filterStatus(filter) {
     return false;
 }
 
+@can('keep_inventory')
+function showDeleted() {
+    const cbox = document.getElementById('show-deleted');
+    window.sessionStorage.setItem('showDeleted', cbox.checked);
+
+    if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
+        $('#loadingModal').modal('show');
+    
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
+        console.log(searchInfo);
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 1000);
+        makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+    }
+}
+@endcan
+
 function createSearchInfo(val, offset) {
     return {
         'val': val,
         'offset': offset,
         'sort': window.sessionStorage.getItem('submissionSort'),
-        'filter': window.sessionStorage.getItem('statusFilter')
+        'filter': window.sessionStorage.getItem('statusFilter'),
+        'showDeleted': window.sessionStorage.getItem('showDeleted') == 'true' ? 1 : 0
     };
 }
 </script>
