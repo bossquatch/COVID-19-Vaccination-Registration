@@ -37,8 +37,9 @@ class Verification extends Mailable
 		return $this->markdown('mail.verify')
 			->subject($this->topic)
 			->with([
-				'url'	=> $this->url,
-				'name'	=> $this->userName,
+				'url'			=> $this->url,
+				'name'			=> $this->userName,
+				'actionText' 	=> 'Verify My Email',
 			])
 			->withSwiftMessage(function($message) {
 				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_UID_": '. intval(strval($this->user_id),36) .'}');

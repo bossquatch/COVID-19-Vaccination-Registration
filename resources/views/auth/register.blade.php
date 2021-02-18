@@ -116,7 +116,7 @@
                                     Primary Phone Number
                                 </label>
                                 <input id="phone" name="phone" class="form-control @error("phone") is-invalid @enderror" type="tel" value="{{ old('phone') }}" placeholder="(XXX) XXX-XXXX" required aria-required="true">
-                
+
                                 @error("phone")
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first("phone") }}</strong>
@@ -148,7 +148,7 @@
 
                             <!-- Submit -->
                             <button class="btn btn-primary btn-block" type="submit">
-                                Register
+                                Create an account
                             </button>
                         </form>
                     </div>

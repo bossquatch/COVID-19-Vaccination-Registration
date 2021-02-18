@@ -19,7 +19,7 @@
 
                         <p>
                             We have sent an email to<br>
-                            <span class="font-weight-bold">{{ $notification->email }}</span>.
+                            <span class="font-weight-bold">{{ Auth::user()->email }}</span>.
                         </p>
 
                         <p>
@@ -31,7 +31,7 @@
                             <button type="submit" class="btn btn-primary btn-block mt-5 mb-4">Resend verification email</button>
                         </form>
 
-                        <p class="text-muted font-size-sm mb-0"><small>* Verification emails expire in {{ \Carbon\CarbonInterval::minutes(config(auth.verification.expire))->cascade()->forHumans(); }}.</small></p>
+                        <p class="text-muted font-size-sm mb-0"><small>* Verification emails expire in {!! \Carbon\CarbonInterval::minutes(config('auth.verification.expire'))->cascade()->forHumans(); !!}.</small></p>
                     </div>
                     {{--<div class="border-top text-center mt-5 pt-5">
                         <p class="font-size-sm font-weight-medium text-gray-dark">Or sign in with</p>
