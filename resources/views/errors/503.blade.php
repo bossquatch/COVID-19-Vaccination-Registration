@@ -17,12 +17,24 @@
                 <div class="col-md-6">
                     <h1 class="title">Polk County COVID-19 Vaccinations</h1>
                     <p class="sub-title h4 mb-5">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
-                    <div class="alert alert-primary mt-6 mb-6" role="alert">
-                        <h4 class="alert-heading">Site Maintenance</h4>
-                        <p>Please excuse the disruption. We are working hard to improve <i class="text-decoration-underline fw-bold">your</i> portal.</p>
-                        <hr>
-                        <p class="mb-0">Estimated completion time is 04:01AM February 15, 2021</p>
-                    </div>
+
+					<div class="card text-center text-gray-dark shadow-light-lg mb-5">
+						<div class="card-header text-light bg-secondary">
+							<h4><i class="fad fa-tools"></i> Site Maintenance</h4>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Please excuse us while we work</h5>
+							<p class="card-text">We are working hard to improve <i class="text-decoration-underline fw-bold">your</i> portal.</p>
+							<i class="fad fa-portal-enter fa-3x"></i>
+						</div>
+						<div class="card-footer text-light font-size-xs bg-secondary">
+							Start time: {{ Carbon\Carbon::createFromTimestamp(Storage::disk('local')->lastmodified('/framework/down'))->toDateTimeString() }}
+						</div>
+					</div>
+
+
+
+
                     <p class="font-size-xs mt-4">
                         You must be able to provide proof of Florida residency at the time of your vaccination.  Please reference this <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/01/Prioritization-of-Floridans-for-Covid-19-Vaccinations.pdf" class="text-light font-weight-medium"><u>advisory</u></a> for more information.
                     </p>
