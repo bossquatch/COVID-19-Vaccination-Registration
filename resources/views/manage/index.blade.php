@@ -246,9 +246,9 @@
 
 <script>
 // make sure sorting is correct right off the bat
-window.sessionStorage.setItem('submissionSort', 'asc');
-window.sessionStorage.setItem('statusFilter', 'All');
-window.sessionStorage.setItem('showDeleted', false);
+document.addEventListener("DOMContentLoaded", function(event) {
+    loadLastSearch();
+});
 
 // Get the input field
 var inputName = document.getElementById("searchName");
@@ -346,8 +346,9 @@ function sortSubmission() {
 
     if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
         $('#loadingModal').modal('show');
+        window.sessionStorage.setItem('searchOffset', '0');
     
-        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
         
         setTimeout(function () {
             $('#loadingModal').modal('hide');
@@ -365,8 +366,9 @@ function filterStatus(filter) {
 
     if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
         $('#loadingModal').modal('show');
+        window.sessionStorage.setItem('searchOffset', '0');
     
-        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
         
         setTimeout(function () {
             $('#loadingModal').modal('hide');
@@ -384,9 +386,10 @@ function showDeleted() {
 
     if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
         $('#loadingModal').modal('show');
+        window.sessionStorage.setItem('searchOffset', '0');
     
-        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
-        console.log(searchInfo);
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
+        
         setTimeout(function () {
             $('#loadingModal').modal('hide');
         }, 1000);
@@ -403,6 +406,45 @@ function createSearchInfo(val, offset) {
         'filter': window.sessionStorage.getItem('statusFilter'),
         'showDeleted': window.sessionStorage.getItem('showDeleted') == 'true' ? 1 : 0
     };
+}
+
+function loadLastSearch() {
+    if (window.sessionStorage.getItem('submissionSort') !== null) {
+        const caret = document.getElementById('submission-sort-caret');
+        if (window.sessionStorage.getItem('submissionSort') == 'desc') {
+            caret.classList.remove('fa-caret-up');
+            caret.classList.add('fa-caret-down');
+        }
+    }
+
+    @can('keep_inventory')
+    if (window.sessionStorage.getItem('showDeleted') !== null) {
+        if (window.sessionStorage.getItem('showDeleted') == 'true') {
+            const cbox = document.getElementById('show-deleted');
+            cbox.checked = window.sessionStorage.getItem('showDeleted');
+        }
+    }
+    @endcan
+
+    if (window.sessionStorage.getItem('statusFilter') !== null) {
+        document.getElementById('status-filter-desc').innerHTML = window.sessionStorage.getItem('statusFilter');
+    }
+
+    if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
+        $('#loadingModal').modal('show');
+    
+        document.getElementById(window.sessionStorage.getItem('searchType')).value = window.sessionStorage.getItem('searchVal');
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
+        
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 1000);
+        makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+    } else {
+        window.sessionStorage.setItem('submissionSort', 'asc');
+        window.sessionStorage.setItem('statusFilter', 'All');
+        window.sessionStorage.setItem('showDeleted', false);
+    }
 }
 </script>
 @endsection
