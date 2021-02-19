@@ -45,12 +45,6 @@
                 <a class="btn btn-header btn-round btn-lg" href="{{ url()->previous() == url()->current() ? '/manage' : url()->previous() }}">
                     <span class="fas fa-arrow-left mr-1"></span> Back
                 </a>
-
-                @can('create_vaccine')
-                <button type="button" class="btn btn-header-outline btn-round btn-lg" data-toggle="modal" data-target="#vaccineModal">
-                    <span class="fad fa-syringe mr-1"></span> Add Vaccination
-                </button>
-                @endcan
             </div>
         </div>
 
@@ -210,9 +204,17 @@
                         @endcan
                         @can('read_registration')
                             <hr>
-                            <div class="row align-items-center justify-content-center">
+                            <div class="row align-items-center justify-content-center mb-4">
                                 <h3>Vaccinations</h3>
+                                @can('create_vaccine')
+                                    <button type="button" class="btn btn-outline-primary btn-round ml-3" data-toggle="collapse" data-target="#vaccineCollapse">
+                                        <span class="fad fa-syringe mr-1"></span> Add Vaccination
+                                    </button>
+                                @endcan
                             </div>
+                            @can('create_vaccine')
+                                @include('vaccine.partials.collapse', ['registration' => $registration])
+                            @endcan
                             <div id="js-vaccine-section">
                                 @php
                                     $no_vacs = false;
@@ -408,6 +410,6 @@
 </script>
 
 @can('create_vaccine')
-    @include('vaccine.partials.modal', ['registration' => $registration])
+    @include('vaccine.js.collapse', ['registration' => $registration])
 @endcan
 @endsection
