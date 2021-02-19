@@ -26,9 +26,13 @@
             @endcan
         @else
             @can('update_registration')
+            @if ($res->deleted_at) 
+            <span class="badge badge-pill badge-danger">Deleted</span>
+            @else
             <a href="#" title="Delete User" aria-title="Delete User" class="text-danger" onclick="deleteUser('{{ $res->id }}')">
                 <span class="fad fa-trash-alt fa-lg ml-1"></span>
             </a>
+            @endif
             @endcan
         @endif
     </td>

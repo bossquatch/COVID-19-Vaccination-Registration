@@ -45,6 +45,11 @@ class Slot extends Model
         return (($this->active_invitation_count + $this->reserved) < $this->capacity);
     }
 
+    // allows $slot->stock
+    public function getStockAttribute() {
+        return ($this->capacity - ($this->active_invitation_count + $this->reserved));
+    }
+
     // allows $slot->partner_handled
     public function getPartnerHandledAttribute() {
         return ($this->event->partner_handled);

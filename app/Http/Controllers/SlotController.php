@@ -22,7 +22,7 @@ class SlotController extends Controller
     {
         $event = \App\Models\Event::findOrFail($event_id);
 
-        $slots = $event->slots()->select('id', 'event_id', 'capacity', 'deleted_at', 'starting_at', 'ending_at')
+        $slots = $event->slots()->select('id', 'event_id', 'capacity', 'deleted_at', 'starting_at', 'ending_at', 'reserved')
             ->withCount([
                 'invitations as active_invitations_count' => function ($query) {
                     $query->whereHas('invite_status', function ($query) {
@@ -63,10 +63,20 @@ class SlotController extends Controller
             return json_encode(['status' => 'failed', 'message' => 'Registration already affiliated with the event!']);
         }
 
-        $registration->invitations()->create([
-            'slot_id' => $slot->id,
-            'invite_status_id' => 10
-        ]);
+        if (\Carbon\Carbon::parse($event->date_held)->greaterThan(\Carbon\Carbon::now())) {
+            $registration->invitations()->create([
+                'slot_id' => $slot->id,
+                'invite_status_id' => 6
+            ]);
+            $registration->status_id = 3;
+            $registration->save();
+            $registration->notify(new Confirm());
+        } else {
+            $registration->invitations()->create([
+                'slot_id' => $slot->id,
+                'invite_status_id' => 10
+            ]); 
+        }
 
         $this->logChanges($registration, 'force invite', true, false, ['forced by' => Auth::id()]);
 

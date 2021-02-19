@@ -1,19 +1,22 @@
 @component('mail::message')
-# Welcome {{ $name }}
+# {{ $name }}, we need you to verify your email address.
 
-Before you can register in the portal you must verify your email address.
-
-@component('mail::button', ['url' => $url])
-	Click to verify
+@component('mail::panel')
+	<h1>Why do we do this?</h1>
+	<p>So that we know that we are sending information to the right person.</p>
+	<p>Just click the button below, then complete your registration.</p>
 @endcomponent
 
-If you did not create an account, no further action is required.
+@component('mail::button', ['url' => $url])
+	{{ $actionText }}
+@endcomponent
+
 Thanks,
 
-{{ config('app.name') }} Team
+{{ config('app.name') }}
 
 @component('mail::subcopy')
-	If you’re having trouble clicking the "Verify Email Address" button, copy and paste the URL below into your web browser: {{ $url }}
+If you’re having trouble clicking the "{{ $actionText }}" button, copy and paste the URL below into your web browser: {{ $url }}
 @endcomponent
 
 @endcomponent

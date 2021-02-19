@@ -54,6 +54,7 @@
                         </div>
                     </div>
                 </div>
+                @include('manage.partials.invitations', ['registration' => $registration])
             </div>
         </div>
     @endcan
@@ -81,7 +82,7 @@
                                 Location:<br>{{ $registration->appointment->event->location->address . ' ' . $registration->appointment->event->location->city . ', ' . $registration->appointment->event->location->state . ' ' . $registration->appointment->event->location->zip }}
                             </p>
                             
-                            @can('create_vaccine')
+                            @can('check_in')
                             @if ($registration->active_invite->invite_status->name == "Accepted")
                                 <form action="/manage/{{ $registration->id }}/invitation/checkin" class="form-inline mb-1 justify-content-center" method="post">
                                     @csrf
@@ -107,6 +108,15 @@
                     </div>
                 </div>
             </div>
+            @include('manage.partials.invitations', ['registration' => $registration])
         </div>
     </div>
+@else
+    @can('keep_inventory')
+        <div class="col-12 col-lg-3">
+            <div class="mb-8 mb-md-0">
+                @include('manage.partials.invitations', ['registration' => $registration])
+            </div>
+        </div>
+    @endcan
 @endif

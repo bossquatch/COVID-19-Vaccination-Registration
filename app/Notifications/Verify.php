@@ -39,7 +39,7 @@ class Verify extends Notification implements ShouldQueue
 		$user_id 		= $notifiable->id;
 		$url 			= $this->verificationUrl($notifiable);
 
-		return (new Verification($notifiable, $url, $userName, $user_id,'Please verify your email address'))
+		return (new Verification($notifiable, $url, $userName, $user_id,'Registration not complete. Please verify your email address'))
 			->to($notifiable->email);
 
 	}

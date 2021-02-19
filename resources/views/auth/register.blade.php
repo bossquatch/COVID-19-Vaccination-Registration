@@ -1,25 +1,27 @@
 @extends('layouts.no-nav')
 
 @section('title')
-    Register
+    Create an Account
 @endsection
 
 @section('content')
 <!-- Page Content -->
-<section class="container d-flex justify-content-center align-items-center flex-grow-1 pt-7 pb-4">
+<section class="container d-flex justify-content-center align-items-center flex-grow-1 py-7">
     <div class="row justify-content-center">
         <div class="col-12 col-md-10">
             <div class="card border-0 shadow my-5">
                 <div class="card-body py-7 px-5">
                     <div>
-                        <h1 class="h2 text-center">Register</h1>
-                        <p class="font-size-xs text-muted mb-4 text-center">Create an account to start the COVID-19 vaccination registration process.</p>
+                        <h1 class="font-size-4xl font-weight-extrabold tracking-tight mb-5">
+                            <span class="d-block">Let's get started!</span>
+                            <span class="d-block text-primary">Create an account.</span>
+                        </h1>
 
                         <!-- Form -->
-                        <form class="mb-6" method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}">
                             @csrf
 
-                            <!-- Name -->
+                            <!-- First name -->
                             <div class="form-group">
                                 <label for="firstName">
                                     First Name
@@ -33,11 +35,12 @@
                                 @enderror
                             </div>
 
+                            <!-- Middle name -->
                             <div class="form-group">
                                 <label for="middleName">
                                     Middle Name
                                 </label>
-                                <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Enter middle name">
+                                <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus placeholder="Enter your middle name">
 
                                 @error('middleName')
                                     <span class="invalid-feedback" role="alert">
@@ -46,6 +49,7 @@
                                 @enderror
                             </div>
 
+                            <!-- Last name -->
                             <div class="form-group">
                                 <label for="lastName">
                                     Last Name
@@ -59,9 +63,9 @@
                                 @enderror
                             </div>
 
-                            <!-- Date of Birth -->
+                            <!-- Date of birth -->
                             <div class="form-row">
-                                <div class="form-group mb-5 col-md-6">
+                                <div class="form-group col-md-6 mb-5">
                                     <label for="suffix">
                                         Suffix
                                     </label>
@@ -78,7 +82,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group mb-5 col-md-6">
+                                <div class="form-group col-md-6 mb-5">
                                     <label for="dob">
                                         Date of Birth
                                     </label>
@@ -98,7 +102,7 @@
                                     Email Address
                                 </label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="name@address.com">
-                                <span class="form-text font-weight-light font-size-xs text-muted">Each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:863-298-7500">(863) 298-7500</a>.</span>
+                                <span class="form-text font-weight-light font-size-xs text-muted">Each registration must have a unique email address. If you would like to register multiple individuals using the same email address, please contact the Vaccination Hotline at <a href="tel:+18632987500">(863) 298-7500</a>.</span>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -112,14 +116,13 @@
                                     Primary Phone Number
                                 </label>
                                 <input id="phone" name="phone" class="form-control @error("phone") is-invalid @enderror" type="tel" value="{{ old('phone') }}" placeholder="(XXX) XXX-XXXX" required aria-required="true">
-                
+
                                 @error("phone")
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first("phone") }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                            
 
                             <!-- Password -->
                             <div class="form-group mb-5">
@@ -145,10 +148,9 @@
 
                             <!-- Submit -->
                             <button class="btn btn-primary btn-block" type="submit">
-                                Register
+                                Create an account
                             </button>
                         </form>
-
                     </div>
                     {{--<div class="border-top text-center mt-5 pt-5">
                         <p class="font-size-sm font-weight-medium text-gray-dark">Or sign in with</p>

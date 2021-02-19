@@ -6,7 +6,7 @@
 
 @section('content')
 <!-- Page Content -->
-<section class="container d-flex justify-content-center align-items-center flex-grow-1 pt-7 pb-4">
+<section class="container d-flex justify-content-center align-items-center flex-grow-1 py-7">
     <div class="row justify-content-center w-75">
         <div class="col-12">
             <div class="card border-0 shadow my-5">

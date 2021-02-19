@@ -54,9 +54,9 @@
             </div>
         </div>
 
-        <div class="row align-items-center">
+        <div class="row align-items-top">
             @include('manage.partials.appointment', ['registration' => $registration])
-            <div class="col-12 col-lg-6 @if($registration->pending_invitation || $registration->has_appointment) @cannot('update_invite') offset-lg-3 @endcannot @cannot('create_vaccine') offset-lg-3 @endcannot @else offset-lg-3 @endif">
+            <div class="col-12 col-lg-6 @if($registration->pending_invitation) @cannot('update_invite') offset-lg-3 @endcannot @elseif(!$registration->has_appointment) @cannot('keep_inventory') offset-lg-3 @endcannot @endif">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     <div class="card card-body p-6">
@@ -164,10 +164,13 @@
                         </div>
                         @can('create_invite')
                         @php
-                            $past_events = \App\Models\Event::where([
-                                    ['date_held', '<', DB::raw('CURDATE()')],
-                                    //['date_held', '>=', \Carbon\Carbon::today()->subDays(14)],
-                                ])->whereHas('slots', function ($query) {
+                            $available_events = \App\Models\Event::where(function ($query) {
+                                    $query->where('date_held', '<', DB::raw('CURDATE()'))
+                                        ->orWhere(function ($query) {
+                                            $query->where('date_held', '>', DB::raw('CURDATE()'))
+                                                ->where('open', '=', '0');
+                                        });
+                                })->whereHas('slots', function ($query) {
                                     $query->select('id', 'event_id', 'capacity', 'deleted_at')
                                     ->withCount([
                                         'invitations as active_invitations_count' => function ($query) {
@@ -176,7 +179,7 @@
                                             });
                                         },
                                     ])->havingRaw('`capacity` > `active_invitations_count`');
-                                })->orderBy('date_held', 'desc')->get();
+                                })->orderBy('date_held', 'asc')->get();
                         @endphp
                             <hr>
                             <div id="forceSchedulingRow">
@@ -188,8 +191,8 @@
                                         <div class="input-group">
                                             <select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
                                                 <option selected>Choose Event...</option>
-                                                @foreach ($past_events as $event)
-                                                    <option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }}</option>
+                                                @foreach ($available_events as $event)
+                                                    <option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }} - {{ \Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}</option>
                                                 @endforeach
                                             </select>
                                             <select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">

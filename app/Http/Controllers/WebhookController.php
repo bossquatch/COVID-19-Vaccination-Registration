@@ -49,37 +49,33 @@ class WebhookController extends Controller
     private function persistEmailData(array $data)
     {
         $currentEmail = new EmailHistory();
-
-        $currentEmail->timestamp = $data['signature']['timestamp'];
-        $currentEmail->token = $data['signature']['token'];
-        $currentEmail->signature = $data['signature']['signature'];
-        // This returns and array of tags, just flatten and save it.
-        $currentEmail->tags = json_encode(Arr::flatten($data['event-data']['tags']));
+        $currentEmail->timestamp 				= $data['signature']['timestamp'];
+        $currentEmail->token 					= $data['signature']['token'];
+        $currentEmail->signature 				= $data['signature']['signature'];
+        $currentEmail->tags 					= json_encode(Arr::flatten($data['event-data']['tags']));
         // Remember to convert these values back to their actual values. I did this to obscure the
         // actual values since they are available in the email headers.  Earlier, we converted these
         // values to base 36.
-        $registration_id = Arr::get($data, 'event-data.user-variables._RID_', 0);
-        $currentEmail->registration_id = intval(base_convert($registration_id,10,36));
-        $user_id = Arr::get($data, 'event-data.user-variables._UID_', 0);
-        $currentEmail->user_id = intval(base_convert($user_id,10,36));
-        // End of conversion
-        $currentEmail->envelope_sending_ip = $data['event-data']['envelope']['sending-ip'];
-        $currentEmail->envelope_sender = $data['event-data']['envelope']['sender'];
-        $currentEmail->envelope_targets = $data['event-data']['envelope']['targets'];
-        $currentEmail->headers_to = $data['event-data']['message']['headers']['to'];
-        $currentEmail->headers_message_id = $data['event-data']['message']['headers']['message-id'];
-        $currentEmail->headers_from = $data['event-data']['message']['headers']['from'];
-        $currentEmail->headers_subject = $data['event-data']['message']['headers']['subject'];
-        $currentEmail->recipient = $data['event-data']['recipient'];
-        $currentEmail->event = $data['event-data']['event'];
-        $currentEmail->delivery_status_code = $data['event-data']['delivery-status']['code'];
-        $currentEmail->delivery_status_message = $data['event-data']['delivery-status']['message'];
-        // Using Arr::get allows me to traverse a multidimensional array and set a default value
-        // if the key is not found.  In this case, severity is not always passed as it only appears
-        // when there is an error sending the email
-        $severity = Arr::get($data, 'event-data.severity',null);
-        $currentEmail->severity = $severity;
 
+		// Using Arr::get allows me to traverse a multidimensional array and set a default value
+		// if the key is not found.
+
+        $registration_id 						= Arr::get($data, 'event-data.user-variables._RID_', 0);
+        $currentEmail->registration_id 			= intval(base_convert($registration_id,10,36));
+        $user_id 								= Arr::get($data, 'event-data.user-variables._UID_', 0);
+        $currentEmail->user_id 					= intval(base_convert($user_id,10,36));
+        $currentEmail->envelope_sending_ip 		= Arr::get($data, 'event-data.envelope.sending-ip', null);
+        $currentEmail->envelope_sender 			= Arr::get($data, 'event-data.envelope.sender',null);
+        $currentEmail->envelope_targets 		= Arr::get($data, 'event-data.envelope.targets', null);
+        $currentEmail->headers_to 				= Arr::get($data, 'event-data.message.headers.to',null);
+        $currentEmail->headers_message_id 		= Arr::get($data, 'event-data.message.headers.message-id', null);
+        $currentEmail->headers_from 			= Arr::get($data, 'event-data.message.headers.from', null);
+        $currentEmail->headers_subject 			= Arr::get($data, 'event-data.message.headers.subject', null);
+        $currentEmail->recipient 				= Arr::get($data, 'event-data.recipient', null);
+        $currentEmail->event 					= Arr::get($data, 'event-data.event', null);
+        $currentEmail->delivery_status_code 	= Arr::get($data, 'event-data.delivery-status.code', null);
+        $currentEmail->delivery_status_message 	= Arr::get($data, 'event-data.delivery-status.message', null);
+		$currentEmail->severity 				= Arr::get($data, 'event-data.severity',null);
         $currentEmail->save();
     }
 
@@ -106,12 +102,5 @@ class WebhookController extends Controller
                         $api_key),
                     $signature);
 
-//        $hmac = hash_hmac('sha256', $timestamp . $token, $api_key);
-//        if (function_exists('hash_equals')) {
-//            // hash_equals is constant time, but will not be introduced until PHP 5.6
-//            return hash_equals($hmac, $signature);
-//        } else {
-//            return $hmac === $signature;
-//        }
     }
 }
