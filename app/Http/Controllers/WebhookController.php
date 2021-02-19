@@ -15,7 +15,7 @@ class WebhookController extends Controller
         try {
             $this->handleDelivered($request->all());
             return response('Success', 200);
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return response($ex->getMessage(), 406);
         }
     }
@@ -25,7 +25,7 @@ class WebhookController extends Controller
         try {
             $this->handleFailed($request->all());
             return response('Success', 200);
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return response($ex->getMessage(), 406);
         }
     }
@@ -53,6 +53,7 @@ class WebhookController extends Controller
         $currentEmail->token 					= $data['signature']['token'];
         $currentEmail->signature 				= $data['signature']['signature'];
         $currentEmail->tags 					= json_encode(Arr::flatten($data['event-data']['tags']));
+
         // Remember to convert these values back to their actual values. I did this to obscure the
         // actual values since they are available in the email headers.  Earlier, we converted these
         // values to base 36.
@@ -76,7 +77,13 @@ class WebhookController extends Controller
         $currentEmail->delivery_status_code 	= Arr::get($data, 'event-data.delivery-status.code', null);
         $currentEmail->delivery_status_message 	= Arr::get($data, 'event-data.delivery-status.message', null);
 		$currentEmail->severity 				= Arr::get($data, 'event-data.severity',null);
-        $currentEmail->save();
+
+		try {
+			$currentEmail->save();
+		} catch (\Exception $e) {
+			return $e->getCode();
+		}
+
     }
 
     private function validateWebhook(array $signature, $api_key = null): bool
@@ -95,12 +102,8 @@ class WebhookController extends Controller
         }
 
         $api_key = config('services.mailgun.webhook_signing_key');
-        return hash_equals(
-                    hash_hmac(
-                        'sha256',
-                        $timestamp . $token,
-                        $api_key),
-                    $signature);
+
+        return hash_equals(hash_hmac('sha256',$timestamp . $token, $api_key), $signature);
 
     }
 }
