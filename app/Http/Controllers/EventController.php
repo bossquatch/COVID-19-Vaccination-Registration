@@ -63,12 +63,17 @@ class EventController extends Controller
     public function addLot($id)
     {
         $event = Event::findOrFail($id);
-        if (request()->has('lot')) {
-            $lot = Lot::firstOrCreate([
-                'number' => request()->input('lot'),
-            ]);
+        $lots = [];
 
-            $event->lots()->attach($lot->id);
+        if (request()->has('lots')) {
+            foreach (request()->get('lots') as $lot_id) {
+                // validate that the lot number is not empty
+                if (trim($lot_id) != '') {
+                    $lot = Lot::find($lot_id);
+                    $lots[] = $lot_id;
+                }
+            }
+            $event->lots()->sync($lots);
 
             return json_encode(['status' => 'success', 'html' => $event->lot_numbers]);
         } else {
@@ -86,10 +91,10 @@ class EventController extends Controller
     public function store()
     {
         $valid = request()->validate($this->validationRules());
-
+        
         $carbon_date = \Carbon\Carbon::parse($valid['date']);
         $slot_times = [];
-        $lots = explode(",", $valid['lot']);
+        $lots = explode(",",$valid['lots']);
 
         try {
             $slot_machine = new \App\Helpers\Events\SlotMachine($carbon_date, (float) $valid["start"], (float) $valid["end"], $valid['slotLength'], (float) $valid['slotCapacity']);
@@ -111,14 +116,13 @@ class EventController extends Controller
 
         // don't try to do anything else to the db if this is a duplicate event
         if ($event->wasRecentlyCreated) {
-            foreach ($lots as $lot_num) {
+            foreach ($lots as $lot_id) {
                 // validate that the lot number is not empty
-                if (trim($lot_num) != '') {
-                    $lot = Lot::firstOrCreate([
-                        'number' => trim($lot_num),
-                    ]);
-        
-                    $event->lots()->attach($lot->id);
+                if (trim($lot_id) != '') {
+                    $lot = Lot::find($lot_id);
+                    if ($lot) {
+                        $event->lots()->attach($lot->id);
+                    }
                 }
             }
             
@@ -180,6 +184,7 @@ class EventController extends Controller
     private function validationRules()
     {
         $valid_locations = implode(",",\App\Models\Location::pluck('id')->toArray());
+        $valid_lots = implode(",",\App\Models\Lot::pluck('id')->toArray());
 
         return [
             'title' => 'required|max:255',
@@ -189,7 +194,7 @@ class EventController extends Controller
             'end' => 'required|numeric|min:0|max:23|gt:start',
             'slotLength' => ['required', Rule::in(\App\Helpers\Events\SlotMachine::$validIntervals)],
             'slotCapacity' => 'required|numeric|min:0',
-            'lot' => 'required|string|max:255',
+            'lots' => 'required',
             'openAutomatically' => 'nullable',
             'partners.*' => 'nullable',
         ];

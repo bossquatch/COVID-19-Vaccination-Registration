@@ -89,16 +89,9 @@
                                         <p class="text-gray-dark" id="lot-numbers">
                                             {{ $event->lot_numbers }}
                                         </p>
-                                        <div class="col-12 col-md-6 mx-auto">
-                                            <div class="input-group input-group-sm mb-3">
-                                                <input type="text" class="form-control font-size-sm lot-input" id="addLotNum" placeholder="Add lot number" aria-label="Add lot number" aria-describedby="lotBtn">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-success font-size-sm btn-sm" type="submit" id="lotBtn" onclick="addLotNum()">
-                                                        <span class="fad fa-plus mr-1"></span>Add
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button type="button" class="btn btn-block btn-info" data-toggle="modal" data-target="#lotModal">
+                                            <span class="fad fa-plus"></span> Add Lot Numbers
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -134,28 +127,5 @@
     </div>
 </section>
 
-<script>
-    $( function() {
-        $(".lot-input").autocomplete({
-            source: availableLots
-        });
-    });
-
-    function addLotNum() {
-        lot = document.getElementById('addLotNum').value;
-        if (lot) {
-            $.post('/events/{{ $event->id }}/lots', {
-                    "_token": $('meta[name=csrf-token]').attr('content'),
-                    "lot": lot,
-                }, function(data) {
-                    if (data.status == 'success') {
-                        document.getElementById('addLotNum').value = "";
-                        $('#lot-numbers').html(data.html);
-                    } else {
-                        console.error('Something went wrong with adding the lot number!')
-                    }
-            }, 'json');
-        }
-    }
-</script>
+@include('event.partials.lotmodal', ['event' => $event, 'type' => 'ajax'])
 @endsection

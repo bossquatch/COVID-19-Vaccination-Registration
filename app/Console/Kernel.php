@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\ParoleCommand::class,
         \App\Console\Commands\PostEventCommand::class,
         \App\Console\Commands\RunSchedulingCommands::class,
+        \App\Console\Commands\LotSync::class,
     ];
 
     /**
@@ -35,6 +36,10 @@ class Kernel extends ConsoleKernel
 			->withoutOverlapping();
         $schedule->command(RunSchedulingCommands::class)
 			->everyFiveMinutes()
+			->onOneServer()
+			->withoutOverlapping();
+        $schedule->command(LotSync::class)
+			->daily()
 			->onOneServer()
 			->withoutOverlapping();
     }

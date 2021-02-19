@@ -46,6 +46,8 @@ class VaccineController extends Controller
         $inputs['giverCreds'] = $vac->creds;
         $inputs['giverLastName'] = $vac->last_name;
 
+        $lot = \App\Models\Lot::findOrFail($inputs['lotNumber']);
+
         $vaccine = \App\Models\Vaccine::create([
             'registration_id' => $inputs['registrationId'],
             'vaccine_type_id' => $inputs['vaccineName'] ?? 1,                                               // default: Moderna
@@ -54,10 +56,10 @@ class VaccineController extends Controller
             'injection_route_id' => $inputs['injectionRoute'] ?? 2,                                         // default: Intramuscular
             'eligibility_id' => $inputs['eligibility'] ?? 1,                                                // default: ?
             'date_given' => $inputs['dateGiven'] ?? Carbon::today(),                                        // default: today
-            'lot_number' => $inputs['lotNumber'],
+            'lot_number' => $lot->number,
             'ndc' => $inputs['ndc'] ?? '08077727399',                                                       // default: normal NDC
-            'exp_month' => $inputs['expDateMonth'] ?? Carbon::today()->addMonth()->format('m'),             // default: next month
-            'exp_year' => $inputs['expDateYear'] ?? Carbon::today()->addMonth()->format('Y'),               // default: next month
+            'exp_month' => $lot->expiration_date ? Carbon::parse($lot->expiration_date)->format('m') : Carbon::today()->addMonth()->format('m'),
+            'exp_year' => $lot->expiration_date ? Carbon::parse($lot->expiration_date)->format('Y') : Carbon::today()->addMonth()->format('Y'),
             'vis_publication' => $inputs['visPubDate'] ?? '2020-12-18',
             'giver_fname' => $inputs['giverFirstName'],
             'giver_creds' => $inputs['giverCreds'],
@@ -93,13 +95,14 @@ class VaccineController extends Controller
         $valid_routes = implode(",",\App\Models\InjectionRoute::pluck('id')->toArray());
         $valid_eligs = implode(",",\App\Models\Eligibility::pluck('id')->toArray());
         $valid_givers = implode(",",\App\Models\User::whereHas('roles', function($query) { $query->where('name', '=', 'vac'); })->pluck('id')->toArray());
+        $valid_lots = implode(",",\App\Models\Lot::pluck('id')->toArray());
 
         $rules = [
             'registrationId' => ['required'],
             'dateGiven' => ['nullable', 'date'],
             'vaccineName' => ['nullable', 'in:'.$valid_types],
             'manufacturer' => ['nullable', 'in:'.$valid_manus],
-            'lotNumber' => ['required', 'string', 'max:255'],
+            'lotNumber' => ['required', 'in:'.$valid_lots],
             'ndc' => ['nullable', 'string', 'max:255', new ElevenDigits],
             'expDateMonth' => ['nullable', 'integer', 'min:1', 'max:12'],
             'expDateYear' => ['nullable', 'integer', 'min:2021'],

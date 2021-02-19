@@ -81,6 +81,8 @@ return [
 
     'google_maps_key' => env('GOOGLE_MAPS_API_KEY', null),
 
+    'moderna_expiry' => env('MODERNA_EXPIRY', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

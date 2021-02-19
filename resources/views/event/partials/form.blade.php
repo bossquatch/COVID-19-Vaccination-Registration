@@ -102,15 +102,19 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="form-group mb-5">
-                <label for="lot">
-                    Lot Number
-                </label>
-                <input id="lot" name="lot" class="lot-input form-control @error("lot") is-invalid @enderror" type="text" value="{{ old('lot') }}" placeholder="Lot Number 1, Lot Number 2, etc.">
-                <span class="form-text font-weight-light font-size-xs text-muted">Enter lot numbers as a comma-separated list.  Additional lot numbers can be added later.</span>
+            <div class="mb-5">
+                <p class="h4">
+                    Lot Numbers: <span id="lot-numbers">N/a</span>
+                </p>
+
+                <input type="hidden" name="lots" id="lots">
+
+                <button type="button" class="btn btn-block btn-info" data-toggle="modal" data-target="#lotModal">
+                    <span class="fad fa-plus"></span> Add Lot Numbers
+                </button>
 
                 @error("lot")
-                <span class="invalid-feedback" role="alert">
+                <span class="alert alert-danger" role="alert">
                     <strong>{{ $errors->first("lot") }}</strong>
                 </span>
                 @enderror

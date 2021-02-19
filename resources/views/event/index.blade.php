@@ -110,6 +110,8 @@
 </section>
 
 @can('create_event')
+@include('event.partials.lotmodal', ['event' => null, 'type' => 'form'])
+
 <script type="text/javascript">
     $( function() {
         document.getElementById('slider-time').innerHTML = valToHour(document.getElementById('start').value);

@@ -5,7 +5,7 @@
         <div class="custom-btn-group mb-3">
             @forelse (($registration->has_appointment ? $registration->appointment->event->lots->all() : collect([])) as $lot)
                 <div class="btn-group-item font-weight-medium font-size-sm">
-                    <input type="radio" id="lotNumber-{{ $lot->id }}" value="{{ $lot->number }}" name="lotNumber" @if($loop->first) checked aria-checked="true" @endif>
+                    <input type="radio" id="lotNumber-{{ $lot->id }}" value="{{ $lot->id }}" name="lotNumber" @if($loop->first) checked aria-checked="true" @endif>
                     <label for="lotNumber-{{ $lot->id }}">
                         {{ $lot->number }}
                     </label>
