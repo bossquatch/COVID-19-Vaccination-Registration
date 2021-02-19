@@ -1,7 +1,7 @@
 <div class="collapse" id="vaccineCollapse">
     <input id="registrationId" type="hidden" value="{{ $registration->id }}">
     <div class="mb-4">
-        <h2 class="font-size-xl mb-3">Lot Number</h2>
+        <h2 class="font-size-xl mb-3">Lot Number <small class="text-muted font-size-xs">(Choose One)</small></h2>
         <div class="custom-btn-group mb-3">
             @forelse (($registration->has_appointment ? $registration->appointment->event->lots->all() : collect([])) as $lot)
                 <div class="btn-group-item font-weight-medium font-size-sm">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="mb-4">
-        <h2 class="font-size-xl mb-3">Injection site</h2>
+        <h2 class="font-size-xl mb-3">Injection site <small class="text-muted font-size-xs">(Choose One)</small></h2>
         <div class="custom-btn-group mb-3">
             @foreach (\App\Models\InjectionSite::get() as $site)
                 <div class="btn-group-item font-weight-medium font-size-sm">
@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="mb-4">
-        <h2 class="font-size-xl mb-3">Eligibility</h2>
+        <h2 class="font-size-xl mb-3">Eligibility <small class="text-muted font-size-xs">(Choose One)</small></h2>
         <div class="custom-btn-group mb-3">
             @foreach (\App\Models\Eligibility::get() as $ele)
                 <div class="btn-group-item font-weight-medium font-size-sm">
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="mb-4">
-        <h2 class="font-size-xl mb-3">Risk factors</h2>
+        <h2 class="font-size-xl mb-3">Risk factors <small class="text-muted font-size-xs">(Choose All That Apply)</small></h2>
         <div class="custom-btn-group mb-3">
             @foreach (\App\Models\RiskFactor::get() as $risk)
                 @if($risk->name != null)
