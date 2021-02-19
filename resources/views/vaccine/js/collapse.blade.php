@@ -50,7 +50,8 @@
     }
 
     function getRadio(name) {
-        return document.querySelector('input[name="' + name + '"]:checked').value;
+        let item = document.querySelector('input[name="' + name + '"]:checked');
+        return item ? item.value : null;
     }
     
     function showErrors(errors) {
