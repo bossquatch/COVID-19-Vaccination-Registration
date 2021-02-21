@@ -1,5 +1,5 @@
 <tr>
-<td class="header">
+<td class="header button-red">
 <a href="{{ $url }}" title="{{ config('app.name') }}" style="display: inline-block;">
 @if (trim($slot) === 'Laravel')
 <img src="https://laravel.com/img/notification-logo.png" class="logo" alt="Laravel Logo">
