@@ -23,6 +23,24 @@ class Invitation extends Model
         'deleted_at',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        self::deleting(function (Invitation $invite) {
+            if (!in_array($invite->invite_status_id, [4,5,8,9,10])) {
+                $regis = $invite->registration;
+
+                if (in_array($regis->status_id, [2,3,4]) ) {
+                    $regis->status_id = 1;
+                    $regis->save();
+                    
+                    // Removed until EventChange Mailable is complete
+                    //$regis->notify(new \App\Notifications\Change());
+                }
+            }
+        });
+    }
+
     /**
      * Set the keys for a save update query.
      *

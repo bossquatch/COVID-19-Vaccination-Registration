@@ -12,6 +12,16 @@ class Event extends Model
 
     protected $guarded = [];
 
+    public static function boot() {
+        parent::boot();
+
+        self::deleting(function (Event $event) {
+            foreach ($event->slots as $slot) {
+                $slot->delete();
+            }
+        });
+    }
+
     public function location() {
         return $this->belongsTo(Location::class, 'location_id')->withTrashed();
     }

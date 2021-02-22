@@ -73,6 +73,14 @@
                                     {{ $event->title }}
                                 </h2>
 
+                                @can('delete_event')
+                                <div class="row justify-content-center">
+                                    <a class="badge badge-danger mb-2" role="button" data-toggle="modal" data-target="#cancelEvent">
+                                        <span class="fal fa-ban mr-1"></span> Cancel Event
+                                    </a>
+                                </div>
+                                @endcan
+
                                 <div class="badge @if($event->partner_handled) badge-info-soft @elseif($event->open) badge-success-soft @else badge-danger-soft @endif mb-2">
                                     <span class="fad fa-calendar mr-1"></span> {{ $event->partner_handled ? $event->partners : ($event->open ? 'Scheduling Automatically' : 'Scheduling Closed') }}
                                 </div>
@@ -119,6 +127,13 @@
             <div class="col-12 col-lg-3 mt-5 mt-lg-0">
                 <div class="card my-auto">
                     <div class="card-body">
+                        {{--@can('update_event')
+                        @if($event->edittable)
+                        <div class="row justify-content-end px-4">
+                            <a class="fad fa-edit text-info font-size-sm" href="#" role="button" aria-expanded="false" aria-controls="" title="Edit Time Slots"></a>
+                        </div>
+                        @endif
+                        @endcan--}}
                         <h3 class="card-title">Slots</h3>
                         <div id="slotSection" class="list-group">
                             @foreach ($event->slots as $slot)
@@ -143,6 +158,38 @@
         </div>
     </div>
 </section>
+
+@can('delete_event')
+<!-- Cancellation Modal -->
+<div class="modal fade" id="cancelEvent" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Event Cancellation Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-6">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <span class="fad fa-exclamation-triangle fa-5x text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p class="h3 text-gray-dark font-weight-md mb-5">Warning!</p>
+                        <p class="text-gray-dark">Are you sure you wish to cancel this event?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Do Not Cancel</button>
+
+                <form class="form-inline" action="/events/{{ $event->id }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-outline-danger">Cancel Event</button>
+                </form>
+            </div>        
+        </div>
+    </div>
+</div>
+@endcan
 
 @include('event.partials.lotmodal', ['event' => $event, 'type' => 'ajax'])
 @endsection

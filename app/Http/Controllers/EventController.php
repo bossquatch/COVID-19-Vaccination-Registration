@@ -155,7 +155,11 @@ class EventController extends Controller
 
     public function delete($id)
     {
-        // Will need to work out how this works and how the repurcussions will impact the system
+        $event = Event::findOrFail($id);
+        $event->delete();   // listeners will handle the slots & invitataions being removed
+
+        Session::flash('success', 'Event was cancelled.');
+        return redirect('/events');
     }
 
     public function pendingInvites($id)

@@ -21,6 +21,16 @@ class Slot extends Model
         'deleted_at',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        self::deleting(function (Slot $slot) {
+            foreach ($slot->invitations as $invite) {
+                $invite->delete();
+            }
+        });
+    }
+
     public function event() {
         return $this->belongsTo(Event::class, 'event_id');
     }
