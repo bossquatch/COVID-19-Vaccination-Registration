@@ -49,6 +49,24 @@ class Event extends Model
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
+    public function intersectsSlot(\Carbon\CarbonPeriod $period) {
+        foreach ($this->slots as $slot) {
+            if ($slot->intersects($period)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function withinEvent(\Carbon\Carbon $time) {
+        foreach ($this->slots as $slot) {
+            if ($slot->withinTime($time)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getLotNumbersAttribute() {
         return implode(", ", $this->lots()->pluck('number')->toArray());
     }
@@ -79,6 +97,24 @@ class Event extends Model
 
     public function getEdittableAttribute() {
         return (!$this->open && $this->invitations()->count() == 0);
+    }
+
+    public function getHeldIntervalsAttribute() {
+        return new \Carbon\CarbonPeriod($this->date_held . ' 06:00', '15 minutes', $this->date_held . ' 22:00');
+    }
+
+    public function getStartableAttribute() {
+        $times = [];
+
+        foreach ($this->held_intervals as $date) {
+            dump($date);
+            $time = \Carbon\Carbon::parse($date);
+            if (!$this->withinEvent($time)) {
+                $times[] = $date;
+            }
+        }
+
+        return $times;
     }
 
     public function getHasPendingCallbacksAttribute() {

@@ -133,16 +133,22 @@
             <div class="col-12 col-lg-3 mt-5 mt-lg-0">
                 <div class="card my-auto">
                     <div class="card-body">
-                        {{--@can('update_event')
-                        @if($event->edittable)
+                        @can('update_event')
                         <div class="row justify-content-end px-4">
-                            <a class="fad fa-edit text-info font-size-sm" href="#" role="button" aria-expanded="false" aria-controls="" title="Edit Time Slots"></a>
+                            <a class="fal fa-plus text-success font-size-sm" href="#newSlotColl" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="newSlotColl" title="New Time Slot"></a>
                         </div>
-                        @endif
-                        @endcan--}}
+                        @endcan
+
                         <h3 class="card-title">Slots</h3>
+
+                        @can('update_event')
+                        <div class="collapse card card-body mb-2 @if($errors->has('startTime') || $errors->has('slotLength') || $errors->has('slotCapacity')) show @endif" id="newSlotColl">
+                            @include('event.partials.newslot', ['event' => $event])
+                        </div>
+                        @endcan
+
                         <div id="slotSection" class="list-group">
-                            @foreach ($event->slots as $slot)
+                            @foreach ($event->slots()->orderBy('starting_at', 'asc')->get() as $slot)
                                 <li class="list-group-item list-group-item-action postition-relative">
                                     @include('event.partials.slot', ['slot' => $slot])
                                 </li>

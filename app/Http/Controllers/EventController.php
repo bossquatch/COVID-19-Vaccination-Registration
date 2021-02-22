@@ -154,11 +154,29 @@ class EventController extends Controller
         $carbon_date = \Carbon\Carbon::parse($valid['date']);
 
         $event = Event::findOrFail($id);
+        $new_date = ($event->date_held != $carbon_date->format('Y-m-d'));
         $event->update([
             'location_id' => $valid['location'],
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
         ]);
+
+        if ($new_date) {
+            foreach ($event->slots as $slot) {
+                $new_start = $carbon_date->copy();
+                $new_end = $carbon_date->copy();
+
+                $new_start->hour = \Carbon\Carbon::parse($slot->starting_at)->hour;
+                $new_start->minute = \Carbon\Carbon::parse($slot->starting_at)->minute;
+                $new_end->hour = \Carbon\Carbon::parse($slot->ending_at)->hour;
+                $new_end->minute = \Carbon\Carbon::parse($slot->ending_at)->minute;
+
+                $slot->update([
+                    'starting_at' => $new_start,
+                    'ending_at' => $new_end,
+                ]);
+            }
+        }
 
         Session::flash('success', "Event was updated.");
         return redirect()->back();
@@ -199,6 +217,17 @@ class EventController extends Controller
         ]);
     }
 
+    public function slotDelete($event_id, $slot_id)
+    {
+        $slot = \App\Models\Slot::findOrFail($slot_id);
+        if ($slot->event_id != $event_id) { abort(404); }
+
+        $slot->delete();
+
+        Session::flash('success', 'Slot was removed.');
+        return redirect('/events/'.$event_id);
+    }
+
     public function reserve($event_id, $slot_id) 
     {
         $slot = \App\Models\Slot::findOrFail($slot_id);
@@ -210,6 +239,31 @@ class EventController extends Controller
 
         Session::flash('success', "Reserved seats in slot were set.");
         return redirect('/events/'.$slot->event_id);
+    }
+
+    public function newSlot($id)
+    {
+        $valid = request()->validate([
+            'startTime' => ['required', 'date'],
+            'slotLength' => ['required', Rule::in(['15 minutes', '30 minutes', '1 hour', '2 hours'])],
+            'slotCapacity' => 'required|numeric|min:0',
+        ]);
+
+        $event = Event::findOrFail($id);
+
+        $period = new \Carbon\CarbonPeriod(\Carbon\Carbon::parse($valid['startTime']), $valid['slotLength'], \Carbon\Carbon::parse($valid['startTime'])->add($valid['slotLength']));
+        if ($event->intersectsSlot($period)) {
+            return redirect()->back()->withErrors(['slotLength' => 'Chosen time slot length causes an overlap with existing time slots'])->withInput();
+        }
+
+        $event->slots()->create([
+            'starting_at' => \Carbon\Carbon::parse($valid['startTime']),
+            'ending_at' => \Carbon\Carbon::parse($valid['startTime'])->add($valid['slotLength']),
+            'capacity' => $valid['slotCapacity']
+        ]);
+
+        Session::flash('success', "Time slot added.");
+        return redirect()->back();
     }
 
     private function validationRules($full = true)
