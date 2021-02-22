@@ -59,6 +59,17 @@ class EventController extends Controller
         return redirect('/events');
     }
 
+    public function close($id)
+    {
+        $event = Event::findOrFail($id);
+
+        $event->open = false;
+        $event->save();
+
+        Session::flash('success', "Event was closed for scheduling.");
+        return redirect('/events');
+    }
+
     public function addLot($id)
     {
         $event = Event::findOrFail($id);

@@ -85,15 +85,21 @@
                                     <span class="fad fa-calendar mr-1"></span> {{ $event->partner_handled ? $event->partners : ($event->open ? 'Scheduling Automatically' : 'Scheduling Closed') }}
                                 </div>
                                 
-                                @if (!$event->open)
                                 @can('update_event')
+                                @if (!$event->open)
                                 <form action="/events/{{ $event->id }}/open" method="post">
                                     @csrf
                                     @method("PUT")
                                     <button type="submit" class="btn btn-sm btn-outline-success">Open for Automatic Scheduling</button>
                                 </form>
-                                @endcan
+                                @else
+                                <form action="/events/{{ $event->id }}/close" method="post">
+                                    @csrf
+                                    @method("PUT")
+                                    <button type="submit" class="btn btn-sm btn-outline-dark">Close Automatic Scheduling</button>
+                                </form>
                                 @endif
+                                @endcan
 
                                 <p class="text-gray-dark mb-2">
                                     Date: {{ Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}
