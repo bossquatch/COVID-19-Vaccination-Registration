@@ -63,11 +63,13 @@
                                 </div>
                                 
                                 @if (!$event->open)
+                                @can('update_event')
                                 <form action="/events/{{ $event->id }}/open" method="post">
                                     @csrf
                                     @method("PUT")
                                     <button type="submit" class="btn btn-sm btn-outline-success">Open for Automatic Scheduling</button>
                                 </form>
+                                @endcan
                                 @endif
 
                                 <p class="text-gray-dark mb-2">
