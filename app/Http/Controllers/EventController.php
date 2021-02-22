@@ -42,7 +42,6 @@ class EventController extends Controller
     public function read($id)
     {
         $event = Event::findOrFail($id);
-
         return view('event.details', [
             'event' => $event,
             'lots' => Lot::get()->pluck('number')->all(),
@@ -137,6 +136,23 @@ class EventController extends Controller
         return redirect('/events');
     }
 
+    public function update($id)
+    {
+        $valid = request()->validate($this->validationRules(false));
+
+        $carbon_date = \Carbon\Carbon::parse($valid['date']);
+
+        $event = Event::findOrFail($id);
+        $event->update([
+            'location_id' => $valid['location'],
+            'date_held' => $carbon_date->format('Y-m-d'),
+            'title' => $valid['title'],
+        ]);
+
+        Session::flash('success', "Event was updated.");
+        return redirect()->back();
+    }
+
     public function delete($id)
     {
         // Will need to work out how this works and how the repurcussions will impact the system
@@ -181,22 +197,30 @@ class EventController extends Controller
         return redirect('/events/'.$slot->event_id);
     }
 
-    private function validationRules()
+    private function validationRules($full = true)
     {
         $valid_locations = implode(",",\App\Models\Location::pluck('id')->toArray());
         $valid_lots = implode(",",\App\Models\Lot::pluck('id')->toArray());
 
-        return [
-            'title' => 'required|max:255',
-            'date' => ['required', 'date', new DateParsable],
-            'location' => 'required|in:'.$valid_locations,
-            'start' => 'required|numeric|min:0|max:23',
-            'end' => 'required|numeric|min:0|max:23|gt:start',
-            'slotLength' => ['required', Rule::in(\App\Helpers\Events\SlotMachine::$validIntervals)],
-            'slotCapacity' => 'required|numeric|min:0',
-            'lots' => 'required',
-            'openAutomatically' => 'nullable',
-            'partners.*' => 'nullable',
-        ];
+        if ($full) {
+            return [
+                'title' => 'required|max:255',
+                'date' => ['required', 'date', new DateParsable],
+                'location' => 'required|in:'.$valid_locations,
+                'start' => 'required|numeric|min:0|max:23',
+                'end' => 'required|numeric|min:0|max:23|gt:start',
+                'slotLength' => ['required', Rule::in(\App\Helpers\Events\SlotMachine::$validIntervals)],
+                'slotCapacity' => 'required|numeric|min:0',
+                'lots' => 'required',
+                'openAutomatically' => 'nullable',
+                'partners.*' => 'nullable',
+            ];
+        } else {
+            return [
+                'title' => 'required|max:255',
+                'date' => ['required', 'date', new DateParsable],
+                'location' => 'required|in:'.$valid_locations,
+            ];
+        }
     }
 }

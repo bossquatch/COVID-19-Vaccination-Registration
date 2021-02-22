@@ -88,6 +88,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/events-history', [App\Http\Controllers\EventController::class, 'history']);
     Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->middleware('can:create_event');
     Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'read']);
+    Route::post('/events/{id}', [App\Http\Controllers\EventController::class, 'update'])->middleware('can:update_event');
     Route::get('/events/{id}/pending', [App\Http\Controllers\EventController::class, 'pendingInvites'])->middleware('can:update_invite');
     Route::get('/events/{event_id}/slots/{slot_id}', [App\Http\Controllers\EventController::class, 'slotInvites']);
     Route::put('/events/{event_id}/slots/{slot_id}/reserve', [App\Http\Controllers\EventController::class, 'reserve'])->middleware('can:create_invite');

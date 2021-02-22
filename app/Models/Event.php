@@ -67,6 +67,10 @@ class Event extends Model
         return $this->slots()->orderBy('ending_at', 'desc')->first()->ending_at ?? 'N/A';
     }
 
+    public function getEdittableAttribute() {
+        return (!$this->open && $this->invitations()->count() == 0);
+    }
+
     public function getHasPendingCallbacksAttribute() {
         return ($this->slots()->whereHas('invitations', function ($query) {
             $query->whereHas('invite_status', function ($query) {
