@@ -50,9 +50,21 @@ class Slot extends Model
         );
     }
 
+    public function intersects(\Carbon\CarbonPeriod $period) {
+        return $period->overlaps($this->carbon_period);
+    }
+
+    public function withinTime(\Carbon\Carbon $time) {
+        return $time->between(\Carbon\Carbon::parse($this->starting_at), \Carbon\Carbon::parse($this->ending_at)->sub('1 minute'));
+    }
+
     // allows $slot->has_stock
     public function getHasStockAttribute() {
         return (($this->active_invitation_count + $this->reserved) < $this->capacity);
+    }
+
+    public function getCarbonPeriodAttribute() {
+        return new \Carbon\CarbonPeriod($this->starting_at, '15 minutes', $this->ending_at);
     }
 
     // allows $slot->stock
