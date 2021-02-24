@@ -120,7 +120,7 @@ class EventController extends Controller
             'location_id' => $valid['location'],
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
-            'open' => (isset($valid['openAutomatically']) || isset($valid['partners']) ),
+            'open' => isset($valid['openAutomatically']),
             'partner_handled' => isset($valid['partners']),
         ]);
 
@@ -141,6 +141,33 @@ class EventController extends Controller
             if(isset($valid['partners'])) {
                 $event->tags()->sync(array_keys($valid['partners']));
             }
+
+            // SETTINGS
+
+            if(isset($valid['vulnerability'])) {
+                $vul = explode('|', $valid['vulnerability']);
+                $valid['vulnerabilityMin'] = $vul[0] ?? null;
+                $valid['vulnerabilityMax'] = $vul[1] ?? null;
+            }
+
+            if (isset($valid['zips'])) {
+                $valid['zips'] = preg_replace('/\s+/', '', rtrim($valid['zips'],","));
+            }
+
+            $settings = $event->settings()->create([
+                'age_min' => $valid['ageMin'] ?? null,
+                'age_max' => $valid['ageMax'] ?? null,
+                'vulnerability_min' => $valid['vulnerabilityMin'] ?? null,
+                'vulnerability_max' => $valid['vulnerabilityMax'] ?? null,
+                'zips_string' => $valid['zips'] ?? null,
+                'search_address' => $valid['autocomplete'] ?? null,
+                'latitude' => $valid['latitude'] ?? null,
+                'longitude' => $valid['longitude'] ?? null,
+                'search_radius' => $valid['radius'] ?? null,
+            ]);
+
+            $settings->conditions()->sync(isset($valid['condition']) ? array_keys($valid['condition']) : []);
+            $settings->occupations()->sync(isset($valid['occupation']) ? array_keys($valid['occupation']) : []);
         }
 
         Session::flash('success', "Event was added.");
@@ -283,6 +310,16 @@ class EventController extends Controller
                 'lots' => 'required',
                 'openAutomatically' => 'nullable',
                 'partners.*' => 'nullable',
+                'ageMin' => 'nullable|numeric',
+                'ageMax' => 'nullable|numeric',
+                'condition' => 'nullable',
+                'vulnerability' => 'nullable',
+                'occupation' => 'nullable',
+                'zips' => 'nullable',
+                'autocomplete' => 'nullable',
+                'latitude' => 'required_with:longitude,autocomplete,radius|numeric',
+                'longitude' => 'required_with:latitude,autocomplete,radius|numeric',
+                'radius' => 'required_with:longitude,autocomplete,latitude|numeric',
             ];
         } else {
             return [

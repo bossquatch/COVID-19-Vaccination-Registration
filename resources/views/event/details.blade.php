@@ -66,6 +66,7 @@
                                 @if($event->edittable)
                                 <div class="row justify-content-end">
                                     <a class="fad fa-edit text-info font-size-sm" data-toggle="collapse" href="#editCollapse" role="button" aria-expanded="false" aria-controls="editCollapse" title="Edit Event"></a>
+                                    <a class="fad fa-cog text-secondary ml-2" href="/events/{{ $event->id }}/settings" title="Edit Event Settings"></a>
                                 </div>
                                 @endif
                                 @endcan

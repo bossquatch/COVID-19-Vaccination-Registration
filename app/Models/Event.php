@@ -26,6 +26,10 @@ class Event extends Model
         return $this->belongsTo(Location::class, 'location_id')->withTrashed();
     }
 
+    public function settings() {
+        return $this->hasOne(Settings::class, 'event_id');
+    }
+
     public function slots() {
         return $this->hasMany(Slot::class, 'event_id');
     }

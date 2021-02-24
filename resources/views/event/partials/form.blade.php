@@ -156,6 +156,164 @@
         </div>
         @endcan
     </div>
+    <div class="row">
+        <div class="col-12">
+            <span class="h4">Settings</span>
+        </div>
+
+        <!-- Age Section -->
+        <div class="col-12">
+            <span class="h5"><u>Age</u> <small>(leave blank if no age restriction)</small></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group mb-5">
+                <label for="ageMin">
+                    Min
+                </label>
+                <input id="ageMin" name="ageMin" class="form-control @error("ageMin") is-invalid @enderror" type="number" min="0" value="{{ old('ageMin') ?? 65 }}" placeholder="Age minimum (leave blank if no age minimum)">
+
+                @error("ageMin")
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first("ageMin") }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group mb-5">
+                <label for="ageMax">
+                    Max
+                </label>
+                <input id="ageMax" name="ageMax" class="form-control @error("ageMax") is-invalid @enderror" type="number" min="0" value="{{ old('ageMax') }}" placeholder="Age maximum (leave blank if no age maximum)">
+
+                @error("ageMax")
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first("ageMax") }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <!-- Conditions Section -->
+        <div class="col-12">
+            <span class="h5"><u>Underlying Conditions</u> <small>(leave blank if no condition restriction)</small></span>
+        </div>
+        @foreach (\App\Models\Condition::get() as $condition)
+            @if($condition->display_name != null)
+                <div class="col-12 col-lg-6 col-md-4">
+                    <div class="form-group mb-5">
+                        <div class="custom-control custom-checkbox">
+                            <input id="condition{{ $condition->id }}" name="condition[{{$condition->id}}]" class="custom-control-input" type="checkbox" @if(old('condition') && array_key_exists($condition->id, old('condition'))) checked aria-checked="true" @endif>
+                            <label class="custom-control-label" for="condition{{ $condition->id }}">{{ $condition->display_name }}</label>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+
+        <!-- Vulnerablity Section -->
+        <div class="col-12">
+            <span class="h5"><u>Vulnerablity Score</u> <small>(leave blank if no vulnerability restriction)</small></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="custom-btn-group my-3">
+                <div class="btn-group-item font-weight-medium font-size-sm">
+                    <input type="radio" id="vulnerability-low" value="0|5" name="vulnerability" @if(old('vulnerability') == '0|5') checked aria-checked="true" @endif>
+                    <label for="vulnerability-low">
+                        0 - 5
+                    </label>
+                </div>
+                <div class="btn-group-item font-weight-medium font-size-sm">
+                    <input type="radio" id="vulnerability-med" value="6|10" name="vulnerability" @if(old('vulnerability') == '6|10') checked aria-checked="true" @endif>
+                    <label for="vulnerability-med">
+                        6 - 10
+                    </label>
+                </div>
+                <div class="btn-group-item font-weight-medium font-size-sm">
+                    <input type="radio" id="vulnerability-high" value="10" name="vulnerability" @if(old('vulnerability') == '10') checked aria-checked="true" @endif>
+                    <label for="vulnerability-high">
+                        10+
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Occupation Section -->
+        <div class="col-12">
+            <span class="h5"><u>Occupational Risks</u> <small>(leave blank if no occupation restriction)</small></span>
+        </div>
+        @foreach (\App\Models\Occupation::get() as $occupation)
+            @if($occupation->display_name != null)
+                <div class="col-12 col-lg-6 col-md-4">
+                    <div class="form-group mb-5">
+                        <div class="custom-control custom-checkbox">
+                            <input id="occupation{{ $occupation->id }}" name="occupation[{{$occupation->id}}]" class="custom-control-input" type="checkbox" @if(old('occupation') && array_key_exists($occupation->id, old('occupation'))) checked aria-checked="true" @endif>
+                            <label class="custom-control-label" for="occupation{{ $occupation->id }}">{{ $occupation->display_name }}</label>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+
+        <!-- Zip Codes Section -->
+        <div class="col-12">
+            <span class="h5"><u>Zip Codes</u> <small>(leave blank if no zip code restriction)</small></span>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="zips">Zip Codes (in a comma-seperated list)</label>
+                <input class="form-control" type="text" id="zips" placeholder="Zip1,Zip2,etc." name="zips" value="{{ old('zips') }}">
+            </div>
+        </div>
+
+        <!-- Geolocation Section -->
+        <div class="col-12">
+            <span class="h5"><u>Geolocation</u> <small>(leave blank if no geolocation restriction)</small></span>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="autocomplete">Address search</label>
+                <input class="form-control" type="text" id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" name="autocomplete" value="{{ old('autocomplete') }}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="lat">Latitude</label>
+                <input class="form-control @error("latitude") is-invalid @enderror" type="number" id="lat" name="latitude" value="{{ old('latitude') }}" step="0.000000000000001">
+                @error("latitude")
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first("latitude") }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="lng">Longitude</label>
+                <input class="form-control @error("longitude") is-invalid @enderror" type="number" id="lng" name="longitude" value="{{ old('longitude') }}" step="0.000000000000001">
+                @error("longitude")
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first("longitude") }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group row px-4">
+                <label for="radius" class="col-form-label col-form-label-sm">Within</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm @error("radius") is-invalid @enderror" type="number" id="radius" min="0" placeholder="Radius (in miles)" name="radius" value="{{ old('radius') }}">
+                
+                    @error("radius")
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first("radius") }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <span class="col-form-label col-form-label-sm">mile radius.</span>
+            </div>
+        </div>
+    </div>
     <div class="row justify-content-end">
         <div class="col-12 col-sm-5 col-md-4 col-lg-3">
             <button type="submit" class="btn btn-success btn-block">Submit</button>

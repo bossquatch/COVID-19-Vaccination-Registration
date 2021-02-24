@@ -26,7 +26,7 @@ class Board
         
         // for each slot:
         foreach ($slots as $slot) {
-            $registrations = self::evaluate(($slot->capacity - ($slot->active_invitations_count + $slot->reserved)), Carbon::parse($slot->starting_at)->format('Y-m-d'), $slot->id)->get();
+            $registrations = self::evaluate(($slot->capacity - ($slot->active_invitations_count + $slot->reserved)), Carbon::parse($slot->starting_at)->format('Y-m-d'), $slot->id, $slot->event->settings->queryMods())->get();
             $regis_ids = $registrations->pluck('id');
             $regis_keys = [];
             foreach ($regis_ids as $id) {
@@ -49,7 +49,7 @@ class Board
     {
         $start_at = Carbon::now()->addHours(1);
         $date_limit = Carbon::today()->addDays(25);
-        return Slot::select('id', 'capacity', 'reserved', 'starting_at')
+        return Slot::select('id', 'event_id', 'capacity', 'reserved', 'starting_at')
             ->withCount([
                 'invitations as active_invitations_count' => function (Builder $query) {
                     $query->whereHas('invite_status', function (Builder $query) {
@@ -66,7 +66,7 @@ class Board
     }
 
     // query valid registrations
-    protected static function evaluate($capacity, $date, $slot)
+    protected static function evaluate($capacity, $date, $slot, $where_callback)
     {
         $age_limit = Carbon::today()->subYears(65);
 
@@ -81,9 +81,8 @@ class Board
                     ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
             })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
                 $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
-            })->where([    
-                ['birth_date', '<=', $age_limit],                                       // only grab age group
-            ])->orderBy('received_vaccines_count', 'desc')                              // prioritize those who need a second vaccine
+            })->where($where_callback)                                                  // base of callback mods
+            ->orderBy('received_vaccines_count', 'desc')                                // prioritize those who need a second vaccine
             ->orderBy('submitted_at', 'asc')                                            // FIFO the registrants
             ->limit($capacity)->pluck('address_id');
 
@@ -107,9 +106,8 @@ class Board
                     ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
             })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
                 $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
-            })->where([    
-                ['birth_date', '<=', $age_limit],                                       // only grab age group
-            ])->where(function ($query) use ($addresses) {
+            })->where($where_callback)                                                  // base of callback mods
+            ->where(function ($query) use ($addresses) {
                 $query->whereIn('address_id', $addresses)
                     ->orWhereNull('address_id');
             })->orderBy('received_vaccines_count', 'desc')                              // prioritize those who need a second vaccine
