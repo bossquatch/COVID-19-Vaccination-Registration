@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\Exports\EventReport;
+use App\Exports\CallbackList;
 use App\Rules\DateParsable;
 use App\Models\Event;
 use App\Models\Lot;
@@ -229,6 +230,13 @@ class EventController extends Controller
             'invites' => $invitations,
             'event' => $event,
         ]);
+    }
+
+    public function pendingInvitesReport($id)
+    {
+        $event = Event::findOrFail($id);
+
+        return new CallbackList($event);
     }
 
     public function slotInvites($event_id, $slot_id)
