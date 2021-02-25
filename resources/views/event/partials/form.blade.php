@@ -128,7 +128,7 @@
                     <div class="custom-control custom-checkbox">
                         <input value="{{ $tag->id }}" id="tag-{{ $tag->id }}" name="partners[{{ $tag->id }}]" class="custom-control-input @error("partners.".$tag->id) is-invalid @enderror" type="checkbox" @if(old('partners.'.$tag->id)) checked aria-checked="true" @endif>
                         <label class="custom-control-label" for="tag-{{ $tag->id }}">{{ $tag->description }}</label>
-    
+
                         @error("partners.".$tag->id)
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first("partners.".$tag->id) }}</strong>
@@ -151,13 +151,13 @@
                         </span>
                     @enderror
                 </div>
-            </div>        
-            
+            </div>
+
             @can('create_invite')
             <div class="form-group mb-5">
                 <div class="custom-control custom-checkbox">
                     <input id="openAutomatically" name="openAutomatically" class="custom-control-input @error("openAutomatically") is-invalid @enderror" type="checkbox" @if(old('openAutomatically')) checked aria-checked="true" @endif>
-                    <label class="custom-control-label" for="openAutomatically">Open for Automatic Scheduling</label>
+                    <label class="custom-control-label" for="openAutomatically">Open for automatic scheduling</label>
 
                     @error("openAutomatically")
                         <span class="invalid-feedback" role="alert">
@@ -165,7 +165,7 @@
                         </span>
                     @enderror
                 </div>
-            </div>        
+            </div>
             @endcan
         </div>
     </div>
@@ -316,7 +316,7 @@
                 <label for="radius" class="col-form-label col-form-label-sm">Within</label>
                 <div class="col-sm-4">
                     <input class="form-control form-control-sm @error("radius") is-invalid @enderror" type="number" id="radius" min="0" placeholder="Radius (in miles)" name="radius" value="{{ old('radius') }}">
-                
+
                     @error("radius")
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first("radius") }}</strong>
