@@ -35,8 +35,8 @@ class AnalyticsController extends Controller
             SELECT
                 date(r.created_at) `Date`,
                 count(*) `Count`,
-                SUM(IF(u.email not like \'%@mg.polk.health%\',1,0)) `Self Serve`,
-                SUM(IF(u.email like \'%@mg.polk.health%\',1,0)) `Call Center`
+                SUM(IF(u.email_verified_at IS NOT NULL,1,0)) `Self Serve`,
+                SUM(IF(u.email_verified_at IS NULL,1,0)) `Call Center`
             FROM
                 registrations r
                 JOIN users u ON u.id = r.user_id
@@ -155,8 +155,8 @@ class AnalyticsController extends Controller
                 $registrations['day'][] = $day->Day;
             }
 
-//            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
-            $currentSchedule = Carbon::create('2021-01-17');
+            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
+//            $currentSchedule = Carbon::create('2021-01-17');
 
             Cache::tags(['analytics'])->put('registrationsByDay', $registrations, $seconds = 600);
             Cache::tags(['analytics'])->put('currentSchedule', $currentSchedule, $seconds = 600);

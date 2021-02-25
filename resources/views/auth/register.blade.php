@@ -14,7 +14,7 @@
                     <div>
                         <h1 class="font-size-4xl font-weight-extrabold tracking-tight mb-5">
                             <span class="d-block">Let's get started!</span>
-                            <span class="d-block text-primary">Create an account.</span>
+                            <span class="d-block text-primary">First, create an account.</span>
                         </h1>
 
                         <!-- Form -->
