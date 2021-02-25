@@ -22,7 +22,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 @if(!$event->edittable) d-none @endif">
                 <div class="form-group mb-5">
                     <label for="date">
                         Date
@@ -36,7 +36,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 @if(!$event->edittable) d-none @endif">
                 <div class="form-group mb-5">
                     <label for="location">
                         Location
@@ -53,6 +53,12 @@
                         </span>
                     @enderror
                 </div>
+            </div>
+            <div class="col-12">
+                <div class="custom-control custom-switch mb-5">
+                    <input type="checkbox" class="custom-control-input" id="autoNotify" name="autoNotify" @if (old('autoNotify')) @if(old('autoNotify') == 'on') checked aria-checked="true" @endif @elseif( $event->send_auto_notifs) checked aria-checked="true" @endif>
+                    <label class="custom-control-label" for="autoNotify">Automatically send invite notifications</label>
+                </div>                  
             </div>
         </div>
         <div class="row justify-content-end">

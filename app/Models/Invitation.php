@@ -120,7 +120,7 @@ class Invitation extends Model
 
     // allows $invitation->auto_contactable
     public function getAutoContactableAttribute() {
-        return ($this->user->sms_verified_at || $this->user->email_verified_at);
+        return ($this->event->send_auto_notifs && ($this->user->sms_verified_at || $this->user->email_verified_at));
     }
 
     // allows $invitation->can_sms

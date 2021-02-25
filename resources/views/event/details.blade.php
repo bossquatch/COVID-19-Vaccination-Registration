@@ -51,11 +51,9 @@
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     @can('update_event', Model::class)
-                    @if($event->edittable)
                     <div class="collapse @if($errors->has('date') || $errors->has('title') || $errors->has('location')) show @endif" id="editCollapse">
                         @include('event.partials.editdetails', ['event' => $event])
                     </div>
-                    @endif
                     @endcan
                     
                     <div class="card card-body p-6">
@@ -63,12 +61,10 @@
                             <div class="col-12 text-center mb-0">
                                 <!-- Title -->
                                 @can('update_event')
-                                @if($event->edittable)
                                 <div class="row justify-content-end">
                                     <a class="fad fa-edit text-info font-size-sm" data-toggle="collapse" href="#editCollapse" role="button" aria-expanded="false" aria-controls="editCollapse" title="Edit Event"></a>
                                     <a class="fad fa-cog text-secondary ml-2" href="/events/{{ $event->id }}/settings" title="Edit Event Settings"></a>
                                 </div>
-                                @endif
                                 @endcan
                                 <h2 class="mb-1 mt-2">
                                     {{ $event->title }}

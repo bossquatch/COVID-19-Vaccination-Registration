@@ -121,6 +121,7 @@ class EventController extends Controller
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
             'open' => isset($valid['openAutomatically']),
+            'send_auto_notifs' => isset($valid['autoNotify']),
             'partner_handled' => isset($valid['partners']),
         ]);
 
@@ -186,6 +187,7 @@ class EventController extends Controller
             'location_id' => $valid['location'],
             'date_held' => $carbon_date->format('Y-m-d'),
             'title' => $valid['title'],
+            'send_auto_notifs' => isset($valid['autoNotify']),
         ]);
 
         if ($new_date) {
@@ -308,6 +310,7 @@ class EventController extends Controller
                 'slotLength' => ['required', Rule::in(\App\Helpers\Events\SlotMachine::$validIntervals)],
                 'slotCapacity' => 'required|numeric|min:0',
                 'lots' => 'required',
+                'autoNotify' => 'nullable',
                 'openAutomatically' => 'nullable',
                 'partners.*' => 'nullable',
                 'ageMin' => 'nullable|numeric',
@@ -326,6 +329,7 @@ class EventController extends Controller
                 'title' => 'required|max:255',
                 'date' => ['required', 'date', new DateParsable],
                 'location' => 'required|in:'.$valid_locations,
+                'autoNotify' => 'nullable',
             ];
         }
     }

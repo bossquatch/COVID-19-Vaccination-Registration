@@ -139,8 +139,21 @@
                 @endforeach
             </div>
         </div>
-        @can('create_invite')
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 mb-5">
+            <div class="form-group mb-2">
+                <div class="custom-control custom-checkbox">
+                    <input id="autoNotify" name="autoNotify" class="custom-control-input @error("autoNotify") is-invalid @enderror" type="checkbox" @if(old('autoNotify')) checked aria-checked="true" @endif>
+                    <label class="custom-control-label" for="autoNotify">Send automatic invitations</label>
+
+                    @error("autoNotify")
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first("autoNotify") }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>        
+            
+            @can('create_invite')
             <div class="form-group mb-5">
                 <div class="custom-control custom-checkbox">
                     <input id="openAutomatically" name="openAutomatically" class="custom-control-input @error("openAutomatically") is-invalid @enderror" type="checkbox" @if(old('openAutomatically')) checked aria-checked="true" @endif>
@@ -152,9 +165,9 @@
                         </span>
                     @enderror
                 </div>
-            </div>
+            </div>        
+            @endcan
         </div>
-        @endcan
     </div>
     <div class="row">
         <div class="col-12">
