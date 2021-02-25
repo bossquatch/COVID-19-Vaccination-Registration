@@ -29,6 +29,23 @@ class Settings extends Model
         return $this->belongsToMany(Condition::class)->withTimestamps();
     }
 
+    public function getEstimateCountAttribute()
+    {
+        $slot_ids = $this->event->slots()->pluck('id')->toArray();
+        $date = Carbon::parse($this->event->date_held)->format('Y-m-d');
+
+        return Registration::has('vaccines', '<', 2)                                    // don't grab those with both vaccinations
+            ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
+                $query->where('name', '=', 'In Wait List');
+            })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
+                $query->whereRaw('DATEDIFF("' . $date . '", date_given) < 26')
+                    ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
+            })->whereDoesntHave('invitations', function (Builder $query) use ($slot_ids) {
+                $query->whereIn('slot_id', $slot_ids);                                  // don't invite those who have had invitations to the same slot
+            })->where($this->queryMods())                                               // base of callback mods
+            ->count();
+    }
+
     /**
      * ONLY QUERY REGISTRATION MODELS UTILIZING THIS FUNCTION
      */
