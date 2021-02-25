@@ -105,6 +105,12 @@
                                 <p class="text-gray-dark mb-2">
                                     Date: {{ Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}
                                 </p>
+
+                                @if($event->edittable)
+                                <p class="text-muted mb-2 font-size-sm">
+                                    Est. Registrations that Qualify: {{ $event->settings->estimate_count }}
+                                </p>
+                                @endif
                             </div>
                             <div class="col-12 text-center mb-0">
                                 <div class="row align-items-center justify-content-center">
