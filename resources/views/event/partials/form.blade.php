@@ -105,6 +105,12 @@
             <div class="mb-5">
                 <p class="h4">
                     Lot Numbers: <span id="lot-numbers">N/a</span>
+
+                    @error("lots")
+                    <span class="text-danger font-size-sm" role="alert">
+                        <strong>{{ $errors->first("lots") }}</strong>
+                    </span>
+                    @enderror
                 </p>
 
                 <input type="hidden" name="lots" id="lots">
@@ -112,12 +118,6 @@
                 <button type="button" class="btn btn-block btn-info" data-toggle="modal" data-target="#lotModal">
                     <span class="fad fa-plus"></span> Add Lot Numbers
                 </button>
-
-                @error("lot")
-                <span class="alert alert-danger" role="alert">
-                    <strong>{{ $errors->first("lot") }}</strong>
-                </span>
-                @enderror
             </div>
         </div>
         <div class="col-12 col-md-6 mb-5">

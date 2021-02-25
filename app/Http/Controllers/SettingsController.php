@@ -77,9 +77,9 @@ class SettingsController extends Controller
             'occupation' => 'nullable',
             'zips' => 'nullable',
             'autocomplete' => 'nullable',
-            'latitude' => 'required_with:longitude,autocomplete,radius|numeric',
-            'longitude' => 'required_with:latitude,autocomplete,radius|numeric',
-            'radius' => 'required_with:longitude,autocomplete,latitude|numeric',
+            'latitude' => 'required_with:longitude,autocomplete,radius|nullable|numeric',
+            'longitude' => 'required_with:latitude,autocomplete,radius|nullable|numeric',
+            'radius' => 'required_with:longitude,autocomplete,latitude|nullable|numeric',
         ];
     }
 }
