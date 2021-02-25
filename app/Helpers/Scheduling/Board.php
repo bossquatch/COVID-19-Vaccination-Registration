@@ -82,7 +82,12 @@ class Board
             })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
                 $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
             })->where($where_callback)                                                  // base of callback mods
-            ->orderBy('received_vaccines_count', 'desc')                                // prioritize those who need a second vaccine
+            ->where(function ($query) {
+                $query->doesntHave('address')
+                    ->orWhereHas('address.state', function ($query) {
+                        $query->where('abbr', '=', 'FL');
+                    });
+            })->orderBy('received_vaccines_count', 'desc')                                // prioritize those who need a second vaccine
             ->orderBy('submitted_at', 'asc')                                            // FIFO the registrants
             ->limit($capacity)->pluck('address_id');
 
@@ -107,7 +112,12 @@ class Board
             })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
                 $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
             })->where($where_callback)                                                  // base of callback mods
-            ->where(function ($query) use ($addresses) {
+            ->where(function ($query) {
+                $query->doesntHave('address')
+                    ->orWhereHas('address.state', function ($query) {
+                        $query->where('abbr', '=', 'FL');
+                    });
+            })->where(function ($query) use ($addresses) {
                 $query->whereIn('address_id', $addresses)
                     ->orWhereNull('address_id');
             })->orderBy('received_vaccines_count', 'desc')                              // prioritize those who need a second vaccine

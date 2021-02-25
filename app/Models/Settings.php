@@ -43,7 +43,12 @@ class Settings extends Model
             })->whereDoesntHave('invitations', function (Builder $query) use ($slot_ids) {
                 $query->whereIn('slot_id', $slot_ids);                                  // don't invite those who have had invitations to the same slot
             })->where($this->queryMods())                                               // base of callback mods
-            ->count();
+            ->where(function ($query) {
+                $query->doesntHave('address')
+                    ->orWhereHas('address.state', function ($query) {
+                        $query->where('abbr', '=', 'FL');
+                    });
+            })->count();
     }
 
     /**
