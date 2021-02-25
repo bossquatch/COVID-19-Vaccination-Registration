@@ -22,15 +22,19 @@
                             <span class="font-weight-bold">{{ Auth::user()->email }}</span>.
                         </p>
 
-                        <p>
-                            You need to verify your email to continue. If you have not received the verification email, please check your "Spam" or "Bulk Email" folder. You can also click the resend button below to have another email sent to you.
-                        </p>
+						<p>
+							To continue your registration, you must verify your email. If you have not received the verification email, please check the email address above. If it is correct check your "Spam" or "Bulk Email" folder. Please note, some email providers can take up to 30 minutes to deliver the email to your inbox.
+						</p>
 
-                        <form method="POST" action="{{ route('verification.resend') }}">
+						<p>
+							You can close this window. Once you click the link in the verification email a new window will open.
+						</p>
+
+                        <form method="POST" action="{{ route('verification.resend') }}" id="resend-form" style="display: none">
                             @csrf
-                            <button type="submit" class="btn btn-primary btn-block mt-5 mb-4">Resend verification email</button>
                         </form>
 
+						<p class="text-muted font-size-sm mb-0"><small>* If you require a new verification email please use this link to request a new verification email: <a href="{{ route('verification.resend') }}" onclick="event.preventDefault(); document.getElementById('resend-form').submit();">Resend confirmation link.</a></small></p>
                         <p class="text-muted font-size-sm mb-0"><small>* Verification emails expire in {!! \Carbon\CarbonInterval::minutes(config('auth.verification.expire'))->cascade()->forHumans(); !!}.</small></p>
                     </div>
                     {{--<div class="border-top text-center mt-5 pt-5">

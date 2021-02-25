@@ -28,7 +28,7 @@ class Judge
         // got through, case by case...
         foreach ($cases as $case) {
             // determine if contactable and sentence accordingly 
-            if ($case->auto_contactable && !$case->partner_handled) {
+            if ($case->auto_contactable) {
                 self::sendInvite($case);
                 
                 if ($case->can_sms) {

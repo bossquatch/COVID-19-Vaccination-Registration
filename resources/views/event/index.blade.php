@@ -10,6 +10,8 @@
 <script>
     var availableLots = {!! json_encode($lots) !!};
 </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps_key') }}&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
 @endsection
 
 @section('content')
@@ -64,7 +66,7 @@
                         <li class="list-group-item" id="event-row-new" @if ($errors->isEmpty()) style="display: none;" @endif>
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-between">
-                                    <strong>New Event</strong>
+                                    <span class="h3">New Event</span>
                                     <button class="btn btn-outline-secondary btn-sm" onclick="eventForm('none')"><span class="fal fa-times mr-1"></span>Cancel</button>
                                 </div>
                             </div>
@@ -110,6 +112,8 @@
 </section>
 
 @can('create_event')
+@include('event.partials.lotmodal', ['event' => null, 'type' => 'form'])
+
 <script type="text/javascript">
     $( function() {
         document.getElementById('slider-time').innerHTML = valToHour(document.getElementById('start').value);
@@ -195,6 +199,51 @@
     function extractLast( term ) {
       return split( term ).pop();
     }
+</script>
+
+<script>
+let placeSearch;
+let autocomplete;
+
+function initAutocomplete() {
+  autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("autocomplete"),
+    { types: ["geocode"] }
+  );
+
+  autocomplete.setFields(["address_component", "geometry"]);
+
+  autocomplete.addListener("place_changed", fillInAddress);
+}
+
+function fillInAddress() {
+  const place = autocomplete.getPlace();
+
+  const lat = place.geometry.location.lat(),
+    lng = place.geometry.location.lng();
+
+  document.getElementById("lat").value = lat;
+  document.getElementById("lng").value = lng;
+}
+
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      const circle = new google.maps.Circle({
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
+
 </script>
 @endcan
 @endsection

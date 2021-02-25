@@ -60,7 +60,7 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'cdn_url' => env('CDN_URL', 'https://cdn.polk.design'),
+    'cdn_url' => env('APP_CDN', 'https://cdn.polk.design'),
 
     'default_password' => env('DEFAULT_PASSWORD', ''),
 
@@ -80,6 +80,8 @@ return [
     'auto_scheduling' => env('AUTO_SCHEDULING', false),
 
     'google_maps_key' => env('GOOGLE_MAPS_API_KEY', null),
+
+    'moderna_expiry' => env('MODERNA_EXPIRY', null),
 
     /*
     |--------------------------------------------------------------------------

@@ -88,13 +88,21 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/events-history', [App\Http\Controllers\EventController::class, 'history']);
     Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->middleware('can:create_event');
     Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'read']);
+    Route::post('/events/{id}', [App\Http\Controllers\EventController::class, 'update'])->middleware('can:update_event');
     Route::get('/events/{id}/pending', [App\Http\Controllers\EventController::class, 'pendingInvites'])->middleware('can:update_invite');
+    Route::get('/events/{id}/pending/report', [App\Http\Controllers\EventController::class, 'pendingInvitesReport'])->middleware('can:update_invite');
     Route::get('/events/{event_id}/slots/{slot_id}', [App\Http\Controllers\EventController::class, 'slotInvites']);
+    Route::delete('/events/{event_id}/slots/{slot_id}', [App\Http\Controllers\EventController::class, 'slotDelete'])->middleware('can:delete_event');
     Route::put('/events/{event_id}/slots/{slot_id}/reserve', [App\Http\Controllers\EventController::class, 'reserve'])->middleware('can:create_invite');
-    //Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'delete'])->middleware('can:delete_event');
-    Route::put('/events/{id}/open', [App\Http\Controllers\EventController::class, 'open']);
+    Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'delete'])->middleware('can:delete_event');
+    Route::put('/events/{id}/open', [App\Http\Controllers\EventController::class, 'open'])->middleware('can:update_event');
+    Route::put('/events/{id}/close', [App\Http\Controllers\EventController::class, 'close'])->middleware('can:update_event');
+    Route::post('/events/{id}/slots', [App\Http\Controllers\EventController::class, 'newSlot'])->middleware('can:update_event');
     Route::post('/events/{id}/lots', [App\Http\Controllers\EventController::class, 'addLot']);
     Route::get('/events/{id}/report', [App\Http\Controllers\EventController::class, 'report']);
+
+    Route::get('/events/{id}/settings', [App\Http\Controllers\SettingsController::class, 'index'])->middleware('can:update_event');
+    Route::post('/events/{id}/settings', [App\Http\Controllers\SettingsController::class, 'update'])->middleware('can:update_event');
 
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store']);
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');

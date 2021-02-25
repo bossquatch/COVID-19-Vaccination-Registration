@@ -35,6 +35,10 @@
                 <a class="btn btn-header btn-round btn-lg" href="/events">
                     <span class="fad fa-arrow-left mr-1"></span>Back
                 </a>
+
+                <a class="btn btn-header btn-header-success btn-round btn-lg" href="/events/{{ $event->id }}/pending/report" title="Event Report" target="_blank" rel="noopener noreferrer">
+                    <span class="fas fa-file-download mr-1"></span>Export Callback List
+                </a>
             </div>
         </div>
 

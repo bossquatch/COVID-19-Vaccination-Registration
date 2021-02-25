@@ -35,6 +35,20 @@
                 <a class="btn btn-header btn-round btn-lg" href="/events/{{ $slot->event_id }}">
                     <span class="fad fa-arrow-left mr-1"></span>Back
                 </a>
+
+                @can('delete_event')
+                @if ($slot->event->edittable)
+                <a class="btn btn-header btn-header-danger btn-round btn-lg" href="#" onclick="event.preventDefault();
+                    document.getElementById('slot-delete-form').submit();">
+                    <span class="fad fa-times-circle mr-1"></span>Remove Slot
+                </a>
+
+                <form action="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}" method="post" class="d-none" id="slot-delete-form">
+                    @csrf
+                    @method('DELETE')
+                </form>
+                @endif
+                @endcan
             </div>
         </div>
 
