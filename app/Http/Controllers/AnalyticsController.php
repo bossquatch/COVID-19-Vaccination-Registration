@@ -155,8 +155,8 @@ class AnalyticsController extends Controller
                 $registrations['day'][] = $day->Day;
             }
 
-            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
-//            $currentSchedule = Carbon::create('2021-01-17');
+//            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
+            $currentSchedule = Carbon::create('2021-01-21');
 
             Cache::tags(['analytics'])->put('registrationsByDay', $registrations, $seconds = 600);
             Cache::tags(['analytics'])->put('currentSchedule', $currentSchedule, $seconds = 600);

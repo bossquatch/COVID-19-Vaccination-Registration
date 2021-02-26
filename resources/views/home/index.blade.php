@@ -77,7 +77,7 @@
                         </h2>
 
                         <!-- Text -->
-                        <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made through:</p>
+                        <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made on:</p>
                         <span class="badge badge-pill badge-primary ml-2">{{ $currentSchedule }}</span>
                         <div class="card border-primary mb-2 mt-4" style="max-width: 18rem;">
 {{--                            <div class="card-header">Header</div>--}}
