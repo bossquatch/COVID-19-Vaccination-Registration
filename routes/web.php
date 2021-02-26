@@ -23,6 +23,8 @@ Auth::routes([
     'verify' => true,
 ]);
 
+Route::get('/redis', [App\Http\Controllers\RedisController::class,'redisTest'])->middleware('can:skeleton_key');;
+
 Route::get('/not-supported', function() {
     return view('home.noie');
 });

@@ -74,9 +74,9 @@ return [
         ],
 
         'redis' => [
-            'driver' => 'redis',
-            'connection' => 'cache',
-            'lock_connection' => 'default',
+            'driver' 			=> 'redis',
+            'connection' 		=> 'cache',
+            'lock_connection' 	=> 'default',
         ],
 
         'dynamodb' => [
@@ -89,9 +89,9 @@ return [
         ],
 
         "geocode" => [
-            'driver' => env('CACHE_DRIVER', 'file'),
-            'connection' => 'geocode-cache',
-            'path' => storage_path('framework/cache/data'),
+            'driver' 		=> env('CACHE_DRIVER', 'file'),
+            'connection' 	=> 'geocode-cache',
+            'path' 			=> storage_path('framework/cache/data'),
         ],
 
     ],
