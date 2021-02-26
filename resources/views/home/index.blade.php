@@ -120,9 +120,9 @@
                         <p class="font-size-sm text-gray-dark mb-0">
                             <span class="mr-1">Mon-Fri:</span> 8am - 5pm
                         </p>
-                        <p class="font-size-sm text-gray-dark mb-0">
-                            <span class="mr-1">Sat & Sun:</span> 8am - 2pm
-                        </p>
+{{--                        <p class="font-size-sm text-gray-dark mb-0">--}}
+{{--                            <span class="mr-1">Sat & Sun:</span> 8am - 2pm--}}
+{{--                        </p>--}}
                     </div>
                 </div>
             </div>
