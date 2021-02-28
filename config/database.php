@@ -165,7 +165,7 @@ return [
             'password' 	=> env('REDIS_PASSWORD', null),
             'port' 		=> env('REDIS_PORT', '6379'),
             'database' 	=> env('REDIS_GEOCODE_CACHE_DB', '0'), // be sure this number differs from your other redis databases
-			'prefix'	=> env('GEOCODE-CACHE_PREFIX', 'g:'),
+			'prefix'	=> env('GEOCODE_CACHE_PREFIX', 'g:'),
         ],
 
 		'queues' 		=> [
