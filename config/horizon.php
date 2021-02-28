@@ -179,7 +179,7 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-				'connection' => 'redis',
+				'connection' => 'redis.queues',
 				'queue' => ['emails','sms','ivr','database','default'],
 				'balance' => 'auto',
 				'memory' => 128,
@@ -194,7 +194,7 @@ return [
 
         'testing' => [
             'supervisor-1' => [
-				'connection' => 'redis',
+				'connection' => 'redis.queues',
 				'queue' => ['emails','sms','ivr','database','default'],
 				'balance' => 'auto',
 				'memory' => 128,
@@ -209,7 +209,7 @@ return [
 
         'test' => [
             'supervisor-1' => [
-				'connection' => 'redis',
+				'connection' => 'redis.queues',
 				'queue' => ['emails','sms','ivr','database','default'],
 				'balance' => 'auto',
 				'memory' => 128,
