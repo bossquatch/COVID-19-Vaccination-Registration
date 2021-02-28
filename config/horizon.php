@@ -166,7 +166,7 @@ return [
 
     'defaults' => [
         'supervisor-1' => [
-            'connection' => 'redis.queues',
+            'connection' => 'redis',
             'queue' => ['emails','sms','ivr','database','default'],
             'balance' => 'auto',
             'maxProcesses' => 1,
@@ -179,7 +179,7 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-				'connection' => 'redis.queues',
+				'connection' => 'redis',
 				'queue' => ['emails','sms','ivr','database','default'],
 				'balance' => 'auto',
 				'memory' => 128,
@@ -194,7 +194,7 @@ return [
 
         'testing' => [
             'supervisor-1' => [
-				'connection' => 'redis.queues',
+				'connection' => 'redis',
 				'queue' => ['emails','sms','ivr','database','default'],
 				'balance' => 'auto',
 				'memory' => 128,
@@ -209,7 +209,7 @@ return [
 
         'test' => [
             'supervisor-1' => [
-				'connection' => 'redis.queues',
+				'connection' => 'redis',
 				'queue' => ['emails','sms','ivr','database','default'],
 				'balance' => 'auto',
 				'memory' => 128,
@@ -224,8 +224,16 @@ return [
 
         'local' => [
             'supervisor-1' => [
-				'connection' => 'redis.queues',
-                'maxProcesses' => 3,
+				'connection' => 'redis',
+				'queue' => ['emails','sms','ivr','database','default'],
+				'balance' => 'auto',
+				'memory' => 128,
+				'tries' => 1,
+				'nice' => 0,
+				'maxProcesses' => 10,
+				'balanceMaxShift' => 1,
+				'balanceCooldown' => 3,
+				'force' => true,
             ],
         ],
     ],
