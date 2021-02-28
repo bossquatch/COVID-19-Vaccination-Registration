@@ -127,11 +127,10 @@ return [
     */
 
     'redis' 			=> [
-
         'client' 		=> env('REDIS_CLIENT', 'phpredis'),
         'options' 		=> [
-            'cluster' 	=> env('REDIS_CLUSTER', 'redis'),
-//            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'cluster' 		=> env('REDIS_CLUSTER', 'redis'),
+            'prefix' 		=> env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
         ],
 
         'default' 		=> [
@@ -140,7 +139,7 @@ return [
             'password' 	=> env('REDIS_PASSWORD', null),
             'port' 		=> env('REDIS_PORT', '6379'),
             'database' 	=> env('REDIS_DB', '0'),
-			'prefix'	=> 'd:',
+			'prefix'	=> env('DEFAULT_PREFIX', 'd:'),
         ],
 
         'cache' 		=> [
@@ -149,7 +148,7 @@ return [
             'password' 	=> env('REDIS_PASSWORD', null),
             'port' 		=> env('REDIS_PORT', '6379'),
             'database' 	=> env('REDIS_CACHE_DB', '0'),
-			'prefix'	=> 'c:',
+			'prefix'	=> env('CACHE_PREFIX', 'c:'),
         ],
 
 		'session'		=> [
@@ -158,7 +157,7 @@ return [
 			'password' 	=> env('REDIS_PASSWORD', null),
 			'port' 		=> env('REDIS_PORT', '6379'),
 			'database' 	=> env('REDIS_SESSION_DB', '0'),
-			'prefix'	=> 's:',
+			'prefix'	=> env('SESSION_PREFIX', 's:'),
 		],
 
         'geocode-cache' => [ // choose an appropriate name
@@ -166,7 +165,7 @@ return [
             'password' 	=> env('REDIS_PASSWORD', null),
             'port' 		=> env('REDIS_PORT', '6379'),
             'database' 	=> env('REDIS_GEOCODE_CACHE_DB', '0'), // be sure this number differs from your other redis databases
-			'prefix'	=> 'g:',
+			'prefix'	=> env('GEOCODE-CACHE_PREFIX', 'g:'),
         ],
 
 		'queues' 		=> [
@@ -175,7 +174,7 @@ return [
 			'password' 	=> env('REDIS_PASSWORD', null),
 			'port' 		=> env('REDIS_PORT', '6379'),
 			'database' 	=> env('REDIS_QUEUES_DB', '0'),
-			'prefix'	=> 'q:'.env('QUEUE_PREFIX_VERSION',''),
+			'prefix'	=> env('QUEUES_PREFIX', 'q:').env('QUEUE_PREFIX_VERSION',''),
 		],
 
     ],

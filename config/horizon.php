@@ -166,7 +166,7 @@ return [
 
     'defaults' => [
         'supervisor-1' => [
-            'connection' => 'redis',
+            'connection' => 'redis.queues',
             'queue' => ['emails','sms','ivr','database','default'],
             'balance' => 'auto',
             'maxProcesses' => 1,
@@ -224,6 +224,7 @@ return [
 
         'local' => [
             'supervisor-1' => [
+				'connection' => 'redis.queues',
                 'maxProcesses' => 3,
             ],
         ],
