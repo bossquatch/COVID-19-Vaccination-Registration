@@ -144,4 +144,5 @@ Route::group(["middleware" => "check.reset"], function() {
 
     Route::post('/webhooks/email_delivered',[WebhookController::class, 'emailDelivered']);
     Route::post('/webhooks/email_failed', [WebhookController::class,'emailFailed']);
+    Route::post('/webhooks/email_incoming', [WebhookController::class,'emailIncoming']);
 });

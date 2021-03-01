@@ -30,6 +30,16 @@ class WebhookController extends Controller
         }
     }
 
+    public function emailIncoming(Request $request)
+	{
+		try {
+			$this->handleIncoming($request->all());
+			return response('Success', 200);
+		} catch (\Exception $e) {
+			return response($e->getMessage(), 406);
+		}
+	}
+
     private function handleDelivered(array $data)
     {
         if (!$this->validateWebhook($data['signature'])) {
@@ -45,6 +55,14 @@ class WebhookController extends Controller
         }
         $this->persistEmailData($data);
     }
+
+    private function handleIncoming(array $data)
+	{
+		if(!$this->validateWebhook([$data['signature'],$data['timestamp'],$data['token']])) {
+			throw new \Exception('Invalid signature!');
+		}
+		$this->persistIncomingEmail($data);
+	}
 
     private function persistEmailData(array $data)
     {
@@ -80,11 +98,17 @@ class WebhookController extends Controller
 
 		try {
 			$currentEmail->save();
+			return true;
 		} catch (\Exception $e) {
 			return $e->getCode();
 		}
 
     }
+
+    private function persistIncomingEmail(array $data)
+	{
+		Log::debug(json_encode(Arr::flatten($data)));
+	}
 
     private function validateWebhook(array $signature, $api_key = null): bool
     {
