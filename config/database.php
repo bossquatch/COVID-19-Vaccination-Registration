@@ -176,15 +176,6 @@ return [
 			'database' 	=> env('REDIS_QUEUES_DB', '0'),
 			'prefix'	=> env('QUEUES_PREFIX', 'q:').env('QUEUE_PREFIX_VERSION',''),
 		],
-//
-//		'horizon' 		=> [
-//			'url' 		=> env('REDIS_URL'),
-//			'host' 		=> env('REDIS_HOST', '127.0.0.1'),
-//			'password' 	=> env('REDIS_PASSWORD', null),
-//			'port' 		=> env('REDIS_PORT', '6379'),
-//			'database' 	=> env('REDIS_HORIZON_DB', '0'),
-//			'prefix'	=> env('HORIZON_PREFIX', 'h:'),
-//		],
 
     ],
 
