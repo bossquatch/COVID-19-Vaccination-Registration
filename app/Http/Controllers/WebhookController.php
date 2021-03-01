@@ -58,9 +58,9 @@ class WebhookController extends Controller
 
     private function handleIncoming(array $data)
 	{
-		if(!$this->validateWebhook([$data['signature'],$data['timestamp'],$data['token']])) {
-			throw new \Exception('Invalid signature!');
-		}
+//		if(!$this->validateWebhook([$data['signature'],$data['timestamp'],$data['token']])) {
+//			throw new \Exception('Invalid signature!');
+//		}
 		$this->persistIncomingEmail($data);
 	}
 
