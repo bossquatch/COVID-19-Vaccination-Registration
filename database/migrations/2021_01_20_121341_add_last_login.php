@@ -14,7 +14,7 @@ class AddLastLogin extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('last_login', 'suffix')) {
+            if (!Schema::hasColumn('users', 'last_login')) {
                 $table->timestamp('last_login')->nullable();
             }
         });

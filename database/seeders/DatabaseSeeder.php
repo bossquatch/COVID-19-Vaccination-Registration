@@ -24,7 +24,14 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ContactTypeSeeder::class,
             PhoneTypeSeeder::class,
-            CountySeeder::class,
+			LocationsSeeder::class,
+			AttendantSeeder::class,
+			EssentialWorkerSeeder::class,
+			PartnerSeeder::class,
+			PruneAdmin::class,
+			SchedulingLookupSeeder::class,
+			SuffixSeeder::class,
+			VaccineDetailsSeeder::class,
         ]);
     }
 }

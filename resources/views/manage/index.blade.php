@@ -44,6 +44,12 @@
                     <span class="fad fa-qrcode mr-1"></span> Scan QR Code
                 </a>
                 @endcan
+
+                @can('read_event')
+                <a class="btn btn-header btn-round btn-lg" href="/events">
+                    <span class="fad fa-calendar-day mr-1"></span> Events
+                </a>
+                @endcan
             </div>
         </div>
 
@@ -52,7 +58,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchName" placeholder="Search for Name" aria-label="Search for Name" aria-describedby="caseBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="nameBtn" onclick="search('searchName')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="nameBtn" onclick="search('searchName')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
@@ -62,7 +68,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchAddr" placeholder="Search for Address" aria-label="Search for Address" aria-describedby="addrBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="addrBtn" onclick="search('searchAddr')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="addrBtn" onclick="search('searchAddr')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
@@ -72,7 +78,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchRegis" placeholder="Search for Registration ID" aria-label="Search for Registration ID" aria-describedby="regisBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="regisBtn" onclick="search('searchRegis')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="regisBtn" onclick="search('searchRegis')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
@@ -82,7 +88,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control font-size-sm" id="searchCode" placeholder="Search for Registration Code" aria-label="Search for Registration Code" aria-describedby="codeBtn">
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-size-sm" type="submit" id="codeBtn" onclick="search('searchCode')">
+                        <button class="btn btn-primary font-size-sm btn-sm" type="submit" id="codeBtn" onclick="search('searchCode')">
                             <span class="fad fa-search mr-1"></span> Search
                         </button>
                     </div>
@@ -97,7 +103,16 @@
                         <!-- Title -->
                         <h2 class="h5 mb-0">
                             Registrations
+                            <small class="font-weight-light font-size-sm text-muted ml-3">Filtered by status: <span id="status-filter-desc" class="font-italic">All</span></small>
                         </h2>
+
+                        @can('keep_inventory')
+                        <div class="ml-auto custom-control custom-switch font-size-sm">
+                            <input type="checkbox" class="custom-control-input" id="show-deleted" onchange="showDeleted();">
+                            <label class="custom-control-label text-muted" for="show-deleted">Show Deleted Accounts</label>
+                        </div>
+                        @endcan
+                        
 
                         {{--<!-- Tabs -->
                         <ul id="applications-tablist" class="nav nav-tabs ml-auto" role="tablist">
@@ -136,7 +151,7 @@
                     <div id="applications-tablist-content" class="tab-content">
                         <div id="all" class="tab-pane show active">
                             <!-- Table -->
-                            <div class="table-responsive">
+                            <div class="{{--table-responsive--}}">
                                 <table class="table table-silk">
                                     <thead>
                                         <tr>
@@ -158,7 +173,19 @@
                                                 Submitted On <a href="#" onclick="sortSubmission()"><span id="submission-sort-caret" class="fas fa-caret-up"></span></a>
                                             </th>
                                             <th>
-                                                Status
+                                                Status 
+                                                <div class="dropdown d-inline">
+                                                    <a class="text-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span id="status-filter-btn" class="fas fa-filter"></span>
+                                                    </a>
+                                                  
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="#" onclick="filterStatus('All')">All</a> 
+                                                        @foreach (\App\Models\Status::all() as $status)
+                                                            <a class="dropdown-item" href="#" onclick="filterStatus('{{ $status->name }}')">{{ $status->name }}</a>      
+                                                        @endforeach
+                                                    </div>
+                                                </div>
                                             </th>
                                             <th class="text-center">
                                                 Email Verified
@@ -219,7 +246,9 @@
 
 <script>
 // make sure sorting is correct right off the bat
-window.sessionStorage.setItem('submissionSort', 'asc');
+document.addEventListener("DOMContentLoaded", function(event) {
+    loadLastSearch();
+});
 
 // Get the input field
 var inputName = document.getElementById("searchName");
@@ -254,11 +283,7 @@ function search(type) {
     window.sessionStorage.setItem('searchLimit', offset);
     window.sessionStorage.setItem('searchType', type);
 
-    var searchInfo = {
-        'val': val,
-        'offset': parseInt(offset),
-        'sort': window.sessionStorage.getItem('submissionSort')
-    };
+    var searchInfo = createSearchInfo(val, parseInt(offset));
 
     setTimeout(function () {
        	$('#loadingModal').modal('hide');
@@ -269,11 +294,7 @@ function search(type) {
 function getNext() {
     $('#loadingModal').modal('show');
     
-    var searchInfo = {
-        'val': window.sessionStorage.getItem('searchVal'),
-        'offset': parseInt(window.sessionStorage.getItem('searchOffset')),
-        'sort': window.sessionStorage.getItem('submissionSort')
-    };
+    var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
 
     setTimeout(function () {
        	$('#loadingModal').modal('hide');
@@ -286,11 +307,7 @@ function getNext() {
 function getPrev() {
     $('#loadingModal').modal('show');
     
-    var searchInfo = {
-        'val': window.sessionStorage.getItem('searchVal'),
-        'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit'))),
-        'sort': window.sessionStorage.getItem('submissionSort')
-    };
+    var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit'))));
 
     setTimeout(function () {
        	$('#loadingModal').modal('hide');
@@ -329,12 +346,9 @@ function sortSubmission() {
 
     if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
         $('#loadingModal').modal('show');
+        window.sessionStorage.setItem('searchOffset', '0');
     
-        var searchInfo = {
-            'val': window.sessionStorage.getItem('searchVal'),
-            'offset': parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))),
-            'sort': window.sessionStorage.getItem('submissionSort')
-        };
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
         
         setTimeout(function () {
             $('#loadingModal').modal('hide');
@@ -343,6 +357,94 @@ function sortSubmission() {
     }
 
     return false;
+}
+
+function filterStatus(filter) {
+    //const caret = document.getElementById('submission-sort-caret');
+    window.sessionStorage.setItem('statusFilter', filter);
+    document.getElementById('status-filter-desc').innerHTML = filter;
+
+    if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
+        $('#loadingModal').modal('show');
+        window.sessionStorage.setItem('searchOffset', '0');
+    
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
+        
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 1000);
+        makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+    }
+
+    return false;
+}
+
+@can('keep_inventory')
+function showDeleted() {
+    const cbox = document.getElementById('show-deleted');
+    window.sessionStorage.setItem('showDeleted', cbox.checked);
+
+    if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
+        $('#loadingModal').modal('show');
+        window.sessionStorage.setItem('searchOffset', '0');
+    
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
+        
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 1000);
+        makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+    }
+}
+@endcan
+
+function createSearchInfo(val, offset) {
+    return {
+        'val': val,
+        'offset': offset,
+        'sort': window.sessionStorage.getItem('submissionSort'),
+        'filter': window.sessionStorage.getItem('statusFilter'),
+        'showDeleted': window.sessionStorage.getItem('showDeleted') == 'true' ? 1 : 0
+    };
+}
+
+function loadLastSearch() {
+    if (window.sessionStorage.getItem('submissionSort') !== null) {
+        const caret = document.getElementById('submission-sort-caret');
+        if (window.sessionStorage.getItem('submissionSort') == 'desc') {
+            caret.classList.remove('fa-caret-up');
+            caret.classList.add('fa-caret-down');
+        }
+    }
+
+    @can('keep_inventory')
+    if (window.sessionStorage.getItem('showDeleted') !== null) {
+        if (window.sessionStorage.getItem('showDeleted') == 'true') {
+            const cbox = document.getElementById('show-deleted');
+            cbox.checked = window.sessionStorage.getItem('showDeleted');
+        }
+    }
+    @endcan
+
+    if (window.sessionStorage.getItem('statusFilter') !== null) {
+        document.getElementById('status-filter-desc').innerHTML = window.sessionStorage.getItem('statusFilter');
+    }
+
+    if(window.sessionStorage.getItem('searchVal') !== null && window.sessionStorage.getItem('searchOffset') !== null && window.sessionStorage.getItem('searchLimit') !== null && window.sessionStorage.getItem('searchType') !== null) {
+        $('#loadingModal').modal('show');
+    
+        document.getElementById(window.sessionStorage.getItem('searchType')).value = window.sessionStorage.getItem('searchVal');
+        var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (parseInt(window.sessionStorage.getItem('searchLimit'))));
+        
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 1000);
+        makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
+    } else {
+        window.sessionStorage.setItem('submissionSort', 'asc');
+        window.sessionStorage.setItem('statusFilter', 'All');
+        window.sessionStorage.setItem('showDeleted', false);
+    }
 }
 </script>
 @endsection

@@ -6,7 +6,7 @@
 
 @section('content')
 <!-- Page Content -->
-<section class="container d-flex justify-content-center align-items-center flex-grow-1 pt-7 pb-4">
+<section class="container d-flex justify-content-center align-items-center flex-grow-1 py-7">
     <div class="row justify-content-center">
         <div class="col-12 col-md-9">
             <div class="card border-0 shadow my-5">
@@ -14,6 +14,12 @@
                     <div>
                         <h1 class="h2 text-center">Sign in</h1>
                         <p class="font-size-xs text-muted mb-4 text-center">Sign in to your account using email and password provided during registration.</p>
+
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
                         <form method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}

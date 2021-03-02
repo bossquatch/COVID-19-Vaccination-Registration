@@ -1,10 +1,12 @@
 @component('mail::message')
-# You have chosen to postpone your vaccination invitation
+# {{ $suffix ? $firstName.' '.$lastName.', '.$suffixDisplay : $firstName.' '.$lastName }}, you have chosen to postpone your vaccination appointment!
 
-There is no further action that you need to take.  Your registration has been placed back on the wait list and you will be contacted for our next event.
+You have been placed back on the waiting list and will be contacted for our next available event.
 
-@component('mail::button', ['url' => 'https://dev.register.polk.health/home','color' => 'primary'])
-    Login to your account
+@component('mail::button', ['url' => $actionUrl, 'color' => 'primary'])
+{{ $actionText }}
 @endcomponent
 
+Thanks,<br>
+{{ config('app.name') }}
 @endcomponent

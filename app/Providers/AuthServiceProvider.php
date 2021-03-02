@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function ($user, $permission) {
 
             // we should only return from that method if the user has the assigned permission
-            if($user->permissions()->contains($permission)) {
+            if($user->permissions()->contains($permission) || $user->permissions()->contains('skeleton_key')) {
                 return true;
             }
 

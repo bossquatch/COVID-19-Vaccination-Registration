@@ -19,7 +19,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
 
         // Horizon::routeSmsNotificationsTo('15556667777');
         // Horizon::routeMailNotificationsTo('example@example.com');
-        // Horizon::routeSlackNotificationsTo('slack-webhook-url', '#channel');
+         Horizon::routeSlackNotificationsTo(config('logging.channels.slack.url'), config('logging.channels.slack.channel'));
 
         // Horizon::night();
     }
@@ -35,7 +35,9 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     {
         Gate::define('viewHorizon', function ($user) {
             return in_array($user->email, [
-                'douglascockerham@polk-county.net'
+                'douglascockerham@polk-county.net',
+                'BenjaminHarvey@polk-county.net',
+                'christophercarpenter@polk-county.net',
             ]);
         });
     }

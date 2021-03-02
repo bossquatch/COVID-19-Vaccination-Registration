@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <input id="registrationId" type="hidden" value="{{ $registration_id }}">
+                    <input id="registrationId" type="hidden" value="{{ $registration->id }}">
                     <div class="row mb-6">
                         {{--<div class="col-12">
                             <h2>Caller Information</h2>
@@ -94,9 +94,9 @@
                                     Expiration Date
                                 </label>
                                 <div id="expDate" class="input-group">
-                                    <input id="expDateMonth" type="number" min="1" max="12" class="form-control" placeholder="Month (MM)">
+                                    <input id="expDateMonth" type="number" min="1" max="12" class="form-control" placeholder="Month (MM)" value="{{ (int) \Carbon\Carbon::now()->addMonth()->format('m') }}">
                                     <span class="input-group-text" style="border-radius: 0;">/</span>
-                                    <input id="expDateYear" type="number" min="2021" class="form-control" placeholder="Year (YYYY)">
+                                    <input id="expDateYear" type="number" min="2021" class="form-control" placeholder="Year (YYYY)" value="2021">
                                 </div>
 
                                 <div class="text-danger js-error-text" role="alert" style="display: none; font-size: 80%;">
@@ -128,7 +128,7 @@
                                 </label>
                                 <select id="injectionSite" class="custom-select">
                                     @foreach (\App\Models\InjectionSite::get() as $site)
-                                        <option value="{{ $site->id }}">{{ $site->abbrev }}</option>    
+                                        <option value="{{ $site->id }}" @if($site->abbrev == "LD") selected @endif>{{ $site->abbrev }}</option>    
                                     @endforeach
                                 </select>
                 
@@ -145,7 +145,7 @@
                                 </label>
                                 <select id="injectionRoute" class="custom-select">
                                     @foreach (\App\Models\InjectionRoute::get() as $route)
-                                        <option value="{{ $route->id }}">{{ $route->abbrev }}</option>    
+                                        <option value="{{ $route->id }}" @if($route->abbrev == "IM") selected @endif>{{ $route->abbrev }}</option>    
                                     @endforeach
                                 </select>
                 
@@ -193,6 +193,25 @@
                             <span class="h6 mb-5">Giver Information</span>
                         </div>
 
+                        <div class="col-12">
+                            <div class="form-group mb-5">
+                                <label for="giver">
+                                    Vaccinator
+                                </label>
+                                <select id="giver" class="custom-select">
+                                    <option value="">N/A</option>    
+                                    @foreach (\App\Models\User::whereHas('roles', function($query) { $query->where('name', '=', 'vac'); })->get() as $el)
+                                        <option value="{{ $el->id }}" @if(Auth::id() == $el->id) selected @endif>{{ $el->creds . ' ' . $el->first_name . ' ' . $el->last_name }}</option>    
+                                    @endforeach
+                                </select>
+                
+                                <span class="invalid-feedback js-error-text" role="alert" style="display: none;">
+                                    <strong id="giverError"></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        {{--
                         <div class="col-12 col-md-4 col-lg-2">
                             <div class="form-group">
                                 <label for="giverCreds">
@@ -231,6 +250,7 @@
                                 </span>
                             </div>
                         </div>
+                        --}}
 
                         {{--<div class="col-12 col-md-6">
                             <div class="form-group mb-5">
@@ -263,15 +283,21 @@
 </div>
 
 <script>
+$( function () {
+    $('#lotNumber').autocomplete({
+        source: {!! $registration->has_appointment ? json_encode($registration->appointment->event->lots->pluck('number')->all()) : json_encode([]) !!}
+    });
+
+    document.getElementById('ndc').value = window.sessionStorage.getItem("session_ndc");
+});
+
 function submitVacForm() {
     loading(true);
     clearErrors();
 
     var postInfo = requestInfo();
-    console.log(postInfo);
 
     $.post('/vaccine/add', postInfo, function(data) {
-        console.log(data);
         loading(false);
         if (data.status == 'success') {
             document.getElementById('js-no-vaccine-alert').style.display = 'none';
@@ -295,6 +321,7 @@ function loading(is) {
 }
 
 function requestInfo() {
+    window.sessionStorage.setItem('session_ndc', document.getElementById('ndc').value);
     return {
         '_token' : $('meta[name=csrf-token]').attr('content'),
         'registrationId' : document.getElementById('registrationId').value,
@@ -310,9 +337,10 @@ function requestInfo() {
         'injectionRoute' : document.getElementById('injectionRoute').options[document.getElementById('injectionRoute').selectedIndex].value,
         'eligibility' : document.getElementById('eligibility').options[document.getElementById('eligibility').selectedIndex].value,
         'risks' : getRisks(),
-        'giverCreds' : document.getElementById('giverCreds').value,
-        'giverLastName' : document.getElementById('giverLastName').value,
-        'giverFirstName' : document.getElementById('giverFirstName').value
+        'giver' : document.getElementById('giver').options[document.getElementById('giver').selectedIndex].value
+        //'giverCreds' : document.getElementById('giverCreds').value,
+        //'giverLastName' : document.getElementById('giverLastName').value,
+        //'giverFirstName' : document.getElementById('giverFirstName').value
     }
 }
 
@@ -337,13 +365,13 @@ function clearInput() {
 
     document.getElementById('dateGiven').value = today;
     document.getElementById('lotNumber').value = null;
-    document.getElementById('ndc').value = null;
-    document.getElementById('expDateMonth').value = null;
-    document.getElementById('expDateYear').value = null;
+    //document.getElementById('ndc').value = null;
+    //document.getElementById('expDateMonth').value = null;
+    //document.getElementById('expDateYear').value = null;
     document.getElementById('visPubDate').value = null;
-    document.getElementById('giverCreds').value = null;
-    document.getElementById('giverLastName').value = null;
-    document.getElementById('giverFirstName').value = null;
+    //document.getElementById('giverCreds').value = null;
+    //document.getElementById('giverLastName').value = null;
+    //document.getElementById('giverFirstName').value = null;
 
     var checkboxes = document.getElementsByClassName('js-risk');
     for (var i=0; i<checkboxes.length; i++) {

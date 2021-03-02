@@ -17,7 +17,7 @@ class TagController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['verified', 'can:update_user']);
+        $this->middleware(['verified', 'can:manage_tag']);
     }
 
     public function index()
@@ -97,6 +97,7 @@ class TagController extends Controller
             'label' => 'required|string|max:30',
             'description' => 'required|string|max:255',
             'color' => 'required|string|max:255',
+            'is_partner' => 'required|boolean',
         ];
 
         return $rules;

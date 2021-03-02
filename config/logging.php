@@ -1,5 +1,6 @@
 <?php
 
+use CMDISP\MonologMicrosoftTeams\TeamsLogChannel;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -57,8 +58,9 @@ return [
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
+            'channel' => env('LOG_SLACK_CHANNEL'),
             'username' => 'Laravel Log',
-            'emoji' => ':boom:',
+            'emoji' => ':skull:',
             'level' => env('LOG_LEVEL', 'error'),
         ],
 
@@ -71,6 +73,15 @@ return [
                 'port' => env('PAPERTRAIL_PORT'),
             ],
         ],
+
+		'teams' => [
+			'driver' 	=> 'custom',
+			'via' 		=> TeamsLogChannel::class,
+			'url'		=> env('LOG_TEAMS_WEBHOOK_URL'),
+			'channel'	=> env('LOG_TEAMS_CHANNEL'),
+			'level'		=> env('LOG_LEVEL', 'error'),
+
+		],
 
         'stderr' => [
             'driver' => 'monolog',

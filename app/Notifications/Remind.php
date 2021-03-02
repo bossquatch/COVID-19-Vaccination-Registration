@@ -22,24 +22,31 @@ class Remind extends Notification implements ShouldQueue
     public function viaQueues()
     {
         return [
-            'mail'      => 'emails',
-            'array'     => 'database',
-            'twilio'    => 'sms',
+            'mail'                  => 'emails',
+            'database'              => 'database',
+            TwilioChannel::class    => 'sms',
         ];
     }
 
     public function via($notifiable)
     {
-        return ['mail','database',TwilioChannel::class];
+        if ($notifiable->auto_contactable) {
+            if ($notifiable->can_sms) {
+                return ['mail','database',TwilioChannel::class];
+            } else {
+                return ['mail','database'];
+            }
+        } else {
+            return ['database'];
+        }
     }
 
     public function toMail($notifiable)
     {
-
         $emailAddress = $notifiable->user->email;
-        return Mail::to($emailAddress)
-            ->send(new Reminder('Polk Health - Vaccination Reminder'));
 
+        return Mail::to($emailAddress)
+            ->send(new Reminder($notifiable, 'Polk Health - Appointment Reminder'));
     }
 
     public function toArray($notifiable)
@@ -49,10 +56,8 @@ class Remind extends Notification implements ShouldQueue
         ];
     }
 
-
     public function toTwilio($notifiable)
     {
-
         $sid    = env('TWILIO_ACCOUNT_SID');
         $token  = env('TWILIO_AUTH_TOKEN');
         $twilio = new Client($sid, $token);
@@ -61,7 +66,7 @@ class Remind extends Notification implements ShouldQueue
             ->create($notifiable->phone_number,
                 array(
                     "messagingServiceSid" => env('TWILIO_SMS_SERVICE_SID'),
-                    "body" => $notifiable->first_name . ', don\'t forget your upcoming vaccination appointment on .'
+                    "body" => $notifiable->first_name . ', don\'t forget your upcoming vaccination appointment tomorrow.  Expect delays early as we get things set up.'
                 )
             );
         return $message->sid;

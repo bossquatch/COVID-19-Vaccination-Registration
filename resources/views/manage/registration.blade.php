@@ -4,6 +4,16 @@
     {{ config('app.name', 'Laravel') }} - Procure Registration
 @endsection
 
+@section('header')
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
+<style>
+    .ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+@endsection
+
 @section('content')
 <!-- Header -->
 <div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
@@ -32,20 +42,15 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
-                <a class="btn btn-header btn-round btn-lg" href="/manage">
-                    <span class="fad fa-times-circle mr-1"></span> Cancel
+                <a class="btn btn-header btn-round btn-lg" href="{{ url()->previous() == url()->current() ? '/manage' : url()->previous() }}">
+                    <span class="fas fa-arrow-left mr-1"></span> Back
                 </a>
-
-                @can('create_vaccine')
-                <button type="button" class="btn btn-header-outline btn-round btn-lg" data-toggle="modal" data-target="#vaccineModal">
-                    <span class="fad fa-syringe mr-1"></span> Add Vaccination
-                </button>
-                @endcan
             </div>
         </div>
 
-        <div class="row align-items-center">
-            <div class="col-12 col-lg-6 offset-lg-3">
+        <div class="row align-items-top">
+            @include('manage.partials.appointment', ['registration' => $registration])
+            <div class="col-12 col-lg-6 @if($registration->pending_invitation) @cannot('update_invite') offset-lg-3 @endcannot @elseif(!$registration->has_appointment) @cannot('keep_inventory') offset-lg-3 @endcannot @endif">
                 <div class="mb-8 mb-md-0">
                     <!-- Card -->
                     <div class="card card-body p-6">
@@ -65,9 +70,19 @@
                                     <span class="{{ $registration->status->fa_icon }} mr-1"></span> {{ $registration->status->name }}
                                 </div>
 
+                                @can('keep_inventory')
+                                <div class="input-group col-12 col-md-6 mx-auto mb-2">
+                                    <div class="input-group-prepend">
+                                        <label for="submitted-at" class="input-group-text" id="submitted-at-desc">Submitted At:</label>
+                                    </div>
+                                    <input type="date" class="form-control" id="submitted-at" data-id="{{ $registration->id }}" aria-describedby="submitted-at-desc" value="{{ Carbon\Carbon::parse($registration->submitted_at)->format('Y-m-d') }}">
+                                </div>
+                                @else
                                 <p class="text-gray-dark mb-2">
                                     Submitted: {{ Carbon\Carbon::parse($registration->submitted_at)->format('m-d-Y h:i:s A') }}
                                 </p>
+                                @endcan
+
                             </div>
                             <div class="col-12 text-center mb-0">
                                 <div class="row align-items-center justify-content-center">
@@ -141,11 +156,65 @@
                                 </div>
                             </div>
                         </div>
-                        @can('read_vaccine')
+                        @can('create_invite')
+                        @php
+                            $available_events = \App\Models\Event::where(function ($query) {
+                                    $query->where('date_held', '<', DB::raw('CURDATE()'))
+                                        ->orWhere(function ($query) {
+                                            $query->where('date_held', '>', DB::raw('CURDATE()'))
+                                                ->where('open', '=', '0');
+                                        });
+                                })->whereHas('slots', function ($query) {
+                                    $query->select('id', 'event_id', 'capacity', 'deleted_at')
+                                    ->withCount([
+                                        'invitations as active_invitations_count' => function ($query) {
+                                            $query->whereHas('invite_status', function ($query) {
+                                                $query->whereNotIn('id', [4, 5]);
+                                            });
+                                        },
+                                    ])->havingRaw('`capacity` > `active_invitations_count`');
+                                })->orderBy('date_held', 'asc')->get();
+                        @endphp
                             <hr>
-                            <div class="row align-items-center justify-content-center">
-                                <h3>Vaccinations</h3>
+                            <div id="forceSchedulingRow">
+                                <div class="row align-items-center justify-content-center">
+                                    <h3>Add Appointment Data for Record</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-10 mx-auto">
+                                        <div class="input-group">
+                                            <select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
+                                                <option selected>Choose Event...</option>
+                                                @foreach ($available_events as $event)
+                                                    <option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }} - {{ \Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}</option>
+                                                @endforeach
+                                            </select>
+                                            <select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">
+                                                <option selected>No available slots</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary btn-disabled" disabled type="button" id="forceSchedulingLoading" style="display: none;"><span class="fad fa-spinner fa-spin"></span></button>
+                                                <button class="btn btn-outline-success" type="button" id="forceSchedulingAdd" onclick="submitInvite()">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="forceSchedulingStatus"></div>
                             </div>
+                        @endcan
+                        @can('read_registration')
+                            <hr>
+                            <div class="row align-items-center justify-content-center mb-4">
+                                <h3>Vaccinations</h3>
+                                @can('create_vaccine')
+                                    <button type="button" class="btn btn-outline-primary btn-round ml-3" data-toggle="collapse" data-target="#vaccineCollapse">
+                                        <span class="fad fa-syringe mr-1"></span> Add Vaccination
+                                    </button>
+                                @endcan
+                            </div>
+                            @can('create_vaccine')
+                                @include('vaccine.partials.collapse', ['registration' => $registration])
+                            @endcan
                             <div id="js-vaccine-section">
                                 @php
                                     $no_vacs = false;
@@ -158,8 +227,41 @@
                                     @endphp
                                 @endforelse
                                 <div id="js-no-vaccine-alert" class="alert alert-info text-center" @if (!$no_vacs) style="display: none" @endif>
-                                    This registrant has not received a vaccine.
+                                    {{ ucwords(strtolower($registration->first_name)) }} has not received a vaccine.
                                 </div>
+                            </div>
+                        @endcan
+                        @can('read_registration')
+                            <hr>
+                            <div class="row align-items-center justify-content-center">
+                                <h3>Email History</h3>
+                            </div>
+                            <div id="js-email-history-section">
+
+								<table class="table table-sm font-size-xs table-hover">
+									<thead>
+										<tr class="">
+											<th scope="col">Date Sent</th>
+											<th scope="col">Recipient</th>
+											<th scope="col">Subject</th>
+											<th scope="col">Status</th>
+										</tr>
+									</thead>
+									<tbody>
+									@forelse ($registration->user->emailHistory as $email_history)
+										<tr class="{{ $email_history->event == 'delivered' ? 'alert-info' : 'alert-danger' }}">
+											<td scope="row">{{ Carbon\Carbon::createFromTimestamp($email_history->timestamp)->isoFormat('M/D/YY h:mm:ss a') }}</td>
+											<td>{{ $email_history->headers_to }}</td>
+											<td>{{ $email_history->headers_subject }}</td>
+											<td data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $email_history->delivery_status_message . ' ' . $email_history->severity }}">{{ ucfirst($email_history->event) }}</td>
+										</tr>
+									@empty
+										<tr class="alert-warning mt-6 mb-6">
+											<td colspan="5" class="text-center font-size-lg alert-warning">No email history found</td>
+										</tr>
+									@endforelse
+									</tbody>
+								</table>
                             </div>
                         @endcan
                     </div>
@@ -189,11 +291,94 @@
     </div>
 </section>
 
+@can('create_invite')
+    <script>
+        $('#forceSchedule').on('change', function() {
+            var eventId = this.value;
+
+            if (eventId > 0) {
+                $.get('/slots/'+eventId, {}, function(data) {
+                        if (data.status == 'success') {
+                            $('#forceSlot').html(data.html);
+                        } else {
+                            $('#forceSlot').html('<option selected>No available slots</option>');
+                        }
+                }, 'json');
+            } else {
+                $('#forceSlot').html('<option selected>No available slots</option>');
+            }
+        });
+
+        function submitInvite() {
+            document.getElementById('forceSchedulingAdd').style.display = 'none';
+            document.getElementById('forceSchedulingLoading').style.display = '';
+            var event = document.getElementById('forceSchedule').options[document.getElementById('forceSchedule').selectedIndex].value;
+            var slot = document.getElementById('forceSlot').options[document.getElementById('forceSlot').selectedIndex].value;
+
+            if (event > 0 && slot > 0) {
+                $.post('/slots/force-invite/{{ $registration->id }}', {
+                        '_token' : $('meta[name=csrf-token]').attr('content'),
+                        'event' : event,
+                        'slot' : slot,
+                    }, function(data) {
+                        document.getElementById('forceSchedulingAdd').style.display = '';
+                        document.getElementById('forceSchedulingLoading').style.display = 'none';
+                        if (data.status == 'success') {
+                            document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-success text-center">The registration was associated with the event time slot!</div>';
+                        } else {
+                            document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-danger text-center">' + data.message + '</div>';
+                        }
+                    }, 'json');
+            } else {
+                document.getElementById('forceSchedulingStatus').innerHTML = '<div class=" col-12 col-lg-10 mx-auto mt-2 alert alert-danger text-center">The event and slot fields need input!</div>';
+            }
+        }
+    </script>
+@endcan
+
+@can('keep_inventory')
+<script>
+    document.getElementById("submitted-at").addEventListener('focusout', function() {
+        let field = this;
+        let newVal = field.value;
+        let regis = field.dataset.id;
+        if (newVal != '') {
+            submitDateBorder(field, 'danger');
+            $.post('/manage/update-submission-date', {
+                    "_token": $('meta[name=csrf-token]').attr('content'),
+                    "regis_id": regis,
+                    "new_date": newVal
+                }, function(data) {
+                    if (data.status == 'success') {
+                        submitDateBorder(field, 'success');
+                    }
+            }, 'json');
+        } else {
+            submitDateBorder(field, 'danger');
+        }
+    });
+
+    function submitDateBorder(ele, borderType) {
+        let oldType = 'danger';
+        if (borderType == oldType) {
+            oldType = 'success';
+        }
+        if (!ele.classList.contains('border')) {
+            ele.classList.add('border');
+        }
+        if (ele.classList.contains('border-' + oldType)) {
+            ele.classList.remove('border-' + oldType);
+        }
+        if (!ele.classList.contains('border-' + borderType)) {
+            ele.classList.add('border-' + borderType);
+        }
+    }
+</script>
+@endcan
+
 <script>
     $('#newComment').click(function(event){
-        console.log('hit');
         event.preventDefault();
-        console.log('hit2');
         regisId = $(this).data('regis-id');
         commentText = document.getElementById('comment').value;
 
@@ -225,6 +410,6 @@
 </script>
 
 @can('create_vaccine')
-    @include('vaccine.partials.modal', ['registration_id' => $registration->id])
+    @include('vaccine.js.collapse', ['registration' => $registration])
 @endcan
 @endsection

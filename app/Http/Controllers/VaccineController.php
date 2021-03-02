@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ElevenDigits;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class VaccineController extends Controller
 {
@@ -26,7 +28,7 @@ class VaccineController extends Controller
         if (empty($inputs['registrationId'])) {
             abort(404);
         }
-        \App\Models\Registration::findOrFail($inputs['registrationId']);
+        $regis = \App\Models\Registration::findOrFail($inputs['registrationId']);
 
         $validator = Validator::make($inputs, $this->validationRules());
 
@@ -34,27 +36,55 @@ class VaccineController extends Controller
             return json_encode(['status' => 'failed', 'errors' => $validator->errors()]);
         }
 
+        if ($inputs['giver'] ?? null) {
+            $vac = \App\Models\User::findOrFail($inputs['giver']);            
+        } else {
+            $vac = Auth::user();
+        }
+
+        $inputs['giverFirstName'] = $vac->first_name;
+        $inputs['giverCreds'] = $vac->creds;
+        $inputs['giverLastName'] = $vac->last_name;
+
+        $lot = \App\Models\Lot::findOrFail($inputs['lotNumber']);
+
         $vaccine = \App\Models\Vaccine::create([
             'registration_id' => $inputs['registrationId'],
-            'vaccine_type_id' => $inputs['vaccineName'],
-            'manufacturer_id' => $inputs['manufacturer'],
+            'vaccine_type_id' => $inputs['vaccineName'] ?? 1,                                               // default: Moderna
+            'manufacturer_id' => $inputs['manufacturer'] ?? 1,                                              // default: Moderna
             'injection_site_id' => $inputs['injectionSite'],
-            'injection_route_id' => $inputs['injectionRoute'],
-            'eligibility_id' => $inputs['eligibility'],
-            'date_given' => $inputs['dateGiven'],
-            'lot_number' => $inputs['lotNumber'],
-            'ndc' => $inputs['ndc'],
-            'exp_month' => $inputs['expDateMonth'],
-            'exp_year' => $inputs['expDateYear'],
-            'vis_publication' => $inputs['visPubDate'],
+            'injection_route_id' => $inputs['injectionRoute'] ?? 2,                                         // default: Intramuscular
+            'eligibility_id' => $inputs['eligibility'] ?? 1,                                                // default: ?
+            'date_given' => $inputs['dateGiven'] ?? Carbon::today(),                                        // default: today
+            'lot_number' => $lot->number,
+            'ndc' => $inputs['ndc'] ?? '08077727399',                                                       // default: normal NDC
+            'exp_month' => $lot->expiration_date ? Carbon::parse($lot->expiration_date)->format('m') : Carbon::today()->addMonth()->format('m'),
+            'exp_year' => $lot->expiration_date ? Carbon::parse($lot->expiration_date)->format('Y') : Carbon::today()->addMonth()->format('Y'),
+            'vis_publication' => $inputs['visPubDate'] ?? '2020-12-18',
             'giver_fname' => $inputs['giverFirstName'],
             'giver_creds' => $inputs['giverCreds'],
             'giver_lname' => $inputs['giverLastName'],
+            'user_id' => Auth::id(),
         ]);
 
+        if (!isset($inputs['risks'])) {
+            $inputs['risks'] = [];
+        }
         $vaccine->risk_factors()->sync($inputs['risks']);
 
+        $this->checkCompleted($regis);
+
         return json_encode(['status' => 'success', 'html' => view('vaccine.partials.info', ['vaccine' => $vaccine])->render()]);
+    }
+
+    private function checkCompleted($registration)
+    {
+        if ($registration->vaccines()->count() >= 2) {
+            $registration->status_id = 5;
+            $registration->save();
+
+            $this->logChanges($registration, 'completed', true);
+        }
     }
 
     private function validationRules()
@@ -64,24 +94,27 @@ class VaccineController extends Controller
         $valid_sites = implode(",",\App\Models\InjectionSite::pluck('id')->toArray());
         $valid_routes = implode(",",\App\Models\InjectionRoute::pluck('id')->toArray());
         $valid_eligs = implode(",",\App\Models\Eligibility::pluck('id')->toArray());
+        $valid_givers = implode(",",\App\Models\User::whereHas('roles', function($query) { $query->where('name', '=', 'vac'); })->pluck('id')->toArray());
+        $valid_lots = implode(",",\App\Models\Lot::pluck('id')->toArray());
 
         $rules = [
             'registrationId' => ['required'],
-            'dateGiven' => ['required', 'date'],
-            'vaccineName' => ['required', 'in:'.$valid_types],
-            'manufacturer' => ['required', 'in:'.$valid_manus],
-            'lotNumber' => ['required', 'string', 'max:255'],
-            'ndc' => ['required', 'string', 'max:255', new ElevenDigits],
-            'expDateMonth' => ['required', 'integer', 'min:1', 'max:12'],
-            'expDateYear' => ['required', 'integer', 'min:2021'],
+            'dateGiven' => ['nullable', 'date'],
+            'vaccineName' => ['nullable', 'in:'.$valid_types],
+            'manufacturer' => ['nullable', 'in:'.$valid_manus],
+            'lotNumber' => ['required', 'in:'.$valid_lots],
+            'ndc' => ['nullable', 'string', 'max:255', new ElevenDigits],
+            'expDateMonth' => ['nullable', 'integer', 'min:1', 'max:12'],
+            'expDateYear' => ['nullable', 'integer', 'min:2021'],
             'visPubDate' => ['nullable', 'date'],
             'injectionSite' => ['required', 'in:'.$valid_sites],
-            'injectionRoute' => ['required', 'in:'.$valid_routes],
+            'injectionRoute' => ['nullable', 'in:'.$valid_routes],
             'eligibility' => ['required', 'in:'.$valid_eligs],
             'risks' => ['nullable'],
-            'giverCreds' => ['nullable', 'string', 'max:255'],
-            'giverLastName' => ['nullable', 'string', 'max:255'],
-            'giverFirstName' => ['nullable', 'string', 'max:255'],
+            'giver' => ['nullable', 'in:'.$valid_givers]
+            //'giverCreds' => ['nullable', 'string', 'max:255'],
+            //'giverLastName' => ['nullable', 'string', 'max:255'],
+            //'giverFirstName' => ['nullable', 'string', 'max:255'],
         ];
 
         return $rules;

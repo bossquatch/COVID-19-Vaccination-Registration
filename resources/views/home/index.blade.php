@@ -79,6 +79,13 @@
                         <!-- Text -->
                         <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made on:</p>
                         <span class="badge badge-pill badge-primary ml-2">{{ $currentSchedule }}</span>
+                        <div class="card border-primary mb-2 mt-4" style="max-width: 18rem;">
+{{--                            <div class="card-header">Header</div>--}}
+                            <div class="card-body text-primary">
+                                <h6 class="card-title">Please note:</h6>
+                                <p class="card-text font-size-sm">If you registered prior to the date shown above and have not been contacted, please reach out to us at the call center for assistance.</p>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -113,9 +120,9 @@
                         <p class="font-size-sm text-gray-dark mb-0">
                             <span class="mr-1">Mon-Fri:</span> 8am - 5pm
                         </p>
-                        <p class="font-size-sm text-gray-dark mb-0">
-                            <span class="mr-1">Sat & Sun:</span> 8am - 2pm
-                        </p>
+{{--                        <p class="font-size-sm text-gray-dark mb-0">--}}
+{{--                            <span class="mr-1">Sat & Sun:</span> 8am - 2pm--}}
+{{--                        </p>--}}
                     </div>
                 </div>
             </div>

@@ -4,6 +4,21 @@
     {{ config('app.name', 'Laravel') }} - Registration Edit
 @endsection
 
+@section('header')
+<style>
+select.read-only {
+    background: #e9ecef;
+    cursor:no-drop;
+}
+
+select.read-only option{
+    display:none;
+}
+</style>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps_key') }}&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
+@endsection
+
 @section('content')
 <!-- Header -->
 <div class="jumbotron jumbotron-fluid jumbotron-header bg-squares teal-gradient">
@@ -35,7 +50,7 @@
                 <div class="card card-border border-primary shadow-light-lg">
                     <div class="card-body">
                         <!-- Form -->
-                        <form action="/edit" id="RegistrationMainForm" method="post">
+                        <form action="/edit" id="RegistrationMainForm" method="post" onkeydown="return event.key != 'Enter';">
                             @csrf
 
                             <div class="row mb-6">
@@ -173,161 +188,40 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-6">
+                            <div class="row mt-4">
                                 <div class="col-12">
                                     <h2 class="mb-5">Home Address</h2>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="address1">
-                                            Address 1
-                                        </label>
-                                        <input id="address1" name="address1" class="form-control @error("address1") is-invalid @enderror" type="text" value="{{ old('address1') ?? $registration->address1 }}" placeholder="Address 1" onchange="checkInlineAddress()">
+                                <div class="col-12 mb-3">
+                                    <div class="form-group">
+                                        <label for="autocomplete">Address search</label>
+                                        <span id="addressMoreOptions" class="animate-fade text-muted small ml-1">
+                                            Address not listed?
+                                            <a id="btnCollapsedAddress" data-toggle="collapse" href="#collapsedAddress" role="button" aria-expanded="false" aria-controls="collapsedAddress">see more options</a>
+                                        </span>
+                                        <input class="form-control @if ($errors->has('street_number') || $errors->has('street_name') || $errors->has('line_2') || $errors->has('locality') || $errors->has('state') || $errors->has('postal_code') || $errors->has('county')) is-invalid @endif" type="text" id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" name="autocomplete" value="{{ old('autocomplete') ?? ($registration->address ? $registration->address->street_number . ' ' . $registration->address->street_name . ', ' . $registration->address->locality . ', ' . $registration->address->state->abbr : '') }}">
 
-                                        @error("address1")
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first("address1") }}</strong>
-                                            </span>
-                                        @enderror
+                                        @if ($errors->has('street_number') || $errors->has('street_name') || $errors->has('line_2') || $errors->has('locality') || $errors->has('state') || $errors->has('postal_code') || $errors->has('county'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>
+                                                {!! $errors->has('street_number') ? $errors->first('street_number') . '<br>' : '' !!}
+                                                {!! $errors->has('street_name') ? $errors->first('street_name') . '<br>' : '' !!}
+                                                {!! $errors->has('line_2') ? $errors->first('line_2') . '<br>' : '' !!}
+                                                {!! $errors->has('locality') ? $errors->first('locality') . '<br>' : '' !!}
+                                                {!! $errors->has('state') ? $errors->first('state') . '<br>' : '' !!}
+                                                {!! $errors->has('postal_code') ? $errors->first('postal_code') . '<br>' : '' !!}
+                                                {!! $errors->has('county') ? $errors->first('county') . '<br>' : '' !!}
+                                            </strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="address2">
-                                            Address 2
-                                        </label>
-                                        <input id="address2" name="address2" class="form-control @error("address2") is-invalid @enderror" type="text" value="{{ old('address2') ?? $registration->address2 }}" placeholder="Address 2" onchange="checkInlineAddress()">
-
-                                        @error("address2")
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first("address2") }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="city">
-                                            City
-                                        </label>
-                                        <input id="city" name="city" class="form-control @error("city") is-invalid @enderror" type="text" value="{{ old('city') ?? $registration->city }}" placeholder="City" onchange="checkInlineAddress()">
-
-                                        @error("city")
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first("city") }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="state">
-                                            State
-                                        </label>
-                                        {{--<input type="hidden" name="state" value="FL">--}}
-                                        <select id="state" name="state" class="custom-select @error("state") is-invalid @enderror" aria-disabled="false">
-                                            <option value="AL" @if($registration->state == "AL") selected @endif>Alabama</option>
-                                            <option value="AK" @if($registration->state == "AK") selected @endif>Alaska</option>
-                                            <option value="AZ" @if($registration->state == "AZ") selected @endif>Arizona</option>
-                                            <option value="AR" @if($registration->state == "AR") selected @endif>Arkansas</option>
-                                            <option value="CA" @if($registration->state == "CA") selected @endif>California</option>
-                                            <option value="CO" @if($registration->state == "CO") selected @endif>Colorado</option>
-                                            <option value="CT" @if($registration->state == "CT") selected @endif>Connecticut</option>
-                                            <option value="DE" @if($registration->state == "DE") selected @endif>Delaware</option>
-                                            <option value="DC" @if($registration->state == "DC") selected @endif>District of Columbia</option>
-                                            <option value="FL" @if($registration->state == "FL") selected @endif>Florida</option>
-                                            <option value="GA" @if($registration->state == "GA") selected @endif>Georgia</option>
-                                            <option value="HI" @if($registration->state == "HI") selected @endif>Hawaii</option>
-                                            <option value="ID" @if($registration->state == "ID") selected @endif>Idaho</option>
-                                            <option value="IL" @if($registration->state == "IL") selected @endif>Illinois</option>
-                                            <option value="IN" @if($registration->state == "IN") selected @endif>Indiana</option>
-                                            <option value="IA" @if($registration->state == "IA") selected @endif>Iowa</option>
-                                            <option value="KS" @if($registration->state == "KS") selected @endif>Kansas</option>
-                                            <option value="KY" @if($registration->state == "KY") selected @endif>Kentucky</option>
-                                            <option value="LA" @if($registration->state == "LA") selected @endif>Louisiana</option>
-                                            <option value="ME" @if($registration->state == "ME") selected @endif>Maine</option>
-                                            <option value="MD" @if($registration->state == "MD") selected @endif>Maryland</option>
-                                            <option value="MA" @if($registration->state == "MA") selected @endif>Massachusetts</option>
-                                            <option value="MI" @if($registration->state == "MI") selected @endif>Michigan</option>
-                                            <option value="MN" @if($registration->state == "MN") selected @endif>Minnesota</option>
-                                            <option value="MS" @if($registration->state == "MS") selected @endif>Mississippi</option>
-                                            <option value="MO" @if($registration->state == "MO") selected @endif>Missouri</option>
-                                            <option value="MT" @if($registration->state == "MT") selected @endif>Montana</option>
-                                            <option value="NE" @if($registration->state == "NE") selected @endif>Nebraska</option>
-                                            <option value="NV" @if($registration->state == "NV") selected @endif>Nevada</option>
-                                            <option value="NH" @if($registration->state == "NH") selected @endif>New Hampshire</option>
-                                            <option value="NJ" @if($registration->state == "NJ") selected @endif>New Jersey</option>
-                                            <option value="NM" @if($registration->state == "NM") selected @endif>New Mexico</option>
-                                            <option value="NY" @if($registration->state == "NY") selected @endif>New York</option>
-                                            <option value="NC" @if($registration->state == "NC") selected @endif>North Carolina</option>
-                                            <option value="ND" @if($registration->state == "ND") selected @endif>North Dakota</option>
-                                            <option value="OH" @if($registration->state == "OH") selected @endif>Ohio</option>
-                                            <option value="OK" @if($registration->state == "OK") selected @endif>Oklahoma</option>
-                                            <option value="OR" @if($registration->state == "OR") selected @endif>Oregon</option>
-                                            <option value="PA" @if($registration->state == "PA") selected @endif>Pennsylvania</option>
-                                            <option value="PR" @if($registration->state == "PR") selected @endif>Puerto Rico</option>
-                                            <option value="RI" @if($registration->state == "RI") selected @endif>Rhode Island</option>
-                                            <option value="SC" @if($registration->state == "SC") selected @endif>South Carolina</option>
-                                            <option value="SD" @if($registration->state == "SD") selected @endif>South Dakota</option>
-                                            <option value="TN" @if($registration->state == "TN") selected @endif>Tennessee</option>
-                                            <option value="TX" @if($registration->state == "TX") selected @endif>Texas</option>
-                                            <option value="UT" @if($registration->state == "UT") selected @endif>Utah</option>
-                                            <option value="VT" @if($registration->state == "VT") selected @endif>Vermont</option>
-                                            <option value="VA" @if($registration->state == "VA") selected @endif>Virginia</option>
-                                            <option value="VI" @if($registration->state == "VI") selected @endif>Virgin Islands</option>
-                                            <option value="WA" @if($registration->state == "WA") selected @endif>Washington</option>
-                                            <option value="WV" @if($registration->state == "WV") selected @endif>West Virginia</option>
-                                            <option value="WI" @if($registration->state == "WI") selected @endif>Wisconsin</option>
-                                            <option value="WY" @if($registration->state == "WY") selected @endif>Wyoming</option>
-                                        </select>
-
-                                        @error("state")
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first("state") }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="zipCode">
-                                            Zip code
-                                        </label>
-                                        <input id="zipCode" name="zip" class="form-control @error("zip") is-invalid @enderror" type="text" value="{{ old('zip') ?? $registration->zip }}" placeholder="Zip code" onchange="checkInlineAddress()">
-
-                                        @error("zip")
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first("zip") }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group mb-5">
-                                        <label for="county">
-                                            County
-                                        </label>
-                                        <select id="county" name="county" class="custom-select @error("county") is-invalid @enderror">
-                                            @foreach (\App\Models\County::get() as $county)
-                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif($registration->county_id == $county->id) selected @endif>{{ $county->county }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('county')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('county') }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
                                 <div class="col-12">
                                     <div class="form-group mb-5">
                                         <div class="custom-control custom-checkbox">
-                                            <input id="scheculePreference" name="scheculePreference" class="custom-control-input @error("scheculePreference") is-invalid @enderror" type="checkbox" @if ($registration->prefer_close_location) checked aria-checked="true" @endif>
-                                            <label class="custom-control-label" for="scheculePreference">I prefer an appointment closer to my location. <em>(This may delay your appointment time.)</em></label>
-
+                                            <input id="scheculePreference" name="scheculePreference" class="custom-control-input @error("scheculePreference") is-invalid @enderror" type="checkbox">
+                                            <label class="custom-control-label" for="scheculePreference">I prefer to get scheduled to the location closest to me instead of being scheduled to the earliest possible appointment.</label>
+                        
                                             @error("scheculePreference")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("scheculePreference") }}</strong>
@@ -336,8 +230,70 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12" style="display: none" id="addressStatusBlock"></div>
+                              </div>
+                              <div id="collapsedAddress" class="row collapse">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="street_number">Street #</label>
+                                        <input class="form-control read-only" type="text" id="street_number" name="street_number" value="{{ old('street_number') ?? ($registration->address->street_number ?? '') }}" readonly="readonly" aria-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="route">Street name</label>
+                                        <input class="form-control read-only" type="text" id="route" name="street_name" value="{{ old('street_name') ?? ($registration->address->street_name ?? '') }}" readonly="readonly" aria-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="address-line-2">Apt, Ste, Unit, etc.</label>
+                                        <input class="form-control read-only" type="text" id="address-line-2" name="line_2" value="{{ old('line_2') ?? ($registration->address->line_2 ?? '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="locality">City</label>
+                                        <input class="form-control read-only" type="text" id="locality" name="locality" value="{{ old('locality') ?? ($registration->address->locality ?? '') }}" readonly="readonly" aria-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="administrative_area_level_1">State</label>
+                                        <select id="administrative_area_level_1" name="state" class="custom-select read-only" readonly="readonly" aria-readonly="true">
+                                            @foreach (\App\Models\State::get() as $state)
+                                                <option value="{{ $state->id }}" @if (old('state')) @if(old('state') == $state->id) selected @endif @elseif(($registration->address->state_id ?? '9') == $state->id) selected @endif>{{ $state->abbr }}</option>    
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="postal_code">Zip code</label>
+                                        <input class="form-control read-only" type="text" id="postal_code" name="postal_code" value="{{ old('postal_code') ?? ($registration->address->postal_code ?? '') }}" readonly="readonly" aria-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="administrative_area_level_2">County</label>
+                                        <select id="administrative_area_level_2" name="county" class="custom-select" readonly="readonly" aria-readonly="true">
+                                            @foreach (\App\Models\County::get() as $county)
+                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif(($registration->address->county_id ?? '53') == $county->id) selected @endif>{{ $county->name }}</option>    
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-none">
+                                    <div class="form-group">
+                                        <label for="lat">Latitude</label>
+                                        <input class="form-control" type="hidden" id="lat" name="latitude" value="{{ old('latitude') ?? ($registration->address->latitude ?? '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-none">
+                                    <div class="form-group">
+                                        <label for="lng">Longitude</label>
+                                        <input class="form-control" type="hidden" id="lng" name="longitude" value="{{ old('longitude') ?? ($registration->address->longitude ?? '') }}">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row mb-6">
@@ -465,89 +421,6 @@
                                 </div>
                             </div>
                         </form>
-
-                        <script type="text/javascript">
-                            function checkInlineAddress() {
-                                var addrInfo = {
-                                    'address1': $("#address1").val(),
-                                    'address2': $("#address2").val(),
-                                    'city': $("#city").val(),
-                                    'zip': $("#zipCode").val(),
-                                    'state': $('#state').find(":selected").val()
-                                };
-
-                                if (addrInfo.address1 != "" && addrInfo.city != "" && addrInfo.zip != ""){
-                                    $("#adressStatusBlock").html(
-                                        "<div class='row justify-content-center'><span class='fad fa-spinner fa-pulse fa-2x'></span></div>"
-                                    );
-
-                                    $.get('/address/validate', addrInfo, function(data) {
-                                        var type, text = "";
-
-                                        if (data.hasOwnProperty('error')) {
-                                            text = data.error;
-                                            type = 'danger';
-                                        } else {
-                                            addr = data.address.Address2;
-                                            if (data.address.Address1 !== undefined) {
-                                                addr += " "+data.address.Address1;
-                                            }
-                                            addr += " "+data.address.City+", "+data.address.State+" "+data.address.Zip5;
-                                            if (data.address.Zip4 !== undefined) {
-                                                addr += "-"+data.address.Zip4;
-                                            }
-                                            text = "<strong>Address was successufully validated!</strong><br><strong>Found address:</strong> "+addr+"<button type='button' class='ml-2 btn btn-outline-success btn-sm' onclick=\"syncInlineAddress('"+data.address.Address2+"', '"+data.address.Address1+"', '"+data.address.City+"', '"+data.address.Zip5+"', '"+data.address.State+"');$(this).hide();\">Sync Address</button>";
-                                            if (data.address.ReturnText !== undefined) {
-                                                text += "<br>"+data.address.ReturnText;
-                                            }
-                                            type = 'success';
-                                        }
-
-                                        $("#addressStatusBlock").html(
-                                            "<div class='alert alert-"+type+"' role='alert'>"+text+"</div>"
-                                        );
-                                        $("#addressStatusBlock").css('display', 'block');
-                                    }, 'json');
-                                } else {
-                                    $("#addressStatusBlock").html(
-                                        "<div class='alert alert-warning' role='alert'>Incomplete address information.</div>"
-                                    );
-                                    $("#addressStatusBlock").css('display', 'block');
-                                }
-                            }
-
-                            function syncInlineAddress(address1, address2, city, zip, state) {
-                                if (address1 !== undefined && address1 != 'undefined') {
-                                    $("#address1").val(address1);
-                                } else {
-                                    $("#address1").val("");
-                                }
-
-                                if (address2 !== undefined && address2 != 'undefined') {
-                                    $("#address2").val(address2);
-                                } else {
-                                    $("#address2").val("");
-                                }
-
-                                if (city !== undefined && city != 'undefined') {
-                                    $("#city").val(city);
-                                } else {
-                                    $("#city").val("");
-                                }
-
-                                if (zip !== undefined && zip != 'undefined') {
-                                    $("#zipCode").val(zip);
-                                } else {
-                                    $("#zipCode").val("");
-                                }
-
-                                if (state !== undefined && state != 'undefined') {
-                                    $("#state").val(state).change();
-                                } else {
-                                    $("#state").val("FL").change();
-                                }
-                            }
-                        </script>
                     </div>
                 </div>
             </div>
@@ -577,4 +450,114 @@
             this.value = ph;
         });
     </script>
+@endsection
+
+@section('scripts')
+<script>
+let placeSearch;
+let autocomplete;
+
+const componentForm = {
+  street_number: "short_name",
+  route: "short_name",
+  locality: "long_name",
+  administrative_area_level_2: "short_name",
+  administrative_area_level_1: "short_name",
+  postal_code: "short_name"
+};
+
+function initAutocomplete() {
+  autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("autocomplete"),
+    { types: ["geocode"] }
+  );
+
+  autocomplete.setFields(["address_component", "geometry"]);
+
+  autocomplete.addListener("place_changed", fillInAddress);
+}
+
+function fillInAddress() {
+  const place = autocomplete.getPlace();
+
+  const lat = place.geometry.location.lat(),
+    lng = place.geometry.location.lng();
+
+  document.getElementById("lat").value = lat;
+  document.getElementById("lng").value = lng;
+
+  for (const component in componentForm) {
+    if (component == "administrative_area_level_1") {
+        document.getElementById(component).value = "9";
+    } else if (component == "administrative_area_level_2") {
+        document.getElementById(component).value = "53";
+    } else {
+        document.getElementById(component).value = "";
+    }
+    document.getElementById(component).readOnly = true;
+    document.getElementById(component).classList.add("read-only");
+  }
+
+  for (const component of place.address_components) {
+    const addressType = component.types[0];
+
+    if (componentForm[addressType]) {
+        if (addressType == "administrative_area_level_1") {
+            changeSelectedOptionByText(addressType, component[componentForm[addressType]], 53);
+        } else if (addressType == "administrative_area_level_2") {
+            changeSelectedOptionByText(addressType, component[componentForm[addressType]].replace(' County', ''), 64);
+        } else {
+            const val = component[componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+        }
+    }
+  }
+}
+
+function changeSelectedOptionByText(selectName, optionText, unknownValue) {
+    const ele = document.getElementById(selectName);
+    var optionId = unknownValue;
+
+    for (optionNum in ele.options) {
+        
+        if (ele.options[optionNum].text == optionText) {
+            optionId = ele.options[optionNum].value;
+        }
+    }
+
+    ele.value = optionId;
+}
+
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      const circle = new google.maps.Circle({
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
+
+document.getElementById("btnCollapsedAddress").addEventListener("click", function () {
+    if (this.getAttribute("aria-expanded") === "false") {
+      for (const component in componentForm) {
+        document.getElementById(component).readOnly = false;
+        document.getElementById(component).classList.remove("read-only")
+      }
+    }
+});
+
+document.getElementById("autocomplete").addEventListener("input", function () {
+  document.getElementById("addressMoreOptions").classList.add("animate-fade-in");
+});
+
+</script>
 @endsection

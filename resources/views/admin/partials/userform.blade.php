@@ -62,22 +62,47 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="role" aria-label="role" title="role">
-                <span class="fad fa-badge-check fa-fw"></span> Role
-            </label>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label for="credentials" aria-label="credentials" title="Credentials/Title">
+                        <span class="fad fa-user-tag fa-fw"></span> Credentials/Title
+                    </label>
+        
+                    <input id="credentials" type="text" class="form-control @error('credentials') is-invalid @enderror" name="credentials" value="{{ old('credentials') ? old('credentials') : ($user ? $user->creds : '') }}" placeholder="Credentials/Title">
+        
+                    @error('credentials')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first("credentials") }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="form-group">
+                    <label for="role" aria-label="role" title="role">
+                        <span class="fad fa-badge-check fa-fw"></span> Role
+                    </label>
 
-            <select id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" required>
-                @foreach ($roles as $role)
-                    <option value="{{ $role->name }}" @if ($userRole && $userRole->name == $role->name) selected @endif>{{ $role->label }}</option>
-                @endforeach
-            </select>
+                    <select id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" required>
+                        @foreach ($roles as $role)
+                            @if ($role->name == 'red_leader')
+                                @can('skeleton_key')
+                                <option value="{{ $role->name }}" @if ($userRole && $userRole->name == $role->name) selected @endif>{{ $role->label }}</option>        
+                                @endcan
+                            @else
+                            <option value="{{ $role->name }}" @if ($userRole && $userRole->name == $role->name) selected @endif>{{ $role->label }}</option>
+                            @endif
+                        @endforeach
+                    </select>
 
-            @error('role')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first("role") }}</strong>
-                </span>
-            @enderror
+                    @error('role')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first("role") }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -26,8 +26,16 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $permissions = $user->permissions();
-        if ($permissions->contains('read_registration')) {
+        if ($permissions->contains('create_user')) {
+            return redirect('/admin');
+        } else if ($permissions->contains('create_event')) {
+            return redirect('/events');
+        } else if ($permissions->contains('create_vaccine') || $permissions->contains('check_in')) {
+            return redirect('/manage/qr');
+        } else if ($permissions->contains('read_registration') || $permissions->contains('skeleton_key')) {
             return redirect('/manage');
+        } else if ($permissions->contains('read_partner_event')) {
+            return redirect('/my-events');
         } else {
             if ($user->registration) {
                 return view('register.status');

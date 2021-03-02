@@ -342,7 +342,7 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        max: 2000,
+                        max: 5000,
                         min: 0
                     }
                 }]

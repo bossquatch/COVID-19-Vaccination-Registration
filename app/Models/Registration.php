@@ -76,10 +76,11 @@ class Registration extends Model
         return $this->belongsTo(Suffix::class, 'suffix_id');
     }
 
-    public function county()
-    {
-        return $this->belongsTo(County::class, 'county_id');
-    }
+    // depreciated
+    //public function county()
+    //{
+    //    return $this->belongsTo(County::class, 'county_id');
+    //}
 
     public function occupation()
     {
@@ -120,6 +121,22 @@ class Registration extends Model
         return false;
     }
 
+    public function invitations() {
+        return $this->hasMany(Invitation::class, 'registration_id');
+    }
+
+    public function address() {
+		return $this->hasOne(Address::class, 'id', 'address_id');
+	}
+
+	public function emailHistory()
+    {
+        return $this->hasMany(EmailHistory::class, 'registration_id', 'id');
+    }
+
+    /**
+    * Accessor for Age.
+    */
     public function getAgeAttribute()
     {
         if ($this->birth_date != null) {
@@ -130,10 +147,141 @@ class Registration extends Model
         }
     }
 
+    public function getPendingInvitationAttribute()
+    {
+        return $this->invitations()->whereHas('invite_status', function($query) {
+            $query->where('name', 'Awaiting Response')
+                ->orWhere('name', 'Awaiting Callback');
+        })->first();
+    }
+
+    public function getHasAppointmentAttribute()
+    {
+        return ($this->active_invite_query()->count() > 0);
+    }
+
+    public function getAppointmentAttribute()
+    {
+        return $this->active_invite->slot;
+    }
+
+    public function getActiveInviteAttribute()
+    {
+        return $this->active_invite_query()->first();
+    }
+
+    private function active_invite_query()
+    {
+        return $this->invitations()->whereHas('invite_status', function($query) {
+            $query->where('name', 'Accepted')
+                ->orWhere('name', 'Checked In');
+        });
+    }
+
     public function getPhoneNumberAttribute()
     {
         $phone = '+1' . preg_replace('/\D/', '', $this->user->phone);
         return $phone;
     }
 
+    // allows $registration->auto_contactable
+    public function getAutoContactableAttribute()
+    {
+        return ($this->user->sms_verified_at || $this->user->email_verified_at);
+    }
+
+    // allows $registration->can_sms
+    public function getCanSmsAttribute() {
+        return ($this->user->sms_verified_at);
+    }
+
+    // allows $registration->can_email
+    public function getCanEmailAttribute() {
+        return ($this->user->email_verified_at);
+    }
+
+    // Address Sync
+    public function syncAddress(array $inputs)
+    {
+        $inputs = [
+            'address_type_id' => 1,
+            'street_number' => $inputs['street_number'] ?? null,
+            'street_name' => $inputs['street_name'] ?? null,
+            'line_2' => $inputs['line_2'] ?? null,
+            'locality' => $inputs['locality'] ?? null,
+            'county_id' => $inputs['county'] ?? null,
+            'state_id' => $inputs['state'] ?? null,
+            'postal_code' => $inputs['postal_code'] ?? null,
+            'latitude' => $inputs['latitude'] ?? null,
+            'longitude' => $inputs['longitude'] ?? null,
+        ];
+        if ($this->address()->count() > 0) {
+            $this->address->update($inputs);
+        } else {
+            $new_addr = Address::create($inputs);
+            $this->update([
+                'address_id' => $new_addr->id,
+            ]);
+        }
+        return $this->address;
+    }
+
+    // Address Accessors
+    // address1
+    public function getAddress1Attribute() {
+        if ($this->address) {
+            return $this->address->street_number . ' ' . $this->address->street_name;
+        } else {
+            return $this->getAttributeFromArray('address1');
+        }
+    }
+
+    // address2
+    public function getAddress2Attribute() {
+        if ($this->address) {
+            return $this->address->line_2;
+        } else {
+            return $this->getAttributeFromArray('address2');
+        }
+    }
+
+    // city
+    public function getCityAttribute() {
+        if ($this->address) {
+            return $this->address->city;
+        } else {
+            return $this->getAttributeFromArray('city');
+        }
+    }
+
+    // state
+    public function getStateAttribute() {
+        if ($this->address) {
+            return $this->address->state_abbr;
+        } else {
+            return $this->getAttributeFromArray('state');
+        }
+    }
+
+    // zip
+    public function getZipAttribute() {
+        if ($this->address) {
+            return $this->address->zip_code;
+        } else {
+            return $this->getAttributeFromArray('zip');
+        }
+    }
+
+    // county
+    public function getCountyAttribute() {
+        if ($this->address) {
+            return $this->address->county->name ?? 'Unknown';
+        } else {
+            if($this->getAttributeFromArray('county_id')) {
+                return (\App\Models\County::find($this->getAttributeFromArray('county_id'))->name ?? 'Unknown');
+            } else {
+                return 'Unknown';
+            };
+        }
+    }
 }

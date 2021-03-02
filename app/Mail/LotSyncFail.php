@@ -6,22 +6,19 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Registration;
 
-class RegistrationComplete extends Mailable
+class LotSyncFail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $registration;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Registration $registration)
+    public function __construct()
     {
-        $this->registration = $registration;
+
     }
 
     /**
@@ -31,6 +28,7 @@ class RegistrationComplete extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.registration.complete');
+        return $this->markdown('mail.lotSyncFail')
+                    ->subject('Moderna Lot Number Sync Failed');
     }
 }
