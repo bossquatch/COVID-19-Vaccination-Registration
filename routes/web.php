@@ -23,6 +23,8 @@ Auth::routes([
     'verify' => true,
 ]);
 
+Route::get('/redis', [App\Http\Controllers\RedisController::class,'redisTest'])->middleware('can:skeleton_key');;
+
 Route::get('/not-supported', function() {
     return view('home.noie');
 });
@@ -142,4 +144,5 @@ Route::group(["middleware" => "check.reset"], function() {
 
     Route::post('/webhooks/email_delivered',[WebhookController::class, 'emailDelivered']);
     Route::post('/webhooks/email_failed', [WebhookController::class,'emailFailed']);
+    Route::post('/webhooks/email_incoming', [WebhookController::class,'emailIncoming']);
 });
