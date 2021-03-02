@@ -95,7 +95,6 @@ class Board
             ->whereIn(DB::raw("CONCAT(COALESCE(`street_number`, ''),COALESCE(`street_name`, ''),COALESCE(`line_2`, ''))"), function ($query) use ($address_ids) {
                 $query->selectRaw("CONCAT(COALESCE(`addr`.`street_number`, ''),COALESCE(`addr`.`street_name`, ''),COALESCE(`addr`.`line_2`, '')) as `concat_address`")->from('addresses as addr')->whereIn('id', $address_ids);
             })->orderBy(DB::raw("CONCAT(COALESCE(`street_number`, ''),COALESCE(`street_name`, ''),COALESCE(`line_2`, ''))"))
-            ->limit($capacity)
             ->pluck('id');
 
         return Registration::select('id', 'status_id', 'submitted_at')
