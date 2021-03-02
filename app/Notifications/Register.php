@@ -73,4 +73,13 @@ class Register extends Notification implements ShouldQueue
             );
         return $message->sid;
     }
+
+    public function tags()
+	{
+		return [
+			'email',
+			'register:',
+		];
+	}
+
 }
