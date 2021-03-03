@@ -119,6 +119,12 @@ class Settings extends Model
                 $occupations = $self->occupations()->pluck('id')->toArray();
                 $query->whereIn('occupation_id', $occupations);
             }
+
+            if ($self->polk_only) {
+                $query->whereHas('address', function (Builder $query) {
+                    $query->where('county_id', 53);
+                });
+            }
         };
     }
 }
