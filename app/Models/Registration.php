@@ -20,12 +20,6 @@ class Registration extends Model
         'age'
     ];
 
-    public function getEmailVerifiedAtAttribute()
-    {
-        $asdf = $this->user->email_verified_at;
-        return $this->attributes['email_verified_at'] == $asdf;
-    }
-
     public function AuditLogs()
     {
         return $this->hasMany(AuditLog::class, 'regis_id');
@@ -75,12 +69,6 @@ class Registration extends Model
     {
         return $this->belongsTo(Suffix::class, 'suffix_id');
     }
-
-    // depreciated
-    //public function county()
-    //{
-    //    return $this->belongsTo(County::class, 'county_id');
-    //}
 
     public function occupation()
     {
@@ -146,6 +134,14 @@ class Registration extends Model
             return 'N/A';
         }
     }
+
+	/**
+	 * Accessor for email verified
+	 */
+	public function getEmailVerifiedAtAttribute()
+	{
+		return $this->user->email_verified_at;
+	}
 
     public function getPendingInvitationAttribute()
     {
