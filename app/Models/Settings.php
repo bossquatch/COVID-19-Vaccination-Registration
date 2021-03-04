@@ -35,6 +35,7 @@ class Settings extends Model
         $date = Carbon::parse($this->event->date_held)->format('Y-m-d');
 
         return Registration::has('vaccines', '<', 2)                                    // don't grab those with both vaccinations
+            ->has('user')
             ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
                 $query->where('name', '=', 'In Wait List');
             })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine

@@ -5,6 +5,8 @@
 @endsection
 
 @section('header')
+<script src="{{ asset('js/analytics.js') }}"></script>
+<link href="{{ asset('css/analytics.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
 <script>
@@ -43,6 +45,14 @@
                 <a class="btn btn-header btn-round btn-lg" href="{{ $event->date_held < \Carbon\Carbon::today() ? '/events-history' : '/events' }}">
                     <span class="fas fa-arrow-left mr-1"></span>Back
                 </a>
+
+                @can('update_invite')
+                    @if ($event->has_pending_callbacks)
+                        <a class="btn btn-header btn-header-success btn-round btn-lg" href="/events/{{ $event->id }}/pending/report" title="Event Report" target="_blank" rel="noopener noreferrer">
+                            <span class="fas fa-file-download mr-1"></span>Export Callback List
+                        </a>
+                    @endif
+                @endcan
             </div>
         </div>
 
@@ -56,7 +66,7 @@
                     </div>
                     @endcan
                     
-                    <div class="card card-body p-6">
+                    <div class="card card-body p-6 mb-5">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-12 text-center mb-0">
                                 <!-- Title -->
@@ -129,6 +139,18 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-body mb-5">
+                        <!-- Title -->
+                        <h3 class="h4 text-center mb-5">
+                            Invitations Breakdown <small>(Total Capacity: {{ $event->total_capacity }})</small>
+                        </h3>
+    
+                        <!-- Chart -->
+                        <div class="chart">
+                            <canvas id="inviteBreakdownChart" width="300" height="300" aria-label="Invitations Breakdown Doughnut Chart" role="img"></canvas>
                         </div>
                     </div>
                 </div>
@@ -207,4 +229,76 @@
 @endcan
 
 @include('event.partials.lotmodal', ['event' => $event, 'type' => 'ajax'])
+@endsection
+
+@section('scripts')
+<script>
+    var invBreakdownCTX = document.getElementById('inviteBreakdownChart');
+
+    var inviteBreakdownChart = new Chart(invBreakdownCTX, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                    {{ $event->total_availability }},
+                    {{ $event->total_awaiting_response_from }},
+                    {{ $event->total_awaiting_callback }},
+                    {{ $event->total_scheduled }},
+                    {{ $event->total_reserved }},
+                ],
+                backgroundColor: [
+                    '#ffc107',
+                    '#0071eb',
+                    '#df8c19',
+                    '#dc3545',
+                    '#398502'
+                ],
+                hoverBorderColor: [
+                    '#fff',
+                    '#fff',
+                    '#fff',
+                    '#fff',
+                    '#fff'
+                ],
+                borderWidth: 3
+            }],
+            labels: [
+                "Available Seats ({{ $event->total_availability }})",
+                "Invited/Waiting for Response ({{ $event->total_awaiting_response_from }})",
+                "Awaiting Callback ({{ $event->total_awaiting_callback }})",
+                "Scheduled ({{ $event->total_scheduled }})",
+                "Reserved ({{ $event->total_reserved }})"
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: true
+                // position: 'right',
+                // labels: {
+                //     fontSize: 14,
+                //     fontColor: '#000',
+                //     padding: 16,
+                //     fontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+                // }
+            },
+            tooltips: {
+                displayColors: false,
+                xPadding: 16,
+                yPadding: 12,
+                titleFontSize: 14,
+                titleFontFamily: "'Open Sans Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+                bodyFontSize: 14,
+                bodyFontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+                footerFontSize: 10,
+                footerFontFamily: "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });
+</script>
 @endsection

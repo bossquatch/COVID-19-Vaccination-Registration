@@ -26,7 +26,7 @@ class Board
         
         // for each slot:
         foreach ($slots as $slot) {
-            $registrations = self::evaluate(($slot->capacity - ($slot->active_invitations_count + $slot->reserved)), Carbon::parse($slot->starting_at)->format('Y-m-d'), $slot->id, $slot->event->settings->queryMods())->get();
+            $registrations = self::evaluate(($slot->capacity - ($slot->active_invitations_count + $slot->reserved)), Carbon::parse($slot->starting_at)->format('Y-m-d'), $slot->event_id, $slot->event->settings->queryMods())->get();
             $regis_ids = $registrations->pluck('id');
             $regis_keys = [];
             foreach ($regis_ids as $id) {
@@ -66,7 +66,7 @@ class Board
     }
 
     // query valid registrations
-    protected static function evaluate($capacity, $date, $slot, $where_callback)
+    protected static function evaluate($capacity, $date, $event, $where_callback)
     {
         $age_limit = Carbon::today()->subYears(65);
 
@@ -74,13 +74,16 @@ class Board
         $address_ids = Registration::select('address_id')
             ->withCount('vaccines as received_vaccines_count')
             ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
+            ->has('user')
             ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
                 $query->where('name', '=', 'In Wait List');
             })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
                 $query->whereRaw('DATEDIFF("' . $date . '", date_given) < 26')
                     ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
-            })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
-                $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
+            })->whereDoesntHave('invitations', function (Builder $query) use ($event) {
+                $query->whereHas('slot', function (Builder $query) use ($event) {
+                    $query->where('event_id', '=', $event);                                   // don't invite those who have had invitations to the same event
+                });
             })->where($where_callback)                                                  // base of callback mods
             ->where(function ($query) {
                 $query->doesntHave('address')
@@ -103,13 +106,16 @@ class Board
                 ->limit(1)])
             ->withCount('vaccines as received_vaccines_count')
             ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
+            ->has('user')
             ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
                 $query->where('name', '=', 'In Wait List');
             })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
                 $query->whereRaw('DATEDIFF("' . $date . '", date_given) < 26')
                     ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
-            })->whereDoesntHave('invitations', function (Builder $query) use ($slot) {
-                $query->where('slot_id', '=', $slot);                                   // don't invite those who have had invitations to the same slot
+            })->whereDoesntHave('invitations', function (Builder $query) use ($event) {
+                $query->whereHas('slot', function (Builder $query) use ($event) {
+                    $query->where('event_id', '=', $event);                                   // don't invite those who have had invitations to the same event
+                });
             })->where($where_callback)                                                  // base of callback mods
             ->where(function ($query) {
                 $query->doesntHave('address')

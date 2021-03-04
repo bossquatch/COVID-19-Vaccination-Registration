@@ -102,7 +102,7 @@ class InvitationController extends Controller
         }
 
         Session::flash('success', "<p>Appointment Accepted!</p><p>Be sure to remind the registrant to bring proof of Florida residency to their appointment.</p>");
-        return redirect('/events/'.$invite->event->id.'/pending');
+        return redirect('/events/'.$invite->event->id.'/slots/'.$invite->slot->id);
     }
 
     public function postponeCallback($id)
@@ -125,7 +125,7 @@ class InvitationController extends Controller
         }
 
         Session::flash('success', "<p>You have declined your invitation and will be returned to the wait list. We will attempt to invite you to our next event.</p>");
-        return redirect('/events/'.$invite->event->id.'/pending');
+        return redirect('/events/'.$invite->event->id.'/slots/'.$invite->slot->id);
     }
 
     public function declineCallback($id)
@@ -148,7 +148,7 @@ class InvitationController extends Controller
         }
 
         Session::flash('success', "<p>You have declined your invitation to any of our events and will not be contacted again for further appointments. If you would like to be placed back on the wait list at a later time please contact our call center at <a href=\"tel:863-298-7500\">(863) 534-7500</a>.</p>");
-        return redirect('/events/'.$invite->event->id.'/pending');
+        return redirect('/events/'.$invite->event->id.'/slots/'.$invite->slot->id);
     }
 
     public function checkIn($id)
@@ -226,7 +226,11 @@ class InvitationController extends Controller
 
     private function postponeInvite($registration, $invite) 
     {
-        $this->runStatusUpdates($registration, 1, $invite, 5);
+        if ($registration->status_id == 2) {
+            $this->runStatusUpdates($registration, 1, $invite, 5);
+        } else {
+            $this->updateInviteStatus($invite, 5);
+        }
 
         $this->logChanges($registration, 'invite declined', true);
     }

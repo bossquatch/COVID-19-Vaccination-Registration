@@ -83,6 +83,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        self::deleting(function (User $u) {
+            if ($u->registration) {
+                $u->registration->delete();
+            }
+        });
+    }
+
     public function hasVerifiedPhone()
     {
         return (bool)($this->sms_verified_at != null);

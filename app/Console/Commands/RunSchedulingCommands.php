@@ -19,7 +19,7 @@ class RunSchedulingCommands extends Command
      *
      * @var string
      */
-    protected $description = 'Run all scheduling commands asyncronously';
+    protected $description = 'Run all scheduling commands asynchronously';
 
     /**
      * Create a new command instance.
