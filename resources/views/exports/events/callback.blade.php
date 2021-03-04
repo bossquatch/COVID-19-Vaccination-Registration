@@ -4,7 +4,7 @@
             <th>ID</th>
             <th>Date Registered</th>
             <th>Updated At</th>
-            <th>Email</th>
+{{--            <th>Email</th>--}}
             <th>Last Name</th>
             <th>First Name</th>
             <th>Middle Name</th>
@@ -29,7 +29,7 @@
                 <td>{{ $i->registration->id }}</td>
                 <td>{{ $i->registration->submitted_at }}</td>
                 <td>{{ $i->registration->updated_at }}</td>
-                <td>{{ \Illuminate\Support\Str::contains($i->registration->user->email, 'mg.polk.health') ? '' : $i->registration->user->email }}</td>
+{{--                <td>{{ \Illuminate\Support\Str::contains($i->registration->user->email, 'mg.polk.health') ? '' : $i->registration->user->email }}</td>--}}
                 <td>{{ $i->registration->last_name }}</td>
                 <td>{{ $i->registration->first_name }}</td>
                 <td>{{ $i->registration->middle_name }}</td>
