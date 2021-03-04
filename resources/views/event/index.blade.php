@@ -78,7 +78,7 @@
                         <li class="list-group-item list-group-item-light">
                             <div class="d-flex w-100 justify-content-between">
                                 <h4 class="h5 mb-1">{{ $event->title }}</h4>
-                                <small>{{ $event->percent_filled }} scheduled</small>
+                                <small>{{ $event->percent_invited }} invited, {{ $event->percent_filled }} scheduled</small>
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                 <div class="d-inline">
