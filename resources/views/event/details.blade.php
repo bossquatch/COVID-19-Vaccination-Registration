@@ -43,6 +43,14 @@
                 <a class="btn btn-header btn-round btn-lg" href="{{ $event->date_held < \Carbon\Carbon::today() ? '/events-history' : '/events' }}">
                     <span class="fas fa-arrow-left mr-1"></span>Back
                 </a>
+
+                @can('update_invite')
+                    @if ($event->has_pending_callbacks)
+                        <a class="btn btn-header btn-header-success btn-round btn-lg" href="/events/{{ $event->id }}/pending/report" title="Event Report" target="_blank" rel="noopener noreferrer">
+                            <span class="fas fa-file-download mr-1"></span>Export Callback List
+                        </a>
+                    @endif
+                @endcan
             </div>
         </div>
 

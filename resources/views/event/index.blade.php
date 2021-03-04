@@ -88,7 +88,7 @@
                                 <div class="text-right">
                                     @can('update_invite')
                                         @if ($event->has_pending_callbacks)
-                                            <a class="text-warning" href="/events/{{ $event->id }}/pending" title="Registrations waiting for callback!"><span class="fad fa-bell-exclamation fa-lg"></span><span class="sr-only">Pending Callbacks</span></a>   
+                                            <span class="text-warning" {{--href="/events/{{ $event->id }}/pending"--}} title="Registrations waiting for callback!"><span class="fad fa-bell-exclamation fa-lg"></span><span class="sr-only">Pending Callbacks</span></span>   
                                         @endif
                                     @endcan
 
