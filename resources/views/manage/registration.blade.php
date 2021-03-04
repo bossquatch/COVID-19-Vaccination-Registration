@@ -159,11 +159,7 @@
                         @can('create_invite')
                         @php
                             $available_events = \App\Models\Event::where(function ($query) {
-                                    $query->where('date_held', '<', DB::raw('CURDATE()'))
-                                        ->orWhere(function ($query) {
-                                            $query->where('date_held', '>', DB::raw('CURDATE()'))
-                                                ->where('open', '=', '0');
-                                        });
+                                    $query->where('date_held', '!=', \Carbon\Carbon::today());
                                 })->whereHas('slots', function ($query) {
                                     $query->select('id', 'event_id', 'capacity', 'deleted_at')
                                     ->withCount([

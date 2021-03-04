@@ -79,6 +79,59 @@ class Event extends Model
         return implode(", ", $this->tags()->pluck('label')->toArray());
     }
 
+    // allows $event->total_capacity
+    public function getTotalCapacityAttribute() {
+        $capacity = 0;
+        foreach ($this->slots as $slot) {
+            $capacity += $slot->capacity;
+        }
+        return $capacity;
+    }
+
+    public function getTotalAvailabilityAttribute() {
+        return $this->total_capacity - ($this->total_invites + $this->total_reserved);
+    }
+
+    public function getTotalAwaitingResponseFromAttribute() {
+        return $this->total_invites - ($this->total_scheduled + $this->total_awaiting_callback);
+    }
+
+    // allows $event->total_invites
+    public function getTotalInvitesAttribute() {
+        $capacity = 0;
+        foreach ($this->slots as $slot) {
+            $capacity += $slot->active_invitation_count;
+        }
+        return $capacity;
+    }
+
+    // allows $event->total_scheduled
+    public function getTotalScheduledAttribute() {
+        $capacity = 0;
+        foreach ($this->slots as $slot) {
+            $capacity += $slot->scheduled_count;
+        }
+        return $capacity;
+    }
+
+    // allows $event->total_reserved
+    public function getTotalReservedAttribute() {
+        $capacity = 0;
+        foreach ($this->slots as $slot) {
+            $capacity += $slot->reserved;
+        }
+        return $capacity;
+    }
+
+    // allows $event->total_awaiting_callback
+    public function getTotalAwaitingCallbackAttribute() {
+        $capacity = 0;
+        foreach ($this->slots as $slot) {
+            $capacity += $slot->callback_count;
+        }
+        return $capacity;
+    }
+
     // allows $event->percent_filled
     public function getPercentFilledAttribute() {
         $filled = $capacity = 0;
