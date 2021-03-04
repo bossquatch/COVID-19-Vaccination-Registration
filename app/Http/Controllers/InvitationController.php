@@ -226,7 +226,11 @@ class InvitationController extends Controller
 
     private function postponeInvite($registration, $invite) 
     {
-        $this->runStatusUpdates($registration, 1, $invite, 5);
+        if ($registration->status_id == 2) {
+            $this->runStatusUpdates($registration, 1, $invite, 5);
+        } else {
+            $this->updateInviteStatus($invite, 5);
+        }
 
         $this->logChanges($registration, 'invite declined', true);
     }
