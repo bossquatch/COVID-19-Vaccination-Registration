@@ -74,6 +74,7 @@ class Board
         $address_ids = Registration::select('address_id')
             ->withCount('vaccines as received_vaccines_count')
             ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
+            ->has('user')
             ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
                 $query->where('name', '=', 'In Wait List');
             })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
@@ -103,6 +104,7 @@ class Board
                 ->limit(1)])
             ->withCount('vaccines as received_vaccines_count')
             ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
+            ->has('user')
             ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
                 $query->where('name', '=', 'In Wait List');
             })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
