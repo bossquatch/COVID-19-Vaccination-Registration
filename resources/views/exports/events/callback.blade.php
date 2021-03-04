@@ -18,6 +18,9 @@
             <th>Verified SMS</th>
             <th>Contact Email</th>
             <th>Verified Email</th>
+            <th>Event Name</th>
+            <th>Location</th>
+            <th>Time Slot</th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +43,9 @@
                 <td>{{ $i->registration->user->sms_capable ? 'Y' : 'N' }}</td>
                 <td>{{ $i->registration->emails()->first() ? $i->registration->emails()->first()->value : '' }}</td>
                 <td>{{ $i->registration->user->email_verified_at != null ? 'Y' : 'N' }}</td>
+                <td>{{ $i->event->title }}</td>
+                <td>{{ $i->event->location->address.' '.$i->event->location->city.', '.$i->event->location->state.' '.$i->event->location->zip }}</td>
+                <td>{{ $i->slot->starting_at }}</td>
             </tr>
         @endforeach
     </tbody>
