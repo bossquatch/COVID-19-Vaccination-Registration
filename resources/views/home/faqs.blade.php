@@ -188,7 +188,7 @@
                                     </ul>
                                     <p class="collapse-content">
                                         Advanced practice registered nurses and pharmacists may also vaccinate persons determined by a physician to be extremely vulnerable to COVID-19. 
-                                        This determination from a physician must be documented using the <a href="/docs/EO-21-47.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
+                                        This determination from a physician must be documented using the <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
                                         and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href="https://floridahealthcovid19.gov/high-risk-populations/">
                                         Florida Department of Health website</a>.
                                     </p>
