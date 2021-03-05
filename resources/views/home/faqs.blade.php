@@ -175,14 +175,26 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        During this first phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations:
+                                        During this phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations per Executive Order 21-47:
                                     </p>
                                     <ul>
                                         <li>Long-term care facility residents and staff</li>
                                         <li>Persons 65 years of age and older</li>
                                         <li>Health care personnel with direct patient contact.</li>
+                                        <li>K-12 school employees 50 years of age and older.</li>
+                                        <li>Sworn law enforcement officers 50 years of age and older.</li>
+                                        <li>Firefighters 50 years of age and older.</li>
                                         <li>Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital</li>
                                     </ul>
+                                    <p class="collapse-content">
+                                        Advanced practice registered nurses and pharmacists may also vaccinate persons determined by a physician to be extremely vulnerable to COVID-19. 
+                                        This determination from a physician must be documented using the <a href="/docs/EO-21-47.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
+                                        and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href="https://floridahealthcovid19.gov/high-risk-populations/">
+                                        Florida Department of Health website</a>.
+                                    </p>
+                                    <p class="collapse-content">
+                                        Those who meet criteria for the extremely vulnerable group may receive a COVID-19 vaccine at a local pharmacy or register on Polk County's vaccination portal.
+                                    </p>
                                 </div>
                             </div>
                         </div>
