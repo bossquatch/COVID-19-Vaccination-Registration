@@ -33,7 +33,7 @@ class Invitation extends Mailable
                 'suffixDisplay' 	=> $this->registration->suffix ? $this->registration->suffix->display_name : '',
                 'firstName' 		=> $this->registration->first_name,
                 'lastName' 			=> $this->registration->last_name,
-                'invitationExpires' => $this->registration->invitations->last()->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H'))->format('M j, Y g:i A')
+                'invitationExpires' => $this->registration->pending_invitation->contacted_at->add(new DateInterval('PT'.config('app.invitation_expire').'H'))->format('M j, Y g:i A')
             ])
             ->withSwiftMessage(function($message) {
 				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. intval(strval($this->registration->id),36) .'}');

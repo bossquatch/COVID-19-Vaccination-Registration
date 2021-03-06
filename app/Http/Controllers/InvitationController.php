@@ -57,7 +57,7 @@ class InvitationController extends Controller
         }
 
         Session::flash('success', "<p>You have declined your invitation and will be returned to the wait list. We will attempt to invite you to our next event.</p>");
-        return redirect('/home');  
+        return redirect('/home');
     }
 
     public function decline()
@@ -78,7 +78,7 @@ class InvitationController extends Controller
             $registration->notify(new Decline());
         }
 
-        Session::flash('success', "<p>You have declined your invitation to any of our events and will not be contacted again for further appointments. If you would like to be placed back on the wait list at a later time please contact our call center at <a href=\"tel:863-298-7500\">(863) 534-7500</a>.</p>");
+        Session::flash('success', "<p>You have declined your invitation to any of our events and will not be contacted again for further appointments. If you would like to be placed back on the wait list at a later time please contact our call center at <a href=\"tel:863-298-7500\">(863) 298-7500</a>.</p>");
         return redirect('/home');
     }
 
@@ -147,7 +147,7 @@ class InvitationController extends Controller
             $registration->notify(new Decline());
         }
 
-        Session::flash('success', "<p>You have declined your invitation to any of our events and will not be contacted again for further appointments. If you would like to be placed back on the wait list at a later time please contact our call center at <a href=\"tel:863-298-7500\">(863) 534-7500</a>.</p>");
+        Session::flash('success', "<p>You have declined your invitation to any of our events and will not be contacted again for further appointments. If you would like to be placed back on the wait list at a later time please contact our call center at <a href=\"tel:863-298-7500\">(863) 298-7500</a>.</p>");
         return redirect('/events/'.$invite->event->id.'/slots/'.$invite->slot->id);
     }
 
@@ -188,7 +188,7 @@ class InvitationController extends Controller
 
         $invite = $registration->active_invite;
         if(!$invite) { abort(404); }
-        
+
         $this->runStatusUpdates($registration, 1, $invite, 9);
         $this->logChanges($registration, 'turned down', true);
 
@@ -217,14 +217,14 @@ class InvitationController extends Controller
         return redirect()->back();
     }
 
-    private function acceptInvite($registration, $invite) 
+    private function acceptInvite($registration, $invite)
     {
         $this->runStatusUpdates($registration, 3, $invite, 6);
 
         $this->logChanges($registration, 'invite accepted', true);
     }
 
-    private function postponeInvite($registration, $invite) 
+    private function postponeInvite($registration, $invite)
     {
         if ($registration->status_id == 2) {
             $this->runStatusUpdates($registration, 1, $invite, 5);
@@ -234,8 +234,8 @@ class InvitationController extends Controller
 
         $this->logChanges($registration, 'invite declined', true);
     }
-    
-    private function declineInvite($registration, $invite) 
+
+    private function declineInvite($registration, $invite)
     {
         $this->runStatusUpdates($registration, 10, $invite, 5);
 

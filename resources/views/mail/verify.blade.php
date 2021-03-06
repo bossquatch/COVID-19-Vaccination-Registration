@@ -1,5 +1,5 @@
 @component('mail::message')
-# {{ $name }}, we need you to verify your email address.
+# {{ $name }}, do not reply to this email. Simply click the link below to verify your email address.
 
 @component('mail::panel')
 	<h1>Why do we do this?</h1>
