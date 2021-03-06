@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
 class RunSchedulingCommands extends Command
@@ -38,6 +39,8 @@ class RunSchedulingCommands extends Command
      */
     public function handle()
     {
+    	Log::alert('Running auto scheduling processes.');
+
         $this->info('Booting up...');
         if (config('app.auto_scheduling')) {
             $this->info('Starting auto-scheduling');
@@ -62,10 +65,14 @@ class RunSchedulingCommands extends Command
             }
 
             $this->info('Auto-scheduling complete!');
+
+            Log::alert('Auto scheduling complete.');
+
             // Finally we return.
             return true;
         } else {
             $this->info('Auto-scheduling is not set up.');
+            Log::alert('No auto scheduling tasks to run.');
             return true;
         }
     }
