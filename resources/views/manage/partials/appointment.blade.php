@@ -42,12 +42,12 @@
                                 </form>
                                 <form action="/manage/{{ $registration->id }}/invitation/postpone" class="form mb-3 justify-content-center" method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-outline-info" aria-describedby="postponeInfo">Postpone</button>
+                                    <button type="submit" class="btn btn-outline-warning" aria-describedby="postponeInfo">Decline</button>
                                     <br><p id="postponeInfo" class="form-text font-weight-light font-size-xs text-muted">I cannot attend this event but would like to be considered for future events.</p>
                                 </form>
                                 <form action="/manage/{{ $registration->id }}/invitation/decline" class="form mb-3 justify-content-center" method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-outline-danger" aria-describedby="declineInfo">Decline</button>
+                                    <button type="submit" class="btn btn-outline-danger" aria-describedby="declineInfo">Remove Registration</button>
                                     <br><p id="declineInfo" class="form-text font-weight-light font-size-xs text-muted">I am no longer interested in receiving a vaccination through this program.</p>
                                 </form>
                             </div>
