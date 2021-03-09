@@ -63,6 +63,10 @@ class Slot extends Model
         return (($this->active_invitation_count + $this->reserved) < $this->capacity);
     }
 
+    public function getHasReservedStockAttribute() {
+        return ($this->active_invitation_count < $this->capacity);
+    }
+
     public function getCarbonPeriodAttribute() {
         return new \Carbon\CarbonPeriod($this->starting_at, '15 minutes', $this->ending_at);
     }

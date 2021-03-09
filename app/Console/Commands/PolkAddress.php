@@ -51,14 +51,14 @@ class PolkAddress extends Command
 
 				$validData = [
 					'street_number' => $returnData->getStreetNumber() ?? null,
-					'street_name' => $returnData->getStreetName() ?? null,
-					'line_2' => $item->address2 ?? null,
-					'locality' => $returnData->getLocality() ?? null,
-					'county' => $returnData->getAdminLevels()->get(2)->getCode() ? $this->getIdByName(County::class, 'name', str_replace(' County', '', $returnData->getAdminLevels()->get(2)->getCode()), 64) : null,
-					'state' => $returnData->getAdminLevels()->get(1)->getCode() ? $this->getIdByName(State::class, 'abbr', $returnData->getAdminLevels()->get(1)->getCode(), 53) : null,
-					'postal_code' => $returnData->getPostalCode() ?? null,
-					'latitude' => $returnData->getCoordinates()->getLatitude() ?? null,
-					'longitude' => $returnData->getCoordinates()->getLongitude() ?? null,
+					'street_name'   => $returnData->getStreetName() ?? null,
+					'line_2'        => $item->address2 ?? null,
+					'locality'      => $returnData->getLocality() ?? null,
+					'county'        => $returnData->getAdminLevels()->get(2)->getCode() ? $this->getIdByName(County::class, 'name', str_replace(' County', '', $returnData->getAdminLevels()->get(2)->getCode()), 64) : null,
+					'state'         => $returnData->getAdminLevels()->get(1)->getCode() ? $this->getIdByName(State::class, 'abbr', $returnData->getAdminLevels()->get(1)->getCode(), 53) : null,
+					'postal_code'   => $returnData->getPostalCode() ?? null,
+					'latitude'      => $returnData->getCoordinates()->getLatitude() ?? null,
+					'longitude'     => $returnData->getCoordinates()->getLongitude() ?? null,
 				];
 
 				$item->syncAddress($validData);

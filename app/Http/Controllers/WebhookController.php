@@ -107,7 +107,8 @@ class WebhookController extends Controller
 
     private function persistIncomingEmail(array $data)
 	{
-		Log::debug(json_encode(Arr::flatten($data)));
+//		Log::debug(json_encode(Arr::flatten($data)));
+	    Log::debug ($data);
 	}
 
     private function validateWebhook(array $signature, $api_key = null): bool
@@ -121,7 +122,7 @@ class WebhookController extends Controller
             return false;
         }
 
-        if(abs(time() - $timestamp) > 15) {
+        if (abs(time() - $timestamp) > 15) {
             return false;
         }
 

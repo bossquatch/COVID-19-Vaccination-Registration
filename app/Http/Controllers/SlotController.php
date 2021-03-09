@@ -56,7 +56,7 @@ class SlotController extends Controller
             return json_encode(['status' => 'failed', 'message' => 'Slot is not affiliated with selected event!']);
         }
 
-        if (!$slot->has_stock) {
+        if (!$slot->has_reserved_stock) {
             return json_encode(['status' => 'failed', 'message' => 'Slot has no more capacity!']);
         }
 
