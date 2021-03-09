@@ -166,6 +166,7 @@ class EventController extends Controller
                 'latitude' => $valid['latitude'] ?? null,
                 'longitude' => $valid['longitude'] ?? null,
                 'search_radius' => $valid['radius'] ?? null,
+                'polk_only' => isset($valid['polkOnly']),
             ]);
 
             $settings->conditions()->sync(isset($valid['condition']) ? array_keys($valid['condition']) : []);
@@ -244,13 +245,22 @@ class EventController extends Controller
         $slot = \App\Models\Slot::findOrFail($slot_id);
         if ($slot->event_id != $event_id) { abort(404); }
 
-        $invitations = $slot->invitations()->whereHas('invite_status', function ($query) {
+        $callback = request()->input('callback');
+
+        if ($callback) {
+            $invitations = $slot->invitations()->whereHas('invite_status', function ($query) {
+                $query->where('id', 2);
+            })->paginate(config('app.pagination_limit'));
+        } else {
+            $invitations = $slot->invitations()->whereHas('invite_status', function ($query) {
                 $query->whereNotIn('id', [4, 5]);
             })->paginate(config('app.pagination_limit'));
+        }
 
         return view('event.slotlist', [
             'invites' => $invitations,
             'slot' => $slot,
+            'callback' => $callback,
         ]);
     }
 
@@ -328,6 +338,7 @@ class EventController extends Controller
                 'occupation' => 'nullable',
                 'zips' => 'nullable',
                 'autocomplete' => 'nullable',
+                'polkOnly' => 'nullable',
                 'latitude' => 'required_with:longitude,autocomplete,radius|nullable|numeric',
                 'longitude' => 'required_with:latitude,autocomplete,radius|nullable|numeric',
                 'radius' => 'required_with:longitude,autocomplete,latitude|nullable|numeric',

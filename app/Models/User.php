@@ -56,8 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail
 	// override Laravel's built-in password reset
 	public function sendPasswordResetNotification($token)
 	{
-
-//		$url = Config::get('app.url') . '/password/reset?token='.$token;
 		$this->notify(new Reset($token));
 	}
 
@@ -82,6 +80,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function boot() {
+        parent::boot();
+
+        self::deleting(function (User $u) {
+            if ($u->registration) {
+                $u->registration->delete();
+            }
+        });
+    }
 
     public function hasVerifiedPhone()
     {

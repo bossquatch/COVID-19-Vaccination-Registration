@@ -56,6 +56,17 @@
                         <form action="/events/{{ $event->id }}/settings" method="post">
                             @csrf
                             <div class="row">
+                                <!-- Polk Only Section -->
+                                <div class="col-12">
+                                    <span class="h5"><u>Basic</u></span>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="ml-auto custom-control custom-switch mt-2 mb-5">
+                                        <input type="checkbox" class="custom-control-input" id="polkOnly" name="polkOnly" @if(old('polkOnly') || $settings->polk_only) checked aria-checked="true" @endif>
+                                        <label class="custom-control-label" for="polkOnly">Only Invite Polk Residents</label>
+                                    </div>
+                                </div>
+
                                 <!-- Age Section -->
                                 <div class="col-12">
                                     <span class="h5"><u>Age</u> <small>(leave blank if no age restriction)</small></span>

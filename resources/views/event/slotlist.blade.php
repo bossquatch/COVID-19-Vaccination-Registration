@@ -36,6 +36,17 @@
                     <span class="fad fa-arrow-left mr-1"></span>Back
                 </a>
 
+                @if ($callback)
+                <a class="btn btn-header-outline btn-round btn-lg" href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}">
+                    <span class="fas fa-clipboard-list-check mr-1"></span>Show All Invites
+                </a>
+                @else
+                <a class="btn btn-header-outline btn-round btn-lg" href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?callback=1">
+                    <span class="fas fa-clipboard-list mr-1"></span>Show Only Invites Awaiting Callback
+                </a>    
+                @endif
+                
+
                 @can('delete_event')
                 @if ($slot->event->edittable)
                 <a class="btn btn-header btn-header-danger btn-round btn-lg" href="#" onclick="event.preventDefault();
@@ -102,7 +113,7 @@
 
                     @if($invites->hasPages())
                     <div class="list-group-item list-group-item-light d-flex justify-content-center">
-                        {!! $invites->links() !!}
+                        {!! $invites->appends(request()->query())->links() !!}
                     </div>
                     @endif
                 </div>

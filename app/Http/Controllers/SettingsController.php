@@ -58,6 +58,7 @@ class SettingsController extends Controller
             'latitude' => $valid['latitude'] ?? null,
             'longitude' => $valid['longitude'] ?? null,
             'search_radius' => $valid['radius'] ?? null,
+            'polk_only' => isset($valid['polkOnly']),
         ]);
 
         $settings->conditions()->sync(isset($valid['condition']) ? array_keys($valid['condition']) : []);
@@ -77,6 +78,7 @@ class SettingsController extends Controller
             'occupation' => 'nullable',
             'zips' => 'nullable',
             'autocomplete' => 'nullable',
+            'polkOnly' => 'nullable',
             'latitude' => 'required_with:longitude,autocomplete,radius|nullable|numeric',
             'longitude' => 'required_with:latitude,autocomplete,radius|nullable|numeric',
             'radius' => 'required_with:longitude,autocomplete,latitude|nullable|numeric',

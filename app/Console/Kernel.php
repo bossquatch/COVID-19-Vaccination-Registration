@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\RunSchedulingCommands;
+use App\Console\Commands\LotSync;
 
 class Kernel extends ConsoleKernel
 {
