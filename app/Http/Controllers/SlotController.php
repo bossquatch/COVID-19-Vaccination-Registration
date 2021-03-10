@@ -64,7 +64,7 @@ class SlotController extends Controller
             return json_encode(['status' => 'failed', 'message' => 'Registration already affiliated with the event!']);
         }
 
-        if (\Carbon\Carbon::parse($event->date_held)->greaterThan(\Carbon\Carbon::now())) {
+        if (\Carbon\Carbon::parse($event->date_held)->addDay()->greaterThan(\Carbon\Carbon::now())) { // added ->addDay() to make sure that same day manual invites won't autocomplete
             $registration->invitations()->create([
                 'slot_id' => $slot->id,
                 'invite_status_id' => 6
