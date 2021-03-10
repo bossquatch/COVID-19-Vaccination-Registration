@@ -14,7 +14,7 @@ class EmailRepliesTable extends Migration
     public function up()
     {
 	    Schema::create('email_replies', function (Blueprint $table) {
-		    $table->id('id')->primary();
+		    $table->id('id');
 		    $table->unsignedBigInteger ('user_id')->nullable();
 		    $table->string('content_type')->nullable ();
 		    $table->dateTime('date')->nullable ();
