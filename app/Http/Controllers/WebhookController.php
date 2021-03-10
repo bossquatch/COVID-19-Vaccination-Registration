@@ -137,12 +137,14 @@ class WebhookController extends Controller
 		$currentReply->attachment_1             = Arr::get($data,'attachment-1',    NULL);
 		$currentReply->attachment_2             = Arr::get($data,'attachment-2',    NULL);
 
-		try {
-			$currentReply->save();
-			return true;
-		} catch (\Exception $e) {
-			return $e->getCode();
-		}
+		$currentReply->save();
+
+//		try {
+//			$currentReply->save();
+//			return true;
+//		} catch (\Exception $e) {
+//			return $e->getCode();
+//		}
 
 	}
 
