@@ -20,6 +20,16 @@ class Registration extends Model
         'age'
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        self::deleting(function (Registration $r) {
+            foreach ($r->invitations as $invite) {
+                $invite->delete();
+            }
+        });
+    }
+
     public function AuditLogs()
     {
         return $this->hasMany(AuditLog::class, 'regis_id');
