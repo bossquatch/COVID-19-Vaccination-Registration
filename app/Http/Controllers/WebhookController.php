@@ -110,7 +110,7 @@ class WebhookController extends Controller
 
     private function persistIncomingEmail(array $data)
 	{
-//	    Log::debug ($data);
+	    Log::debug ('INCOMING!!! (email)');
 
 	    $currentReply = new EmailReply();
 
