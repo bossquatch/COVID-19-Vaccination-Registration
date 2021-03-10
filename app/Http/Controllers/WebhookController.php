@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailReply;
+use Carbon\Carbon;
 use ZBateson\MailMimeParser\MailMimeParser;
 use ZBateson\MailMimeParser\Message;
 use App\Models\EmailHistory;
@@ -115,7 +116,7 @@ class WebhookController extends Controller
 	    $currentReply = new EmailReply();
 
 	    $currentReply->content_type             = Arr::get($data,'Content_Type',    NULL);
-	    $currentReply->date                     = Arr::get($data,'Date',            NULL);
+	    $currentReply->date                     = Carbon::create(Arr::get($data,'Date',            NULL))->toDateTimeString();
 		$currentReply->from                     = Arr::get($data,'From',            NULL);
 		$currentReply->in_reply_to              = Arr::get($data,'In-Reply-To',     NULL);
 		$currentReply->message_id               = Arr::get($data,'Message-Id',      NULL);
