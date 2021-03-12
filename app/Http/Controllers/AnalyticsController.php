@@ -40,6 +40,8 @@ class AnalyticsController extends Controller
             FROM
                 registrations r
                 JOIN users u ON u.id = r.user_id
+            WHERE
+            	r.deleted_at IS NULL
             GROUP BY
                 date(r.created_at)');
 
@@ -65,6 +67,8 @@ class AnalyticsController extends Controller
                         registrations r
                         JOIN addresses a ON r.address_id = a.id
                         JOIN counties c ON a.county_id = c.id
+					WHERE
+						r.deleted_at IS NULL
                     GROUP BY c.id
                     ORDER BY 1 DESC LIMIT 10
                 )
@@ -101,6 +105,9 @@ class AnalyticsController extends Controller
             FROM
                 registrations r
 
+            WHERE
+            	r.deleted_at IS NULL
+
             GROUP BY
                 r.city
 
@@ -118,13 +125,13 @@ class AnalyticsController extends Controller
         }
 
         return view('analytics.index', [
-            'register_by_day' => $registered_by_day,
-            'register_by_county' => $registered_by_county,
-            'register_by_city' => $registered_by_city,
-            'registrations_today' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`submitted_at`) = DATE(DATE_ADD(NOW(), INTERVAL -5 HOUR))')[0]->Count,
-            'registrations_total' => DB::select('SELECT COUNT(*) `Count` FROM registrations')[0]->Count,
-            'registrations_old' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`birth_date`) <= DATE_SUB(CURDATE(), INTERVAL 65 YEAR)')[0]->Count,
-            'registrations_young' => DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`birth_date`) > DATE_SUB(CURDATE(), INTERVAL 65 YEAR)')[0]->Count,
+            'register_by_day' 		=> $registered_by_day,
+            'register_by_county' 	=> $registered_by_county,
+            'register_by_city' 		=> $registered_by_city,
+            'registrations_today' 	=> DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`submitted_at`) = DATE(DATE_ADD(NOW() AND `deleted_at` IS NULL, INTERVAL -5 HOUR))')[0]->Count,
+            'registrations_total' 	=> DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE `deleted_at` IS NULL')[0]->Count,
+            'registrations_old' 	=> DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`birth_date`) <= DATE_SUB(CURDATE(), INTERVAL 65 YEAR) AND `deleted_at` IS NULL')[0]->Count,
+            'registrations_young' 	=> DB::select('SELECT COUNT(*) `Count` FROM registrations WHERE DATE(`birth_date`) > DATE_SUB(CURDATE(), INTERVAL 65 YEAR) AND `deleted_at` IS NULL')[0]->Count,
         ]);
     }
 
@@ -156,7 +163,7 @@ class AnalyticsController extends Controller
             }
 
 //            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
-            $currentSchedule = Carbon::create('2021-02-03');
+            $currentSchedule = Carbon::create('2021-02-18');
 
             Cache::tags(['analytics'])->put('registrationsByDay', $registrations, $seconds = 600);
             Cache::tags(['analytics'])->put('currentSchedule', $currentSchedule, $seconds = 600);
