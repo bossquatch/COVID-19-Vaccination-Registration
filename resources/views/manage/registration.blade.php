@@ -160,6 +160,7 @@
                         @php
                             $available_events = \App\Models\Event::whereHas('slots', function ($query) {
                                     $query->select('id', 'event_id', 'capacity', 'deleted_at')
+                                    ->where('date_held','>=',now())
                                     ->withCount([
                                         'invitations as active_invitations_count' => function ($query) {
                                             $query->whereHas('invite_status', function ($query) {

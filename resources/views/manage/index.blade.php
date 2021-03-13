@@ -39,6 +39,10 @@
                     <span class="fad fa-file-medical mr-1"></span> Moderna Consent Form
                 </a>
 
+                <a class="btn btn-header btn-round btn-lg" href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">
+                    <span class="fad fa-file-medical mr-1"></span> EO-21-47 Form
+                </a>
+
                 @can('read_vaccine')
                 <a class="btn btn-header btn-round btn-lg" href="/manage/qr">
                     <span class="fad fa-qrcode mr-1"></span> Scan QR Code

@@ -123,7 +123,10 @@ class RegistrationController extends Controller
 
 		$registration->notify(new Register());
 
-        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a>.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
+        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a>.</p><p>If you are receiving the 
+        inoculation as extremely vulnerable you must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a> 
+        and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href=\"https://floridahealthcovid19.gov/high-risk-populations/\">
+        Florida Department of Health website</a>.<p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/home');
     }
 

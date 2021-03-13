@@ -35,7 +35,7 @@
         <div class="custom-btn-group mb-3">
             @foreach (\App\Models\Eligibility::get() as $ele)
                 <div class="btn-group-item font-weight-medium font-size-sm">
-                    <input type="radio" id="eligibility-{{ $ele->id }}" value="{{ $ele->id }}" name="eligibility" @if($loop->first) checked aria-checked="true" @endif>
+                    <input type="radio" id="eligibility-{{ $ele->id }}" value="{{ $ele->id }}" name="eligibility" @if($loop->last) checked aria-checked="true" @endif>
                     <label for="eligibility-{{ $ele->id }}">
                         {{ str_replace("COVID-19 ", "", $ele->description) }}
                     </label>

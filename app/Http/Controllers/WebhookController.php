@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailReply;
+use Carbon\Carbon;
+use ZBateson\MailMimeParser\MailMimeParser;
+use ZBateson\MailMimeParser\Message;
 use App\Models\EmailHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -70,14 +74,14 @@ class WebhookController extends Controller
         $currentEmail->timestamp 				= $data['signature']['timestamp'];
         $currentEmail->token 					= $data['signature']['token'];
         $currentEmail->signature 				= $data['signature']['signature'];
-        $currentEmail->tags 					= json_encode(Arr::flatten($data['event-data']['tags']));
+	    $currentEmail->tags 					= json_encode(Arr::flatten($data['event-data']['tags']));
 
-        // Remember to convert these values back to their actual values. I did this to obscure the
-        // actual values since they are available in the email headers.  Earlier, we converted these
-        // values to base 36.
+	    // Remember to convert these values back to their actual values. I did this to obscure the
+	    // actual values since they are available in the email headers.  Earlier, we converted these
+	    // values to base 36.
 
-		// Using Arr::get allows me to traverse a multidimensional array and set a default value
-		// if the key is not found.
+	    // Using Arr::get allows me to traverse a multidimensional array and set a default value
+	    // if the key is not found.
 
         $registration_id 						= Arr::get($data, 'event-data.user-variables._RID_', 0);
         $currentEmail->registration_id 			= intval(base_convert($registration_id,10,36));
@@ -107,8 +111,42 @@ class WebhookController extends Controller
 
     private function persistIncomingEmail(array $data)
 	{
-//		Log::debug(json_encode(Arr::flatten($data)));
-	    Log::debug ($data);
+	    Log::debug ('INCOMING!!! (email)');
+
+	    $currentReply = new EmailReply();
+
+	    $currentReply->content_type             = Arr::get($data,'Content_Type',    NULL);
+	    $currentReply->date                     = Carbon::create(Arr::get($data,'Date',            NULL))->toDateTimeString();
+		$currentReply->from                     = Arr::get($data,'From',            NULL);
+		$currentReply->in_reply_to              = Arr::get($data,'In-Reply-To',     NULL);
+		$currentReply->message_id               = Arr::get($data,'Message-Id',      NULL);
+		$currentReply->mime_version             = Arr::get($data,'Mime-Version',    NULL);
+		$currentReply->received                 = Arr::get($data,'Received',        NULL);
+		$currentReply->references               = Arr::get($data,'References',      NULL);
+		$currentReply->sender                   = Arr::get($data,'Sender',          NULL);
+		$currentReply->subject                  = Arr::get($data,'Subject',         NULL);
+		$currentReply->to                       = Arr::get($data,'To',              NULL);
+		$currentReply->user_agent               = Arr::get($data,'User-Agent',      NULL);
+		$currentReply->x_mailgun_variables      = Arr::get($data,'X-Mailgun-Variables', NULL);
+		$currentReply->attachment_count         = Arr::get($data,'attachment-count', NULL);
+		$currentReply->body_html                = Arr::get($data,'body-html',       NULL);
+		$currentReply->body_plain               = Arr::get($data,'body-plain',      NULL);
+		$currentReply->stripped_signature       = Arr::get($data,'stripped-signature', NULL);
+		$currentReply->stripped_text            = Arr::get($data,'stripped-text',   NULL);
+		$currentReply->timestamp                = Arr::get($data,'timestamp',       NULL);
+		$currentReply->token                    = Arr::get($data,'token',           NULL);
+		$currentReply->attachment_1             = Arr::get($data,'attachment-1',    NULL);
+		$currentReply->attachment_2             = Arr::get($data,'attachment-2',    NULL);
+
+		$currentReply->save();
+
+//		try {
+//			$currentReply->save();
+//			return true;
+//		} catch (\Exception $e) {
+//			return $e->getCode();
+//		}
+
 	}
 
     private function validateWebhook(array $signature, $api_key = null): bool
