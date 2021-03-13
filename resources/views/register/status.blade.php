@@ -255,7 +255,33 @@
                         <p class="text-gray-dark mb-0">
                             Once scheduled, you need to show up.  Be sure to bring a valid ID and a completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent Form</a>.
                         </p>
+
                     </div>
+
+                </div>
+                <div class="d-flex">
+                    <!-- Badge -->
+                    <div class="badge badge-lg badge-rounded-circle badge-primary-soft font-size-lg mt-1">
+                        <span>4</span>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="ml-5">
+                        <!-- Heading -->
+                        <h2 class="h3">
+                            Are you "extremely vulnerable"?
+                        </h2>
+
+                        <!-- Text -->
+                        <p class="text-gray-dark mb-0">
+                            You may also receive the vaccine if your phycisian deems you extremely vulnerable. To receive the 
+                            inoculation as extremely vulnerable you must bring a completed <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
+                            and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href="https://floridahealthcovid19.gov/high-risk-populations/">
+                            Florida Department of Health website</a>.
+                        </p>
+
+                    </div>
+                    
                 </div>
             </div>
         </div>

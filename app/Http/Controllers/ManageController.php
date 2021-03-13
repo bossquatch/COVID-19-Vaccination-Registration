@@ -229,7 +229,10 @@ class ManageController extends Controller
 			$user->notify(new Verify());
         }
 
-        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
+        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.<p>If they are receiving the 
+        inoculation as extremely vulnerable they must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a> 
+        and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href=\"https://floridahealthcovid19.gov/high-risk-populations/\">
+        Florida Department of Health website</a>.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/manage');
     }
 
@@ -371,7 +374,10 @@ class ManageController extends Controller
 			$user->notify(new Verify());
         }
 
-        Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
+        Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>If they are receiving the 
+        inoculation as extremely vulnerable they must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a> 
+        and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href=\"https://floridahealthcovid19.gov/high-risk-populations/\">
+        Florida Department of Health website</a>.<p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
         return redirect('/manage');
     }
 
