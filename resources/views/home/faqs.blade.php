@@ -40,7 +40,7 @@
                                 <span class="text-uppercase">
                                     Update
                                 </span>
-                            </span>                           
+                            </span>
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFour" role="button" aria-expanded="false" aria-controls="helpFour">
                                 <!-- Title -->
@@ -58,9 +58,9 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                    The Florida Department of Health Polk County's COVID-19 vaccine portal is now open for reservations and, 
-                                    starting March 15, will expand the eligibility to those 60 years old and older, who wish to be inoculated 
-                                    once vaccine becomes available, according to the most recent executive order from Florida Gov. Ron DeSantis. 
+                                    The Florida Department of Health Polk County's COVID-19 vaccine portal is now open for reservations and,
+                                    starting March 15, will expand the eligibility to those 60 years old and older, who wish to be inoculated
+                                    once vaccine becomes available, according to the most recent executive order from Florida Gov. Ron DeSantis.
                                     COVID-19 vaccinations also will include:
                                     </p>
                                     <ul>
@@ -71,19 +71,19 @@
                                         <li>Firefighters 50 years of age and older</li>
                                     </ul>
                                     <p class="collapse-content">
-                                    Through the portal, you can create an account and upload your personal information for a future appointment. 
-                                    You can also learn more about the vaccine being administered by the Florida Department of Health and have other 
+                                    Through the portal, you can create an account and upload your personal information for a future appointment.
+                                    You can also learn more about the vaccine being administered by the Florida Department of Health and have other
                                     frequent questions answered.
                                     </p>
-                                    <!-- <p class="collapse-content">
-                                        Advanced practice registered nurses and pharmacists may also vaccinate persons determined by a physician to be extremely vulnerable to COVID-19. 
-                                        This determination from a physician must be documented using the <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
+                                    <p class="collapse-content">
+                                        Advanced practice registered nurses and pharmacists may also vaccinate persons determined by a physician to be extremely vulnerable to COVID-19.
+                                        This determination from a physician must be documented using the <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a>
                                         and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href="https://floridahealthcovid19.gov/high-risk-populations/">
                                         Florida Department of Health website</a>.
                                     </p>
                                     <p class="collapse-content">
                                         Those who meet criteria for the extremely vulnerable group may receive a COVID-19 vaccine at a local pharmacy or register on Polk County's vaccination portal.
-                                    </p> -->
+                                    </p>
                                 </div>
                             </div>
                         </div>
