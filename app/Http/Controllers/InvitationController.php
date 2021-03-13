@@ -34,7 +34,10 @@ class InvitationController extends Controller
             $registration->notify(new Confirm());
         }
 
-        Session::flash('success', "<p>Appointment Accepted!</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a> and bring it to your appointment as well as proof of Florida residency.</p>");
+        Session::flash('success', "<p>Appointment Accepted!</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a> and bring it to your appointment as well as proof of Florida residency.</p><p>If you are receiving the 
+        inoculation as extremely vulnerable you must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a> 
+        and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href=\"https://floridahealthcovid19.gov/high-risk-populations/\">
+        Florida Department of Health website</a>.");
         return redirect('/home');
     }
 

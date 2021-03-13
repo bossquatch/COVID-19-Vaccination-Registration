@@ -35,6 +35,58 @@
                 <!-- Card Accordion -->
                 <div class="card card-accordion accordion mb-4 mb-md-5" id="helpAccordionOne">
                     <div class="list-group">
+                    <div class="list-group-item">
+                            <span class="badge badge-pill badge-danger-soft mb-3">
+                                <span class="text-uppercase">
+                                    Update
+                                </span>
+                            </span>                           
+                            <!-- Toggle -->
+                            <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFour" role="button" aria-expanded="false" aria-controls="helpFour">
+                                <!-- Title -->
+                                <h3 class="collapse-title">Who is eligible for the COVID-19 Vaccine?</h3>
+
+                                <!-- Metadata -->
+                                <div class="ml-auto">
+                                    <!-- Chevron -->
+                                    <span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
+                                </div>
+                            </a>
+
+                            <!-- Collapse -->
+                            <div class="collapse" id="helpFour" data-parent="#helpAccordionOne">
+                                <div class="py-4">
+                                    <!-- Text -->
+                                    <p class="collapse-content">
+                                    The Florida Department of Health Polk County's COVID-19 vaccine portal is now open for reservations and, 
+                                    starting March 15, will expand the eligibility to those 60 years old and older, who wish to be inoculated 
+                                    once vaccine becomes available, according to the most recent executive order from Florida Gov. Ron DeSantis. 
+                                    COVID-19 vaccinations also will include:
+                                    </p>
+                                    <ul>
+                                        <li>Long-term care facility residents and staff</li>
+                                        <li>Health care personnel with direct patient contact</li>
+                                        <li>K-12 school employees 50 years of age and older</li>
+                                        <li>Sworn law enforcement officers 50 years of age and older</li>
+                                        <li>Firefighters 50 years of age and older</li>
+                                    </ul>
+                                    <p class="collapse-content">
+                                    Through the portal, you can create an account and upload your personal information for a future appointment. 
+                                    You can also learn more about the vaccine being administered by the Florida Department of Health and have other 
+                                    frequent questions answered.
+                                    </p>
+                                    <!-- <p class="collapse-content">
+                                        Advanced practice registered nurses and pharmacists may also vaccinate persons determined by a physician to be extremely vulnerable to COVID-19. 
+                                        This determination from a physician must be documented using the <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
+                                        and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href="https://floridahealthcovid19.gov/high-risk-populations/">
+                                        Florida Department of Health website</a>.
+                                    </p>
+                                    <p class="collapse-content">
+                                        Those who meet criteria for the extremely vulnerable group may receive a COVID-19 vaccine at a local pharmacy or register on Polk County's vaccination portal.
+                                    </p> -->
+                                </div>
+                            </div>
+                        </div>
                         <div class="list-group-item">
                             <span class="badge badge-pill badge-danger-soft mb-3">
                                 <span class="text-uppercase">
@@ -153,47 +205,6 @@
                                     <!-- Text -->
                                     <p class="collapse-content">
                                         No. Appointments are mandatory to receive a COVID-19 vaccine.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item">
-                            <!-- Toggle -->
-                            <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFour" role="button" aria-expanded="false" aria-controls="helpFour">
-                                <!-- Title -->
-                                <h3 class="collapse-title">Who is eligible for the COVID-19 Vaccine?</h3>
-
-                                <!-- Metadata -->
-                                <div class="ml-auto">
-                                    <!-- Chevron -->
-                                    <span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
-                                </div>
-                            </a>
-
-                            <!-- Collapse -->
-                            <div class="collapse" id="helpFour" data-parent="#helpAccordionOne">
-                                <div class="py-4">
-                                    <!-- Text -->
-                                    <p class="collapse-content">
-                                        During this phase of vaccine administration, all providers administering any COVID-19 vaccine shall only vaccinate the following populations per Executive Order 21-47:
-                                    </p>
-                                    <ul>
-                                        <li>Long-term care facility residents and staff</li>
-                                        <li>Persons 65 years of age and older</li>
-                                        <li>Health care personnel with direct patient contact.</li>
-                                        <li>K-12 school employees 50 years of age and older.</li>
-                                        <li>Sworn law enforcement officers 50 years of age and older.</li>
-                                        <li>Firefighters 50 years of age and older.</li>
-                                        <li>Hospitals, however, also may vaccinate persons who they deem to be extremely vulnerable to COVID-19. This discernment is left up to the hospital</li>
-                                    </ul>
-                                    <p class="collapse-content">
-                                        Advanced practice registered nurses and pharmacists may also vaccinate persons determined by a physician to be extremely vulnerable to COVID-19. 
-                                        This determination from a physician must be documented using the <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
-                                        and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href="https://floridahealthcovid19.gov/high-risk-populations/">
-                                        Florida Department of Health website</a>.
-                                    </p>
-                                    <p class="collapse-content">
-                                        Those who meet criteria for the extremely vulnerable group may receive a COVID-19 vaccine at a local pharmacy or register on Polk County's vaccination portal.
                                     </p>
                                 </div>
                             </div>
@@ -436,6 +447,7 @@
                                         <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
                                         <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
                                         <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
+                                        <li>If you are receiving the inoculation as extremely vulnerable you must bring a completed <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a>
                                         <li>The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.</li>
                                     </ul>
                                 </div>
