@@ -288,7 +288,7 @@ class AnalyticsController extends Controller
 	public function publicAnalytics()
 	{
 		//  check the cache for the existence of this data.  If found, use cache; if not, run the queries and store in cache
-		if (Cache::tags(['analytics'])->has('registrationsByDayPublic') == false) {
+		if (Cache::tags(['analytics'])->has('registrationsByDayPublic') == false || Cache::tags(['analytics'])->has('currentSchedule') == false) {
 
 			$registrations = [
 				'counts' => [],
