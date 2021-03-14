@@ -42,7 +42,7 @@ class AnalyticsController extends Controller
 
 		    $registrations = [
 			    'dates' => [],
-			    'self' => [],
+			    'organic' => [],
 			    'call-center' => []
 		    ];
 
@@ -62,7 +62,7 @@ class AnalyticsController extends Controller
 		    // split em
 		    foreach($registrationsAll as $day) {
 			    $registrations['dates'][] = Carbon::parse($day->{'Date'})->isoFormat('MMM D');
-			    $registrations['self'][] = $day->{'Self Serve'};
+			    $registrations['organic'][] = $day->{'Self Serve'};
 			    $registrations['call-center'][] = $day->{'Call Center'};
 		    }
 
