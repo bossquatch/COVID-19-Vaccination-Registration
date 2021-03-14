@@ -174,11 +174,11 @@
         type: 'bar',
         data: {
             datasets: [{
-                label: 'Self Registered',
+                label: 'Organically Registered',
                 stack: 'Stack 0',
                 backgroundColor: '#0071eb',
                 borderColor: '#0071eb',
-                data: {!! json_encode($register_by_day['self']) !!}
+                data: {!! json_encode($register_by_day['organic']) !!}
             }, {
                 label: 'Call Center Registered',
                 stack: 'Stack 0',
