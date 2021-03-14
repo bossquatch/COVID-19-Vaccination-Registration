@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -311,8 +312,7 @@ class AnalyticsController extends Controller
 				$registrations['day'][]     = $day->Day;
 			}
 
-//            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
-			$currentSchedule = Carbon::create('2021-02-18');
+			$currentSchedule = Carbon::create(Config::get('app.current_vaccination_date'));
 
 			Cache::tags(['analytics'])->put('registrationsByDayPublic', $registrations, $seconds = $this->timeout);
 			Cache::tags(['analytics'])->put('currentSchedule', $currentSchedule, $seconds = $this->timeout);
