@@ -13,14 +13,16 @@ use Illuminate\Support\Str;
 class AnalyticsController extends Controller
 {
 
-	// set a global timeout for the cache, in seconds
-	protected $timeout = 300;
+	// global timeout for the cache, in seconds
+	protected $timeout;
 
     public function __construct()
     {
         $this->middleware(['verified', 'can:keep_inventory'])->except([
             'publicAnalytics'
         ]);
+
+        $this->timeout = Config::get('app.analytics_refresh');
     }
 
     public function index()

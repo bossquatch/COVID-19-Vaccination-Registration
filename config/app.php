@@ -68,6 +68,7 @@ return [
     'google_maps_key'           => env('GOOGLE_MAPS_API_KEY', null),
     'moderna_expiry'            => env('MODERNA_EXPIRY', null),
 	'current_vaccination_date'  => env('CURRENT_VACCINATION_DATE','01-01-2000'),
+	'analytics_refresh'			=> env('ANALYTICS_REFRESH', 300),
 
     /*
     |--------------------------------------------------------------------------
