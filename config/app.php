@@ -52,36 +52,23 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
-
-    'organization' => env('APP_ORG', 'Polk County'),
-
-    'organization_url' => env('APP_ORG_URL', 'https://www.polk-county.net'),
-
-    'asset_url' => env('ASSET_URL', null),
-
-    'cdn_url' => env('APP_CDN', 'https://cdn.polk.design'),
-
-    'default_password' => env('DEFAULT_PASSWORD', ''),
-
-    'default_no_email' => env('DEFAULT_NO_EMAIL', ''),
-
-    'allow_self_service' =>env('ALLOW_SELF_SERVICE', false),
-
-    'always_show_qr' =>env('ALWAYS_SHOW_QR', false),
-
-    'usps_username' => env('USPS_USERNAME', ''),
-
-    'pagination_limit' => env('PAGINATION_LIMIT', 25),
-
-    // how long it takes for invitations to expire in hours
-    'invitation_expire' => env('INVITATION_EXPIRE', 24),
-
-    'auto_scheduling' => env('AUTO_SCHEDULING', false),
-
-    'google_maps_key' => env('GOOGLE_MAPS_API_KEY', null),
-
-    'moderna_expiry' => env('MODERNA_EXPIRY', null),
+    'url'                       => env('APP_URL', 'http://localhost'),
+    'organization'              => env('APP_ORG', 'Polk County'),
+    'organization_url'          => env('APP_ORG_URL', 'https://www.polk-county.net'),
+    'asset_url'                 => env('ASSET_URL', null),
+    'cdn_url'                   => env('APP_CDN', 'https://cdn.polk.design'),
+    'default_password'          => env('DEFAULT_PASSWORD', ''),
+    'default_no_email'          => env('DEFAULT_NO_EMAIL', ''),
+    'allow_self_service'        => env('ALLOW_SELF_SERVICE', false),
+    'always_show_qr'            => env('ALWAYS_SHOW_QR', false),
+    'usps_username'             => env('USPS_USERNAME', ''),
+    'pagination_limit'          => env('PAGINATION_LIMIT', 25),
+    'invitation_expire'         => env('INVITATION_EXPIRE', 24),
+    'auto_scheduling'           => env('AUTO_SCHEDULING', false),
+    'google_maps_key'           => env('GOOGLE_MAPS_API_KEY', null),
+    'moderna_expiry'            => env('MODERNA_EXPIRY', null),
+	'current_vaccination_date'  => env('CURRENT_VACCINATION_DATE','01-01-2000'),
+	'analytics_refresh'			=> env('ANALYTICS_REFRESH', 300),
 
     /*
     |--------------------------------------------------------------------------
