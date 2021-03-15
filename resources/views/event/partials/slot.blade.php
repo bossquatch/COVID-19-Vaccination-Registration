@@ -17,3 +17,48 @@
         @endif
     </div>
 </div>
+<div class="d-flex w-100 justify-content-between">
+    <div class="w-100">
+        <p class="mb-0 font-size-sm text-black font-weight-bold">Check In Breakdown</p>
+        <progress class="mb-2 w-100" value="{{ $slot->checked_in }}" max="{{ $slot->to_check_in + $slot->checked_in }}"></progress>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-4">
+                <div class="card card-body p-2 mb-2">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <!-- Title -->
+                            <p class="initialism font-size-xs text-uppercase text-gray-dark mb-1">Check Ins Left</p>
+                            <!-- Value -->
+                            <span class="h6 mb-0">{{ number_format($slot->to_check_in,0) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="card card-body p-2 mb-2">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <!-- Title -->
+                            <p class="initialism font-size-xs text-uppercase text-gray-dark mb-1">Checked In</p>
+                            <!-- Value -->
+                            <span class="h6 mb-0">{{ number_format($slot->checked_in, 0) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="card card-body p-2 mb-2">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <!-- Title -->
+                            <p class="initialism font-size-xs text-uppercase text-gray-dark mb-1">Total</p>
+                            <!-- Value -->
+                            <span class="h6 mb-0">{{ number_format($slot->checked_in + $slot->to_check_in, 0) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

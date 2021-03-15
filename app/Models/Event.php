@@ -4,7 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use mysql_xdevapi\Exception;
 
 class Event extends Model
 {
@@ -26,19 +31,33 @@ class Event extends Model
         return $this->belongsTo(Location::class, 'location_id')->withTrashed();
     }
 
-    public function settings() {
+    public function settings(): HasOne
+    {
         return $this->hasOne(Settings::class, 'event_id');
     }
 
-    public function slots() {
+    public function slots(): HasMany
+    {
         return $this->hasMany(Slot::class, 'event_id');
     }
 
-    public function lots() {
+    public function lots(): BelongsToMany
+    {
         return $this->belongsToMany(Lot::class)->withTimestamps();
     }
 
-    public function invitations() {
+    public function eventMessage(): HasOne
+    {
+    	return $this->hasOne(EventMessage::class,'event_id');
+    }
+
+    public function hasMessage(): bool
+    {
+		return $this->eventMessage->message ?? false;
+    }
+
+    public function invitations(): HasManyThrough
+    {
         return $this->hasManyThrough(
             Invitation::class,
             Slot::class,
@@ -49,11 +68,13 @@ class Event extends Model
         );
     }
 
-    public function tags() {
+    public function tags(): BelongsToMany
+    {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
-    public function intersectsSlot(\Carbon\CarbonPeriod $period) {
+    public function intersectsSlot(\Carbon\CarbonPeriod $period): bool
+    {
         foreach ($this->slots as $slot) {
             if ($slot->intersects($period)) {
                 return true;
@@ -62,7 +83,8 @@ class Event extends Model
         return false;
     }
 
-    public function withinEvent(\Carbon\Carbon $time) {
+    public function withinEvent(\Carbon\Carbon $time): bool
+    {
         foreach ($this->slots as $slot) {
             if ($slot->withinTime($time)) {
                 return true;
@@ -168,6 +190,14 @@ class Event extends Model
 
     public function getHeldIntervalsAttribute() {
         return new \Carbon\CarbonPeriod($this->date_held . ' 06:00', '15 minutes', $this->date_held . ' 22:00');
+    }
+
+    public function getToCheckInAttribute() {
+        return $this->invitations()->whereIn('invite_status_id', [6])->count();
+    }
+
+    public function getCheckedInAttribute() {
+        return $this->invitations()->whereIn('invite_status_id', [7, 10])->count();
     }
 
     public function getStartableAttribute() {

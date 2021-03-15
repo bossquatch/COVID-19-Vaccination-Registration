@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -12,14 +13,16 @@ use Illuminate\Support\Str;
 class AnalyticsController extends Controller
 {
 
-	// set a global timeout for the cache, in seconds
-	protected $timeout = 300;
+	// global timeout for the cache, in seconds
+	protected $timeout;
 
     public function __construct()
     {
         $this->middleware(['verified', 'can:keep_inventory'])->except([
             'publicAnalytics'
         ]);
+
+        $this->timeout = Config::get('app.analytics_refresh');
     }
 
     public function index()
@@ -287,7 +290,7 @@ class AnalyticsController extends Controller
 	public function publicAnalytics()
 	{
 		//  check the cache for the existence of this data.  If found, use cache; if not, run the queries and store in cache
-		if (Cache::tags(['analytics'])->has('registrationsByDayPublic') == false) {
+		if (Cache::tags(['analytics'])->has('registrationsByDayPublic') == false || Cache::tags(['analytics'])->has('currentSchedule') == false) {
 
 			$registrations = [
 				'counts' => [],
@@ -311,8 +314,7 @@ class AnalyticsController extends Controller
 				$registrations['day'][]     = $day->Day;
 			}
 
-//            $currentSchedule = Carbon::create(Registration::where('status_id', '=', 2)->max('submitted_at'));
-			$currentSchedule = Carbon::create('2021-02-18');
+			$currentSchedule = Carbon::create(Config::get('app.current_vaccination_date'));
 
 			Cache::tags(['analytics'])->put('registrationsByDayPublic', $registrations, $seconds = $this->timeout);
 			Cache::tags(['analytics'])->put('currentSchedule', $currentSchedule, $seconds = $this->timeout);
