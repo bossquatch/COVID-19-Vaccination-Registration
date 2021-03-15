@@ -53,6 +53,11 @@
                         </a>
                     @endif
                 @endcan
+				@can('update_invite')
+					<a class="btn btn-header btn-header-primary btn-round btn-lg" href="/events/{{ $event->id }}/all/report" title="Event Report" target="_blank" rel="noopener noreferrer">
+						<span class="fas fa-file-download mr-1"></span>Export Entire List
+					</a>
+				@endcan
             </div>
         </div>
 
@@ -65,7 +70,7 @@
                         @include('event.partials.editdetails', ['event' => $event])
                     </div>
                     @endcan
-                    
+
                     <div class="card card-body p-6 mb-5">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-12 text-center mb-0">
@@ -91,7 +96,7 @@
                                 <div class="badge @if($event->partner_handled) badge-info-soft @elseif($event->open) badge-success-soft @else badge-danger-soft @endif mb-2">
                                     <span class="fad fa-calendar mr-1"></span> {{ $event->partner_handled ? $event->partners : ($event->open ? 'Scheduling Automatically' : 'Scheduling Closed') }}
                                 </div>
-                                
+
                                 @can('update_event')
                                 @if (!$event->open)
                                 <form action="/events/{{ $event->id }}/open" method="post">
@@ -147,7 +152,7 @@
                         <h3 class="h4 text-center mb-5">
                             Check-In Breakdown
                         </h3>
-    
+
                         <!-- Chart -->
                         <progress class="mb-3" value="{{ $event->checked_in }}" max="{{ $event->to_check_in + $event->checked_in }}"></progress>
 
@@ -196,7 +201,7 @@
                         <h3 class="h4 text-center mb-5">
                             Invitations Breakdown <small>(Total Capacity: {{ $event->total_capacity }})</small>
                         </h3>
-    
+
                         <!-- Chart -->
                         <div class="chart">
                             <canvas id="inviteBreakdownChart" width="300" height="300" aria-label="Invitations Breakdown Doughnut Chart" role="img"></canvas>
@@ -271,7 +276,7 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-outline-danger">Cancel Event</button>
                 </form>
-            </div>        
+            </div>
         </div>
     </div>
 </div>

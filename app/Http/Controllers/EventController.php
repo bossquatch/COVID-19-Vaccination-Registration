@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AllList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -102,7 +103,7 @@ class EventController extends Controller
     public function store()
     {
         $valid = request()->validate($this->validationRules());
-        
+
         $carbon_date = \Carbon\Carbon::parse($valid['date']);
         $slot_times = [];
         $lots = explode(",",$valid['lots']);
@@ -137,7 +138,7 @@ class EventController extends Controller
                     }
                 }
             }
-            
+
             $event->slots()->createMany($slot_times);
 
             if(isset($valid['partners'])) {
@@ -240,6 +241,13 @@ class EventController extends Controller
         return new CallbackList($event);
     }
 
+	public function allInvitesReport($id)
+	{
+		$event = Event::findOrFail($id);
+
+		return new AllList($event);
+	}
+
     public function slotInvites($event_id, $slot_id)
     {
         $slot = \App\Models\Slot::findOrFail($slot_id);
@@ -275,7 +283,7 @@ class EventController extends Controller
         return redirect('/events/'.$event_id);
     }
 
-    public function reserve($event_id, $slot_id) 
+    public function reserve($event_id, $slot_id)
     {
         $slot = \App\Models\Slot::findOrFail($slot_id);
         if ($slot->event_id != $event_id) { abort(404); }
