@@ -24,6 +24,8 @@ For quick check-in, log into the COVID-19 vaccination registration website and s
 
 Remember, proof of Florida residency is ***required*** at your appointment.
 
+{!! $message !!}
+
 Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
