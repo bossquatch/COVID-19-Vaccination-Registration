@@ -53,7 +53,7 @@ class Event extends Model
 
     public function hasMessage(): bool
     {
-		return $this->eventMessage->exists() ?? false;
+		return $this->eventMessage->message ?? false;
     }
 
     public function invitations(): HasManyThrough
