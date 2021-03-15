@@ -81,6 +81,14 @@ class Slot extends Model
         return ($this->event->partner_handled);
     }
 
+    public function getToCheckInAttribute() {
+        return $this->invitations()->whereIn('invite_status_id', [6])->count();
+    }
+
+    public function getCheckedInAttribute() {
+        return $this->invitations()->whereIn('invite_status_id', [7, 10])->count();
+    }
+
     // allows $slot->active_invitation_list
     public function getActiveInvitationListAttribute() {
         return $this->activeInvitationQuery()->get();

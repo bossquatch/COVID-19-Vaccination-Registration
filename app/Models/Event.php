@@ -192,6 +192,14 @@ class Event extends Model
         return new \Carbon\CarbonPeriod($this->date_held . ' 06:00', '15 minutes', $this->date_held . ' 22:00');
     }
 
+    public function getToCheckInAttribute() {
+        return $this->invitations()->whereIn('invite_status_id', [6])->count();
+    }
+
+    public function getCheckedInAttribute() {
+        return $this->invitations()->whereIn('invite_status_id', [7, 10])->count();
+    }
+
     public function getStartableAttribute() {
         $times = [];
 

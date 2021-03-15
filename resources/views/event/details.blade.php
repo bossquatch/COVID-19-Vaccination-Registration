@@ -145,6 +145,55 @@
                     <div class="card card-body mb-5">
                         <!-- Title -->
                         <h3 class="h4 text-center mb-5">
+                            Check-In Breakdown
+                        </h3>
+    
+                        <!-- Chart -->
+                        <progress class="mb-3" value="{{ $event->checked_in }}" max="{{ $event->to_check_in + $event->checked_in }}"></progress>
+
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-4">
+                                <div class="card card-body p-3 mb-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <!-- Title -->
+                                            <p class="h6 text-uppercase text-gray-dark mb-2">Check Ins Left</p>
+                                            <!-- Value -->
+                                            <span class="h4 mb-0">{{ number_format($event->to_check_in,0) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="card card-body p-3 mb-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <!-- Title -->
+                                            <p class="h6 text-uppercase text-gray-dark mb-2">Checked In</p>
+                                            <!-- Value -->
+                                            <span class="h4 mb-0">{{ number_format($event->checked_in, 0) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="card card-body p-3 mb-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <!-- Title -->
+                                            <p class="h6 text-uppercase text-gray-dark mb-2">Total</p>
+                                            <!-- Value -->
+                                            <span class="h4 mb-0">{{ number_format($event->checked_in + $event->to_check_in, 0) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-body mb-5">
+                        <!-- Title -->
+                        <h3 class="h4 text-center mb-5">
                             Invitations Breakdown <small>(Total Capacity: {{ $event->total_capacity }})</small>
                         </h3>
     
