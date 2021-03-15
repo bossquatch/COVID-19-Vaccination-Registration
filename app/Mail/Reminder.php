@@ -40,7 +40,8 @@ class Reminder extends Mailable
                 'apptDate' 			=> $this->registration->appointment->starting_at->format('M j, Y g:i A'),
                 'code' 				=> $this->registration->code,
                 'userId' 			=> $this->registration->user_id,
-                'regId' 			=> $this->registration->id
+                'regId' 			=> $this->registration->id,
+				'message'			=> $this->registration->appointment->event->hasMessage() ? $this->registration->appointment->event->eventMessage->message : '',
             ])
             ->withSwiftMessage(function($message) {
 				$message->getHeaders()->addTextHeader('X-Mailgun-Variables', '{"_RID_": '. intval(strval($this->registration->id),36) .'}');

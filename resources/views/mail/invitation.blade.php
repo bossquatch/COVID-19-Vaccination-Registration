@@ -15,6 +15,8 @@ Please log into the COVID-19 vaccination registration website to accept your app
 
 Remember, proof of Florida residency is ***required*** at your appointment.
 
+{!! $message !!}
+
 Thanks,<br>
 {{ config('app.name') }}
 
