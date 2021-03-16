@@ -53,7 +53,7 @@ class Board
             ->withCount([
                 'invitations as active_invitations_count' => function (Builder $query) {
                     $query->whereHas('invite_status', function (Builder $query) {
-                        $query->whereNotIn('id', [4, 5]);
+                        $query->whereNotIn('id', [4, 5, 9]);
                     });
                 },
             ])->havingRaw('(`slots`.`capacity` - `slots`.`reserved`) > `active_invitations_count`')                        // only get slots with seats available

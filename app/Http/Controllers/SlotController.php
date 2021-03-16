@@ -27,7 +27,7 @@ class SlotController extends Controller
             ->withCount([
                 'invitations as active_invitations_count' => function ($query) {
                     $query->whereHas('invite_status', function ($query) {
-                        $query->whereNotIn('id', [4, 5]);
+                        $query->whereNotIn('id', [4, 5, 9]);
                     });
                 },
             ])->havingRaw('`capacity` > `active_invitations_count`')->get();        // allow retroactive assigning to filled slots via reservation

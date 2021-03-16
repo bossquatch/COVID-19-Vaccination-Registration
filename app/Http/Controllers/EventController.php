@@ -275,7 +275,7 @@ class EventController extends Controller
         
         if (!($callback || $tocheck || $checkedin)){
             $invitations = $invitations->whereHas('invite_status', function ($query) {
-                $query->whereNotIn('id', [4, 5]);
+                $query->whereNotIn('id', [4, 5, 9]);
             })->paginate(config('app.pagination_limit'));
         } else {
             $invitations = $slot->invitations()->whereHas('invite_status', function ($query) use ($invite_statuses) {
