@@ -94,6 +94,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::get('/events/{id}/pending', [App\Http\Controllers\EventController::class, 'pendingInvites'])->middleware('can:update_invite');
     Route::get('/events/{id}/pending/report', [App\Http\Controllers\EventController::class, 'pendingInvitesReport'])->middleware('can:update_invite');
 	Route::get('/events/{id}/all/report', [App\Http\Controllers\EventController::class, 'allInvitesReport'])->middleware('can:update_invite');
+    Route::get('/events/{event_id}/list', [App\Http\Controllers\EventController::class, 'inviteList']);
     Route::get('/events/{event_id}/slots/{slot_id}', [App\Http\Controllers\EventController::class, 'slotInvites']);
     Route::delete('/events/{event_id}/slots/{slot_id}', [App\Http\Controllers\EventController::class, 'slotDelete'])->middleware('can:delete_event');
     Route::put('/events/{event_id}/slots/{slot_id}/reserve', [App\Http\Controllers\EventController::class, 'reserve'])->middleware('can:create_invite');
