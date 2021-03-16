@@ -289,9 +289,6 @@ function search(type) {
 
     var searchInfo = createSearchInfo(val, parseInt(offset));
 
-    setTimeout(function () {
-       	$('#loadingModal').modal('hide');
-    }, 1000);
     makeRequest(searchInfo, type);
 }
 
@@ -300,9 +297,6 @@ function getNext() {
     
     var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')));
 
-    setTimeout(function () {
-       	$('#loadingModal').modal('hide');
-    }, 1000);
     makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
 
     return false;
@@ -313,9 +307,6 @@ function getPrev() {
     
     var searchInfo = createSearchInfo(window.sessionStorage.getItem('searchVal'), parseInt(window.sessionStorage.getItem('searchOffset')) - (2 * parseInt(window.sessionStorage.getItem('searchLimit'))));
 
-    setTimeout(function () {
-       	$('#loadingModal').modal('hide');
-    }, 1000);
     makeRequest(searchInfo, window.sessionStorage.getItem('searchType'));
 
     return false;
@@ -328,12 +319,11 @@ function makeRequest(searchInfo, type) {
         window.sessionStorage.setItem('searchLimit', data.limit.toString())
         $("#registrations").html(data.result);
         $("#pagination-area").html(data.pagination);
-        $('#loadingModal').modal('hide');
-    }, 'json');
 
-    setTimeout(function () {
-       	$('#loadingModal').modal('hide');
-    }, 1000);
+        setTimeout(function () {
+            $('#loadingModal').modal('hide');
+        }, 500);
+    }, 'json');
 }
 
 function sortSubmission() {
