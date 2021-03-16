@@ -42,7 +42,7 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
-                <a class="btn btn-header btn-round btn-lg" href="{{ $event->date_held < \Carbon\Carbon::today() ? '/events-history' : '/events' }}">
+                <a class="btn btn-header btn-round btn-lg" href="{{ \Carbon\Carbon::parse($event->date_held)->lessThan(\Carbon\Carbon::today()) ? '/events-history' : '/events' }}">
                     <span class="fas fa-arrow-left mr-1"></span>Back
                 </a>
 
