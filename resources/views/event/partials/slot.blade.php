@@ -1,5 +1,5 @@
 <div class="d-flex w-100 justify-content-between">
-    <a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}" class="stretched-link h5 mb-1">{{ \Carbon\Carbon::parse($slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse($slot->ending_at)->format('h:iA') }}</a>
+    <a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}" class="h5 mb-1">{{ \Carbon\Carbon::parse($slot->starting_at)->format('h:iA') . '-' . \Carbon\Carbon::parse($slot->ending_at)->format('h:iA') }}</a>
         @if ($slot->capacity > $slot->scheduled_count)
         <span class="font-size-xs"><span class="fad fa-calendar text-muted mr-1"></span>Scheduling...</span>
         @else
@@ -24,11 +24,11 @@
 
         <div class="row justify-content-center">
             <div class="col-12 col-lg-4">
-                <div class="card card-body p-2 mb-2">
+                <div class="card card-body p-2 mb-2 position-relative">
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <!-- Title -->
-                            <p class="initialism font-size-xs text-uppercase text-gray-dark mb-1">Check Ins Left</p>
+                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?tocheck=1" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Check Ins Left</a></div>
                             <!-- Value -->
                             <span class="h6 mb-0">{{ number_format($slot->to_check_in,0) }}</span>
                         </div>
@@ -36,11 +36,11 @@
                 </div>
             </div>
             <div class="col-12 col-lg-4">
-                <div class="card card-body p-2 mb-2">
+                <div class="card card-body p-2 mb-2 position-relative">
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <!-- Title -->
-                            <p class="initialism font-size-xs text-uppercase text-gray-dark mb-1">Checked In</p>
+                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?checkedin=1" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Checked In</a></div>
                             <!-- Value -->
                             <span class="h6 mb-0">{{ number_format($slot->checked_in, 0) }}</span>
                         </div>
@@ -48,11 +48,11 @@
                 </div>
             </div>
             <div class="col-12 col-lg-4">
-                <div class="card card-body p-2 mb-2">
+                <div class="card card-body p-2 mb-2 position-relative">
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <!-- Title -->
-                            <p class="initialism font-size-xs text-uppercase text-gray-dark mb-1">Total</p>
+                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Total</a></div>
                             <!-- Value -->
                             <span class="h6 mb-0">{{ number_format($slot->checked_in + $slot->to_check_in, 0) }}</span>
                         </div>

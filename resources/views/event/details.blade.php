@@ -42,7 +42,7 @@
         <div class="col-12">
             <div class="text-center mb-6">
                 <!-- Button -->
-                <a class="btn btn-header btn-round btn-lg" href="{{ $event->date_held < \Carbon\Carbon::today() ? '/events-history' : '/events' }}">
+                <a class="btn btn-header btn-round btn-lg" href="{{ \Carbon\Carbon::parse($event->date_held)->lessThan(\Carbon\Carbon::today()) ? '/events-history' : '/events' }}">
                     <span class="fas fa-arrow-left mr-1"></span>Back
                 </a>
 
@@ -162,7 +162,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <!-- Title -->
-                                            <p class="h6 text-uppercase text-gray-dark mb-2">Check Ins Left</p>
+                                            <div class="w-100"><a href="/events/{{ $event->id }}/list?tocheck=1" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Check Ins Left</a></div>
                                             <!-- Value -->
                                             <span class="h4 mb-0">{{ number_format($event->to_check_in,0) }}</span>
                                         </div>
@@ -174,7 +174,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <!-- Title -->
-                                            <p class="h6 text-uppercase text-gray-dark mb-2">Checked In</p>
+                                            <div class="w-100"><a href="/events/{{ $event->id }}/list?checkedin=1" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Checked In</a></div>
                                             <!-- Value -->
                                             <span class="h4 mb-0">{{ number_format($event->checked_in, 0) }}</span>
                                         </div>
@@ -186,7 +186,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <!-- Title -->
-                                            <p class="h6 text-uppercase text-gray-dark mb-2">Total</p>
+                                            <div class="w-100"><a href="/events/{{ $event->id }}/list" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Total</a></div>
                                             <!-- Value -->
                                             <span class="h4 mb-0">{{ number_format($event->checked_in + $event->to_check_in, 0) }}</span>
                                         </div>

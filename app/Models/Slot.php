@@ -102,7 +102,7 @@ class Slot extends Model
     // allows $slot->scheduled_count
     public function getScheduledCountAttribute() {
         return $this->invitations()->whereHas('invite_status', function (Builder $query) {
-            $query->whereNotIn('id', [1, 2, 3, 4, 5]);
+            $query->whereNotIn('id', [1, 2, 3, 4, 5, 9]);
         })->count();
     }
 
@@ -114,7 +114,7 @@ class Slot extends Model
 
     private function activeInvitationQuery() {
         return $this->invitations()->whereHas('invite_status', function (Builder $query) {
-            $query->whereNotIn('id', [4, 5]);
+            $query->whereNotIn('id', [4, 5, 9]);
         });
     }
 }

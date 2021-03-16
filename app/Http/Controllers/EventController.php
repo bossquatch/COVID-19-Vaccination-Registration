@@ -254,21 +254,80 @@ class EventController extends Controller
         if ($slot->event_id != $event_id) { abort(404); }
 
         $callback = request()->input('callback');
+        $tocheck = request()->input('tocheck');
+        $checkedin = request()->input('checkedin');
+
+        $invite_statuses = [];
+
+        $invitations = $slot->invitations();
 
         if ($callback) {
-            $invitations = $slot->invitations()->whereHas('invite_status', function ($query) {
-                $query->where('id', 2);
+            $invite_statuses = array_merge($invite_statuses, [2]);
+        }
+
+        if ($tocheck) {
+            $invite_statuses = array_merge($invite_statuses, [6]);
+        }
+
+        if ($checkedin) {
+            $invite_statuses = array_merge($invite_statuses, [7,10]);
+        }
+        
+        if (!($callback || $tocheck || $checkedin)){
+            $invitations = $invitations->whereHas('invite_status', function ($query) {
+                $query->whereNotIn('id', [4, 5, 9]);
             })->paginate(config('app.pagination_limit'));
         } else {
-            $invitations = $slot->invitations()->whereHas('invite_status', function ($query) {
-                $query->whereNotIn('id', [4, 5]);
+            $invitations = $slot->invitations()->whereHas('invite_status', function ($query) use ($invite_statuses) {
+                $query->whereIn('id', $invite_statuses);
             })->paginate(config('app.pagination_limit'));
         }
 
         return view('event.slotlist', [
             'invites' => $invitations,
             'slot' => $slot,
-            'callback' => $callback,
+            'restricted' => ($callback || $tocheck || $checkedin),
+        ]);
+    }
+
+    public function inviteList($event_id)
+    {
+        $event = \App\Models\Event::findOrFail($event_id);
+
+        $callback = request()->input('callback');
+        $tocheck = request()->input('tocheck');
+        $checkedin = request()->input('checkedin');
+
+        $invite_statuses = [];
+
+        $invitations = $event->invitations();
+
+        if ($callback) {
+            $invite_statuses = array_merge($invite_statuses, [2]);
+        }
+
+        if ($tocheck) {
+            $invite_statuses = array_merge($invite_statuses, [6]);
+        }
+
+        if ($checkedin) {
+            $invite_statuses = array_merge($invite_statuses, [7,10]);
+        }
+        
+        if (!($callback || $tocheck || $checkedin)){
+            $invitations = $invitations->whereHas('invite_status', function ($query) {
+                $query->whereNotIn('id', [4, 5, 9]);
+            })->paginate(config('app.pagination_limit'));
+        } else {
+            $invitations = $event->invitations()->whereHas('invite_status', function ($query) use ($invite_statuses) {
+                $query->whereIn('id', $invite_statuses);
+            })->paginate(config('app.pagination_limit'));
+        }
+
+        return view('event.eventlist', [
+            'invites' => $invitations,
+            'event' => $event,
+            'restricted' => ($callback || $tocheck || $checkedin),
         ]);
     }
 

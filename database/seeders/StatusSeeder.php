@@ -25,6 +25,7 @@ class StatusSeeder extends Seeder
             ['id' => '8', 'name' => 'No Response', 'fa_icon' => 'fad fa-comment-alt-slash text-warning', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['id' => '9', 'name' => 'Absent', 'fa_icon' => 'fad fa-minus-circle text-danger', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['id' => '10', 'name' => 'Cancelled', 'fa_icon' => 'fad fa-ban text-info', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+	        ['id' => '11', 'name' => 'Third-Party Assigned', 'fa_icon' => 'far fa-sign-out-alt', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
     }
 }
