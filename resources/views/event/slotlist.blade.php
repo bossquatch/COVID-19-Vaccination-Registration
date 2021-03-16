@@ -36,7 +36,7 @@
                     <span class="fad fa-arrow-left mr-1"></span>Back
                 </a>
 
-                @if ($callback)
+                @if ($restricted)
                 <a class="btn btn-header-outline btn-round btn-lg" href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}">
                     <span class="fas fa-clipboard-list-check mr-1"></span>Show All Invites
                 </a>
