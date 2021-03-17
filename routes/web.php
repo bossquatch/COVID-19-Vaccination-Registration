@@ -112,6 +112,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');
 
     Route::post('/vaccine/add', [App\Http\Controllers\VaccineController::class, 'store']);
+    Route::delete('/vaccines/{id}', [App\Http\Controllers\VaccineController::class, 'remove'])->middleware('can:do_whatever_you_want');
 
     Route::get('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'show']);
     Route::post('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'verify']);

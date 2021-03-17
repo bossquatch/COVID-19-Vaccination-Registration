@@ -1,4 +1,15 @@
 <div class="card card-body p-4">
+    @can('do_whatever_you_want')
+    <div class="row align-items-end justify-content-end mb-2">
+        <form id="vacDel{{ $vaccine->id }}" class="collapse mr-3" action="/vaccines/{{ $vaccine->id }}" method="post">
+            @csrf
+            @method('DELETE')
+            <label for="vacDelBtn{{ $vaccine->id }}">Are you sure?</label>
+            <button id="vacDelBtn{{ $vaccine->id }}" type="submit" class="btn btn-outline-danger">Just delete it</button>
+        </form>
+        <a class="btn btn-warning mr-1" data-toggle="collapse" href="#vacDel{{ $vaccine->id }}" role="button" aria-expanded="false" aria-controls="vacDel{{ $vaccine->id }}">Delete</a>
+    </div>
+    @endcan
     <div class="row align-items-center justify-content-center">
         <div class="col-12 text-center col-md-6 col-lg-4">
             <h4>Date Given</h4>

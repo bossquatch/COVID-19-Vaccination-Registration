@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Rules\ElevenDigits;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Session;
 
 class VaccineController extends Controller
 {
@@ -75,6 +76,18 @@ class VaccineController extends Controller
         $this->checkCompleted($regis);
 
         return json_encode(['status' => 'success', 'html' => view('vaccine.partials.info', ['vaccine' => $vaccine])->render()]);
+    }
+
+    public function remove($id) {
+        $vac = \App\Models\Vaccine::findOrFail($id);
+        $registration = $vac->registration;
+
+        $this->logChanges($registration, 'vaccine removed', true, false, ['id' => $id]);
+
+        $vac->delete();
+
+        Session::flash('success', 'Vaccine entry was removed.');
+        return redirect()->back();
     }
 
     private function checkCompleted($registration)
