@@ -57,7 +57,7 @@
                     
                     @foreach ($invites as $invite)
                         <a href="{{ "/".$invite->user->id."/".$invite->registration->id."/".$invite->registration->code }}" class="list-group-item list-group-item-action">
-                            {{ $invite->registration->suffix_id ? $invite->registration->first_name.' '.$invite->registration->last_name.', '.$invite->registration->suffix->display_name : $invite->registration->first_name.' '.$invite->registration->last_name }} <span class="font-italic">- {{ $invite->invite_status->name }}</span>
+                            {{ $invite->registration->suffix_id ? $invite->registration->last_name.', '.$invite->registration->first_name.', '.$invite->registration->suffix->display_name : $invite->registration->last_name.', '.$invite->registration->first_name }} <span class="font-italic">- {{ $invite->invite_status->name }}</span>
                         </a>
                     @endforeach
 

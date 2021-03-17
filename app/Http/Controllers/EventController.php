@@ -274,13 +274,13 @@ class EventController extends Controller
         }
         
         if (!($callback || $tocheck || $checkedin)){
-            $invitations = $invitations->whereHas('invite_status', function ($query) {
+            $invitations = $invitations->select('invitations.*')->join('registrations', 'registrations.id', '=', 'invitations.registration_id')->whereHas('invite_status', function ($query) {
                 $query->whereNotIn('id', [4, 5, 9]);
-            })->paginate(config('app.pagination_limit'));
+            })->orderBy('registrations.last_name')->orderBy('registrations.first_name')->paginate(config('app.pagination_limit'));
         } else {
-            $invitations = $slot->invitations()->whereHas('invite_status', function ($query) use ($invite_statuses) {
+            $invitations = $slot->invitations()->select('invitations.*')->join('registrations', 'registrations.id', '=', 'invitations.registration_id')->whereHas('invite_status', function ($query) use ($invite_statuses) {
                 $query->whereIn('id', $invite_statuses);
-            })->paginate(config('app.pagination_limit'));
+            })->orderBy('registrations.last_name')->orderBy('registrations.first_name')->paginate(config('app.pagination_limit'));
         }
 
         return view('event.slotlist', [
@@ -315,13 +315,13 @@ class EventController extends Controller
         }
         
         if (!($callback || $tocheck || $checkedin)){
-            $invitations = $invitations->whereHas('invite_status', function ($query) {
+            $invitations = $invitations->select('invitations.*')->join('registrations', 'registrations.id', '=', 'invitations.registration_id')->whereHas('invite_status', function ($query) {
                 $query->whereNotIn('id', [4, 5, 9]);
-            })->paginate(config('app.pagination_limit'));
+            })->orderBy('registrations.last_name')->orderBy('registrations.first_name')->paginate(config('app.pagination_limit'));
         } else {
-            $invitations = $event->invitations()->whereHas('invite_status', function ($query) use ($invite_statuses) {
+            $invitations = $event->invitations()->select('invitations.*')->join('registrations', 'registrations.id', '=', 'invitations.registration_id')->whereHas('invite_status', function ($query) use ($invite_statuses) {
                 $query->whereIn('id', $invite_statuses);
-            })->paginate(config('app.pagination_limit'));
+            })->orderBy('registrations.last_name')->orderBy('registrations.first_name')->paginate(config('app.pagination_limit'));
         }
 
         return view('event.eventlist', [
