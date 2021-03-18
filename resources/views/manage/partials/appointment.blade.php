@@ -86,7 +86,7 @@
                             @if ($registration->active_invite->invite_status->name == "Accepted")
                                 <form action="/manage/{{ $registration->id }}/invitation/checkin" class="form-inline mb-1 justify-content-center" method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-info">Check In</button>
+                                    <button type="submit" class="btn btn-info" @if (\Carbon\Carbon::parse($registration->active_invite->event->date_held)->notEqualTo(\Carbon\Carbon::today())) disabled aria-disabled="true" title="Can only check into event on the day of the event!" @endif>Check In</button>
                                 </form>
                             @else
                                 <div class="row justify-content-center mb-2">
