@@ -33,6 +33,12 @@ class VaccineController extends Controller
 
         $validator = Validator::make($inputs, $this->validationRules());
 
+        $validator->after(function ($validator) use ($regis) {
+            if ($regis->vaccines()->where('date_given', '=', Carbon::today())->count() > 0) {
+                $validator->errors()->add('date', 'This registration already has a vaccination record for today!');
+            }
+        });
+
         if ($validator->fails()) {
             return json_encode(['status' => 'failed', 'errors' => $validator->errors()]);
         }
