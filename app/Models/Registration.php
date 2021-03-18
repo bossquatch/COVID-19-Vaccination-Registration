@@ -3,8 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
@@ -17,7 +23,17 @@ class Registration extends Model
     protected $appends = [
         'email_verified_at',
         'phone_number',
-        'age'
+        'age',
+	    'address1',
+	    'address2',
+	    'locality',
+	    'state',
+	    'postal_code',
+	    'county',
+	    'latitude',
+	    'longitude',
+	    'zip',
+	    'city',
     ];
 
     public static function boot() {
@@ -30,75 +46,78 @@ class Registration extends Model
         });
     }
 
-    public function AuditLogs()
+    public function AuditLogs(): HasMany
     {
         return $this->hasMany(AuditLog::class, 'regis_id');
     }
 
-    public function AuditChanges()
+    public function AuditChanges(): MorphMany
     {
         return $this->morphMany(AuditLog::class, 'auditable');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function contacts()
+    public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class, 'registration_id');
     }
 
-    public function emails()
+    public function emails(): Collection
     {
         return $this->contacts()->where('contact_type_id', 1)->get();
     }
 
-    public function phones()
+    public function phones(): Collection
     {
         return $this->contacts()->where('contact_type_id', 2)->get();
     }
 
-    public function status()
+    public function status(): BelongsTo
     {
         return $this->belongsTo(Status::class, 'status_id');
     }
 
-    public function race()
+    public function race(): BelongsTo
     {
         return $this->belongsTo(Race::class, 'race_id');
     }
 
-    public function gender()
+    public function gender(): BelongsTo
     {
         return $this->belongsTo(Gender::class, 'gender_id');
     }
 
-    public function suffix()
+    public function suffix(): BelongsTo
     {
         return $this->belongsTo(Suffix::class, 'suffix_id');
     }
 
-    public function occupation()
+    public function occupation(): BelongsTo
     {
         return $this->belongsTo(Occupation::class, 'occupation_id');
     }
 
-    public function conditions()
+    public function conditions(): BelongsToMany
     {
         return $this->belongsToMany(Condition::class)->withTimestamps();
     }
 
-    public function vaccines() {
+    public function vaccines(): HasMany
+    {
         return $this->hasMany(Vaccine::class, 'registration_id');
     }
 
-    public function comments() {
+    public function comments(): HasMany
+    {
         return $this->hasMany(Comment::class, 'registration_id');
     }
 
-    public function events() {
+    public function events(): BelongsToMany
+    {
         return $this->belongsToMany(Event::class)->withTimestamps();
     }
 
@@ -112,23 +131,26 @@ class Registration extends Model
         $this->events()->detach($event);
     }
 
-    public function hasComments() {
+    public function hasComments(): bool
+    {
         if ($this->comments()->count() > 0) {
             return true;
         }
         return false;
     }
 
-    public function invitations() {
+    public function invitations(): HasMany
+    {
         return $this->hasMany(Invitation::class, 'registration_id');
     }
 
-    public function address() {
+    public function address(): HasOne
+    {
 		return $this->hasOne(Address::class, 'id', 'address_id');
 	}
 
-	public function emailHistory()
-    {
+	public function emailHistory(): HasMany
+	{
         return $this->hasMany(EmailHistory::class, 'registration_id', 'id');
     }
 
@@ -161,14 +183,14 @@ class Registration extends Model
         })->first();
     }
 
-    public function getHasAppointmentAttribute()
+    public function getHasAppointmentAttribute(): bool
     {
         return ($this->active_invite_query()->count() > 0);
     }
 
     public function getAppointmentAttribute()
     {
-        return $this->active_invite->slot;
+        return $this->active_invite->slot ?? NULL;
     }
 
     public function getActiveInviteAttribute()
@@ -184,25 +206,27 @@ class Registration extends Model
         });
     }
 
-    public function getPhoneNumberAttribute()
+    public function getPhoneNumberAttribute(): string
     {
         $phone = '+1' . preg_replace('/\D/', '', $this->user->phone);
         return $phone;
     }
 
     // allows $registration->auto_contactable
-    public function getAutoContactableAttribute()
+    public function getAutoContactableAttribute(): bool
     {
         return ($this->user->sms_verified_at || $this->user->email_verified_at);
     }
 
     // allows $registration->can_sms
-    public function getCanSmsAttribute() {
+    public function getCanSmsAttribute()
+    {
         return ($this->user->sms_verified_at);
     }
 
     // allows $registration->can_email
-    public function getCanEmailAttribute() {
+    public function getCanEmailAttribute()
+    {
         return ($this->user->email_verified_at);
     }
 
@@ -212,14 +236,14 @@ class Registration extends Model
         $inputs = [
             'address_type_id' => 1,
             'street_number' => $inputs['street_number'] ?? null,
-            'street_name' => $inputs['street_name'] ?? null,
-            'line_2' => $inputs['line_2'] ?? null,
-            'locality' => $inputs['locality'] ?? null,
-            'county_id' => $inputs['county'] ?? null,
-            'state_id' => $inputs['state'] ?? null,
-            'postal_code' => $inputs['postal_code'] ?? null,
-            'latitude' => $inputs['latitude'] ?? null,
-            'longitude' => $inputs['longitude'] ?? null,
+            'street_name'   => $inputs['street_name'] ?? null,
+            'line_2'        => $inputs['line_2'] ?? null,
+            'locality'      => $inputs['locality'] ?? null,
+            'county_id'     => $inputs['county'] ?? null,
+            'state_id'      => $inputs['state'] ?? null,
+            'postal_code'   => $inputs['postal_code'] ?? null,
+            'latitude'      => $inputs['latitude'] ?? null,
+            'longitude'     => $inputs['longitude'] ?? null,
         ];
         if ($this->address()->count() > 0) {
             $this->address->update($inputs);
@@ -233,61 +257,58 @@ class Registration extends Model
     }
 
     // Address Accessors
-    // address1
-    public function getAddress1Attribute() {
-        if ($this->address) {
-            return $this->address->street_number . ' ' . $this->address->street_name;
-        } else {
-            return $this->getAttributeFromArray('address1');
-        }
+
+    public function getAddress1Attribute(): string
+    {
+    	$num = $this->address->street_number ?? '';
+    	$name = $this->address->street_name ?? '';
+    	return trim($num . ' ' . $name);
     }
 
-    // address2
-    public function getAddress2Attribute() {
-        if ($this->address) {
-            return $this->address->line_2;
-        } else {
-            return $this->getAttributeFromArray('address2');
-        }
+    public function getAddress2Attribute(): string
+    {
+    	return $this->address->line_2 ?? '';
     }
 
-    // city
-    public function getCityAttribute() {
-        if ($this->address) {
-            return $this->address->city;
-        } else {
-            return $this->getAttributeFromArray('city');
-        }
+    public function getLocalityAttribute(): string
+    {
+        return $this->address->locality ?? '';
     }
 
-    // state
-    public function getStateAttribute() {
-        if ($this->address) {
-            return $this->address->state_abbr;
-        } else {
-            return $this->getAttributeFromArray('state');
-        }
+    // city - for backward compatibility
+    public function getCityAttribute(): string
+    {
+    	return $this->locality;
     }
 
-    // zip
-    public function getZipAttribute() {
-        if ($this->address) {
-            return $this->address->zip_code;
-        } else {
-            return $this->getAttributeFromArray('zip');
-        }
+    public function getStateAttribute(): string
+    {
+	    return $this->address->state_abbr ?? '';
     }
 
-    // county
-    public function getCountyAttribute() {
-        if ($this->address) {
-            return $this->address->county->name ?? 'Unknown';
-        } else {
-            if($this->getAttributeFromArray('county_id')) {
-                return (\App\Models\County::find($this->getAttributeFromArray('county_id'))->name ?? 'Unknown');
-            } else {
-                return 'Unknown';
-            };
-        }
+    public function getPostalCodeAttribute(): string
+    {
+	    return $this->address->postal_code ?? '';
     }
+
+    // zip - for backward compatibility
+    public function getZipAttribute(): string
+    {
+    	return $this->postal_code;
+    }
+
+    public function getCountyAttribute(): string
+    {
+	    return $this->address->county->name ?? 'Unknown';
+    }
+
+    public function getLatitudeAttribute(): string
+    {
+    	return $this->address->latitude ?? '';
+    }
+
+	public function getLongitudeAttribute(): string
+	{
+		return $this->address->longitude ?? '';
+	}
 }
