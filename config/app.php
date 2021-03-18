@@ -69,6 +69,8 @@ return [
     'moderna_expiry'            => env('MODERNA_EXPIRY', null),
 	'current_vaccination_date'  => env('CURRENT_VACCINATION_DATE','01-01-2000'),
 	'analytics_refresh'			=> env('ANALYTICS_REFRESH', 300),
+    'ndc'                       => env('NDC', '08077727399'),
+    'vis'                       => env('VIS_PUBLICATION_DATE', '2020-12-18'),
 
     /*
     |--------------------------------------------------------------------------

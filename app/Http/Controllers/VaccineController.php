@@ -58,10 +58,10 @@ class VaccineController extends Controller
             'eligibility_id' => $inputs['eligibility'] ?? 1,                                                // default: ?
             'date_given' => $inputs['dateGiven'] ?? Carbon::today(),                                        // default: today
             'lot_number' => $lot->number,
-            'ndc' => $inputs['ndc'] ?? '08077727399',                                                       // default: normal NDC
+            'ndc' => $inputs['ndc'] ?? config('app.ndc'),                                                   // default: normal NDC
             'exp_month' => $lot->expiration_date ? Carbon::parse($lot->expiration_date)->format('m') : Carbon::today()->addMonth()->format('m'),
             'exp_year' => $lot->expiration_date ? Carbon::parse($lot->expiration_date)->format('Y') : Carbon::today()->addMonth()->format('Y'),
-            'vis_publication' => $inputs['visPubDate'] ?? '2020-12-18',
+            'vis_publication' => $inputs['visPubDate'] ?? config('app.vis'),
             'giver_fname' => $inputs['giverFirstName'],
             'giver_creds' => $inputs['giverCreds'],
             'giver_lname' => $inputs['giverLastName'],
