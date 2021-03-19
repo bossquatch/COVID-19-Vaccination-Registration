@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +36,7 @@ class AnalyticsController extends Controller
             'registrations_total' 	=> $this->registrationsTotal(),
             'registrations_old' 	=> $this->registrationsOld (),
             'registrations_young' 	=> $this->registrationsYoung(),
+	        'registrations_by_age'  => $this->registrationsByAgeGroup (),
         ]);
     }
 
@@ -325,6 +327,60 @@ class AnalyticsController extends Controller
 			'currentSchedule'   => Cache::tags(['analytics'])->get('currentSchedule')->format('F jS, Y'),
 			'registrations'     => Cache::tags(['analytics'])->get('registrationsByDayPublic'),
 		]);
+	}
+
+	public function registrationsByAgeGroup(): array
+	{
+		if (Cache::tags(['analytics'])->has('registrationsByAgeGroup') == false) {
+
+			// grab em
+			$registrationsAll = DB::select('
+				SELECT
+					s.`name` `Status`,
+					SUM(IF(r.birth_date <= DATE_SUB(now(), INTERVAL 65 YEAR),1,0)) `65+`,
+					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 64 YEAR) AND DATE_SUB(NOW(), INTERVAL 60 YEAR),1,0)) `60-64`,
+					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 59 YEAR) AND DATE_SUB(NOW(), INTERVAL 50 YEAR),1,0)) `50-59`,
+					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 49 YEAR) AND DATE_SUB(NOW(), INTERVAL 40 YEAR),1,0)) `40-49`,
+					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 39 YEAR) AND DATE_SUB(NOW(), INTERVAL 30 YEAR),1,0)) `30-39`,
+					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 29 YEAR) AND DATE_SUB(NOW(), INTERVAL 18 YEAR),1,0)) `18-29`,
+					SUM(IF(r.birth_date > DATE_SUB(now(), INTERVAL 17 YEAR),1,0)) `17-`,
+					count(*) `Total`
+
+				FROM
+					registrations r
+					JOIN statuses s ON s.id = r.status_id
+
+				WHERE
+					r.deleted_at IS NULL
+
+				GROUP BY
+					s.id
+
+				ORDER BY
+					s.id;
+			');
+
+			$registrations = [
+				'65+'   => Arr::pluck($registrationsAll, '65+','Status'),
+				'60-64' => Arr::pluck($registrationsAll, '60-64','Status'),
+				'50-59' => Arr::pluck($registrationsAll, '50-59','Status'),
+				'40-49' => Arr::pluck($registrationsAll, '40-49','Status'),
+				'30-39' => Arr::pluck($registrationsAll, '30-39','Status'),
+				'18-29' => Arr::pluck($registrationsAll, '18-29','Status'),
+				'17-'   => Arr::pluck($registrationsAll, '17-','Status'),
+				'Total' => Arr::pluck($registrationsAll, 'Total','Status'),
+			];
+
+			// cache em
+			Cache::tags(['analytics'])->put('registrationsByAgeGroup', $registrations, $seconds = $this->timeout);
+
+			// return em
+			return $registrations;
+
+		} else {
+			// grab em from cache, return em
+			return Cache::tags(['analytics'])->get('registrationsByAgeGroup');
+		}
 	}
 
 }
