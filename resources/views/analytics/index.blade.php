@@ -7,7 +7,7 @@
 @section('header')
 <script src="{{ asset('js/analytics.js') }}"></script>
 <link href="{{ asset('css/analytics.css') }}" rel="stylesheet">
-<meta http-equiv="refresh" content="30" >
+<meta http-equiv="refresh" content="300" >
 @endsection
 
 @section('content')
