@@ -156,108 +156,209 @@
                                 </div>
                             </div>
                         </div>
-                        @can('create_invite')
-                        @php
-                            $available_events = \App\Models\Event::whereHas('slots', function ($query) {
-                                    $query->select('id', 'event_id', 'capacity', 'deleted_at')
-                                    ->where('date_held','>=',\Carbon\Carbon::today())
-                                    ->withCount([
-                                        'invitations as active_invitations_count' => function ($query) {
-                                            $query->whereHas('invite_status', function ($query) {
-                                                $query->whereNotIn('id', [4, 5, 9]);
-                                            });
-                                        },
-                                    ])->havingRaw('`capacity` > `active_invitations_count`');
-                                })->orderBy('date_held', 'asc')->get();
-                        @endphp
-                            <hr>
-                            <div id="forceSchedulingRow">
-                                <div class="row align-items-center justify-content-center">
-                                    <h3>Add Appointment Data for Record</h3>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-lg-10 mx-auto">
-                                        <div class="input-group">
-                                            <select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
-                                                <option selected>Choose Event...</option>
-                                                @foreach ($available_events as $event)
-                                                    <option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }} - {{ \Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}</option>
-                                                @endforeach
-                                            </select>
-                                            <select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">
-                                                <option selected>No available slots</option>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary btn-disabled" disabled type="button" id="forceSchedulingLoading" style="display: none;"><span class="fad fa-spinner fa-spin"></span></button>
-                                                <button class="btn btn-outline-success" type="button" id="forceSchedulingAdd" onclick="submitInvite()">Add</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" id="forceSchedulingStatus"></div>
-                            </div>
-                        @endcan
-                        @can('read_registration')
-                            <hr>
-                            <div class="row align-items-center justify-content-center mb-4">
-                                <h3>Vaccinations</h3>
-                                @can('create_vaccine')
-                                    <button type="button" class="btn btn-outline-primary btn-round ml-3" data-toggle="collapse" data-target="#vaccineCollapse">
-                                        <span class="fad fa-syringe mr-1"></span> Add Vaccination
-                                    </button>
-                                @endcan
-                            </div>
-                            @can('create_vaccine')
-                                @include('vaccine.partials.collapse', ['registration' => $registration])
-                            @endcan
-                            <div id="js-vaccine-section">
-                                @php
-                                    $no_vacs = false;
-                                @endphp
-                                @forelse ($registration->vaccines as $vaccine)
-                                    @include('vaccine.partials.info', ['vaccine' => $vaccine])
-                                @empty
-                                    @php
-                                        $no_vacs = true;
-                                    @endphp
-                                @endforelse
-                                <div id="js-no-vaccine-alert" class="alert alert-info text-center" @if (!$no_vacs) style="display: none" @endif>
-                                    {{ ucwords(strtolower($registration->first_name)) }} has not received a vaccine.
-                                </div>
-                            </div>
-                        @endcan
-                        @can('read_registration')
-                            <hr>
-                            <div class="row align-items-center justify-content-center">
-                                <h3>Email History</h3>
-                            </div>
-                            <div id="js-email-history-section">
 
-								<table class="table table-sm font-size-xs table-hover">
-									<thead>
-										<tr class="">
-											<th scope="col">Date Sent</th>
-											<th scope="col">Recipient</th>
-											<th scope="col">Subject</th>
-											<th scope="col">Status</th>
-										</tr>
-									</thead>
-									<tbody>
-									@forelse ($registration->user->emailHistory as $email_history)
-										<tr class="{{ $email_history->event == 'delivered' ? 'alert-info' : 'alert-danger' }}">
-											<td scope="row">{{ Carbon\Carbon::createFromTimestamp($email_history->timestamp)->isoFormat('M/D/YY h:mm:ss a') }}</td>
-											<td>{{ $email_history->headers_to }}</td>
-											<td>{{ $email_history->headers_subject }}</td>
-											<td data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $email_history->delivery_status_message . ' ' . $email_history->severity }}">{{ ucfirst($email_history->event) }}</td>
-										</tr>
+						@if ($registration->hasShotRecord)
+							<div class="row align-items-center justify-content-center mb-4 mt-6">
+								<div class="card border-secondary mb-3" style="max-width: 36rem;">
+									<div class="card-header bg-primary text-white">Attention</div>
+									<div class="card-body text-secondary">
+										<h5 class="card-title">COVID-19 Vaccination Record Found</h5>
+										<div class="table-responsive">
+											<table class="table">
+												<tr>
+													<td>Name:</td>
+													<td>{{ $registration->shotRecord->name_last . ', ' . $registration->shotRecord->name_first }}</td>
+												</tr>
+												<tr>
+													<td>DOB:</td>
+													<td>{{ $registration->shotRecord->date_birth }}</td>
+												</tr>
+												<tr>
+													<td>Date Received:</td>
+													<td>{{ $registration->shotRecord->date_given }}</td>
+												</tr>
+												<tr>
+													<td>Vaccine:</td>
+													<td>{{ $registration->shotRecord->vaccine }}</td>
+												</tr>
+												<tr>
+													<td>Location:</td>
+													<td>{{ $registration->shotRecord->provider_site }}</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td>{{ $registration->shotRecord->provider_org }}</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td>{{ $registration->shotRecord->provider_site_county }}</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						@else
+							@can('create_invite')
+							@php
+								$available_events = \App\Models\Event::whereHas('slots', function ($query) {
+										$query->select('id', 'event_id', 'capacity', 'deleted_at')
+										->where('date_held','>=',\Carbon\Carbon::today())
+										->withCount([
+											'invitations as active_invitations_count' => function ($query) {
+												$query->whereHas('invite_status', function ($query) {
+													$query->whereNotIn('id', [4, 5, 9]);
+												});
+											},
+										])->havingRaw('`capacity` > `active_invitations_count`');
+									})->orderBy('date_held', 'asc')->get();
+							@endphp
+								<hr>
+								<div id="forceSchedulingRow">
+									<div class="row align-items-center justify-content-center">
+										<h3>Add Appointment Data for Record</h3>
+									</div>
+									<div class="row">
+										<div class="col-12 col-lg-10 mx-auto">
+											<div class="input-group">
+												<select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
+													<option selected>Choose Event...</option>
+													@foreach ($available_events as $event)
+														<option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }} - {{ \Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}</option>
+													@endforeach
+												</select>
+												<select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">
+													<option selected>No available slots</option>
+												</select>
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary btn-disabled" disabled type="button" id="forceSchedulingLoading" style="display: none;"><span class="fad fa-spinner fa-spin"></span></button>
+													<button class="btn btn-outline-success" type="button" id="forceSchedulingAdd" onclick="submitInvite()">Add</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" id="forceSchedulingStatus"></div>
+								</div>
+							@endcan
+							@can('read_registration')
+
+								<div class="row align-items-center justify-content-center mb-4 mt-6">
+									<h3>Vaccinations</h3>
+									@can('create_vaccine')
+										<button type="button" class="btn btn-outline-primary btn-round ml-3" data-toggle="collapse" data-target="#vaccineCollapse">
+											<span class="fad fa-syringe mr-1"></span> Add Vaccination
+										</button>
+									@endcan
+								</div>
+								@can('create_vaccine')
+									@include('vaccine.partials.collapse', ['registration' => $registration])
+								@endcan
+								<div id="js-vaccine-section">
+									@php
+										$no_vacs = false;
+									@endphp
+									@forelse ($registration->vaccines as $vaccine)
+										@include('vaccine.partials.info', ['vaccine' => $vaccine])
 									@empty
-										<tr class="alert-warning mt-6 mb-6">
-											<td colspan="5" class="text-center font-size-lg alert-warning">No email history found</td>
-										</tr>
+										@php
+											$no_vacs = true;
+										@endphp
 									@endforelse
-									</tbody>
-								</table>
-                            </div>
+									<div id="js-no-vaccine-alert" class="alert alert-info text-center" @if (!$no_vacs) style="display: none" @endif>
+										{{ ucwords(strtolower($registration->first_name)) }} has not received a vaccine.
+									</div>
+								</div>
+
+                        	@endcan
+						@endif
+                        @can('read_registration')
+							<div class="card mb-6">
+								<div class="card-header" id="headingOne">
+									<div class="row align-items-center justify-content-center">
+										<h3>Email History</h3>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="js-email-history-section">
+
+										<table class="table table-sm font-size-xs table-hover">
+											<thead>
+												<tr class="">
+													<th scope="col">Date Sent</th>
+													<th scope="col">Recipient</th>
+													<th scope="col">Subject</th>
+													<th scope="col">Status</th>
+												</tr>
+											</thead>
+											<tbody>
+											@forelse ($registration->user->emailHistory as $email_history)
+												<tr class="{{ $email_history->event == 'delivered' ? 'alert-info' : 'alert-danger' }}">
+													<td scope="row">{{ Carbon\Carbon::createFromTimestamp($email_history->timestamp)->isoFormat('M/D/YY h:mm:ss a') }}</td>
+													<td>{{ $email_history->headers_to }}</td>
+													<td>{{ $email_history->headers_subject }}</td>
+													<td data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $email_history->delivery_status_message . ' ' . $email_history->severity }}">{{ ucfirst($email_history->event) }}</td>
+												</tr>
+											@empty
+												<tr class="alert-warning mt-6 mb-6">
+													<td colspan="5" class="text-center font-size-lg alert-warning">No email history found</td>
+												</tr>
+											@endforelse
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+							<div id="accordion">
+
+								<div class="card">
+									<div class="card-header" id="headingOne">
+										<div class="row align-items-center justify-content-center">
+											<h3>Account History</h3>
+										</div>
+									</div>
+									<div class="card-body">
+
+										<div class="table-responsive">
+											<table class="table table-hover table-sm font-size-xs">
+												<thead>
+													<tr>
+														<td scope="col">Date</td>
+														<td scope="col">User</td>
+														<td scope="col">Action</td>
+														<td scope="col">Model</td>
+													</tr>
+												</thead>
+												<tbody>
+												@php
+													$i = 0;
+												@endphp
+
+												@foreach($registration->auditLogs as $item)
+													@php $i++; @endphp
+													<tr data-toggle="collapse" data-target="#accordion{{$i}}" class="clickable alert-primary"  style="cursor: pointer">
+														<td>{{$item->dateCreated}}</td>
+														<td>{{$item->activeUser ?? ''}}</td>
+														<td>{{json_decode($item->json_description)->status}}</td>
+														<td>{{$item->model}}</td>
+													</tr>
+													<tr id="accordion{{$i}}" class="collapse">
+														<td colspan="4">
+															<ul>
+															@foreach(json_decode($item->json_description)->values as $key=>$val)
+																<li>{{$key . ': ' . $val}}</li>
+															@endforeach
+															</ul>
+														</td>
+													</tr>
+												@endforeach
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
                         @endcan
                     </div>
                 </div>

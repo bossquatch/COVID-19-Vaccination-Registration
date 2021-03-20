@@ -46,6 +46,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    protected $appends = [
+	    'name',
+    ];
 
     // override Laravel's built-in email verification
 	public function sendEmailVerificationNotification()
@@ -195,5 +198,14 @@ class User extends Authenticatable implements MustVerifyEmail
     // allows $user->can_email
     public function getCanEmailAttribute() {
         return ($this->email_verified_at);
+    }
+
+    public function getNameAttribute()
+    {
+
+    	$fname = $this->first_name ?? '';
+    	$lname = $this->last_name ?? '';
+
+    	return $fname . ' ' .$lname;
     }
 }

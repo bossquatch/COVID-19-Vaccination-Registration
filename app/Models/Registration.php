@@ -34,6 +34,7 @@ class Registration extends Model
 	    'longitude',
 	    'zip',
 	    'city',
+	    'hasShotRecord'
     ];
 
     public static function boot() {
@@ -152,6 +153,16 @@ class Registration extends Model
 	public function emailHistory(): HasMany
 	{
         return $this->hasMany(EmailHistory::class, 'registration_id', 'id');
+    }
+
+    public function shotRecord()
+    {
+    	return $this->hasOneThrough (ShotRecord::class,RegistrationShot::class,'registration_id','id','id','fl_shots_id');
+    }
+
+    public function getHasShotRecordAttribute(): bool
+    {
+	    return (($this->shotRecord()->count() ?? 0) > 0);
     }
 
     /**
@@ -311,4 +322,10 @@ class Registration extends Model
 	{
 		return $this->address->longitude ?? '';
 	}
-}
+
+	public function getNameAttribute(): string
+    {
+	    $fname = $this->first_name ?? '';
+	    $lname = $this->last_name ?? '';
+	    return $fname . ' ' .$lname;
+    }}
