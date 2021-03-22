@@ -24,12 +24,12 @@ class AuditLog extends Model
 ;
     public function registration()
     {
-        return $this->belongsTo(Registration::class, 'regis_id');
+        return $this->belongsTo(Registration::class, 'regis_id')->withTrashed();
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     public function auditable()
@@ -50,7 +50,9 @@ class AuditLog extends Model
 
     public function getActiveUserAttribute(): string
     {
-    	return $this->user->name == $this->registration->name ? 'Self' : $this->user->name;
+
+
+    	return $this->user->name == $this->registration->name ? 'Self' : $this->user->name ?? '';
     }
 
 }
