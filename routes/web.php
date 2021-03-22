@@ -112,6 +112,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::delete('/comments/{comment_id}', [App\Http\Controllers\CommentController::class, 'delete'])->middleware('can:update_registration');
 
     Route::post('/vaccine/add', [App\Http\Controllers\VaccineController::class, 'store']);
+    Route::delete('/vaccines/{id}', [App\Http\Controllers\VaccineController::class, 'remove'])->middleware('can:do_whatever_you_want');
 
     Route::get('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'show']);
     Route::post('/sms/verify', [App\Http\Controllers\SmsVerificationController::class, 'verify']);
@@ -130,11 +131,11 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::put('/admin/{id}', [App\Http\Controllers\AdminController::class, 'update'])->middleware('can:update_user');
     Route::delete('/admin/{id}', [App\Http\Controllers\AdminController::class, 'delete'])->middleware('can:delete_user');
 
-    Route::get('/admin/tags/{id}/edit', [App\Http\Controllers\TagController::class, 'edit'])->middleware('can:skeleton_key');;
-    Route::post('/admin/tags', [App\Http\Controllers\TagController::class, 'new'])->middleware('can:skeleton_key');;
+    Route::get('/admin/tags/{id}/edit', [App\Http\Controllers\TagController::class, 'edit'])->middleware('can:skeleton_key');
+    Route::post('/admin/tags', [App\Http\Controllers\TagController::class, 'new'])->middleware('can:skeleton_key');
     Route::post('/admin/tags/sync', [App\Http\Controllers\TagController::class, 'sync']);
-    Route::post('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'update'])->middleware('can:skeleton_key');;
-    Route::delete('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'delete'])->middleware('can:skeleton_key');;
+    Route::post('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'update'])->middleware('can:skeleton_key');
+    Route::delete('/admin/tags/{id}', [App\Http\Controllers\TagController::class, 'delete'])->middleware('can:skeleton_key');
 
     Route::post('/slots/force-invite/{regis_id}', [App\Http\Controllers\SlotController::class, 'forceInvite'])->middleware('can:create_invite');
     Route::get('/slots/{event_id}', [App\Http\Controllers\SlotController::class, 'options'])->middleware('can:create_invite');
@@ -147,4 +148,8 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/webhooks/email_delivered',[WebhookController::class, 'emailDelivered']);
     Route::post('/webhooks/email_failed', [WebhookController::class,'emailFailed']);
     Route::post('/webhooks/email_incoming', [WebhookController::class,'emailIncoming']);
+
+    Route::get('/contact-center/email-replies', [App\Http\Controllers\ReplyEmailsController::class, 'index'])->middleware('can:skeleton_key');
+    Route::delete('/contact-center/email-replies/{id}', [App\Http\Controllers\ReplyEmailsController::class, 'destroy'])->middleware('can:skeleton_key');
+    Route::get('/contact-center/email-replies/email/{email_id}', [App\Http\Controllers\ReplyEmailsController::class, 'getHTML'])->middleware('can:skeleton_key');
 });
