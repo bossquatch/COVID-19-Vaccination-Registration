@@ -69,8 +69,7 @@
     <main class="site-content">
         @yield('content')
 
-
-		<div id="accordion">
+		<div id="main_content">
 			<div class="card">
 				<div class="card-header" id="headingOne">
 					<div class="row align-items-center justify-content-center">
@@ -95,44 +94,33 @@
 
 							@foreach($current_emails as $item)
 								@php $i++; @endphp
-								<tr data-toggle="collapse" data-target="#accordion{{$i}}" class="clickable"  style="cursor: pointer">
-									<td>{{$item->date}}</td>
-									<td>{{$item->email ?? ''}}</td>
-									<td>{{$item->topic}}</td>
-								</tr>
-								<tr id="accordion{{$i}}" class="collapse">
-									<td colspan="3">
-										<div>
-											<div class="card">
-												<div class="card-header" id="headingThree">
-													<div class="row align-items-center justify-content-center">
-														<h3>Data</h3>
-													</div>
-												</div>
-												<div class="card-body">
-													<ul class="list-group">
-														<li class="list-group-item">{{$item->body}}</li>
-														<li class="list-group-item">{{$item->signature}}</li>
-													</ul>
-												</div>
-											</div>
 
-											<div class="card">
-												<div class="card-body">
-													<div class="btn-group-vertical btn-group-sm" role="group" aria-label="Basic example">
+								<div class="accordion" id="emailAccordion">
+
+									<tr class="clickable" data-toggle="collapse" data-target="#accordion{{$i}}" aria-expanded="true" aria-controls="accordion{{$i}}" style="cursor: pointer">
+										<td>{{$item->date}}</td>
+										<td>{{$item->email ?? ''}}</td>
+										<td>{{$item->topic}}</td>
+									</tr>
+
+									<tr id="accordion{{$i}}" class="collapse" data-parent="#emailAccordion">
+										<td colspan="3">
+											<div class="d-flex">
+												<div class="card w-25">
+													<div class="card-body btn-group-vertical btn-group-sm" role="group" aria-label="Basic example">
 														<button type="button" class="btn btn-success">
 															Lookup
 														</button>
 														<button type="button" class="btn btn-primary">
 															Reply
 														</button>
-														<button type="button" class="btn btn-warning">
+														<button type="button" class="btn btn-warning showEmail" id="{{$item->id}}">
 															Show
 														</button>
 														<button type="submit" class="btn btn-danger">
 															Delete
 														</button>
-														<form class="form-inline" action="/contact-center/email-replies/{{ $item->id }}" method="POST">
+														<form action="/contact-center/email-replies/{{ $item->id }}" method="POST">
 															@csrf
 															@method('DELETE')
 															<button type="submit" class="btn btn-outline-danger">
@@ -141,10 +129,19 @@
 														</form>
 													</div>
 												</div>
+
+												<div class="card">
+													<div class="card-body">
+														<ul class="list-group">
+															<li class="list-group-item">{{$item->body}}</li>
+															<li class="list-group-item">{{$item->signature}}</li>
+														</ul>
+													</div>
+												</div>
 											</div>
-										</div>
-									</td>
-								</tr>
+										</td>
+									</tr>
+								</div>
 							@endforeach
 							</tbody>
 						</table>
@@ -158,11 +155,51 @@
 
     @include('layouts.partials.modals')
 
+	<!-- Modal -->
+	<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="emailModalLabel">View Email</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="emailHTML">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
     @yield('scripts')
 	<script>
 		$(document).ready(function() {
 			$("#custom_alert").fadeTo(2000, 500).slideUp(500, function() {
 				$("#custom_alert").slideUp(500);
+			});
+
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$('.showEmail').click(function() {
+				var email_id = $(this).attr("id");
+
+				$.ajax({
+					url: "/contact-center/email-replies/email/" + email_id,
+					method: "GET",
+					// data: {email_id : email_id},
+					success: function(data){
+						$('#emailHTML').html(data);
+						$('#emailModal').modal("show");
+					}
+				});
 			});
 		});
 	</script>

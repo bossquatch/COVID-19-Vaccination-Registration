@@ -23,4 +23,11 @@ class ReplyEmailsController extends Controller
 		$current_email->delete();
 		return back()->with('success', 'The email was deleted.');
     }
+
+    public function getHTML($email_id): string
+    {
+    	$current_email = EmailReply::findOrFail($email_id);
+	    return $current_email->body_html;
+//	    return back()->with('success', 'fuckyou');
+    }
 }
