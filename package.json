@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "health-scheduler-package",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "NPM Packages for the Health Scheduler Application",
     "author": "Polk County Board of County Commissioners Information Technology Division",
     "license": "ISC",
@@ -28,25 +28,26 @@
         "production": "mix --production"
     },
     "dependencies": {
-        "vue": "^2.6.12",
-        "vue-qrcode-reader": "^2.3.16",
-        "@fortawesome/fontawesome-pro": "^5.15.2",
-        "bootstrap": "^4.5.3",
+        "@fortawesome/fontawesome-pro": "^5.15.3",
+        "bootstrap": "^4.6.0",
         "chart.js": "^2.9.4",
         "inputmask": "^5.0.5",
         "jquery": "^3.5.1",
-        "jquery-validation-unobtrusive": "^3.2.11",
-        "popper.js": "^1.16.1"
+        "jquery-validation-unobtrusive": "^3.2.12",
+        "popper.js": "^1.16.1",
+        "vue": "^2.6.12",
+        "vue-qrcode-reader": "^2.3.16"
     },
     "devDependencies": {
         "axios": "^0.21",
         "cross-env": "^7.0",
+        "is-svg": "^4.3.1",
         "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
+        "lodash": "^4.17.21",
+        "postcss": "^8.2.8",
         "resolve-url-loader": "^3.1.0",
-        "sass": "^1.15.2",
-        "sass-loader": "^8.0.0",
+        "sass": "^1.32.8",
+        "sass-loader": "^8.0.2",
         "vue-loader": "^15.9.6",
         "vue-template-compiler": "^2.6.11"
     }
