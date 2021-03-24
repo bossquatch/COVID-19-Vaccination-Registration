@@ -349,15 +349,19 @@ class AnalyticsController extends Controller
 				FROM
 					registrations r
 					JOIN statuses s ON s.id = r.status_id
+					JOIN addresses a on r.address_id = a.id
+					JOIN states s2 on a.state_id = s2.id
 
 				WHERE
-					r.deleted_at IS NULL
+				      r.deleted_at IS NULL
+				AND
+				      s2.abbr = "FL"
 
 				GROUP BY
-					s.id
+				         s.id
 
 				ORDER BY
-					s.id;
+				         s.id;
 			');
 
 			$registrations = [
