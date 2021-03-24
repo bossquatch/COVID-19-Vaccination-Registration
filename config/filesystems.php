@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'spaces'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path(''),
+            'root' => storage_path('app/public'),
         ],
 
         'public' => [
@@ -43,14 +43,24 @@ return [
         ],
 
         's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
+            'driver'    => 's3',
+            'key'       => env('AWS_ACCESS_KEY_ID'),
+            'secret'    => env('AWS_SECRET_ACCESS_KEY'),
+            'region'    => env('AWS_DEFAULT_REGION'),
+            'bucket'    => env('AWS_BUCKET'),
+            'url'       => env('AWS_URL'),
+            'endpoint'  => env('AWS_ENDPOINT'),
         ],
+
+	    'spaces' => [
+		    'driver'    => 's3',
+		    'key'       => env('DO_SPACES_KEY'),
+		    'secret'    => env('DO_SPACES_SECRET'),
+		    'endpoint'  => env('DO_SPACES_ENDPOINT'),
+		    'region'    => env('DO_SPACES_REGION'),
+		    'bucket'    => env('DO_SPACES_BUCKET'),
+		    'folder'    => env('DO_SPACES_FOLDER'),
+	    ],
 
     ],
 
