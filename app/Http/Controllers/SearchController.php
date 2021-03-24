@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Exception;
 
 class SearchController extends Controller
 {
