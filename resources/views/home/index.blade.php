@@ -50,7 +50,7 @@
                         </p>
 
                         <p class="text-gray-dark">
-                            The state’s allocation plan is based on a phased approach while the vaccine doses are in limited supply, as they are now. Polk County is following the required prioritization set by the federal government and the State of Florida in directing the first vaccinations to high-risk health care workers and residents of long-term care facilities at the highest risk of contracting COVID-19, as well as any person over the age of 65.
+                            The state’s allocation plan is based on a phased approach while the vaccine doses are in limited supply, as they are now. Polk County is following the required prioritization set by the federal government and the State of Florida in directing current vaccinations to those who are at the highest risk of contracting COVID-19, as well as any person over the age of 50.
                         </p>
                     </div>
                 </div>
@@ -69,26 +69,26 @@
 
             <div class="col-12 col-md-4">
                 <!-- Card -->
-                <div class="card shadow-light-lg mb-5">
-                    <div class="card-body">
-                        <!-- Heading -->
-                        <h2 class="h4">
-                            Current Status
-                        </h2>
+{{--                <div class="card shadow-light-lg mb-5">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <!-- Heading -->--}}
+{{--                        <h2 class="h4">--}}
+{{--                            Current Status--}}
+{{--                        </h2>--}}
 
-                        <!-- Text -->
-                        <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made on:</p>
-                        <span class="badge badge-pill badge-primary ml-2">{{ $currentSchedule }}</span>
-                        <div class="card border-primary mb-2 mt-4" style="max-width: 18rem;">
+{{--                        <!-- Text -->--}}
+{{--                        <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made on:</p>--}}
+{{--                        <span class="badge badge-pill badge-primary ml-2">{{ $currentSchedule }}</span>--}}
+{{--                        <div class="card border-primary mb-2 mt-4" style="max-width: 18rem;">--}}
 {{--                            <div class="card-header">Header</div>--}}
-                            <div class="card-body text-primary">
-                                <h6 class="card-title">Please note:</h6>
-                                <p class="card-text font-size-sm">If you registered prior to the date shown above and have not been contacted, please reach out to us at the call center for assistance.</p>
-                            </div>
-                        </div>
+{{--                            <div class="card-body text-primary">--}}
+{{--                                <h6 class="card-title">Please note:</h6>--}}
+{{--                                <p class="card-text font-size-sm">If you registered prior to the date shown above and have not been contacted, please reach out to us at the call center for assistance.</p>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                    </div>
-                </div>
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="card shadow-light-lg mb-5">
                     <div class="card-body">
                         <!-- Heading -->
