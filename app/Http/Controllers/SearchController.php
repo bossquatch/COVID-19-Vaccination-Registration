@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Exception;
 
 class SearchController extends Controller
 {
@@ -21,17 +23,36 @@ class SearchController extends Controller
 
     public function searchName()
     {
-        return response()->json(
-            $this->searchResults(
-                \App\Models\User::whereHas('roles', function (Builder $query) {
-                    $query->where('name', '=', 'user');
-                })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'),
-                request()->input('offset'),
-                request()->input('sort'),
-                request()->input('filter'),
-                request()->input('showDeleted')
-            )
-        );
+
+    	try {
+    		$data = Carbon::parse (request ()->input ('val'));
+
+		    return response()->json(
+			    $this->searchResults(
+				    \App\Models\User::whereHas('roles', function (Builder $query) {
+					    $query->where('name', '=', 'user');
+				    })->where(DB::raw('CONCAT_WS(" ",birth_date)'), '=', $data->format ('Y-m-d')),
+				    request()->input('offset'),
+				    request()->input('sort'),
+				    request()->input('filter'),
+				    request()->input('showDeleted')
+			    )
+		    );
+
+	    } catch (\Exception $e) {
+		    return response()->json(
+			    $this->searchResults(
+				    \App\Models\User::whereHas('roles', function (Builder $query) {
+					    $query->where('name', '=', 'user');
+				    })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'),
+				    request()->input('offset'),
+				    request()->input('sort'),
+				    request()->input('filter'),
+				    request()->input('showDeleted')
+			    )
+		    );
+	    }
+
     }
 
     public function searchAddr()
