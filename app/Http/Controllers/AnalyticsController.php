@@ -351,11 +351,14 @@ class AnalyticsController extends Controller
 					JOIN statuses s ON s.id = r.status_id
 					JOIN addresses a on r.address_id = a.id
 					JOIN states s2 on a.state_id = s2.id
+					LEFT JOIN fl_shots_registrations fl ON fl.registration_id = r.id
 
 				WHERE
 				      r.deleted_at IS NULL
 				AND
 				      s2.abbr = "FL"
+				AND
+				      fl.registration_id IS NULL
 
 				GROUP BY
 				         s.id
