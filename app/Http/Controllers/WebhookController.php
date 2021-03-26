@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\EmailReply;
 use Carbon\Carbon;
 use ZBateson\MailMimeParser\MailMimeParser;
@@ -138,14 +139,18 @@ class WebhookController extends Controller
 		$currentReply->attachment_1             = Arr::get($data,'attachment-1',    NULL);
 		$currentReply->attachment_2             = Arr::get($data,'attachment-2',    NULL);
 
-		$currentReply->save();
+		if(strpos ($currentReply->from,'<') !== false) {
+			$in = $currentReply->from;
+			$len = strlen($in);
+			$pos = strpos($in,'<');
+			$currentReply->email = $pos == 0 ? preg_replace ("<>",'',$in) : substr($in, $pos + 1, $len - $pos - 2);
+		} else {
+			$currentReply->email = $currentReply->from;
+		}
 
-//		try {
-//			$currentReply->save();
-//			return true;
-//		} catch (\Exception $e) {
-//			return $e->getCode();
-//		}
+		$currentReply->registration_id = Contact::where('contact_type_id',1)->where('value',$currentReply->email);
+
+	    $currentReply->save();
 
 	}
 

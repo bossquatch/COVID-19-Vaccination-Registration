@@ -33,40 +33,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
-    <script>
-        var csrf_token = '{{ csrf_token() }}';
-    </script>
-
     @yield('header')
 </head>
-<body class="site">
-{{--    @if (config('app.env') != 'prod' && config('app.env') != 'production')--}}
-{{--    <div class="fixed-top alert alert-warning alert-dismissible fade show mb-0" role="alert" style="z-index: 1031;" id="test-env-warning">--}}
-{{--        <span class="fad fa-exclamation-triangle"></span></strong>Warning!</strong> This is a testing environment and <strong>not</strong> the <a href="https://register.polk.health/">real website</a>.--}}
-{{--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--            <span aria-hidden="true">&times;</span>--}}
-{{--        </button>--}}
-{{--    </div>--}}
-
-{{--    <script>--}}
-{{--        document.addEventListener("DOMContentLoaded", function(event) {--}}
-{{--            setTimeout(function () {--}}
-{{--                var warning = document.getElementById('test-env-warning');--}}
-{{--                if (typeof(warning) != 'undefined' && warning != null) {--}}
-{{--                    warning.classList.remove('show');--}}
-{{--                    setTimeout(function () {--}}
-{{--                        document.getElementById('test-env-warning').remove();--}}
-{{--                    }, 1000);--}}
-{{--                }--}}
-{{--            }, 5000);--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--    @endif--}}
-
+<body class="site" >
     @include('layouts.partials.navbar')
-{{--	@include('layouts.partials.flash')--}}
 
     <main class="site-content">
+		@include('layouts.partials.flash')
         @yield('content')
 
 		<div id="main_content">
@@ -85,6 +58,7 @@
 								<td scope="col">Date</td>
 								<td scope="col">Email Address</td>
 								<td scope="col">Subject</td>
+								<td scope="col">Actions</td>
 							</tr>
 							</thead>
 							<tbody>
@@ -93,54 +67,69 @@
 							@endphp
 
 							@foreach($current_emails as $item)
-								@php $i++; @endphp
+								@php
+									$i++;
+
+									$reg_id = $item->registration_id ?? false;
+
+									if($reg_id) {
+										$lookup_info = 'id="' . $reg_id . '" data-id="' . $reg_id . '"';
+									} else {
+										$lookup_info = 'disabled';
+									}
+
+								@endphp
 
 								<div class="accordion" id="emailAccordion">
 
-									<tr class="clickable" data-toggle="collapse" data-target="#accordion{{$i}}" aria-expanded="true" aria-controls="accordion{{$i}}" style="cursor: pointer">
+									<tr class="clickable" data-toggle="collapse" data-target="#accordion{{$i}}" aria-expanded="true" aria-controls="accordion{{$i}}">
 										<td>{{$item->date}}</td>
 										<td>{{$item->email ?? ''}}</td>
 										<td>{{$item->topic}}</td>
-									</tr>
-
-									<tr id="accordion{{$i}}" class="collapse" data-parent="#emailAccordion">
-										<td colspan="3">
-											<div class="d-flex">
-												<div class="card w-25">
-													<div class="card-body btn-group-vertical btn-group-sm" role="group" aria-label="Basic example">
-														<button type="button" class="btn btn-success">
-															Lookup
-														</button>
-														<button type="button" class="btn btn-primary">
-															Reply
-														</button>
-														<button type="button" class="btn btn-warning showEmail" id="{{$item->id}}">
-															Show
-														</button>
-														<button type="submit" class="btn btn-danger">
-															Delete
-														</button>
-														<form action="/contact-center/email-replies/{{ $item->id }}" method="POST">
-															@csrf
-															@method('DELETE')
-															<button type="submit" class="btn btn-outline-danger">
-																Delete
-															</button>
-														</form>
-													</div>
-												</div>
-
-												<div class="card">
-													<div class="card-body">
-														<ul class="list-group">
-															<li class="list-group-item">{{$item->body}}</li>
-															<li class="list-group-item">{{$item->signature}}</li>
-														</ul>
-													</div>
-												</div>
-											</div>
+										<td>
+											<a href="/manage/edit/{{$reg_id}}" type="button" class="btn btn-outline-success btn-sm" {{$lookup_info}}>
+												Lookup
+											</a>
+											<button type="button" class="btn btn-outline-info btn-sm showEmail" id="show-{{$item->id}}" data-id="{{$item->id}}">
+												Display
+											</button>
+											<button type="submit" class="btn btn-outline-danger btn-sm deleteEmail" id="delete-{{$item->id}}" data-id="{{$item->id}}" data-csrf="{{csrf_token ()}}">
+												Delete
+											</button>
 										</td>
 									</tr>
+
+{{--									<tr id="accordion{{$i}}" class="collapse" data-parent="#emailAccordion">--}}
+{{--										<td colspan="3">--}}
+{{--											<div class="d-flex">--}}
+{{--												<div class="card w-25">--}}
+{{--													<div class="card-body btn-group-vertical btn-group-sm" role="group" aria-label="Basic example">--}}
+{{--														<button type="button" class="btn btn-success">--}}
+{{--															Lookup--}}
+{{--														</button>--}}
+{{--														<button type="button" class="btn btn-primary">--}}
+{{--															Reply--}}
+{{--														</button>--}}
+{{--														<button type="button" class="btn btn-warning showEmail" id="show-{{$item->id}}" data-id="{{$item->id}}">--}}
+{{--															Show--}}
+{{--														</button>--}}
+{{--														<button type="submit" class="btn btn-danger deleteEmail" id="delete-{{$item->id}}" data-id="{{$item->id}}" data-csrf="{{csrf_token ()}}">--}}
+{{--															Delete--}}
+{{--														</button>--}}
+{{--													</div>--}}
+{{--												</div>--}}
+
+{{--												<div class="card">--}}
+{{--													<div class="card-body">--}}
+{{--														<ul class="list-group">--}}
+{{--															<li class="list-group-item">{{$item->body}}</li>--}}
+{{--															<li class="list-group-item">{{$item->signature}}</li>--}}
+{{--														</ul>--}}
+{{--													</div>--}}
+{{--												</div>--}}
+{{--											</div>--}}
+{{--										</td>--}}
+{{--									</tr>--}}
 								</div>
 							@endforeach
 							</tbody>
@@ -189,7 +178,7 @@
 			});
 
 			$('.showEmail').click(function() {
-				var email_id = $(this).attr("id");
+				var email_id = $(this).data("id");
 
 				$.ajax({
 					url: "/contact-center/email-replies/email/" + email_id,
@@ -201,6 +190,26 @@
 					}
 				});
 			});
+
+			$('.deleteEmail').click(function() {
+				let email_id 	= $(this).data('id');
+				let token 		= $(this).data('token');
+
+				$.ajax({
+					url: "/contact-center/email-replies/email/" + email_id,
+					method: "POST",
+					data: {
+						email_id: email_id,
+						_token: token,
+						_method: "DELETE"
+					},
+					success: function(response){
+						// $('.flash-message').html(response);
+						location.reload();
+					}
+				});
+			});
+
 		});
 	</script>
 </body>

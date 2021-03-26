@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmailReply extends Model
@@ -25,12 +26,9 @@ class EmailReply extends Model
 	    'signature',
     ];
 
-    public function GetEmailAttribute(): string
+    public function registration(): BelongsTo
     {
-	    $in = $this->from;
-	    $len = strlen($in);
-	    $pos = strpos($in,'<');
-	    return $pos == 0 ? $in : substr($in, $pos + 1, $len - $pos - 2);
+    	return $this->belongsTo (Registration::class, 'registration_id');
     }
 
     public function GetTopicAttribute(): string
