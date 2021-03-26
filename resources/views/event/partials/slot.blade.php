@@ -23,42 +23,62 @@
         <progress class="mb-2 w-100" value="{{ $slot->checked_in }}" max="{{ $slot->to_check_in + $slot->checked_in }}"></progress>
 
         <div class="row justify-content-center">
-            <div class="col-12 col-lg-4">
-                <div class="card card-body p-2 mb-2 position-relative">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <!-- Title -->
-                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?tocheck=1" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Check Ins Left</a></div>
-                            <!-- Value -->
-                            <span class="h6 mb-0">{{ number_format($slot->to_check_in,0) }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-4">
-                <div class="card card-body p-2 mb-2 position-relative">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <!-- Title -->
-                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?checkedin=1" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Checked In</a></div>
-                            <!-- Value -->
-                            <span class="h6 mb-0">{{ number_format($slot->checked_in, 0) }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-4">
-                <div class="card card-body p-2 mb-2 position-relative">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <!-- Title -->
-                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Total</a></div>
-                            <!-- Value -->
-                            <span class="h6 mb-0">{{ number_format($slot->checked_in + $slot->to_check_in, 0) }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+			<table class="table table-responsive-sm">
+				<thead>
+				<tr class="bg-primary">
+					<th class="text-sm-center w-25" scope="col"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?tocheck=1" class="initialism font-size-xs text-uppercase  text-white-75">Scheduled</a></th>
+					<th class="text-sm-center w-50" scope="col"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?checkedin=1" class="initialism font-size-xs text-uppercase  text-white-75">Checked-In</a></th>
+					<th class="text-sm-center w-25" scope="col"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}" class="initialism font-size-xs text-uppercase  text-white-75">Total</a></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr class="align-content-center">
+					<td class="text-sm-center">{{ number_format($slot->to_check_in,0) }}</td>
+					<td class="text-sm-center">{{ number_format($slot->checked_in, 0) }}</td>
+					<td class="text-sm-center">{{ number_format($slot->checked_in + $slot->to_check_in, 0) }}</td>
+				</tr>
+				</tbody>
+			</table>
+
+
+
+{{--            <div class="col-12 col-lg-4">--}}
+{{--                <div class="card card-body p-2 mb-2 position-relative">--}}
+{{--                    <div class="row align-items-center">--}}
+{{--                        <div class="col-auto">--}}
+{{--                            <!-- Title -->--}}
+{{--                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?tocheck=1" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Check Ins Left</a></div>--}}
+{{--                            <!-- Value -->--}}
+{{--                            <span class="h6 mb-0">{{ number_format($slot->to_check_in,0) }}</span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-lg-4">--}}
+{{--                <div class="card card-body p-2 mb-2 position-relative">--}}
+{{--                    <div class="row align-items-center">--}}
+{{--                        <div class="col-auto">--}}
+{{--                            <!-- Title -->--}}
+{{--                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}?checkedin=1" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Checked In</a></div>--}}
+{{--                            <!-- Value -->--}}
+{{--                            <span class="h6 mb-0">{{ number_format($slot->checked_in, 0) }}</span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-lg-4">--}}
+{{--                <div class="card card-body p-2 mb-2 position-relative">--}}
+{{--                    <div class="row align-items-center">--}}
+{{--                        <div class="col-auto">--}}
+{{--                            <!-- Title -->--}}
+{{--                            <div class="w-100"><a href="/events/{{ $slot->event_id }}/slots/{{ $slot->id }}" class="stretched-link initialism font-size-xs text-uppercase text-gray-dark mb-1">Total</a></div>--}}
+{{--                            <!-- Value -->--}}
+{{--                            <span class="h6 mb-0">{{ number_format($slot->checked_in + $slot->to_check_in, 0) }}</span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
     </div>
 </div>
