@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,43 +23,49 @@ class SearchController extends Controller
 
     public function searchName()
     {
+    	$input = request()->input('val');
 
-    	try {
-    		$data = Carbon::parse (request ()->input ('val'));
-
-		    return response()->json(
-			    $this->searchResults(
-				    \App\Models\User::whereHas('roles', function (Builder $query) {
-					    $query->where('name', '=', 'user');
-				    })->where(DB::raw('CONCAT_WS(" ",birth_date)'), '=', $data->format ('Y-m-d')),
-				    request()->input('offset'),
-				    request()->input('sort'),
-				    request()->input('filter'),
-				    request()->input('showDeleted')
-			    )
-		    );
-
-	    } catch (\Exception $e) {
-		    return response()->json(
-			    $this->searchResults(
-				    \App\Models\User::whereHas('roles', function (Builder $query) {
-					    $query->where('name', '=', 'user');
-				    })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'),
-				    request()->input('offset'),
-				    request()->input('sort'),
-				    request()->input('filter'),
-				    request()->input('showDeleted')
-			    )
-		    );
+    	// check for a valid date
+    	if(strtotime($input))
+	    {
+		    $data = Carbon::parse ($input);
+		    return response()->json($this->searchByBirthdate($data));
+	    } else {
+    		return response()->json ($this->searchByName ($input));
 	    }
+    }
 
+    private function searchByName($data)
+    {
+	    return $this->searchResults(
+			    User::whereHas('roles', function (Builder $query) {
+				    $query->where('name', '=', 'user');
+			    })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.$data.'%'),
+			    request()->input('offset'),
+			    request()->input('sort'),
+			    request()->input('filter'),
+			    request()->input('showDeleted')
+	    );
+    }
+
+    private function searchByBirthdate($data)
+    {
+	    return $this->searchResults(
+			    User::whereHas('roles', function (Builder $query) {
+				    $query->where('name', '=', 'user');
+			    })->where(DB::raw('CONCAT_WS(" ",birth_date)'), '=', $data->format('Y-m-d')),
+			    request()->input('offset'),
+			    request()->input('sort'),
+			    request()->input('filter'),
+			    request()->input('showDeleted')
+	    );
     }
 
     public function searchAddr()
     {
         return response()->json(
             $this->searchResults(
-                \App\Models\User::whereHas('registration', function (Builder $query) {
+                User::whereHas('registration', function (Builder $query) {
                     $query->whereHas('address', function (Builder $query) {
                         $query->where(DB::raw('CONCAT_WS(" ",street_number,street_name,locality,(SELECT states.abbr FROM states where states.id = addresses.state_id),postal_code)'), 'LIKE', '%'.request()->input('val').'%');
                     });
@@ -75,7 +82,7 @@ class SearchController extends Controller
     {
         return response()->json(
             $this->searchResults(
-                \App\Models\User::whereHas('registration', function (Builder $query) {
+                User::whereHas('registration', function (Builder $query) {
                     $query->where('id', '=', request()->input('val'));
                 }),
                 request()->input('offset'),
@@ -90,7 +97,7 @@ class SearchController extends Controller
     {
         return response()->json(
             $this->searchResults(
-                \App\Models\User::whereHas('registration', function (Builder $query) {
+                User::whereHas('registration', function (Builder $query) {
                     $query->where('code', 'LIKE', '%'.request()->input('val').'%');
                 }),
                 request()->input('offset'),
