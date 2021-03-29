@@ -73,9 +73,11 @@
 									$reg_id = $item->registration_id ?? false;
 
 									if($reg_id) {
-										$lookup_info = 'id="' . $reg_id . '" data-id="' . $reg_id . '"';
+										$lookup_info = 'id=' . $reg_id . ' data-id=' . $reg_id;
+										$button_type = 'btn-success';
 									} else {
 										$lookup_info = 'disabled';
+										$button_type = 'btn-outline-success';
 									}
 
 								@endphp
@@ -87,49 +89,20 @@
 										<td>{{$item->email ?? ''}}</td>
 										<td>{{$item->topic}}</td>
 										<td>
-											<a href="/manage/edit/{{$reg_id}}" type="button" class="btn btn-outline-success btn-sm" {{$lookup_info}}>
-												Lookup
-											</a>
-											<button type="button" class="btn btn-outline-info btn-sm showEmail" id="show-{{$item->id}}" data-id="{{$item->id}}">
-												Display
+{{--											<a href="/manage/edit/{{$reg_id}}" type="button" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Lookup Registration" {{$lookup_info}}>--}}
+{{--												--}}
+{{--											</a>--}}
+											<button type="button" class="btn {{$button_type}} btn-sm lookupRegistration" data-bs-toggle="tooltip" data-bs-placement="top" title="Lookup Registration" {{$lookup_info}}>
+												<i class="fad fa-search-location"></i>
 											</button>
-											<button type="submit" class="btn btn-outline-danger btn-sm deleteEmail" id="delete-{{$item->id}}" data-id="{{$item->id}}" data-csrf="{{csrf_token ()}}">
-												Delete
+											<button type="button" class="btn btn-outline-info btn-sm showEmail" id="show-{{$item->id}}" data-id="{{$item->id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Email">
+												<i class="fad fa-file-user"></i>
+											</button>
+											<button type="submit" class="btn btn-danger btn-sm deleteEmail" id="delete-{{$item->id}}" data-id="{{$item->id}}" data-csrf="{{csrf_token ()}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Email">
+												<i class="fad fa-trash-alt"></i>
 											</button>
 										</td>
 									</tr>
-
-{{--									<tr id="accordion{{$i}}" class="collapse" data-parent="#emailAccordion">--}}
-{{--										<td colspan="3">--}}
-{{--											<div class="d-flex">--}}
-{{--												<div class="card w-25">--}}
-{{--													<div class="card-body btn-group-vertical btn-group-sm" role="group" aria-label="Basic example">--}}
-{{--														<button type="button" class="btn btn-success">--}}
-{{--															Lookup--}}
-{{--														</button>--}}
-{{--														<button type="button" class="btn btn-primary">--}}
-{{--															Reply--}}
-{{--														</button>--}}
-{{--														<button type="button" class="btn btn-warning showEmail" id="show-{{$item->id}}" data-id="{{$item->id}}">--}}
-{{--															Show--}}
-{{--														</button>--}}
-{{--														<button type="submit" class="btn btn-danger deleteEmail" id="delete-{{$item->id}}" data-id="{{$item->id}}" data-csrf="{{csrf_token ()}}">--}}
-{{--															Delete--}}
-{{--														</button>--}}
-{{--													</div>--}}
-{{--												</div>--}}
-
-{{--												<div class="card">--}}
-{{--													<div class="card-body">--}}
-{{--														<ul class="list-group">--}}
-{{--															<li class="list-group-item">{{$item->body}}</li>--}}
-{{--															<li class="list-group-item">{{$item->signature}}</li>--}}
-{{--														</ul>--}}
-{{--													</div>--}}
-{{--												</div>--}}
-{{--											</div>--}}
-{{--										</td>--}}
-{{--									</tr>--}}
 								</div>
 							@endforeach
 							</tbody>
@@ -177,13 +150,19 @@
 				}
 			});
 
+			$('.lookupRegistration').click(function() {
+				var registration_id = $(this).data("id");
+				var path = "/manage/edit/";
+				path = path.concat(registration_id);
+				window.location.href = path;
+			});
+
 			$('.showEmail').click(function() {
-				var email_id = $(this).data("id");
+				let email_id = $(this).data("id");
 
 				$.ajax({
 					url: "/contact-center/email-replies/email/" + email_id,
 					method: "GET",
-					// data: {email_id : email_id},
 					success: function(data){
 						$('#emailHTML').html(data);
 						$('#emailModal').modal("show");
@@ -194,7 +173,6 @@
 			$('.deleteEmail').click(function() {
 				let email_id 	= $(this).data('id');
 				let token 		= $(this).data('token');
-
 				$.ajax({
 					url: "/contact-center/email-replies/email/" + email_id,
 					method: "POST",
