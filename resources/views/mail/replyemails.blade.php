@@ -89,9 +89,6 @@
 										<td>{{$item->email ?? ''}}</td>
 										<td>{{$item->topic}}</td>
 										<td>
-{{--											<a href="/manage/edit/{{$reg_id}}" type="button" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Lookup Registration" {{$lookup_info}}>--}}
-{{--												--}}
-{{--											</a>--}}
 											<button type="button" class="btn {{$button_type}} btn-sm lookupRegistration" data-bs-toggle="tooltip" data-bs-placement="top" title="Lookup Registration" {{$lookup_info}}>
 												<i class="fad fa-search-location"></i>
 											</button>

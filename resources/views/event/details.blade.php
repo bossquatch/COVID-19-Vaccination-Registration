@@ -55,7 +55,7 @@
                 @endcan
 				@can('update_invite')
 					<a class="btn btn-header btn-header-primary btn-round btn-lg" href="/events/{{ $event->id }}/all/report" title="Event Report" target="_blank" rel="noopener noreferrer">
-						<span class="fas fa-file-download mr-1"></span>Export Entire List
+						<span class="fas fa-file-download mr-1"></span>Export Event (Accepted) List
 					</a>
 				@endcan
             </div>
