@@ -23,36 +23,42 @@ class SearchController extends Controller
 
     public function searchName()
     {
+    	$input = request()->input('val');
 
-    	try {
-    		$data = Carbon::parse (request ()->input ('val'));
-
-		    return response()->json(
-			    $this->searchResults(
-				    User::whereHas('roles', function (Builder $query) {
-					    $query->where('name', '=', 'user');
-				    })->where(DB::raw('CONCAT_WS(" ",birth_date)'), '=', $data->format ('Y-m-d')),
-				    request()->input('offset'),
-				    request()->input('sort'),
-				    request()->input('filter'),
-				    request()->input('showDeleted')
-			    )
-		    );
-
-	    } catch (\Exception $e) {
-		    return response()->json(
-			    $this->searchResults(
-				    User::whereHas('roles', function (Builder $query) {
-					    $query->where('name', '=', 'user');
-				    })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.request()->input('val').'%'),
-				    request()->input('offset'),
-				    request()->input('sort'),
-				    request()->input('filter'),
-				    request()->input('showDeleted')
-			    )
-		    );
+    	// check for a valid date
+    	if(strtotime($input))
+	    {
+		    $data = Carbon::parse ($input);
+		    return response()->json($this->searchByBirthdate($data));
+	    } else {
+    		return response()->json ($this->searchByName ($input));
 	    }
+    }
 
+    private function searchByName($data)
+    {
+	    return $this->searchResults(
+			    User::whereHas('roles', function (Builder $query) {
+				    $query->where('name', '=', 'user');
+			    })->where(DB::raw('CONCAT_WS(" ",first_name,last_name)'), 'LIKE', '%'.$data.'%'),
+			    request()->input('offset'),
+			    request()->input('sort'),
+			    request()->input('filter'),
+			    request()->input('showDeleted')
+	    );
+    }
+
+    private function searchByBirthdate($data)
+    {
+	    return $this->searchResults(
+			    User::whereHas('roles', function (Builder $query) {
+				    $query->where('name', '=', 'user');
+			    })->where(DB::raw('CONCAT_WS(" ",birth_date)'), '=', $data->format('Y-m-d')),
+			    request()->input('offset'),
+			    request()->input('sort'),
+			    request()->input('filter'),
+			    request()->input('showDeleted')
+	    );
     }
 
     public function searchAddr()
