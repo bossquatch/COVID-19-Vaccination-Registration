@@ -139,6 +139,8 @@ class WebhookController extends Controller
 		$currentReply->attachment_1             = Arr::get($data,'attachment-1',    NULL);
 		$currentReply->attachment_2             = Arr::get($data,'attachment-2',    NULL);
 
+		$currentReply->save();
+
 		if(strpos ($currentReply->from,'<') !== false) {
 			$in = $currentReply->from;
 			$len = strlen($in);
@@ -148,9 +150,11 @@ class WebhookController extends Controller
 			$currentReply->email = $currentReply->from;
 		}
 
-		$currentReply->registration_id = Contact::where('contact_type_id',1)->where('value',$currentReply->email)->first() ?? '';
+		$currentReply->save();
 
-	    $currentReply->save();
+		$currentReply->registration_id = Contact::where('contact_type_id',1)->where('value',$currentReply->email)->first() ?? null;
+
+		$currentReply->save();
 
 	}
 
