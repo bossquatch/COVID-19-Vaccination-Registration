@@ -167,7 +167,7 @@ class WebhookController extends Controller
 			return response($ex->getMessage(), 406);
 		}
 	}
-	private function handleEnvoy(array $data)
+	private function handleEnvoy($data)
 	{
 		Log::info($data);
 	}
