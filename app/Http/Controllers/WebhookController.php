@@ -152,7 +152,7 @@ class WebhookController extends Controller
 
 		$currentReply->save();
 
-		$currentReply->registration_id = Contact::where('contact_type_id',1)->where('value',$currentReply->email)->first() ?? null;
+		$currentReply->registration_id = Contact::where('contact_type_id',1)->where('value',$currentReply->email)->first()->registration_id ?? null;
 
 		$currentReply->save();
 
