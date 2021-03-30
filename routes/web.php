@@ -148,6 +148,7 @@ Route::group(["middleware" => "check.reset"], function() {
     Route::post('/webhooks/email_delivered',[WebhookController::class, 'emailDelivered']);
     Route::post('/webhooks/email_failed', [WebhookController::class,'emailFailed']);
     Route::post('/webhooks/email_incoming', [WebhookController::class,'emailIncoming']);
+    Route::post('/webhooks/envoy_incoming', [WebhookController::class,'envoyDelivered']);
 
     Route::get('/contact-center/email-replies', [App\Http\Controllers\ReplyEmailsController::class, 'index'])->middleware('can:skeleton_key');
     Route::delete('/contact-center/email-replies/email/{email_id}', [App\Http\Controllers\ReplyEmailsController::class, 'destroy'])->middleware('can:skeleton_key');

@@ -158,6 +158,20 @@ class WebhookController extends Controller
 
 	}
 
+	public function envoyDelivered(Request $request)
+	{
+		try {
+			$this->handleEnvoy($request->all());
+			return response('Success', 200);
+		} catch (\Exception $ex) {
+			return response($ex->getMessage(), 406);
+		}
+	}
+	private function handleEnvoy(array $data)
+	{
+		Log::info($data);
+	}
+
     private function validateWebhook(array $signature, $api_key = null): bool
     {
 
