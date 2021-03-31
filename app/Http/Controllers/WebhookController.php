@@ -171,6 +171,7 @@ class WebhookController extends Controller
 	private function handleEnvoy($data)
 	{
 		Log::info('A visitor: ' . Arr::get('payload.attributes.full-name', null));
+		Log::info($data);
 
 		$currentVisit = new Vistor();
 
