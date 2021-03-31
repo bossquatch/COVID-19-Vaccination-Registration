@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\County;
+use App\Models\Gender;
+use App\Models\Occupation;
+use App\Models\Race;
 use App\Models\Registration;
+use App\Models\State;
 use App\Notifications\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,35 +82,22 @@ class RegistrationController extends Controller
             "value" => $user->email,
         ]];
 
-        $registration = \App\Models\Registration::create([
-            'code'=> $code,
-            'user_id'=> Auth::id(),
-            'race_id'=> $valid['race'],
-            'gender_id'=> $valid['gender'],
-            'occupation_id'=> $valid['occupation'],
-//  removed and replaced by locations
-//            'county_id'=> $valid['county'],
-
+        $registration = Registration::create([
+            'code'                  => $code,
+            'user_id'               => Auth::id(),
+            'race_id'               => $valid['race'],
+            'gender_id'             => $valid['gender'],
+            'occupation_id'         => $valid['occupation'],
             // Obtained by user account:
-            'first_name'=> $user->first_name,
-            'middle_name'=> $user->middle_name,
-            'last_name'=> $user->last_name,
-            // Replaced by 'contacts' table
-            //'email'=> $user->email,
-            //'phone'=> $user->phone,
-            'birth_date'=> $user->birth_date,
-            'suffix_id' => $user->suffix_id,
-
-            // New Info
-            //'address1'=> $valid['address1'],
-            //'address2'=> $valid['address2'],
-            //'city'=> $valid['city'],
-            //'state'=> $valid['state'],
-            //'zip'=> $valid['zip'],
-            'prefer_close_location'=> $valid['scheculePreference'],
+            'first_name'            => $user->first_name,
+            'middle_name'           => $user->middle_name,
+            'last_name'             => $user->last_name,
+            'birth_date'            => $user->birth_date,
+            'suffix_id'             => $user->suffix_id,
+            'prefer_close_location' => $valid['scheculePreference'],
 			// had to change this to match the account creation date as we had some who created their account but
 			// did not finish their registration
-			'submitted_at' => $user->created_at,
+			'submitted_at'          => $user->created_at,
 //            'submitted_at'=> Carbon::now(),
         ]);
 
@@ -123,8 +115,8 @@ class RegistrationController extends Controller
 
 		$registration->notify(new Register());
 
-        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a>.</p><p>If you are receiving the 
-        inoculation as extremely vulnerable you must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a> 
+        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to fill out a <a href=\"/docs/consent_moderna.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">Moderna Consent Form</a>.</p><p>If you are receiving the
+        inoculation as extremely vulnerable you must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a>
         and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href=\"https://floridahealthcovid19.gov/high-risk-populations/\">
         Florida Department of Health website</a>.<p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/home');
@@ -155,19 +147,19 @@ class RegistrationController extends Controller
             ]);
 
             $user->forceFill([
-                'sms_capable' => 0,
-                'sms_verified_at' => null,
+                'sms_capable'       => 0,
+                'sms_verified_at'   => null,
             ]);
 
             $this->logChanges($user, 'updated', false, true);
         }
 
         $user->update([
-            'first_name' => $valid['firstName'],
-            'middle_name' => $valid['middleName'],
-            'last_name' => $valid['lastName'],
-            'birth_date' => Carbon::parse($valid['dateOfBirth']),
-            'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
+            'first_name'    => $valid['firstName'],
+            'middle_name'   => $valid['middleName'],
+            'last_name'     => $valid['lastName'],
+            'birth_date'    => Carbon::parse($valid['dateOfBirth']),
+            'suffix_id'     => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
         ]);
 
         $this->logChanges($user, 'updated', false, true);
@@ -179,9 +171,9 @@ class RegistrationController extends Controller
 
         if (!empty($valid['phone'])) {
             $phones = [[
-                "contact_type_id" => 2,
-                "phone_type_id" => 1,
-                "value" => preg_replace('/\D/', '', $valid['phone']),
+                "contact_type_id"   => 2,
+                "phone_type_id"     => 1,
+                "value"             => preg_replace('/\D/', '', $valid['phone']),
             ]];
         } else {
             $phones = [];
@@ -190,32 +182,19 @@ class RegistrationController extends Controller
         $registration = $user->registration;
 
         $registration->update([
-            'race_id'=> $valid['race'],
-            'gender_id'=> $valid['gender'],
-            'occupation_id'=> $valid['occupation'],
-//            removed - this is part of the locations functionality now
-//            'county_id'=> $valid['county'],
-
+            'race_id'               => $valid['race'],
+            'gender_id'             => $valid['gender'],
+            'occupation_id'         => $valid['occupation'],
             // Obtained by user account:
-            'first_name' => $valid['firstName'],
-            'middle_name' => $valid['middleName'],
-            'last_name' => $valid['lastName'],
-            //'email' => $valid['email'],
-            //'phone' => $valid['phone'],
-            'birth_date' => Carbon::parse($valid['dateOfBirth']),
-            'suffix_id' => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
-
-            // New Info
-            //'address1'=> $valid['address1'],
-            //'address2'=> $valid['address2'],
-            //'city'=> $valid['city'],
-            //'state'=> $valid['state'],
-            //'zip'=> $valid['zip'],
-            'prefer_close_location'=> $valid['scheculePreference'],
+            'first_name'            => $valid['firstName'],
+            'middle_name'           => $valid['middleName'],
+            'last_name'             => $valid['lastName'],
+            'birth_date'            => Carbon::parse($valid['dateOfBirth']),
+            'suffix_id'             => ($valid['suffix'] != '0' ? $valid['suffix'] : null),
+            'prefer_close_location' => $valid['scheculePreference'],
         ]);
 
         $registration->syncAddress($valid);
-
         $registration->conditions()->sync($conditions);
 
         // rewrite if we start allowing multiple phones and emails
@@ -268,47 +247,41 @@ class RegistrationController extends Controller
 
     private function validationRules($full = false)
     {
-        $valid_races = implode(",",\App\Models\Race::pluck('id')->toArray());
-        $valid_genders = implode(",",\App\Models\Gender::pluck('id')->toArray());
-        $valid_occupations = implode(",",\App\Models\Occupation::pluck('id')->toArray());
-        $valid_counties = implode(",",\App\Models\County::pluck('id')->toArray());
-        $valid_states = implode(",",\App\Models\State::pluck('id')->toArray());
+        $valid_races        = implode(",", Race::pluck('id')->toArray());
+        $valid_genders      = implode(",", Gender::pluck('id')->toArray());
+        $valid_occupations  = implode(",", Occupation::pluck('id')->toArray());
+        $valid_counties     = implode(",", County::pluck('id')->toArray());
+        $valid_states       = implode(",", State::pluck('id')->toArray());
 
         $rules = [
-            'race' => 'required|in:'.$valid_races,
-            'gender' => 'required|in:'.$valid_genders,
-            'occupation' => 'required|in:'.$valid_occupations,
-            //'address1' => 'required|max:60',
-            //'address2' => 'nullable|max:60',
-            //'city' => 'required|max:60',
-            'autocomplete' => 'nullable',
-            'street_number' => 'required|max:60',
-            'street_name' => 'required|max:60',
-            'line_2' => 'nullable',
-            'locality' => 'required|max:60',
-            'postal_code' => 'required|max:60',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'state' => 'required|in:'.$valid_states,
-            //'zip' => 'required|max:11',
-            'county' => 'required|in:'.$valid_counties,
-            //'vaccineAgreement' => 'accepted',
-            'reactionAgreement' =>'accepted',
-            'availableAgreement' =>'accepted',
-            //'illAgreement' =>'accepted',
-            'condition' =>'nullable'
+            'race'                  => 'required|in:'.$valid_races,
+            'gender'                => 'required|in:'.$valid_genders,
+            'occupation'            => 'required|in:'.$valid_occupations,
+            'autocomplete'          => 'nullable',
+            'street_number'         => 'required|max:60',
+            'street_name'           => 'required|max:60',
+            'line_2'                => 'nullable',
+            'locality'              => 'required|max:60',
+            'postal_code'           => 'required|max:60',
+            'latitude'              => 'nullable|numeric',
+            'longitude'             => 'nullable|numeric',
+            'state'                 => 'required|in:'.$valid_states,
+            'county'                => 'required|in:'.$valid_counties,
+            'reactionAgreement'     =>'accepted',
+            'availableAgreement'    =>'accepted',
+            'condition'             =>'nullable'
         ];
 
         if ($full) {
             $valid_suffixes = '0,'.implode(",",\App\Models\Suffix::pluck('id')->toArray());
 
             $rules = array_merge($rules, [
-                'firstName' => ['required', 'string', 'max:255'],
-                'middleName' => ['nullable', 'string', 'max:30'],
-                'lastName' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'regex:/^(?=.*[0-9])[- +()0-9]+$/', 'max:14'],
-                'dateOfBirth' => ['required', 'date', new DateParsable, new AtLeastThirteen],
-                'suffix' => ['required', 'in:'.$valid_suffixes],
+                'firstName'     => ['required', 'string', 'max:255'],
+                'middleName'    => ['nullable', 'string', 'max:30'],
+                'lastName'      => ['required', 'string', 'max:255'],
+                'phone'         => ['required', 'regex:/^(?=.*[0-9])[- +()0-9]+$/', 'max:14'],
+                'dateOfBirth'   => ['required', 'date', new DateParsable, new AtLeastThirteen],
+                'suffix'        => ['required', 'in:'.$valid_suffixes],
             ]);
         }
 
