@@ -67,8 +67,8 @@ select.read-only option{
                     <span class="fad fa-clipboard-check mr-1"></span> Complete Registration
                 </button>
 
-                @if($registration->status_id == 2)
-                <button class="btn btn-header-outline btn-round btn-lg" data-toggle="modal" data-target="#waitlistModal">
+                @if($registration->status_id == 2 || $registration->status_id == 12)
+                <button class="btn btn-header-outline btn-round btn-lg mt-4" data-toggle="modal" data-target="#waitlistModal">
                     <span class="fad fa-clipboard-list mr-1"></span> Return to Waitlist
                 </button>
                 @endif
@@ -259,7 +259,7 @@ select.read-only option{
                                         {{--@if (!$registration->address)
                                         <span class="text-danger small ml-1">
                                             Please update address with Google selection.
-                                        </span>                                            
+                                        </span>
                                         @endif--}}
                                         <span id="addressMoreOptions" class="animate-fade text-muted small ml-1">
                                             Address not listed?
@@ -287,7 +287,7 @@ select.read-only option{
                                         <div class="custom-control custom-checkbox">
                                             <input id="scheculePreference" name="scheculePreference" class="custom-control-input @error("scheculePreference") is-invalid @enderror" type="checkbox">
                                             <label class="custom-control-label" for="scheculePreference">I prefer to get scheduled to the location closest to me instead of being scheduled to the earliest possible appointment.</label>
-                        
+
                                             @error("scheculePreference")
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first("scheculePreference") }}</strong>
@@ -327,7 +327,7 @@ select.read-only option{
                                         <label for="administrative_area_level_1">State</label>
                                         <select id="administrative_area_level_1" name="state" class="custom-select read-only" readonly="readonly" aria-readonly="true">
                                             @foreach (\App\Models\State::get() as $state)
-                                                <option value="{{ $state->id }}" @if (old('state')) @if(old('state') == $state->id) selected @endif @elseif(($registration->address->state_id ?? '9') == $state->id) selected @endif>{{ $state->abbr }}</option>    
+                                                <option value="{{ $state->id }}" @if (old('state')) @if(old('state') == $state->id) selected @endif @elseif(($registration->address->state_id ?? '9') == $state->id) selected @endif>{{ $state->abbr }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -343,7 +343,7 @@ select.read-only option{
                                         <label for="administrative_area_level_2">County</label>
                                         <select id="administrative_area_level_2" name="county" class="custom-select" readonly="readonly" aria-readonly="true">
                                             @foreach (\App\Models\County::get() as $county)
-                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif(($registration->address->county_id ?? '53') == $county->id) selected @endif>{{ $county->name }}</option>    
+                                                <option value="{{ $county->id }}" @if (old('county')) @if(old('county') == $county->id) selected @endif @elseif(($registration->address->county_id ?? '53') == $county->id) selected @endif>{{ $county->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -623,7 +623,7 @@ select.read-only option{
     </div>
 </div>
 
-@if($registration->status_id == 2)
+@if($registration->status_id == 2 || $registration->status_id == 12)
 <div class="modal fade" id="waitlistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Waitlist Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -733,7 +733,7 @@ function changeSelectedOptionByText(selectName, optionText, unknownValue) {
     var optionId = unknownValue;
 
     for (optionNum in ele.options) {
-        
+
         if (ele.options[optionNum].text == optionText) {
             optionId = ele.options[optionNum].value;
         }

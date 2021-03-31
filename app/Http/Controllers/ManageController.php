@@ -54,7 +54,7 @@ class ManageController extends Controller
 
     public function view_registration($user_id, $app_id, $code)
     {
-        $regis = \App\Models\Registration::findOrFail($app_id);
+        $regis = Registration::findOrFail($app_id);
 
         if ($user_id != $regis->user_id || $code != $regis->code) {
             abort(404);
@@ -168,7 +168,7 @@ class ManageController extends Controller
             $emails = [];
         }
 
-        $registration = \App\Models\Registration::create([
+        $registration = Registration::create([
             'code'=> $code,
             'user_id'=> $user->id,
             'race_id'=> $valid['race'],
@@ -239,7 +239,7 @@ class ManageController extends Controller
 
     public function updateRegistration($regis_id)
     {
-        $registration = \App\Models\Registration::findOrFail($regis_id);
+        $registration = Registration::findOrFail($regis_id);
 
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
@@ -407,7 +407,7 @@ class ManageController extends Controller
 
     public function delete($regis_id)
     {
-        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis = Registration::findOrFail($regis_id);
         $this->logChanges($regis, 'deleted', true);
         $regis->delete();
 
@@ -425,7 +425,7 @@ class ManageController extends Controller
 
     public function complete($regis_id)
     {
-        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis = Registration::findOrFail($regis_id);
         $regis->update([
             'status_id' => 5,
         ]);
@@ -437,7 +437,7 @@ class ManageController extends Controller
 
     public function waitlist($regis_id)
     {
-        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis = Registration::findOrFail($regis_id);
         $regis->update([
             'status_id' => 1,
         ]);
@@ -467,7 +467,7 @@ class ManageController extends Controller
         if (empty($inputs['regis_id']) || empty($inputs['new_date'])) {
             abort(404);
         }
-        $regis = \App\Models\Registration::findOrFail($inputs['regis_id']);
+        $regis = Registration::findOrFail($inputs['regis_id']);
 
         try {
             $regis->update([
