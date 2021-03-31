@@ -175,6 +175,7 @@ class WebhookController extends Controller
 
 		$currentVisit = new Vistor();
 
+
 		$currentVisit->location         = Arr::get($data,'meta.location.attributes.name', null);
 		$currentVisit->visitor_name     = Arr::get($data,'payload.attributes.full-name', null);
 		$currentVisit->visitor_phone    = Arr::get($data,'payload.attributes.phone-number', null);
