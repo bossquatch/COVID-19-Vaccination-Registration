@@ -159,38 +159,6 @@ class WebhookController extends Controller
 
 	}
 
-	public function envoyDelivered(Request $request)
-	{
-		try {
-			$this->handleEnvoy($request->all());
-			return response('Success', 200);
-		} catch (\Exception $ex) {
-			return response($ex->getMessage(), 406);
-		}
-	}
-	private function handleEnvoy($data)
-	{
-		Log::info('A visitor: ' . Arr::get($data,'payload.attributes.full-name', null));
-		Log::info($data);
-
-		$currentVisit = new Vistor();
-
-
-		$currentVisit->location         = Arr::get($data,'meta.location.attributes.name', null);
-		$currentVisit->visitor_name     = Arr::get($data,'payload.attributes.full-name', null);
-		$currentVisit->visitor_phone    = Arr::get($data,'payload.attributes.phone-number', null);
-		$currentVisit->visitor_email    = Arr::get($data,'payload.attributes.email', null);
-		$currentVisit->host_name        = Arr::get($data,'payload.attributes.host', null);
-		$currentVisit->host_email       = Arr::get($data,'payload.attributes.host-email', null);
-		$currentVisit->sign_in_time     = Arr::get($data,'payload.attributes.signed-in-at', null);
-		$currentVisit->thumbnail        = Arr::get($data,'payload.attributes.thumbnails.small', null);
-		$currentVisit->visitor_entity   = Arr::get($data,'payload.attributes.user-data.1.value', null);
-		$currentVisit->visitor_reason   = Arr::get($data,'payload.attributes.user-data.3.value', null);
-
-		$currentVisit->save();
-
-	}
-
     private function validateWebhook(array $signature, $api_key = null): bool
     {
 
