@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\EmailReply;
+use App\Models\Vistor;
 use Carbon\Carbon;
 use ZBateson\MailMimeParser\MailMimeParser;
 use ZBateson\MailMimeParser\Message;
@@ -169,7 +170,23 @@ class WebhookController extends Controller
 	}
 	private function handleEnvoy($data)
 	{
-		Log::info($data);
+		Log::info('A visitor: ' . Arr::get('payload.attributes.full-name', null));
+
+		$currentVisit = new Vistor();
+
+		$currentVisit->location         = Arr::get('meta.location.attributes.name', null);
+		$currentVisit->visitor_name     = Arr::get('payload.attributes.full-name', null);
+		$currentVisit->visitor_phone    = Arr::get('payload.attributes.phone-number', null);
+		$currentVisit->visitor_email    = Arr::get('payload.attributes.email', null);
+		$currentVisit->host_name        = Arr::get('payload.attributes.host', null);
+		$currentVisit->host_email       = Arr::get('payload.attributes.host-email', null);
+		$currentVisit->sign_in_time     = Arr::get('payload.attributes.signed-in-at', null);
+		$currentVisit->thumbnail        = Arr::get('payload.attributes.thumbnails.small', null);
+		$currentVisit->visitor_entity   = Arr::get('payload.attributes.user-data.1.value', null);
+		$currentVisit->visitor_reason   = Arr::get('payload.attributes.user-data.3.value', null);
+
+		$currentVisit->save();
+
 	}
 
     private function validateWebhook(array $signature, $api_key = null): bool
