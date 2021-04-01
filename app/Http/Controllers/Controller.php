@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuditLog;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -40,7 +41,7 @@ class Controller extends BaseController
                 'values' => empty($model->getChanges()) ? $model->getOriginal() : $model->getChanges()
             ];
 
-            $log = new \App\Models\AuditLog([
+            $log = new AuditLog([
                 'user_id' => $userModelRegistered ? $model->id : Auth::id(),
                 'regis_id' => !($userModelRegistered || $adminUserChanges) ? ($registrationModel ? $model->id : ($model->registration ? $model->registration->id : null)) : null,
                 'json_description' => json_encode($arr),

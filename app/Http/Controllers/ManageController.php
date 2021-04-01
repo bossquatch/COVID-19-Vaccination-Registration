@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Registration;
 use App\Models\User;
 use App\Notifications\Register;
 use App\Notifications\Verify;
@@ -41,7 +42,7 @@ class ManageController extends Controller
 
     public function edit($regis_id)
     {
-        $registration = \App\Models\Registration::findOrFail($regis_id);
+        $registration = Registration::findOrFail($regis_id);
 
         return view('manage.edit', ['registration' => $registration]);
     }
@@ -53,7 +54,7 @@ class ManageController extends Controller
 
     public function view_registration($user_id, $app_id, $code)
     {
-        $regis = \App\Models\Registration::findOrFail($app_id);
+        $regis = Registration::findOrFail($app_id);
 
         if ($user_id != $regis->user_id || $code != $regis->code) {
             abort(404);
@@ -167,7 +168,7 @@ class ManageController extends Controller
             $emails = [];
         }
 
-        $registration = \App\Models\Registration::create([
+        $registration = Registration::create([
             'code'=> $code,
             'user_id'=> $user->id,
             'race_id'=> $valid['race'],
@@ -229,8 +230,8 @@ class ManageController extends Controller
 			$user->notify(new Verify());
         }
 
-        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.<p>If they are receiving the 
-        inoculation as extremely vulnerable they must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a> 
+        Session::flash('success', "<p>Registration submission was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.<p>If they are receiving the
+        inoculation as extremely vulnerable they must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a>
         and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href=\"https://floridahealthcovid19.gov/high-risk-populations/\">
         Florida Department of Health website</a>.</p><p>Your code is:</p><p class=\"h3 mb-6\">".$code."</p>");
         return redirect('/manage');
@@ -238,7 +239,7 @@ class ManageController extends Controller
 
     public function updateRegistration($regis_id)
     {
-        $registration = \App\Models\Registration::findOrFail($regis_id);
+        $registration = Registration::findOrFail($regis_id);
 
         $valid = request()->validate($this->validationRules());
         $valid['scheculePreference'] = (bool) request('scheculePreference');
@@ -374,8 +375,8 @@ class ManageController extends Controller
 			$user->notify(new Verify());
         }
 
-        Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>If they are receiving the 
-        inoculation as extremely vulnerable they must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a> 
+        Session::flash('success', "<p>Registration edit was successful.</p><p>Be sure to remind the caller that they will need to fill out a Moderna consent form at their appointment.</p><p>If they are receiving the
+        inoculation as extremely vulnerable they must bring a completed <a href=\"/docs/EO-21-47-Form.pdf\" target=\"_blank\" rel=\"noopener\" download aria-download=\"true\">EO-21-47-Form</a>
         and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href=\"https://floridahealthcovid19.gov/high-risk-populations/\">
         Florida Department of Health website</a>.<p>Your code is:</p><p class=\"h3 mb-6\">".$registration->code."</p>");
         return redirect('/manage');
@@ -406,7 +407,7 @@ class ManageController extends Controller
 
     public function delete($regis_id)
     {
-        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis = Registration::findOrFail($regis_id);
         $this->logChanges($regis, 'deleted', true);
         $regis->delete();
 
@@ -424,7 +425,7 @@ class ManageController extends Controller
 
     public function complete($regis_id)
     {
-        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis = Registration::findOrFail($regis_id);
         $regis->update([
             'status_id' => 5,
         ]);
@@ -436,7 +437,7 @@ class ManageController extends Controller
 
     public function waitlist($regis_id)
     {
-        $regis = \App\Models\Registration::findOrFail($regis_id);
+        $regis = Registration::findOrFail($regis_id);
         $regis->update([
             'status_id' => 1,
         ]);
@@ -466,7 +467,7 @@ class ManageController extends Controller
         if (empty($inputs['regis_id']) || empty($inputs['new_date'])) {
             abort(404);
         }
-        $regis = \App\Models\Registration::findOrFail($inputs['regis_id']);
+        $regis = Registration::findOrFail($inputs['regis_id']);
 
         try {
             $regis->update([

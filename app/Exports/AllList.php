@@ -52,7 +52,7 @@ class AllList implements FromView, Responsable, WithColumnFormatting
     */
     public function view(): View
     {
-        $invitations = $this->event->invitations()->with(['registration', 'registration.user', 'registration.address', 'registration.address.state', 'registration.contacts'])->get();
+        $invitations = $this->event->invitations()->where('invite_status_id',6)->with(['registration', 'registration.user', 'registration.address', 'registration.address.state', 'registration.contacts'])->get();
 
         return view('exports.events.all', [
             'invites' => $invitations,
