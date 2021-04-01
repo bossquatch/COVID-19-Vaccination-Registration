@@ -155,46 +155,46 @@
                     </div>
                 </div>
             </div>
-			<div class="row">
-				<div class="col-12">
-					<div class="card card-body mb-0">
-						<!-- Title -->
-						<h2 class="h4 text-center mb-0">
-							Registrations by Status and Age Group
-						</h2>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="card card-body mb-0">
+					<!-- Title -->
+					<h2 class="h4 text-center mb-0">
+						Registrations by Status and Age Group
+					</h2>
 
-						<!-- Table -->
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-								<tr>
-									<th scope="col">Group</th>
-								@foreach($registrations_by_age['Total'] as $key => $val)
-									<th scope="col">{{ $key }}</th>
-								@endforeach
+					<!-- Table -->
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+							<tr>
+								<th scope="col" class="font-size-xs" width="7%">Group</th>
+							@foreach($registrations_by_age['Total'] as $key => $val)
+								<th scope="col" class="font-size-xs text-right" width="12%">{{ $key }}</th>
+							@endforeach
+							</tr>
+							</thead>
+							<tbody>
+
+							@foreach($registrations_by_age as $key => $val)
+								<tr class="text-right">
+									<th scope="row">{{ $key }}</th>
+
+									@foreach($val as $key2 => $item)
+
+											<td>{{ number_format ($item) }}</td>
+
+									@endforeach
+
 								</tr>
-								</thead>
-								<tbody>
-
-								@foreach($registrations_by_age as $key => $val)
-									<tr class="text-right">
-										<th scope="row">{{ $key }}</th>
-
-										@foreach($val as $key2 => $item)
-
-												<td>{{ number_format ($item) }}</td>
-
-										@endforeach
-
-									</tr>
-								@endforeach
-								</tbody>
-							</table>
-						</div>
+							@endforeach
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-        </div>
+		</div>
     </div>
 </section>
 @endsection
