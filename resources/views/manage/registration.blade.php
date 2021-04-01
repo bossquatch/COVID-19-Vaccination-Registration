@@ -70,18 +70,18 @@
                                     <span class="{{ $registration->status->fa_icon }} mr-1"></span> {{ $registration->status->name }}
                                 </div>
 
-                                @can('keep_inventory')
+                                {{--@can('keep_inventory')
                                 <div class="input-group col-12 col-md-6 mx-auto mb-2">
                                     <div class="input-group-prepend">
                                         <label for="submitted-at" class="input-group-text" id="submitted-at-desc">Submitted At:</label>
                                     </div>
                                     <input type="date" class="form-control" id="submitted-at" data-id="{{ $registration->id }}" aria-describedby="submitted-at-desc" value="{{ Carbon\Carbon::parse($registration->submitted_at)->format('Y-m-d') }}">
                                 </div>
-                                @else
+                                @else--}}
                                 <p class="text-gray-dark mb-2">
                                     Submitted: {{ Carbon\Carbon::parse($registration->submitted_at)->format('m-d-Y h:i:s A') }}
                                 </p>
-                                @endcan
+                                {{--@endcan--}}
 
                             </div>
                             <div class="col-12 text-center mb-0">
