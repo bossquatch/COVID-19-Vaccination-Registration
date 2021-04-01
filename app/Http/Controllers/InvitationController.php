@@ -177,7 +177,11 @@ class InvitationController extends Controller
 
         $this->updateInviteStatus($invite, 10);
         if ($registration->status_id != 5) {
-            $this->updateRegistrationStatus($registration, 2);
+            if ($registration->vaccines()->count() == 1) {
+                $this->updateRegistrationStatus($registration, 13);
+            } else {
+                $this->updateRegistrationStatus($registration, 1);
+            }
             $this->logChanges($registration, 'appointment completed', true);
         }
 
