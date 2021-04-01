@@ -76,7 +76,7 @@ class Board
             ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
             ->has('user')
             ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
-                $query->where('name', '=', 'In Wait List');
+                $query->whereIn('name', ['In Wait List', 'Waitlist - 2nd Shot']);
             })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
                 $query->whereRaw('DATEDIFF("' . $date . '", date_given) < 26')
                     ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');
@@ -108,7 +108,7 @@ class Board
             ->having('received_vaccines_count', '<', 2)                                 // don't grab those with both vaccinations
             ->has('user')
             ->whereHas('status', function (Builder $query) {                            // only grab registrations in a wait list
-                $query->where('name', '=', 'In Wait List');
+                $query->whereIn('name', ['In Wait List', 'Waitlist - 2nd Shot']);
             })->whereDoesntHave('vaccines', function (Builder $query) use ($date) {     // don't grab those who have waited too long or too little for second vaccine
                 $query->whereRaw('DATEDIFF("' . $date . '", date_given) < 26')
                     ->orWhereRaw('DATEDIFF("' . $date . '", date_given) > 30');

@@ -31,7 +31,12 @@ class Invitation extends Model
                 $regis = $invite->registration;
 
                 if (in_array($regis->status_id, [2,3,4]) ) {
-                    $regis->status_id = 1;
+                    // ADD WAITLIST 2 CHECK HERE
+                    if ($regis->vaccines()->count() > 0) {
+                        $regis->status_id = 13;
+                    } else {
+                        $regis->status_id = 1;
+                    }
                     $regis->save();
                     
                     // Removed until EventChange Mailable is complete

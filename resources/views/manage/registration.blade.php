@@ -70,18 +70,18 @@
                                     <span class="{{ $registration->status->fa_icon }} mr-1"></span> {{ $registration->status->name }}
                                 </div>
 
-                                @can('keep_inventory')
+                                {{--@can('keep_inventory')
                                 <div class="input-group col-12 col-md-6 mx-auto mb-2">
                                     <div class="input-group-prepend">
                                         <label for="submitted-at" class="input-group-text" id="submitted-at-desc">Submitted At:</label>
                                     </div>
                                     <input type="date" class="form-control" id="submitted-at" data-id="{{ $registration->id }}" aria-describedby="submitted-at-desc" value="{{ Carbon\Carbon::parse($registration->submitted_at)->format('Y-m-d') }}">
                                 </div>
-                                @else
+                                @else--}}
                                 <p class="text-gray-dark mb-2">
                                     Submitted: {{ Carbon\Carbon::parse($registration->submitted_at)->format('m-d-Y h:i:s A') }}
                                 </p>
-                                @endcan
+                                {{--@endcan--}}
 
                             </div>
                             <div class="col-12 text-center mb-0">
@@ -198,79 +198,80 @@
 									</div>
 								</div>
 							</div>
-						@else
-							@can('create_invite')
-							@php
-								$available_events = \App\Models\Event::whereHas('slots', function ($query) {
-										$query->select('id', 'event_id', 'capacity', 'deleted_at')
-										->where('date_held','>=',\Carbon\Carbon::today())
-										->withCount([
-											'invitations as active_invitations_count' => function ($query) {
-												$query->whereHas('invite_status', function ($query) {
-													$query->whereNotIn('id', [4, 5, 9]);
-												});
-											},
-										])->havingRaw('`capacity` > `active_invitations_count`');
-									})->orderBy('date_held', 'asc')->get();
-							@endphp
-								<hr>
-								<div id="forceSchedulingRow">
-									<div class="row align-items-center justify-content-center">
-										<h3>Add Appointment Data for Record</h3>
-									</div>
-									<div class="row">
-										<div class="col-12 col-lg-10 mx-auto">
-											<div class="input-group">
-												<select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
-													<option selected>Choose Event...</option>
-													@foreach ($available_events as $event)
-														<option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }} - {{ \Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}</option>
-													@endforeach
-												</select>
-												<select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">
-													<option selected>No available slots</option>
-												</select>
-												<div class="input-group-append">
-													<button class="btn btn-outline-secondary btn-disabled" disabled type="button" id="forceSchedulingLoading" style="display: none;"><span class="fad fa-spinner fa-spin"></span></button>
-													<button class="btn btn-outline-success" type="button" id="forceSchedulingAdd" onclick="submitInvite()">Add</button>
-												</div>
+						@endif
+
+						@can('create_invite')
+						@php
+							$available_events = \App\Models\Event::whereHas('slots', function ($query) {
+									$query->select('id', 'event_id', 'capacity', 'deleted_at')
+									->where('date_held','>=',\Carbon\Carbon::today())
+									->withCount([
+										'invitations as active_invitations_count' => function ($query) {
+											$query->whereHas('invite_status', function ($query) {
+												$query->whereNotIn('id', [4, 5, 9]);
+											});
+										},
+									])->havingRaw('`capacity` > `active_invitations_count`');
+								})->orderBy('date_held', 'asc')->get();
+						@endphp
+							<hr>
+							<div id="forceSchedulingRow">
+								<div class="row align-items-center justify-content-center">
+									<h3>Add Appointment Data for Record</h3>
+								</div>
+								<div class="row">
+									<div class="col-12 col-lg-10 mx-auto">
+										<div class="input-group">
+											<select class="custom-select" id="forceSchedule" aria-label="Force a registration to a past event for historical data">
+												<option selected>Choose Event...</option>
+												@foreach ($available_events as $event)
+													<option value="{{ $event->id }}" data-id="{{ $event->id }}">{{ $event->title }} - {{ \Carbon\Carbon::parse($event->date_held)->format('M d, Y') }}</option>
+												@endforeach
+											</select>
+											<select class="custom-select" id="forceSlot" aria-label="Force a registration to a past slot for historical data">
+												<option selected>No available slots</option>
+											</select>
+											<div class="input-group-append">
+												<button class="btn btn-outline-secondary btn-disabled" disabled type="button" id="forceSchedulingLoading" style="display: none;"><span class="fad fa-spinner fa-spin"></span></button>
+												<button class="btn btn-outline-success" type="button" id="forceSchedulingAdd" onclick="submitInvite()">Add</button>
 											</div>
 										</div>
 									</div>
-									<div class="row" id="forceSchedulingStatus"></div>
 								</div>
-							@endcan
-							@can('read_registration')
+								<div class="row" id="forceSchedulingStatus"></div>
+							</div>
+						@endcan
+						@can('read_registration')
 
-								<div class="row align-items-center justify-content-center mb-4 mt-6">
-									<h3>Vaccinations</h3>
-									@can('create_vaccine')
-										<button type="button" class="btn btn-outline-primary btn-round ml-3" data-toggle="collapse" data-target="#vaccineCollapse">
-											<span class="fad fa-syringe mr-1"></span> Add Vaccination
-										</button>
-									@endcan
-								</div>
+							<div class="row align-items-center justify-content-center mb-4 mt-6">
+								<h3>Vaccinations</h3>
 								@can('create_vaccine')
-									@include('vaccine.partials.collapse', ['registration' => $registration])
+									<button type="button" class="btn btn-outline-primary btn-round ml-3" data-toggle="collapse" data-target="#vaccineCollapse">
+										<span class="fad fa-syringe mr-1"></span> Add Vaccination
+									</button>
 								@endcan
-								<div id="js-vaccine-section">
+							</div>
+							@can('create_vaccine')
+								@include('vaccine.partials.collapse', ['registration' => $registration])
+							@endcan
+							<div id="js-vaccine-section">
+								@php
+									$no_vacs = false;
+								@endphp
+								@forelse ($registration->vaccines as $vaccine)
+									@include('vaccine.partials.info', ['vaccine' => $vaccine])
+								@empty
 									@php
-										$no_vacs = false;
+										$no_vacs = true;
 									@endphp
-									@forelse ($registration->vaccines as $vaccine)
-										@include('vaccine.partials.info', ['vaccine' => $vaccine])
-									@empty
-										@php
-											$no_vacs = true;
-										@endphp
-									@endforelse
-									<div id="js-no-vaccine-alert" class="alert alert-info text-center" @if (!$no_vacs) style="display: none" @endif>
-										{{ ucwords(strtolower($registration->first_name)) }} has not received a vaccine.
-									</div>
+								@endforelse
+								<div id="js-no-vaccine-alert" class="alert alert-info text-center" @if (!$no_vacs) style="display: none" @endif>
+									{{ ucwords(strtolower($registration->first_name)) }} has not received a vaccine.
 								</div>
+							</div>
 
-                        	@endcan
-						@endif
+						@endcan
+
                         @can('read_registration')
 							<div class="card mb-6">
 								<div class="card-header" id="headingOne">
