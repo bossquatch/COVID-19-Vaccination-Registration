@@ -157,42 +157,60 @@
                         <progress class="mb-3" value="{{ $event->checked_in }}" max="{{ $event->to_check_in + $event->checked_in }}"></progress>
 
                         <div class="row justify-content-center">
-                            <div class="col-12 col-lg-4">
+{{--                            <div class="col-12 col-lg-4">--}}
                                 <div class="card card-body p-3 mb-3">
                                     <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <!-- Title -->
-                                            <div class="w-100"><a href="/events/{{ $event->id }}/list?tocheck=1" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Check Ins Left</a></div>
-                                            <!-- Value -->
-                                            <span class="h4 mb-0">{{ number_format($event->to_check_in,0) }}</span>
-                                        </div>
+{{--                                        <div class="col-auto">--}}
+{{--                                            <!-- Title -->--}}
+{{--                                            <div class="w-100"><a href="/events/{{ $event->id }}/list?tocheck=1" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Check Ins Left</a></div>--}}
+{{--                                            <!-- Value -->--}}
+{{--                                            <span class="h4 mb-0">{{ number_format($event->to_check_in,0) }}</span>--}}
+
+											<table class="table table-responsive-sm">
+												<thead>
+													<tr class="bg-light">
+														<th class="text-lg-center w-25" scope="col"><a href="/events/{{ $event->id }}/list?tocheck=1" class="h6 text-uppercase text-gray-dark mb-2">Scheduled</a></th>
+														<th class="text-lg-center w-50" scope="col"><a href="/events/{{ $event->id }}/list?checkedin=1" class="h6 text-uppercase text-gray-dark mb-2">Checked-In</a></th>
+														<th class="text-lg-center w-25" scope="col"><a href="/events/{{ $event->id }}/list" class="h6 text-uppercase text-gray-dark mb-2">Total</a></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr class="align-content-center">
+														<td class="text-lg-center">{{ number_format($event->to_check_in,0) }}</td>
+														<td class="text-lg-center">{{ number_format($event->checked_in, 0) }}</td>
+														<td class="text-lg-center">{{ number_format($event->checked_in + $event->to_check_in, 0) }}</td>
+													</tr>
+												</tbody>
+											</table>
+
+{{--                                        </div>--}}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="card card-body p-3 mb-3">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <!-- Title -->
-                                            <div class="w-100"><a href="/events/{{ $event->id }}/list?checkedin=1" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Checked In</a></div>
-                                            <!-- Value -->
-                                            <span class="h4 mb-0">{{ number_format($event->checked_in, 0) }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="card card-body p-3 mb-3">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <!-- Title -->
-                                            <div class="w-100"><a href="/events/{{ $event->id }}/list" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Total</a></div>
-                                            <!-- Value -->
-                                            <span class="h4 mb-0">{{ number_format($event->checked_in + $event->to_check_in, 0) }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                            	</div>--}}
+{{--                            <div class="col-12 col-lg-4">--}}
+{{--                                <div class="card card-body p-3 mb-3">--}}
+{{--                                    <div class="row align-items-center">--}}
+{{--                                        <div class="col-auto">--}}
+{{--                                            <!-- Title -->--}}
+{{--                                            <div class="w-100"><a href="/events/{{ $event->id }}/list?checkedin=1" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Checked In</a></div>--}}
+{{--                                            <!-- Value -->--}}
+{{--                                            <span class="h4 mb-0">{{ number_format($event->checked_in, 0) }}</span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-12 col-lg-4">--}}
+{{--                                <div class="card card-body p-3 mb-3">--}}
+{{--                                    <div class="row align-items-center">--}}
+{{--                                        <div class="col-auto">--}}
+{{--                                            <!-- Title -->--}}
+{{--                                            <div class="w-100"><a href="/events/{{ $event->id }}/list" class="stretched-link h6 text-uppercase text-gray-dark mb-2">Total</a></div>--}}
+{{--                                            <!-- Value -->--}}
+{{--                                            <span class="h4 mb-0">{{ number_format($event->checked_in + $event->to_check_in, 0) }}</span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
 
