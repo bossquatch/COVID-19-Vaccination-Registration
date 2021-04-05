@@ -375,7 +375,8 @@ class AnalyticsController extends Controller
 				'40-49' => Arr::pluck($registrationsAll, '40-49','Status'),
 				'30-39' => Arr::pluck($registrationsAll, '30-39','Status'),
 				'18-29' => Arr::pluck($registrationsAll, '18-29','Status'),
-				'17-'   => Arr::pluck($registrationsAll, '17-','Status'),
+				'16-17' => Arr::pluck($registrationsAll, '16-17','Status'),
+				'15-'   => Arr::pluck($registrationsAll, '15-','Status'),
 				'Total' => Arr::pluck($registrationsAll, 'Total','Status'),
 			];
 
