@@ -344,7 +344,7 @@ class AnalyticsController extends Controller
 					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 39 YEAR) AND DATE_SUB(NOW(), INTERVAL 30 YEAR),1,0)) `30-39`,
 					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 29 YEAR) AND DATE_SUB(NOW(), INTERVAL 18 YEAR),1,0)) `18-29`,
 				    SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 17 YEAR) AND DATE_SUB(NOW(), INTERVAL 16 YEAR),1,0)) `16-17`,
-					SUM(IF(r.birth_date > DATE_SUB(now(), INTERVAL 16 YEAR),1,0)) `16-`,
+					SUM(IF(r.birth_date > DATE_SUB(now(), INTERVAL 16 YEAR),1,0)) `15-`,
 					count(*) `Total`
 
 				FROM
