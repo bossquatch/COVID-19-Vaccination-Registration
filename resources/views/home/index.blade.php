@@ -50,7 +50,7 @@
                         </p>
 
                         <p class="text-gray-dark">
-                            The state’s allocation plan is based on a phased approach while the vaccine doses are in limited supply, as they are now. Polk County is following the required prioritization set by the federal government and the State of Florida in directing current vaccinations to those who are at the highest risk of contracting COVID-19, as well as any person over the age of 50.
+                            The state’s allocation plan is based on a phased approach while the vaccine doses are in limited supply. Polk County is following the required prioritization set by the federal government and the State of Florida in directing current vaccinations to any person 18 and over for the Moderna and Johnson & Johnson vaccines and 16 or over for the Pfizer vaccine.
                         </p>
                     </div>
                 </div>
