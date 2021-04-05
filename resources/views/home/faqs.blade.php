@@ -58,27 +58,9 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-                                        The Florida Department of Health Polk County continues to take reservations through Polk County's COVID-19 vaccine portal.
-                                        Beginning Monday, March 22nd, the Governor's executive order will expand the eligibility to those 50 years of age and older,
-                                        who wish to be vaccinated. Eligible individuals prioritized in the executive order now include:
-                                    </p>
-                                    <ul class="text-gray-dark">
-                                        <li>Long-term care facility residents and staff</li>
-                                        <li>Persons 50 years of age and older</li>
-                                        <li>Health care personnel with direct patient contact</li>
-                                    </ul>
-                                    <p class="collapse-content">
-                                        Through the portal, you can create an account and upload your personal information for a future appointment.
-                                        You can also learn more about the vaccine being administered by the Florida Department of Health and have other
-                                        frequent questions answered.
-                                    </p>
-                                    <p class="collapse-content">
-                                        Individuals deemed extremely vulnerable to COVID-19 must be determined by a physician and documented using the
-                                        <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a>
-                                        and include a statement from the physician that the patient meets eligibility criteria outlined on the
-                                        <a href="https://floridahealthcovid19.gov/high-risk-populations/">Florida Department of Health website</a>.
-                                        Those who meet criteria for the extremely vulnerable group may receive a COVID-19 vaccine at a local pharmacy or register on Polk County's vaccination portal.
-                                    </p>
+										As of Monday, April 5, all Florida residents 18 and over shall be eligible to receive any COVID-19 vaccine as prescribed by the Food and Drug Administration.
+										The Pfizer vaccine is authorized for persons age 16 and up. The Moderna and Janssen (Johnson and Johnson) vaccines are authorized for persons age 18 and up. All individuals under the age of 18 receiving a vaccine must be accompanied by a guardian and complete the COVID-19 vaccine screening and consent <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/04/doh-covid-vaccine-screening-consent-form.pdf" target="_blank" rel="noopener" download aria-download="true">form</a>.
+									</p>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +424,6 @@
                                         <li>A photo ID with your name and date of birth (for example: Florida driver's license, state-issued ID, or passport)</li>
                                         <li>Proof of your appointment (printed copy or screenshot of the confirmation email or text message)</li>
                                         <li>Completed <a href="/docs/consent_moderna.pdf" target="_blank" rel="noopener" download aria-download="true">Moderna Consent form</a></li>
-                                        <li>If you are receiving the inoculation as extremely vulnerable you must bring a completed <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a>
                                         <li>The Centers for Disease Control and Prevention recommends that people wear a mask that covers their nose and mouth when receiving any vaccine, including a COVID-19 vaccine. Anyone who has trouble breathing or is unable to remove a mask without assistance should not wear a mask.</li>
                                     </ul>
                                 </div>
