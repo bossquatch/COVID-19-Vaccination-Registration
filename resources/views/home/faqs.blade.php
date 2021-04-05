@@ -58,8 +58,9 @@
                                 <div class="py-4">
                                     <!-- Text -->
                                     <p class="collapse-content">
-										The Florida Department of Health Polk County's COVID-19 vaccine portal is now open for those who are age eligible and wish to be inoculated, according to the most recent executive order from Florida Gov. Ron DeSantis. COVID-19 vaccinations eligibility guidelines include anyone 18 years and older for the Moderna and Johnson & Johnson vaccines, and 16 years and older for the Pfizer vaccine.
-                                    </p>
+										As of Monday, April 5, all Florida residents 18 and over shall be eligible to receive any COVID-19 vaccine as prescribed by the Food and Drug Administration.
+										The Pfizer vaccine is authorized for persons age 16 and up. The Moderna and Janssen (Johnson and Johnson) vaccines are authorized for persons age 18 and up. All individuals under the age of 18 receiving a vaccine must be accompanied by a guardian and complete the COVID-19 vaccine screening and consent <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/04/doh-covid-vaccine-screening-consent-form.pdf" target="_blank" rel="noopener" download aria-download="true">form</a>.
+									</p>
                                 </div>
                             </div>
                         </div>
