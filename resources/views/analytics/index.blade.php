@@ -178,7 +178,7 @@
 							<tbody>
 
 							@foreach($registrations_by_age as $key => $val)
-								<tr class="text-right">
+								<tr class="text-right {{ $key == 'Today' ? 'bg-info text-white' : '' }}">
 									<th scope="row">{{ $key }}</th>
 
 									@foreach($val as $key2 => $item)
