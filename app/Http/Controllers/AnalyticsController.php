@@ -356,8 +356,7 @@ class AnalyticsController extends Controller
 
 				WHERE
 				      r.deleted_at IS NULL
-				AND
-				      s2.abbr = "FL"
+
 				AND
 				      fl.registration_id IS NULL
 
