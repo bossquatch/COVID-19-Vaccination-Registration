@@ -345,7 +345,8 @@ class AnalyticsController extends Controller
 					SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 29 YEAR) AND DATE_SUB(NOW(), INTERVAL 18 YEAR),1,0)) `18-29`,
 				    SUM(IF(r.birth_date BETWEEN DATE_SUB(NOW(), INTERVAL 17 YEAR) AND DATE_SUB(NOW(), INTERVAL 16 YEAR),1,0)) `16-17`,
 					SUM(IF(r.birth_date > DATE_SUB(now(), INTERVAL 16 YEAR),1,0)) `15-`,
-					count(*) `Total`
+					count(*) `Total`,
+				    SUM(IF(DATE(r.submitted_at) = CURRENT_DATE(),1,0)) `Today`
 
 				FROM
 					registrations r
@@ -368,6 +369,7 @@ class AnalyticsController extends Controller
 			');
 
 			$registrations = [
+				'Today' => Arr::pluck ($registrationsAll, 'Today','Status'),
 				'65+'   => Arr::pluck($registrationsAll, '65+','Status'),
 				'60-64' => Arr::pluck($registrationsAll, '60-64','Status'),
 				'50-59' => Arr::pluck($registrationsAll, '50-59','Status'),
