@@ -441,6 +441,7 @@ class ManageController extends Controller
         $regis->update([
             'status_id' => 1,
         ]);
+
         $this->logChanges($regis, 'returned', true);
 
         Session::flash('success', "<p>Registration was returned to the waitlist.</p>");

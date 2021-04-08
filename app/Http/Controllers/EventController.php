@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AllList;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -104,7 +105,7 @@ class EventController extends Controller
     {
         $valid = request()->validate($this->validationRules());
 
-        $carbon_date = \Carbon\Carbon::parse($valid['date']);
+        $carbon_date = Carbon::parse($valid['date']);
         $slot_times = [];
         $lots = explode(",",$valid['lots']);
 
@@ -182,7 +183,7 @@ class EventController extends Controller
     {
         $valid = request()->validate($this->validationRules(false));
 
-        $carbon_date = \Carbon\Carbon::parse($valid['date']);
+        $carbon_date = Carbon::parse($valid['date']);
 
         $event = Event::findOrFail($id);
         $new_date = ($event->date_held != $carbon_date->format('Y-m-d'));
@@ -198,10 +199,10 @@ class EventController extends Controller
                 $new_start = $carbon_date->copy();
                 $new_end = $carbon_date->copy();
 
-                $new_start->hour = \Carbon\Carbon::parse($slot->starting_at)->hour;
-                $new_start->minute = \Carbon\Carbon::parse($slot->starting_at)->minute;
-                $new_end->hour = \Carbon\Carbon::parse($slot->ending_at)->hour;
-                $new_end->minute = \Carbon\Carbon::parse($slot->ending_at)->minute;
+                $new_start->hour = Carbon::parse($slot->starting_at)->hour;
+                $new_start->minute = Carbon::parse($slot->starting_at)->minute;
+                $new_end->hour = Carbon::parse($slot->ending_at)->hour;
+                $new_end->minute = Carbon::parse($slot->ending_at)->minute;
 
                 $slot->update([
                     'starting_at' => $new_start,
@@ -272,7 +273,7 @@ class EventController extends Controller
         if ($checkedin) {
             $invite_statuses = array_merge($invite_statuses, [7,10]);
         }
-        
+
         if (!($callback || $tocheck || $checkedin)){
             $invitations = $invitations->select('invitations.*')->join('registrations', 'registrations.id', '=', 'invitations.registration_id')->whereHas('invite_status', function ($query) {
                 $query->whereNotIn('id', [4, 5, 9]);
@@ -313,7 +314,7 @@ class EventController extends Controller
         if ($checkedin) {
             $invite_statuses = array_merge($invite_statuses, [7,10]);
         }
-        
+
         if (!($callback || $tocheck || $checkedin)){
             $invitations = $invitations->select('invitations.*')->join('registrations', 'registrations.id', '=', 'invitations.registration_id')->whereHas('invite_status', function ($query) {
                 $query->whereNotIn('id', [4, 5, 9]);
@@ -365,14 +366,14 @@ class EventController extends Controller
 
         $event = Event::findOrFail($id);
 
-        $period = new \Carbon\CarbonPeriod(\Carbon\Carbon::parse($valid['startTime']), $valid['slotLength'], \Carbon\Carbon::parse($valid['startTime'])->add($valid['slotLength']));
+        $period = new \Carbon\CarbonPeriod(Carbon::parse($valid['startTime']), $valid['slotLength'], Carbon::parse($valid['startTime'])->add($valid['slotLength']));
         if ($event->intersectsSlot($period)) {
             return redirect()->back()->withErrors(['slotLength' => 'Chosen time slot length causes an overlap with existing time slots'])->withInput();
         }
 
         $event->slots()->create([
-            'starting_at' => \Carbon\Carbon::parse($valid['startTime']),
-            'ending_at' => \Carbon\Carbon::parse($valid['startTime'])->add($valid['slotLength']),
+            'starting_at' => Carbon::parse($valid['startTime']),
+            'ending_at' => Carbon::parse($valid['startTime'])->add($valid['slotLength']),
             'capacity' => $valid['slotCapacity']
         ]);
 
