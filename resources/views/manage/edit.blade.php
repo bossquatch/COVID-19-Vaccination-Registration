@@ -67,7 +67,8 @@ select.read-only option{
                     <span class="fad fa-clipboard-check mr-1"></span> Complete Registration
                 </button>
 
-                @if($registration->status_id == 2 || $registration->status_id == 12)
+{{--                @if($registration->status_id == 2 || $registration->status_id == 12)--}}
+				@if(in_array ($regstration->status_id,[2,5,11,12]))
                 <button class="btn btn-header-outline btn-round btn-lg mt-4" data-toggle="modal" data-target="#waitlistModal">
                     <span class="fad fa-clipboard-list mr-1"></span> Return to Waitlist
                 </button>
@@ -623,7 +624,8 @@ select.read-only option{
     </div>
 </div>
 
-@if($registration->status_id == 2 || $registration->status_id == 12)
+{{--@if($registration->status_id == 2 || $registration->status_id == 12)--}}
+@if(in_array ($regstration->status_id,[2,5,11,12]))
 <div class="modal fade" id="waitlistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-label="Registration Waitlist Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
