@@ -2,7 +2,7 @@
 <nav class="navbar fixed-top navbar-expand-md  @if(Request::is('/')) navbar-transparent navbar-color-on-scroll @endif" @if(Request::is('/')) color-on-scroll="100" @endif>
     <div class="container-md">
         <img src="/images/FDOH-Polk-color-logo3.png" height="58" />
-        <a class="navbar-brand ml-5" href="/"><span class="fas fa-home-alt mr-2"></span>Polk Health</a>
+        <a class="navbar-brand ml-5" href="/"><span class="fal fa-home-alt mr-2"></span>Polk Health</a>
 
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="far fa-bars"></span>
