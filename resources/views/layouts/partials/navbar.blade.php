@@ -49,7 +49,10 @@
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/login">
+                        <span class="fal fa-user-alt fa-fw mr-1"></span>
+                        Login
+                    </a>
                 </li>
                 @endauth
             </ul>
