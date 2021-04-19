@@ -23,3 +23,11 @@
         z-index: $i;
     }
 }
+
+.blend-mode-multiply {
+    mix-blend-mode: multiply;
+}
+
+.opacity-80 {
+    opacity: 0.8;
+}

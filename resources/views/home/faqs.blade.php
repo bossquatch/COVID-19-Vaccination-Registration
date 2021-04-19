@@ -35,12 +35,61 @@
                 <!-- Card Accordion -->
                 <div class="card card-accordion accordion mb-4 mb-md-5" id="helpAccordionOne">
                     <div class="list-group">
-                    <div class="list-group-item">
-                            <span class="badge badge-pill badge-danger-soft mb-3">
-                                <span class="text-uppercase">
-                                    Update
-                                </span>
-                            </span>
+						<div class="list-group-item">
+							<span class="badge badge-pill badge-danger-soft mb-3">
+								<span class="text-uppercase">
+									Update April 19, 2021
+								</span>
+							</span>
+							<!-- Toggle -->
+							<a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpNinetyNine" role="button" aria-expanded="false" aria-controls="helpNinetyNine">
+								<!-- Title -->
+								<h3 class="collapse-title">Polk County to Close Vaccine Portal. Lakeland Regional Health to Take Over Scheduling</h3>
+
+								<!-- Metadata -->
+								<div class="ml-auto">
+									<!-- Chevron -->
+									<span class="collapse-chevron text-muted"><span class="fas fa-chevron-down"></span></span>
+								</div>
+							</a>
+
+							<!-- Collapse -->
+							<div class="collapse" id="helpNinetyNine" data-parent="#helpAccordionOne">
+								<div class="py-4">
+									<!-- Text -->
+									<div class="collapse-content">
+										<p>
+										The Florida Department of Health in Polk County, in partnership with Polk County Board of County Commissioners, will be closing Polk County’s COVID-19 vaccine portal on Sunday, April 18th at 11:59 p.m. The call center will remain open until Friday, April 23. As COVID-19 vaccine becomes more widely available across the county, DOH-Polk will transition its vaccination efforts to larger walk-up vaccine point of dispensing (POD) locations across the county where appointments are not necessary.
+										</p>
+										<p>
+										“We are thankful for our community vaccination partners and the Polk County Board of County Commissioners who have been a tremendous asset to DOH-Polk in helping us provide COVID-19 vaccines to our residents,” says Dr. Joy Jackson, director of the Florida Department of Health in Polk County. “As vaccine availability expands across the county, we continue to encourage residents 16 years of age and older to get a COVID-19 vaccine.”
+										</p>
+										<p>
+											Lakeland Regional Health will now be assisting DOH-Polk by scheduling anyone who wishes to receive a COVID-19 vaccine by appointment. Those interested in making a COVID-19 vaccine appointment can visit <a href="https://myLRH.org/vaccineform">https://myLRH.org/vaccineform</a>  or call <span class="fal fa-phone-alt fa-fw font-size-lg text-dark mr-1"></span><a class="text-dark text-decoration-underline" href="tel:+18639041895"> +1 (863) 904-1895</a> to schedule their appointment. Appointments will be available for scheduling Monday through Friday 8 a.m. to 5 p.m.
+										</p>
+										<p>
+										“Lakeland Regional Health is committed to strengthening the health of our community, and that includes doing our part to stop the spread of the COVID-19 virus,” says Terry Hamilton, Lakeland Regional Health Executive Vice President and Chief Operations Officer. “Our goal is to vaccinate as many individuals who are ages 16 years and older as possible, and we are so pleased to collaborate with the Department of Health to continue administering vaccines for our community.”
+										</p>
+										<p>
+										DOH-Polk will transition into hosting walk-up vaccine events across the county on certain days of the week. On Tuesday, April 20, DOH-Polk will be providing COVID-19 vaccines at Lake Eva Event Center in Haines City from 10 a.m. – 6 p.m., no appointment needed. Vaccines will be available to anyone 18 years of age and older as outlined in the Governor’s Executive Order.
+										</p>
+										<p>
+										In addition to DOH-Polk and Lakeland Regional Health’s vaccine availability, COVID-19 vaccine is also becoming more widely available through local pharmacies and private providers. Individuals are encouraged to visit the state’s COVID-19 vaccine locator to find vaccine availability nearest them. This can be found by visiting <a href="http://www.floridahealth.gov/">http://www.floridahealth.gov/</a>  and clicking the Vaccine Site Locator map located on the home page. Individuals may also contact DOH-Polk’s COVID-19 Information Center at <span class="fal fa-phone-alt fa-fw font-size-lg text-dark mr-1"></span><a class="text-dark text-decoration-underline" href="tel:+18635197911">+1 (863) 519-7911</a> for COVID-19 related questions.
+										</p>
+										<p>
+										The Florida Department of Health in Polk County remains committed to continue the distribution of COVID-19 vaccines across the county. To date, more than 200,000 of Polk’s residents have received the COVID-19 vaccine.
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</div>
+                    	<div class="list-group-item">
+{{--                            <span class="badge badge-pill badge-danger-soft mb-3">--}}
+{{--                                <span class="text-uppercase">--}}
+{{--                                    Update--}}
+{{--                                </span>--}}
+{{--                            </span>--}}
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFour" role="button" aria-expanded="false" aria-controls="helpFour">
                                 <!-- Title -->
@@ -65,11 +114,11 @@
                             </div>
                         </div>
                         <div class="list-group-item">
-                            <span class="badge badge-pill badge-danger-soft mb-3">
-                                <span class="text-uppercase">
-                                    Update
-                                </span>
-                            </span>
+{{--                            <span class="badge badge-pill badge-danger-soft mb-3">--}}
+{{--                                <span class="text-uppercase">--}}
+{{--                                    Update--}}
+{{--                                </span>--}}
+{{--                            </span>--}}
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpSixty" role="button" aria-expanded="false" aria-controls="helpSixty">
                                 <!-- Title -->
@@ -399,7 +448,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="list-group-item">
                             <!-- Toggle -->
                             <a class="d-flex align-items-center text-reset text-decoration-none" data-toggle="collapse" href="#helpFifteen" role="button" aria-expanded="false" aria-controls="helpFifteen">

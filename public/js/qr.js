@@ -30,32 +30,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/qr.js":
-/*!****************************!*\
-  !*** ./resources/js/qr.js ***!
-  \****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var _QR_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QR.vue */ "./resources/js/QR.vue");
-
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"); //Vue.use(VueQrcodeReader);
-
-
-var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
-  el: '#qr-reader-app',
-  components: {
-    QR: _QR_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  render: function render(h) {
-    return h(_QR_vue__WEBPACK_IMPORTED_MODULE_0__.default);
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/QR.vue":
 /*!*****************************!*\
   !*** ./resources/js/QR.vue ***!
@@ -1957,8 +1931,13 @@ var camera_Camera = /*#__PURE__*/function () {
   _createClass(Camera, [{
     key: "stop",
     value: function stop() {
+      var _this = this;
+
+      this.videoEl.srcObject = null;
       this.stream.getTracks().forEach(function (track) {
-        return track.stop();
+        _this.stream.removeTrack(track);
+
+        track.stop();
       });
     }
   }, {
@@ -2507,11 +2486,11 @@ var component = Object(componentNormalizer["a" /* default */])(
 /***/ }),
 
 /***/ "0d3b":
-/***/ (function(module, exports, __nested_webpack_require_70810__) {
+/***/ (function(module, exports, __nested_webpack_require_70907__) {
 
-var fails = __nested_webpack_require_70810__("d039");
-var wellKnownSymbol = __nested_webpack_require_70810__("b622");
-var IS_PURE = __nested_webpack_require_70810__("c430");
+var fails = __nested_webpack_require_70907__("d039");
+var wellKnownSymbol = __nested_webpack_require_70907__("b622");
+var IS_PURE = __nested_webpack_require_70907__("c430");
 
 var ITERATOR = wellKnownSymbol('iterator');
 
@@ -2547,10 +2526,10 @@ module.exports = !fails(function () {
 /***/ }),
 
 /***/ "131a":
-/***/ (function(module, exports, __nested_webpack_require_72021__) {
+/***/ (function(module, exports, __nested_webpack_require_72118__) {
 
-var $ = __nested_webpack_require_72021__("23e7");
-var setPrototypeOf = __nested_webpack_require_72021__("d2bb");
+var $ = __nested_webpack_require_72118__("23e7");
+var setPrototypeOf = __nested_webpack_require_72118__("d2bb");
 
 // `Object.setPrototypeOf` method
 // https://tc39.github.io/ecma262/#sec-object.setprototypeof
@@ -2562,14 +2541,14 @@ $({ target: 'Object', stat: true }, {
 /***/ }),
 
 /***/ "13d5":
-/***/ (function(module, exports, __nested_webpack_require_72363__) {
+/***/ (function(module, exports, __nested_webpack_require_72460__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_72363__("23e7");
-var $reduce = __nested_webpack_require_72363__("d58f").left;
-var arrayMethodIsStrict = __nested_webpack_require_72363__("a640");
-var arrayMethodUsesToLength = __nested_webpack_require_72363__("ae40");
+var $ = __nested_webpack_require_72460__("23e7");
+var $reduce = __nested_webpack_require_72460__("d58f").left;
+var arrayMethodIsStrict = __nested_webpack_require_72460__("a640");
+var arrayMethodUsesToLength = __nested_webpack_require_72460__("ae40");
 
 var STRICT_METHOD = arrayMethodIsStrict('reduce');
 var USES_TO_LENGTH = arrayMethodUsesToLength('reduce', { 1: 0 });
@@ -2586,10 +2565,10 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD || !USES_TO_LENGTH }, {
 /***/ }),
 
 /***/ "14c3":
-/***/ (function(module, exports, __nested_webpack_require_73132__) {
+/***/ (function(module, exports, __nested_webpack_require_73229__) {
 
-var classof = __nested_webpack_require_73132__("c6b6");
-var regexpExec = __nested_webpack_require_73132__("9263");
+var classof = __nested_webpack_require_73229__("c6b6");
+var regexpExec = __nested_webpack_require_73229__("9263");
 
 // `RegExpExec` abstract operation
 // https://tc39.github.io/ecma262/#sec-regexpexec
@@ -2615,12 +2594,12 @@ module.exports = function (R, S) {
 /***/ }),
 
 /***/ "159b":
-/***/ (function(module, exports, __nested_webpack_require_73820__) {
+/***/ (function(module, exports, __nested_webpack_require_73917__) {
 
-var global = __nested_webpack_require_73820__("da84");
-var DOMIterables = __nested_webpack_require_73820__("fdbc");
-var forEach = __nested_webpack_require_73820__("17c2");
-var createNonEnumerableProperty = __nested_webpack_require_73820__("9112");
+var global = __nested_webpack_require_73917__("da84");
+var DOMIterables = __nested_webpack_require_73917__("fdbc");
+var forEach = __nested_webpack_require_73917__("17c2");
+var createNonEnumerableProperty = __nested_webpack_require_73917__("9112");
 
 for (var COLLECTION_NAME in DOMIterables) {
   var Collection = global[COLLECTION_NAME];
@@ -2637,13 +2616,13 @@ for (var COLLECTION_NAME in DOMIterables) {
 /***/ }),
 
 /***/ "17c2":
-/***/ (function(module, exports, __nested_webpack_require_74544__) {
+/***/ (function(module, exports, __nested_webpack_require_74641__) {
 
 "use strict";
 
-var $forEach = __nested_webpack_require_74544__("b727").forEach;
-var arrayMethodIsStrict = __nested_webpack_require_74544__("a640");
-var arrayMethodUsesToLength = __nested_webpack_require_74544__("ae40");
+var $forEach = __nested_webpack_require_74641__("b727").forEach;
+var arrayMethodIsStrict = __nested_webpack_require_74641__("a640");
+var arrayMethodUsesToLength = __nested_webpack_require_74641__("ae40");
 
 var STRICT_METHOD = arrayMethodIsStrict('forEach');
 var USES_TO_LENGTH = arrayMethodUsesToLength('forEach');
@@ -2670,9 +2649,9 @@ module.exports = function (it, Constructor, name) {
 /***/ }),
 
 /***/ "1be4":
-/***/ (function(module, exports, __nested_webpack_require_75486__) {
+/***/ (function(module, exports, __nested_webpack_require_75583__) {
 
-var getBuiltIn = __nested_webpack_require_75486__("d066");
+var getBuiltIn = __nested_webpack_require_75583__("d066");
 
 module.exports = getBuiltIn('document', 'documentElement');
 
@@ -2692,9 +2671,9 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "1c7e":
-/***/ (function(module, exports, __nested_webpack_require_75880__) {
+/***/ (function(module, exports, __nested_webpack_require_75977__) {
 
-var wellKnownSymbol = __nested_webpack_require_75880__("b622");
+var wellKnownSymbol = __nested_webpack_require_75977__("b622");
 
 var ITERATOR = wellKnownSymbol('iterator');
 var SAFE_CLOSING = false;
@@ -2737,24 +2716,24 @@ module.exports = function (exec, SKIP_CLOSING) {
 /***/ }),
 
 /***/ "1cc0":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_76898__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_76995__) {
 
 "use strict";
 
 // EXPORTS
-__nested_webpack_require_76898__.d(__webpack_exports__, "b", function() { return /* binding */ errors_DropImageFetchError; });
-__nested_webpack_require_76898__.d(__webpack_exports__, "a", function() { return /* binding */ errors_DropImageDecodeError; });
-__nested_webpack_require_76898__.d(__webpack_exports__, "d", function() { return /* binding */ errors_StreamApiNotSupportedError; });
-__nested_webpack_require_76898__.d(__webpack_exports__, "c", function() { return /* binding */ errors_InsecureContextError; });
+__nested_webpack_require_76995__.d(__webpack_exports__, "b", function() { return /* binding */ errors_DropImageFetchError; });
+__nested_webpack_require_76995__.d(__webpack_exports__, "a", function() { return /* binding */ errors_DropImageDecodeError; });
+__nested_webpack_require_76995__.d(__webpack_exports__, "d", function() { return /* binding */ errors_StreamApiNotSupportedError; });
+__nested_webpack_require_76995__.d(__webpack_exports__, "c", function() { return /* binding */ errors_InsecureContextError; });
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __nested_webpack_require_76898__("b0c0");
+var es_function_name = __nested_webpack_require_76995__("b0c0");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-var classCallCheck = __nested_webpack_require_76898__("d4ec");
+var classCallCheck = __nested_webpack_require_76995__("d4ec");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.set-prototype-of.js
-var es_object_set_prototype_of = __nested_webpack_require_76898__("131a");
+var es_object_set_prototype_of = __nested_webpack_require_76995__("131a");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
 
@@ -2783,10 +2762,10 @@ function _inherits(subClass, superClass) {
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.reflect.construct.js
-var es_reflect_construct = __nested_webpack_require_76898__("4ae1");
+var es_reflect_construct = __nested_webpack_require_76995__("4ae1");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-prototype-of.js
-var es_object_get_prototype_of = __nested_webpack_require_76898__("3410");
+var es_object_get_prototype_of = __nested_webpack_require_76995__("3410");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
 
@@ -2798,10 +2777,10 @@ function _getPrototypeOf(o) {
   return _getPrototypeOf(o);
 }
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
-var es_object_to_string = __nested_webpack_require_76898__("d3b7");
+var es_object_to_string = __nested_webpack_require_76995__("d3b7");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.to-string.js
-var es_regexp_to_string = __nested_webpack_require_76898__("25f0");
+var es_regexp_to_string = __nested_webpack_require_76995__("25f0");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
 
@@ -2820,7 +2799,7 @@ function _isNativeReflectConstruct() {
   }
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __nested_webpack_require_76898__("53ca");
+var esm_typeof = __nested_webpack_require_76995__("53ca");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
 function _assertThisInitialized(self) {
@@ -2862,19 +2841,19 @@ function _createSuper(Derived) {
   };
 }
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
-var es_array_iterator = __nested_webpack_require_76898__("e260");
+var es_array_iterator = __nested_webpack_require_76995__("e260");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.map.js
-var es_map = __nested_webpack_require_76898__("4ec9");
+var es_map = __nested_webpack_require_76995__("4ec9");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
-var es_string_iterator = __nested_webpack_require_76898__("3ca3");
+var es_string_iterator = __nested_webpack_require_76995__("3ca3");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
-var web_dom_collections_iterator = __nested_webpack_require_76898__("ddb0");
+var web_dom_collections_iterator = __nested_webpack_require_76995__("ddb0");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.index-of.js
-var es_array_index_of = __nested_webpack_require_76898__("c975");
+var es_array_index_of = __nested_webpack_require_76995__("c975");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/isNativeFunction.js
 
@@ -3024,9 +3003,9 @@ var errors_InsecureContextError = /*#__PURE__*/function (_Error4) {
 /***/ }),
 
 /***/ "1cdc":
-/***/ (function(module, exports, __nested_webpack_require_85898__) {
+/***/ (function(module, exports, __nested_webpack_require_85995__) {
 
-var userAgent = __nested_webpack_require_85898__("342f");
+var userAgent = __nested_webpack_require_85995__("342f");
 
 module.exports = /(iphone|ipod|ipad).*applewebkit/i.test(userAgent);
 
@@ -3047,14 +3026,14 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "1da1":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_86400__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_86497__) {
 
 "use strict";
-/* harmony export (binding) */ __nested_webpack_require_86400__.d(__webpack_exports__, "a", function() { return _asyncToGenerator; });
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_86400__("d3b7");
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_86400__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_86400__("e6cf");
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_86400__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony export (binding) */ __nested_webpack_require_86497__.d(__webpack_exports__, "a", function() { return _asyncToGenerator; });
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_86497__("d3b7");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_86497__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_86497__("e6cf");
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_86497__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -3097,11 +3076,11 @@ function _asyncToGenerator(fn) {
 /***/ }),
 
 /***/ "1dde":
-/***/ (function(module, exports, __nested_webpack_require_88014__) {
+/***/ (function(module, exports, __nested_webpack_require_88111__) {
 
-var fails = __nested_webpack_require_88014__("d039");
-var wellKnownSymbol = __nested_webpack_require_88014__("b622");
-var V8_VERSION = __nested_webpack_require_88014__("2d00");
+var fails = __nested_webpack_require_88111__("d039");
+var wellKnownSymbol = __nested_webpack_require_88111__("b622");
+var V8_VERSION = __nested_webpack_require_88111__("2d00");
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -3123,14 +3102,14 @@ module.exports = function (METHOD_NAME) {
 /***/ }),
 
 /***/ "2266":
-/***/ (function(module, exports, __nested_webpack_require_88741__) {
+/***/ (function(module, exports, __nested_webpack_require_88838__) {
 
-var anObject = __nested_webpack_require_88741__("825a");
-var isArrayIteratorMethod = __nested_webpack_require_88741__("e95a");
-var toLength = __nested_webpack_require_88741__("50c4");
-var bind = __nested_webpack_require_88741__("0366");
-var getIteratorMethod = __nested_webpack_require_88741__("35a1");
-var callWithSafeIterationClosing = __nested_webpack_require_88741__("9bdd");
+var anObject = __nested_webpack_require_88838__("825a");
+var isArrayIteratorMethod = __nested_webpack_require_88838__("e95a");
+var toLength = __nested_webpack_require_88838__("50c4");
+var bind = __nested_webpack_require_88838__("0366");
+var getIteratorMethod = __nested_webpack_require_88838__("35a1");
+var callWithSafeIterationClosing = __nested_webpack_require_88838__("9bdd");
 
 var Result = function (stopped, result) {
   this.stopped = stopped;
@@ -3173,9 +3152,9 @@ iterate.stop = function (result) {
 /***/ }),
 
 /***/ "23cb":
-/***/ (function(module, exports, __nested_webpack_require_90423__) {
+/***/ (function(module, exports, __nested_webpack_require_90520__) {
 
-var toInteger = __nested_webpack_require_90423__("a691");
+var toInteger = __nested_webpack_require_90520__("a691");
 
 var max = Math.max;
 var min = Math.min;
@@ -3192,15 +3171,15 @@ module.exports = function (index, length) {
 /***/ }),
 
 /***/ "23e7":
-/***/ (function(module, exports, __nested_webpack_require_90939__) {
+/***/ (function(module, exports, __nested_webpack_require_91036__) {
 
-var global = __nested_webpack_require_90939__("da84");
-var getOwnPropertyDescriptor = __nested_webpack_require_90939__("06cf").f;
-var createNonEnumerableProperty = __nested_webpack_require_90939__("9112");
-var redefine = __nested_webpack_require_90939__("6eeb");
-var setGlobal = __nested_webpack_require_90939__("ce4e");
-var copyConstructorProperties = __nested_webpack_require_90939__("e893");
-var isForced = __nested_webpack_require_90939__("94ca");
+var global = __nested_webpack_require_91036__("da84");
+var getOwnPropertyDescriptor = __nested_webpack_require_91036__("06cf").f;
+var createNonEnumerableProperty = __nested_webpack_require_91036__("9112");
+var redefine = __nested_webpack_require_91036__("6eeb");
+var setGlobal = __nested_webpack_require_91036__("ce4e");
+var copyConstructorProperties = __nested_webpack_require_91036__("e893");
+var isForced = __nested_webpack_require_91036__("94ca");
 
 /*
   options.target      - name of the target object
@@ -3253,10 +3232,10 @@ module.exports = function (options, source) {
 /***/ }),
 
 /***/ "241c":
-/***/ (function(module, exports, __nested_webpack_require_93439__) {
+/***/ (function(module, exports, __nested_webpack_require_93536__) {
 
-var internalObjectKeys = __nested_webpack_require_93439__("ca84");
-var enumBugKeys = __nested_webpack_require_93439__("7839");
+var internalObjectKeys = __nested_webpack_require_93536__("ca84");
+var enumBugKeys = __nested_webpack_require_93536__("7839");
 
 var hiddenKeys = enumBugKeys.concat('length', 'prototype');
 
@@ -3270,16 +3249,16 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /***/ }),
 
 /***/ "2493":
-/***/ (function(module, exports, __nested_webpack_require_93914__) {
+/***/ (function(module, exports, __nested_webpack_require_94011__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __nested_webpack_require_93914__("ede3");
+var content = __nested_webpack_require_94011__("ede3");
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __nested_webpack_require_93914__("499e").default
+var add = __nested_webpack_require_94011__("499e").default
 var update = add("4c9ea657", content, true, {"sourceMap":false,"shadowMode":false});
 
 /***/ }),
@@ -3386,14 +3365,14 @@ function toComment(sourceMap) {
 /***/ }),
 
 /***/ "2532":
-/***/ (function(module, exports, __nested_webpack_require_97009__) {
+/***/ (function(module, exports, __nested_webpack_require_97106__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_97009__("23e7");
-var notARegExp = __nested_webpack_require_97009__("5a34");
-var requireObjectCoercible = __nested_webpack_require_97009__("1d80");
-var correctIsRegExpLogic = __nested_webpack_require_97009__("ab13");
+var $ = __nested_webpack_require_97106__("23e7");
+var notARegExp = __nested_webpack_require_97106__("5a34");
+var requireObjectCoercible = __nested_webpack_require_97106__("1d80");
+var correctIsRegExpLogic = __nested_webpack_require_97106__("ab13");
 
 // `String.prototype.includes` method
 // https://tc39.github.io/ecma262/#sec-string.prototype.includes
@@ -3408,14 +3387,14 @@ $({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, 
 /***/ }),
 
 /***/ "25f0":
-/***/ (function(module, exports, __nested_webpack_require_97708__) {
+/***/ (function(module, exports, __nested_webpack_require_97805__) {
 
 "use strict";
 
-var redefine = __nested_webpack_require_97708__("6eeb");
-var anObject = __nested_webpack_require_97708__("825a");
-var fails = __nested_webpack_require_97708__("d039");
-var flags = __nested_webpack_require_97708__("ad6d");
+var redefine = __nested_webpack_require_97805__("6eeb");
+var anObject = __nested_webpack_require_97805__("825a");
+var fails = __nested_webpack_require_97805__("d039");
+var flags = __nested_webpack_require_97805__("ad6d");
 
 var TO_STRING = 'toString';
 var RegExpPrototype = RegExp.prototype;
@@ -3441,14 +3420,14 @@ if (NOT_GENERIC || INCORRECT_NAME) {
 /***/ }),
 
 /***/ "2626":
-/***/ (function(module, exports, __nested_webpack_require_98756__) {
+/***/ (function(module, exports, __nested_webpack_require_98853__) {
 
 "use strict";
 
-var getBuiltIn = __nested_webpack_require_98756__("d066");
-var definePropertyModule = __nested_webpack_require_98756__("9bf2");
-var wellKnownSymbol = __nested_webpack_require_98756__("b622");
-var DESCRIPTORS = __nested_webpack_require_98756__("83ab");
+var getBuiltIn = __nested_webpack_require_98853__("d066");
+var definePropertyModule = __nested_webpack_require_98853__("9bf2");
+var wellKnownSymbol = __nested_webpack_require_98853__("b622");
+var DESCRIPTORS = __nested_webpack_require_98853__("83ab");
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -3468,10 +3447,10 @@ module.exports = function (CONSTRUCTOR_NAME) {
 /***/ }),
 
 /***/ "2877":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_99441__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_99538__) {
 
 "use strict";
-/* harmony export (binding) */ __nested_webpack_require_99441__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
+/* harmony export (binding) */ __nested_webpack_require_99538__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
@@ -3575,15 +3554,15 @@ function normalizeComponent (
 /***/ }),
 
 /***/ "2909":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_102430__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_102527__) {
 
 "use strict";
 
 // EXPORTS
-__nested_webpack_require_102430__.d(__webpack_exports__, "a", function() { return /* binding */ _toConsumableArray; });
+__nested_webpack_require_102527__.d(__webpack_exports__, "a", function() { return /* binding */ _toConsumableArray; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-var arrayLikeToArray = __nested_webpack_require_102430__("6b75");
+var arrayLikeToArray = __nested_webpack_require_102527__("6b75");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
 
@@ -3591,28 +3570,28 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return Object(arrayLikeToArray["a" /* default */])(arr);
 }
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
-var es_symbol = __nested_webpack_require_102430__("a4d3");
+var es_symbol = __nested_webpack_require_102527__("a4d3");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.description.js
-var es_symbol_description = __nested_webpack_require_102430__("e01a");
+var es_symbol_description = __nested_webpack_require_102527__("e01a");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.iterator.js
-var es_symbol_iterator = __nested_webpack_require_102430__("d28b");
+var es_symbol_iterator = __nested_webpack_require_102527__("d28b");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.from.js
-var es_array_from = __nested_webpack_require_102430__("a630");
+var es_array_from = __nested_webpack_require_102527__("a630");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
-var es_array_iterator = __nested_webpack_require_102430__("e260");
+var es_array_iterator = __nested_webpack_require_102527__("e260");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
-var es_object_to_string = __nested_webpack_require_102430__("d3b7");
+var es_object_to_string = __nested_webpack_require_102527__("d3b7");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
-var es_string_iterator = __nested_webpack_require_102430__("3ca3");
+var es_string_iterator = __nested_webpack_require_102527__("3ca3");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
-var web_dom_collections_iterator = __nested_webpack_require_102430__("ddb0");
+var web_dom_collections_iterator = __nested_webpack_require_102527__("ddb0");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
 
@@ -3627,7 +3606,7 @@ function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __nested_webpack_require_102430__("06c5");
+var unsupportedIterableToArray = __nested_webpack_require_102527__("06c5");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
 function _nonIterableSpread() {
@@ -3645,27 +3624,27 @@ function _toConsumableArray(arr) {
 /***/ }),
 
 /***/ "2b3d":
-/***/ (function(module, exports, __nested_webpack_require_104945__) {
+/***/ (function(module, exports, __nested_webpack_require_105042__) {
 
 "use strict";
 
 // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
-__nested_webpack_require_104945__("3ca3");
-var $ = __nested_webpack_require_104945__("23e7");
-var DESCRIPTORS = __nested_webpack_require_104945__("83ab");
-var USE_NATIVE_URL = __nested_webpack_require_104945__("0d3b");
-var global = __nested_webpack_require_104945__("da84");
-var defineProperties = __nested_webpack_require_104945__("37e8");
-var redefine = __nested_webpack_require_104945__("6eeb");
-var anInstance = __nested_webpack_require_104945__("19aa");
-var has = __nested_webpack_require_104945__("5135");
-var assign = __nested_webpack_require_104945__("60da");
-var arrayFrom = __nested_webpack_require_104945__("4df4");
-var codeAt = __nested_webpack_require_104945__("6547").codeAt;
-var toASCII = __nested_webpack_require_104945__("5fb2");
-var setToStringTag = __nested_webpack_require_104945__("d44e");
-var URLSearchParamsModule = __nested_webpack_require_104945__("9861");
-var InternalStateModule = __nested_webpack_require_104945__("69f3");
+__nested_webpack_require_105042__("3ca3");
+var $ = __nested_webpack_require_105042__("23e7");
+var DESCRIPTORS = __nested_webpack_require_105042__("83ab");
+var USE_NATIVE_URL = __nested_webpack_require_105042__("0d3b");
+var global = __nested_webpack_require_105042__("da84");
+var defineProperties = __nested_webpack_require_105042__("37e8");
+var redefine = __nested_webpack_require_105042__("6eeb");
+var anInstance = __nested_webpack_require_105042__("19aa");
+var has = __nested_webpack_require_105042__("5135");
+var assign = __nested_webpack_require_105042__("60da");
+var arrayFrom = __nested_webpack_require_105042__("4df4");
+var codeAt = __nested_webpack_require_105042__("6547").codeAt;
+var toASCII = __nested_webpack_require_105042__("5fb2");
+var setToStringTag = __nested_webpack_require_105042__("d44e");
+var URLSearchParamsModule = __nested_webpack_require_105042__("9861");
+var InternalStateModule = __nested_webpack_require_105042__("69f3");
 
 var NativeURL = global.URL;
 var URLSearchParams = URLSearchParamsModule.URLSearchParams;
@@ -4660,17 +4639,17 @@ $({ global: true, forced: !USE_NATIVE_URL, sham: !DESCRIPTORS }, {
 /***/ }),
 
 /***/ "2ca0":
-/***/ (function(module, exports, __nested_webpack_require_137535__) {
+/***/ (function(module, exports, __nested_webpack_require_137632__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_137535__("23e7");
-var getOwnPropertyDescriptor = __nested_webpack_require_137535__("06cf").f;
-var toLength = __nested_webpack_require_137535__("50c4");
-var notARegExp = __nested_webpack_require_137535__("5a34");
-var requireObjectCoercible = __nested_webpack_require_137535__("1d80");
-var correctIsRegExpLogic = __nested_webpack_require_137535__("ab13");
-var IS_PURE = __nested_webpack_require_137535__("c430");
+var $ = __nested_webpack_require_137632__("23e7");
+var getOwnPropertyDescriptor = __nested_webpack_require_137632__("06cf").f;
+var toLength = __nested_webpack_require_137632__("50c4");
+var notARegExp = __nested_webpack_require_137632__("5a34");
+var requireObjectCoercible = __nested_webpack_require_137632__("1d80");
+var correctIsRegExpLogic = __nested_webpack_require_137632__("ab13");
+var IS_PURE = __nested_webpack_require_137632__("c430");
 
 var nativeStartsWith = ''.startsWith;
 var min = Math.min;
@@ -4700,15 +4679,15 @@ $({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGE
 /***/ }),
 
 /***/ "2cf4":
-/***/ (function(module, exports, __nested_webpack_require_138996__) {
+/***/ (function(module, exports, __nested_webpack_require_139093__) {
 
-var global = __nested_webpack_require_138996__("da84");
-var fails = __nested_webpack_require_138996__("d039");
-var classof = __nested_webpack_require_138996__("c6b6");
-var bind = __nested_webpack_require_138996__("0366");
-var html = __nested_webpack_require_138996__("1be4");
-var createElement = __nested_webpack_require_138996__("cc12");
-var IS_IOS = __nested_webpack_require_138996__("1cdc");
+var global = __nested_webpack_require_139093__("da84");
+var fails = __nested_webpack_require_139093__("d039");
+var classof = __nested_webpack_require_139093__("c6b6");
+var bind = __nested_webpack_require_139093__("0366");
+var html = __nested_webpack_require_139093__("1be4");
+var createElement = __nested_webpack_require_139093__("cc12");
+var IS_IOS = __nested_webpack_require_139093__("1cdc");
 
 var location = global.location;
 var set = global.setImmediate;
@@ -4814,10 +4793,10 @@ module.exports = {
 /***/ }),
 
 /***/ "2d00":
-/***/ (function(module, exports, __nested_webpack_require_141993__) {
+/***/ (function(module, exports, __nested_webpack_require_142090__) {
 
-var global = __nested_webpack_require_141993__("da84");
-var userAgent = __nested_webpack_require_141993__("342f");
+var global = __nested_webpack_require_142090__("da84");
+var userAgent = __nested_webpack_require_142090__("342f");
 
 var process = global.process;
 var versions = process && process.versions;
@@ -4841,13 +4820,13 @@ module.exports = version && +version;
 /***/ }),
 
 /***/ "3410":
-/***/ (function(module, exports, __nested_webpack_require_142588__) {
+/***/ (function(module, exports, __nested_webpack_require_142685__) {
 
-var $ = __nested_webpack_require_142588__("23e7");
-var fails = __nested_webpack_require_142588__("d039");
-var toObject = __nested_webpack_require_142588__("7b0b");
-var nativeGetPrototypeOf = __nested_webpack_require_142588__("e163");
-var CORRECT_PROTOTYPE_GETTER = __nested_webpack_require_142588__("e177");
+var $ = __nested_webpack_require_142685__("23e7");
+var fails = __nested_webpack_require_142685__("d039");
+var toObject = __nested_webpack_require_142685__("7b0b");
+var nativeGetPrototypeOf = __nested_webpack_require_142685__("e163");
+var CORRECT_PROTOTYPE_GETTER = __nested_webpack_require_142685__("e177");
 
 var FAILS_ON_PRIMITIVES = fails(function () { nativeGetPrototypeOf(1); });
 
@@ -4864,9 +4843,9 @@ $({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES, sham: !CORRECT_PR
 /***/ }),
 
 /***/ "342f":
-/***/ (function(module, exports, __nested_webpack_require_143286__) {
+/***/ (function(module, exports, __nested_webpack_require_143383__) {
 
-var getBuiltIn = __nested_webpack_require_143286__("d066");
+var getBuiltIn = __nested_webpack_require_143383__("d066");
 
 module.exports = getBuiltIn('navigator', 'userAgent') || '';
 
@@ -4874,11 +4853,11 @@ module.exports = getBuiltIn('navigator', 'userAgent') || '';
 /***/ }),
 
 /***/ "35a1":
-/***/ (function(module, exports, __nested_webpack_require_143478__) {
+/***/ (function(module, exports, __nested_webpack_require_143575__) {
 
-var classof = __nested_webpack_require_143478__("f5df");
-var Iterators = __nested_webpack_require_143478__("3f8c");
-var wellKnownSymbol = __nested_webpack_require_143478__("b622");
+var classof = __nested_webpack_require_143575__("f5df");
+var Iterators = __nested_webpack_require_143575__("3f8c");
+var wellKnownSymbol = __nested_webpack_require_143575__("b622");
 
 var ITERATOR = wellKnownSymbol('iterator');
 
@@ -4892,12 +4871,12 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "37e8":
-/***/ (function(module, exports, __nested_webpack_require_143881__) {
+/***/ (function(module, exports, __nested_webpack_require_143978__) {
 
-var DESCRIPTORS = __nested_webpack_require_143881__("83ab");
-var definePropertyModule = __nested_webpack_require_143881__("9bf2");
-var anObject = __nested_webpack_require_143881__("825a");
-var objectKeys = __nested_webpack_require_143881__("df75");
+var DESCRIPTORS = __nested_webpack_require_143978__("83ab");
+var definePropertyModule = __nested_webpack_require_143978__("9bf2");
+var anObject = __nested_webpack_require_143978__("825a");
+var objectKeys = __nested_webpack_require_143978__("df75");
 
 // `Object.defineProperties` method
 // https://tc39.github.io/ecma262/#sec-object.defineproperties
@@ -4915,9 +4894,9 @@ module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperti
 /***/ }),
 
 /***/ "3bbe":
-/***/ (function(module, exports, __nested_webpack_require_144571__) {
+/***/ (function(module, exports, __nested_webpack_require_144668__) {
 
-var isObject = __nested_webpack_require_144571__("861d");
+var isObject = __nested_webpack_require_144668__("861d");
 
 module.exports = function (it) {
   if (!isObject(it) && it !== null) {
@@ -4929,27 +4908,27 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "3c85":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_144869__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_144966__) {
 
 "use strict";
-/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_144869__("e260");
-/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_144869__("d3b7");
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_144869__("ac1f");
-/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_144869__("25f0");
-/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_144869__("3ca3");
-/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_144869__("466d");
-/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var core_js_modules_es_string_trim__WEBPACK_IMPORTED_MODULE_6__ = __nested_webpack_require_144869__("498a");
-/* harmony import */ var core_js_modules_es_string_trim__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_es_string_trim__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_7__ = __nested_webpack_require_144869__("ddb0");
-/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var core_js_modules_web_url__WEBPACK_IMPORTED_MODULE_8__ = __nested_webpack_require_144869__("2b3d");
-/* harmony import */ var core_js_modules_web_url__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__nested_webpack_require_144869__.n(core_js_modules_web_url__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_144966__("e260");
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_144966__("d3b7");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_144966__("ac1f");
+/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_144966__("25f0");
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_144966__("3ca3");
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_144966__("466d");
+/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_string_trim__WEBPACK_IMPORTED_MODULE_6__ = __nested_webpack_require_144966__("498a");
+/* harmony import */ var core_js_modules_es_string_trim__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_es_string_trim__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_7__ = __nested_webpack_require_144966__("ddb0");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_web_url__WEBPACK_IMPORTED_MODULE_8__ = __nested_webpack_require_144966__("2b3d");
+/* harmony import */ var core_js_modules_web_url__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__nested_webpack_require_144966__.n(core_js_modules_web_url__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -4973,7 +4952,16 @@ var inlineWorker = function inlineWorker(func) {
     self.importScripts("https://cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js");
     self.addEventListener("message", function (event) {
       var imageData = event.data;
-      var result = jsQR(imageData.data, imageData.width, imageData.height);
+      var result = null;
+
+      try {
+        result = jsQR(imageData.data, imageData.width, imageData.height);
+      } catch (error) {
+        if (!(error instanceof RangeError)) {
+          throw error;
+        }
+      }
+
       var content = null;
       var location = null;
 
@@ -4996,13 +4984,13 @@ var inlineWorker = function inlineWorker(func) {
 /***/ }),
 
 /***/ "3ca3":
-/***/ (function(module, exports, __nested_webpack_require_148843__) {
+/***/ (function(module, exports, __nested_webpack_require_149088__) {
 
 "use strict";
 
-var charAt = __nested_webpack_require_148843__("6547").charAt;
-var InternalStateModule = __nested_webpack_require_148843__("69f3");
-var defineIterator = __nested_webpack_require_148843__("7dd0");
+var charAt = __nested_webpack_require_149088__("6547").charAt;
+var InternalStateModule = __nested_webpack_require_149088__("69f3");
+var defineIterator = __nested_webpack_require_149088__("7dd0");
 
 var STRING_ITERATOR = 'String Iterator';
 var setInternalState = InternalStateModule.set;
@@ -5041,12 +5029,12 @@ module.exports = {};
 /***/ }),
 
 /***/ "4160":
-/***/ (function(module, exports, __nested_webpack_require_150028__) {
+/***/ (function(module, exports, __nested_webpack_require_150273__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_150028__("23e7");
-var forEach = __nested_webpack_require_150028__("17c2");
+var $ = __nested_webpack_require_150273__("23e7");
+var forEach = __nested_webpack_require_150273__("17c2");
 
 // `Array.prototype.forEach` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.foreach
@@ -5058,9 +5046,9 @@ $({ target: 'Array', proto: true, forced: [].forEach != forEach }, {
 /***/ }),
 
 /***/ "428f":
-/***/ (function(module, exports, __nested_webpack_require_150399__) {
+/***/ (function(module, exports, __nested_webpack_require_150644__) {
 
-var global = __nested_webpack_require_150399__("da84");
+var global = __nested_webpack_require_150644__("da84");
 
 module.exports = global;
 
@@ -5068,10 +5056,10 @@ module.exports = global;
 /***/ }),
 
 /***/ "44ad":
-/***/ (function(module, exports, __nested_webpack_require_150551__) {
+/***/ (function(module, exports, __nested_webpack_require_150796__) {
 
-var fails = __nested_webpack_require_150551__("d039");
-var classof = __nested_webpack_require_150551__("c6b6");
+var fails = __nested_webpack_require_150796__("d039");
+var classof = __nested_webpack_require_150796__("c6b6");
 
 var split = ''.split;
 
@@ -5088,11 +5076,11 @@ module.exports = fails(function () {
 /***/ }),
 
 /***/ "44d2":
-/***/ (function(module, exports, __nested_webpack_require_151128__) {
+/***/ (function(module, exports, __nested_webpack_require_151373__) {
 
-var wellKnownSymbol = __nested_webpack_require_151128__("b622");
-var create = __nested_webpack_require_151128__("7c73");
-var definePropertyModule = __nested_webpack_require_151128__("9bf2");
+var wellKnownSymbol = __nested_webpack_require_151373__("b622");
+var create = __nested_webpack_require_151373__("7c73");
+var definePropertyModule = __nested_webpack_require_151373__("9bf2");
 
 var UNSCOPABLES = wellKnownSymbol('unscopables');
 var ArrayPrototype = Array.prototype;
@@ -5115,9 +5103,9 @@ module.exports = function (key) {
 /***/ }),
 
 /***/ "44de":
-/***/ (function(module, exports, __nested_webpack_require_151842__) {
+/***/ (function(module, exports, __nested_webpack_require_152087__) {
 
-var global = __nested_webpack_require_151842__("da84");
+var global = __nested_webpack_require_152087__("da84");
 
 module.exports = function (a, b) {
   var console = global.console;
@@ -5130,11 +5118,11 @@ module.exports = function (a, b) {
 /***/ }),
 
 /***/ "44e7":
-/***/ (function(module, exports, __nested_webpack_require_152146__) {
+/***/ (function(module, exports, __nested_webpack_require_152391__) {
 
-var isObject = __nested_webpack_require_152146__("861d");
-var classof = __nested_webpack_require_152146__("c6b6");
-var wellKnownSymbol = __nested_webpack_require_152146__("b622");
+var isObject = __nested_webpack_require_152391__("861d");
+var classof = __nested_webpack_require_152391__("c6b6");
+var wellKnownSymbol = __nested_webpack_require_152391__("b622");
 
 var MATCH = wellKnownSymbol('match');
 
@@ -5149,14 +5137,14 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "45fc":
-/***/ (function(module, exports, __nested_webpack_require_152645__) {
+/***/ (function(module, exports, __nested_webpack_require_152890__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_152645__("23e7");
-var $some = __nested_webpack_require_152645__("b727").some;
-var arrayMethodIsStrict = __nested_webpack_require_152645__("a640");
-var arrayMethodUsesToLength = __nested_webpack_require_152645__("ae40");
+var $ = __nested_webpack_require_152890__("23e7");
+var $some = __nested_webpack_require_152890__("b727").some;
+var arrayMethodIsStrict = __nested_webpack_require_152890__("a640");
+var arrayMethodUsesToLength = __nested_webpack_require_152890__("ae40");
 
 var STRICT_METHOD = arrayMethodIsStrict('some');
 var USES_TO_LENGTH = arrayMethodUsesToLength('some');
@@ -5173,16 +5161,16 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD || !USES_TO_LENGTH }, {
 /***/ }),
 
 /***/ "466d":
-/***/ (function(module, exports, __nested_webpack_require_153365__) {
+/***/ (function(module, exports, __nested_webpack_require_153610__) {
 
 "use strict";
 
-var fixRegExpWellKnownSymbolLogic = __nested_webpack_require_153365__("d784");
-var anObject = __nested_webpack_require_153365__("825a");
-var toLength = __nested_webpack_require_153365__("50c4");
-var requireObjectCoercible = __nested_webpack_require_153365__("1d80");
-var advanceStringIndex = __nested_webpack_require_153365__("8aa5");
-var regExpExec = __nested_webpack_require_153365__("14c3");
+var fixRegExpWellKnownSymbolLogic = __nested_webpack_require_153610__("d784");
+var anObject = __nested_webpack_require_153610__("825a");
+var toLength = __nested_webpack_require_153610__("50c4");
+var requireObjectCoercible = __nested_webpack_require_153610__("1d80");
+var advanceStringIndex = __nested_webpack_require_153610__("8aa5");
+var regExpExec = __nested_webpack_require_153610__("14c3");
 
 // @@match logic
 fixRegExpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCallNative) {
@@ -5225,11 +5213,11 @@ fixRegExpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCal
 /***/ }),
 
 /***/ "4840":
-/***/ (function(module, exports, __nested_webpack_require_155001__) {
+/***/ (function(module, exports, __nested_webpack_require_155246__) {
 
-var anObject = __nested_webpack_require_155001__("825a");
-var aFunction = __nested_webpack_require_155001__("1c0b");
-var wellKnownSymbol = __nested_webpack_require_155001__("b622");
+var anObject = __nested_webpack_require_155246__("825a");
+var aFunction = __nested_webpack_require_155246__("1c0b");
+var wellKnownSymbol = __nested_webpack_require_155246__("b622");
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -5245,9 +5233,9 @@ module.exports = function (O, defaultConstructor) {
 /***/ }),
 
 /***/ "4930":
-/***/ (function(module, exports, __nested_webpack_require_155574__) {
+/***/ (function(module, exports, __nested_webpack_require_155819__) {
 
-var fails = __nested_webpack_require_155574__("d039");
+var fails = __nested_webpack_require_155819__("d039");
 
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
   // Chrome 38 Symbol has incorrect toString conversion
@@ -5259,13 +5247,13 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 /***/ }),
 
 /***/ "498a":
-/***/ (function(module, exports, __nested_webpack_require_155899__) {
+/***/ (function(module, exports, __nested_webpack_require_156144__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_155899__("23e7");
-var $trim = __nested_webpack_require_155899__("58a8").trim;
-var forcedStringTrimMethod = __nested_webpack_require_155899__("c8d2");
+var $ = __nested_webpack_require_156144__("23e7");
+var $trim = __nested_webpack_require_156144__("58a8").trim;
+var forcedStringTrimMethod = __nested_webpack_require_156144__("c8d2");
 
 // `String.prototype.trim` method
 // https://tc39.github.io/ecma262/#sec-string.prototype.trim
@@ -5279,14 +5267,14 @@ $({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
 /***/ }),
 
 /***/ "499e":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_156384__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_156629__) {
 
 "use strict";
 // ESM COMPAT FLAG
-__nested_webpack_require_156384__.r(__webpack_exports__);
+__nested_webpack_require_156629__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_156384__.d(__webpack_exports__, "default", function() { return /* binding */ addStylesClient; });
+__nested_webpack_require_156629__.d(__webpack_exports__, "default", function() { return /* binding */ addStylesClient; });
 
 // CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/listToStyles.js
 /**
@@ -5545,16 +5533,16 @@ function applyToTag (styleElement, obj) {
 /***/ }),
 
 /***/ "4ae1":
-/***/ (function(module, exports, __nested_webpack_require_163621__) {
+/***/ (function(module, exports, __nested_webpack_require_163866__) {
 
-var $ = __nested_webpack_require_163621__("23e7");
-var getBuiltIn = __nested_webpack_require_163621__("d066");
-var aFunction = __nested_webpack_require_163621__("1c0b");
-var anObject = __nested_webpack_require_163621__("825a");
-var isObject = __nested_webpack_require_163621__("861d");
-var create = __nested_webpack_require_163621__("7c73");
-var bind = __nested_webpack_require_163621__("0538");
-var fails = __nested_webpack_require_163621__("d039");
+var $ = __nested_webpack_require_163866__("23e7");
+var getBuiltIn = __nested_webpack_require_163866__("d066");
+var aFunction = __nested_webpack_require_163866__("1c0b");
+var anObject = __nested_webpack_require_163866__("825a");
+var isObject = __nested_webpack_require_163866__("861d");
+var create = __nested_webpack_require_163866__("7c73");
+var bind = __nested_webpack_require_163866__("0538");
+var fails = __nested_webpack_require_163866__("d039");
 
 var nativeConstruct = getBuiltIn('Reflect', 'construct');
 
@@ -5603,11 +5591,11 @@ $({ target: 'Reflect', stat: true, forced: FORCED, sham: FORCED }, {
 /***/ }),
 
 /***/ "4d64":
-/***/ (function(module, exports, __nested_webpack_require_165839__) {
+/***/ (function(module, exports, __nested_webpack_require_166084__) {
 
-var toIndexedObject = __nested_webpack_require_165839__("fc6a");
-var toLength = __nested_webpack_require_165839__("50c4");
-var toAbsoluteIndex = __nested_webpack_require_165839__("23cb");
+var toIndexedObject = __nested_webpack_require_166084__("fc6a");
+var toLength = __nested_webpack_require_166084__("50c4");
+var toAbsoluteIndex = __nested_webpack_require_166084__("23cb");
 
 // `Array.prototype.{ indexOf, includes }` methods implementation
 var createMethod = function (IS_INCLUDES) {
@@ -5642,14 +5630,14 @@ module.exports = {
 /***/ }),
 
 /***/ "4de4":
-/***/ (function(module, exports, __nested_webpack_require_167172__) {
+/***/ (function(module, exports, __nested_webpack_require_167417__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_167172__("23e7");
-var $filter = __nested_webpack_require_167172__("b727").filter;
-var arrayMethodHasSpeciesSupport = __nested_webpack_require_167172__("1dde");
-var arrayMethodUsesToLength = __nested_webpack_require_167172__("ae40");
+var $ = __nested_webpack_require_167417__("23e7");
+var $filter = __nested_webpack_require_167417__("b727").filter;
+var arrayMethodHasSpeciesSupport = __nested_webpack_require_167417__("1dde");
+var arrayMethodUsesToLength = __nested_webpack_require_167417__("ae40");
 
 var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
 // Edge 14- issue
@@ -5668,17 +5656,17 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGT
 /***/ }),
 
 /***/ "4df4":
-/***/ (function(module, exports, __nested_webpack_require_167994__) {
+/***/ (function(module, exports, __nested_webpack_require_168239__) {
 
 "use strict";
 
-var bind = __nested_webpack_require_167994__("0366");
-var toObject = __nested_webpack_require_167994__("7b0b");
-var callWithSafeIterationClosing = __nested_webpack_require_167994__("9bdd");
-var isArrayIteratorMethod = __nested_webpack_require_167994__("e95a");
-var toLength = __nested_webpack_require_167994__("50c4");
-var createProperty = __nested_webpack_require_167994__("8418");
-var getIteratorMethod = __nested_webpack_require_167994__("35a1");
+var bind = __nested_webpack_require_168239__("0366");
+var toObject = __nested_webpack_require_168239__("7b0b");
+var callWithSafeIterationClosing = __nested_webpack_require_168239__("9bdd");
+var isArrayIteratorMethod = __nested_webpack_require_168239__("e95a");
+var toLength = __nested_webpack_require_168239__("50c4");
+var createProperty = __nested_webpack_require_168239__("8418");
+var getIteratorMethod = __nested_webpack_require_168239__("35a1");
 
 // `Array.from` method implementation
 // https://tc39.github.io/ecma262/#sec-array.from
@@ -5717,12 +5705,12 @@ module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undef
 /***/ }),
 
 /***/ "4ec9":
-/***/ (function(module, exports, __nested_webpack_require_169814__) {
+/***/ (function(module, exports, __nested_webpack_require_170059__) {
 
 "use strict";
 
-var collection = __nested_webpack_require_169814__("6d61");
-var collectionStrong = __nested_webpack_require_169814__("6566");
+var collection = __nested_webpack_require_170059__("6d61");
+var collectionStrong = __nested_webpack_require_170059__("6566");
 
 // `Map` constructor
 // https://tc39.github.io/ecma262/#sec-map-objects
@@ -5734,9 +5722,9 @@ module.exports = collection('Map', function (init) {
 /***/ }),
 
 /***/ "50c4":
-/***/ (function(module, exports, __nested_webpack_require_170252__) {
+/***/ (function(module, exports, __nested_webpack_require_170497__) {
 
-var toInteger = __nested_webpack_require_170252__("a691");
+var toInteger = __nested_webpack_require_170497__("a691");
 
 var min = Math.min;
 
@@ -5762,24 +5750,24 @@ module.exports = function (it, key) {
 /***/ }),
 
 /***/ "53ca":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_170829__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_171074__) {
 
 "use strict";
-/* harmony export (binding) */ __nested_webpack_require_170829__.d(__webpack_exports__, "a", function() { return _typeof; });
-/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_170829__("a4d3");
-/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_170829__.n(core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_170829__("e01a");
-/* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_170829__.n(core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_170829__("d28b");
-/* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nested_webpack_require_170829__.n(core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_170829__("e260");
-/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__nested_webpack_require_170829__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_170829__("d3b7");
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__nested_webpack_require_170829__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_170829__("3ca3");
-/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__nested_webpack_require_170829__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_6__ = __nested_webpack_require_170829__("ddb0");
-/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__nested_webpack_require_170829__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony export (binding) */ __nested_webpack_require_171074__.d(__webpack_exports__, "a", function() { return _typeof; });
+/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_171074__("a4d3");
+/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_171074__.n(core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_171074__("e01a");
+/* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_171074__.n(core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_171074__("d28b");
+/* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nested_webpack_require_171074__.n(core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_171074__("e260");
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__nested_webpack_require_171074__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_171074__("d3b7");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__nested_webpack_require_171074__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_171074__("3ca3");
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__nested_webpack_require_171074__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_6__ = __nested_webpack_require_171074__("ddb0");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__nested_webpack_require_171074__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
@@ -5806,10 +5794,10 @@ function _typeof(obj) {
 /***/ }),
 
 /***/ "5692":
-/***/ (function(module, exports, __nested_webpack_require_173716__) {
+/***/ (function(module, exports, __nested_webpack_require_173961__) {
 
-var IS_PURE = __nested_webpack_require_173716__("c430");
-var store = __nested_webpack_require_173716__("c6cd");
+var IS_PURE = __nested_webpack_require_173961__("c430");
+var store = __nested_webpack_require_173961__("c6cd");
 
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
@@ -5823,12 +5811,12 @@ var store = __nested_webpack_require_173716__("c6cd");
 /***/ }),
 
 /***/ "56ef":
-/***/ (function(module, exports, __nested_webpack_require_174138__) {
+/***/ (function(module, exports, __nested_webpack_require_174383__) {
 
-var getBuiltIn = __nested_webpack_require_174138__("d066");
-var getOwnPropertyNamesModule = __nested_webpack_require_174138__("241c");
-var getOwnPropertySymbolsModule = __nested_webpack_require_174138__("7418");
-var anObject = __nested_webpack_require_174138__("825a");
+var getBuiltIn = __nested_webpack_require_174383__("d066");
+var getOwnPropertyNamesModule = __nested_webpack_require_174383__("241c");
+var getOwnPropertySymbolsModule = __nested_webpack_require_174383__("7418");
+var anObject = __nested_webpack_require_174383__("825a");
 
 // all object keys, includes non-enumerable and symbols
 module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
@@ -5851,10 +5839,10 @@ module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u
 /***/ }),
 
 /***/ "58a8":
-/***/ (function(module, exports, __nested_webpack_require_175084__) {
+/***/ (function(module, exports, __nested_webpack_require_175329__) {
 
-var requireObjectCoercible = __nested_webpack_require_175084__("1d80");
-var whitespaces = __nested_webpack_require_175084__("5899");
+var requireObjectCoercible = __nested_webpack_require_175329__("1d80");
+var whitespaces = __nested_webpack_require_175329__("5899");
 
 var whitespace = '[' + whitespaces + ']';
 var ltrim = RegExp('^' + whitespace + whitespace + '*');
@@ -5886,9 +5874,9 @@ module.exports = {
 /***/ }),
 
 /***/ "5a34":
-/***/ (function(module, exports, __nested_webpack_require_176218__) {
+/***/ (function(module, exports, __nested_webpack_require_176463__) {
 
-var isRegExp = __nested_webpack_require_176218__("44e7");
+var isRegExp = __nested_webpack_require_176463__("44e7");
 
 module.exports = function (it) {
   if (isRegExp(it)) {
@@ -5900,7 +5888,7 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "5c0b":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_176502__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_176747__) {
 
 "use strict";
 
@@ -5912,34 +5900,34 @@ var staticRenderFns = []
 // CONCATENATED MODULE: ./src/components/QrcodeCapture.vue?vue&type=template&id=b4532170&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.for-each.js
-var es_array_for_each = __nested_webpack_require_176502__("4160");
+var es_array_for_each = __nested_webpack_require_176747__("4160");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
-var es_array_map = __nested_webpack_require_176502__("d81d");
+var es_array_map = __nested_webpack_require_176747__("d81d");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
-var web_dom_collections_for_each = __nested_webpack_require_176502__("159b");
+var web_dom_collections_for_each = __nested_webpack_require_176747__("159b");
 
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
-var runtime = __nested_webpack_require_176502__("96cf");
+var runtime = __nested_webpack_require_176747__("96cf");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
-var asyncToGenerator = __nested_webpack_require_176502__("1da1");
+var asyncToGenerator = __nested_webpack_require_176747__("1da1");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 3 modules
-var toConsumableArray = __nested_webpack_require_176502__("2909");
+var toConsumableArray = __nested_webpack_require_176747__("2909");
 
 // EXTERNAL MODULE: ./src/misc/scanner.js
-var scanner = __nested_webpack_require_176502__("a180");
+var scanner = __nested_webpack_require_176747__("a180");
 
 // EXTERNAL MODULE: ./src/misc/image-data.js
-var image_data = __nested_webpack_require_176502__("f718");
+var image_data = __nested_webpack_require_176747__("f718");
 
 // EXTERNAL MODULE: ./src/mixins/CommonAPI.vue + 2 modules
-var CommonAPI = __nested_webpack_require_176502__("b3af");
+var CommonAPI = __nested_webpack_require_176747__("b3af");
 
 // EXTERNAL MODULE: ./src/worker/jsqr.js
-var jsqr = __nested_webpack_require_176502__("3c85");
+var jsqr = __nested_webpack_require_176747__("3c85");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/QrcodeCapture.vue?vue&type=script&lang=js&
 
@@ -6013,7 +6001,7 @@ var jsqr = __nested_webpack_require_176502__("3c85");
 // CONCATENATED MODULE: ./src/components/QrcodeCapture.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_QrcodeCapturevue_type_script_lang_js_ = (QrcodeCapturevue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __nested_webpack_require_176502__("2877");
+var componentNormalizer = __nested_webpack_require_176747__("2877");
 
 // CONCATENATED MODULE: ./src/components/QrcodeCapture.vue
 
@@ -6230,17 +6218,17 @@ module.exports = function (input) {
 /***/ }),
 
 /***/ "60da":
-/***/ (function(module, exports, __nested_webpack_require_186622__) {
+/***/ (function(module, exports, __nested_webpack_require_186867__) {
 
 "use strict";
 
-var DESCRIPTORS = __nested_webpack_require_186622__("83ab");
-var fails = __nested_webpack_require_186622__("d039");
-var objectKeys = __nested_webpack_require_186622__("df75");
-var getOwnPropertySymbolsModule = __nested_webpack_require_186622__("7418");
-var propertyIsEnumerableModule = __nested_webpack_require_186622__("d1e7");
-var toObject = __nested_webpack_require_186622__("7b0b");
-var IndexedObject = __nested_webpack_require_186622__("44ad");
+var DESCRIPTORS = __nested_webpack_require_186867__("83ab");
+var fails = __nested_webpack_require_186867__("d039");
+var objectKeys = __nested_webpack_require_186867__("df75");
+var getOwnPropertySymbolsModule = __nested_webpack_require_186867__("7418");
+var propertyIsEnumerableModule = __nested_webpack_require_186867__("d1e7");
+var toObject = __nested_webpack_require_186867__("7b0b");
+var IndexedObject = __nested_webpack_require_186867__("44ad");
 
 var nativeAssign = Object.assign;
 var defineProperty = Object.defineProperty;
@@ -6290,10 +6278,10 @@ module.exports = !nativeAssign || fails(function () {
 /***/ }),
 
 /***/ "6547":
-/***/ (function(module, exports, __nested_webpack_require_188692__) {
+/***/ (function(module, exports, __nested_webpack_require_188937__) {
 
-var toInteger = __nested_webpack_require_188692__("a691");
-var requireObjectCoercible = __nested_webpack_require_188692__("1d80");
+var toInteger = __nested_webpack_require_188937__("a691");
+var requireObjectCoercible = __nested_webpack_require_188937__("1d80");
 
 // `String.prototype.{ codePointAt, at }` methods implementation
 var createMethod = function (CONVERT_TO_STRING) {
@@ -6324,21 +6312,21 @@ module.exports = {
 /***/ }),
 
 /***/ "6566":
-/***/ (function(module, exports, __nested_webpack_require_189898__) {
+/***/ (function(module, exports, __nested_webpack_require_190143__) {
 
 "use strict";
 
-var defineProperty = __nested_webpack_require_189898__("9bf2").f;
-var create = __nested_webpack_require_189898__("7c73");
-var redefineAll = __nested_webpack_require_189898__("e2cc");
-var bind = __nested_webpack_require_189898__("0366");
-var anInstance = __nested_webpack_require_189898__("19aa");
-var iterate = __nested_webpack_require_189898__("2266");
-var defineIterator = __nested_webpack_require_189898__("7dd0");
-var setSpecies = __nested_webpack_require_189898__("2626");
-var DESCRIPTORS = __nested_webpack_require_189898__("83ab");
-var fastKey = __nested_webpack_require_189898__("f183").fastKey;
-var InternalStateModule = __nested_webpack_require_189898__("69f3");
+var defineProperty = __nested_webpack_require_190143__("9bf2").f;
+var create = __nested_webpack_require_190143__("7c73");
+var redefineAll = __nested_webpack_require_190143__("e2cc");
+var bind = __nested_webpack_require_190143__("0366");
+var anInstance = __nested_webpack_require_190143__("19aa");
+var iterate = __nested_webpack_require_190143__("2266");
+var defineIterator = __nested_webpack_require_190143__("7dd0");
+var setSpecies = __nested_webpack_require_190143__("2626");
+var DESCRIPTORS = __nested_webpack_require_190143__("83ab");
+var fastKey = __nested_webpack_require_190143__("f183").fastKey;
+var InternalStateModule = __nested_webpack_require_190143__("69f3");
 
 var setInternalState = InternalStateModule.set;
 var internalStateGetterFor = InternalStateModule.getterFor;
@@ -6518,11 +6506,11 @@ module.exports = {
 /***/ }),
 
 /***/ "65f0":
-/***/ (function(module, exports, __nested_webpack_require_196590__) {
+/***/ (function(module, exports, __nested_webpack_require_196835__) {
 
-var isObject = __nested_webpack_require_196590__("861d");
-var isArray = __nested_webpack_require_196590__("e8b5");
-var wellKnownSymbol = __nested_webpack_require_196590__("b622");
+var isObject = __nested_webpack_require_196835__("861d");
+var isArray = __nested_webpack_require_196835__("e8b5");
+var wellKnownSymbol = __nested_webpack_require_196835__("b622");
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -6545,15 +6533,15 @@ module.exports = function (originalArray, length) {
 /***/ }),
 
 /***/ "69f3":
-/***/ (function(module, exports, __nested_webpack_require_197370__) {
+/***/ (function(module, exports, __nested_webpack_require_197615__) {
 
-var NATIVE_WEAK_MAP = __nested_webpack_require_197370__("7f9a");
-var global = __nested_webpack_require_197370__("da84");
-var isObject = __nested_webpack_require_197370__("861d");
-var createNonEnumerableProperty = __nested_webpack_require_197370__("9112");
-var objectHas = __nested_webpack_require_197370__("5135");
-var sharedKey = __nested_webpack_require_197370__("f772");
-var hiddenKeys = __nested_webpack_require_197370__("d012");
+var NATIVE_WEAK_MAP = __nested_webpack_require_197615__("7f9a");
+var global = __nested_webpack_require_197615__("da84");
+var isObject = __nested_webpack_require_197615__("861d");
+var createNonEnumerableProperty = __nested_webpack_require_197615__("9112");
+var objectHas = __nested_webpack_require_197615__("5135");
+var sharedKey = __nested_webpack_require_197615__("f772");
+var hiddenKeys = __nested_webpack_require_197615__("d012");
 
 var WeakMap = global.WeakMap;
 var set, get, has;
@@ -6613,10 +6601,10 @@ module.exports = {
 /***/ }),
 
 /***/ "6b75":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_198949__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_199194__) {
 
 "use strict";
-/* harmony export (binding) */ __nested_webpack_require_198949__.d(__webpack_exports__, "a", function() { return _arrayLikeToArray; });
+/* harmony export (binding) */ __nested_webpack_require_199194__.d(__webpack_exports__, "a", function() { return _arrayLikeToArray; });
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
 
@@ -6630,22 +6618,22 @@ function _arrayLikeToArray(arr, len) {
 /***/ }),
 
 /***/ "6d61":
-/***/ (function(module, exports, __nested_webpack_require_199366__) {
+/***/ (function(module, exports, __nested_webpack_require_199611__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_199366__("23e7");
-var global = __nested_webpack_require_199366__("da84");
-var isForced = __nested_webpack_require_199366__("94ca");
-var redefine = __nested_webpack_require_199366__("6eeb");
-var InternalMetadataModule = __nested_webpack_require_199366__("f183");
-var iterate = __nested_webpack_require_199366__("2266");
-var anInstance = __nested_webpack_require_199366__("19aa");
-var isObject = __nested_webpack_require_199366__("861d");
-var fails = __nested_webpack_require_199366__("d039");
-var checkCorrectnessOfIteration = __nested_webpack_require_199366__("1c7e");
-var setToStringTag = __nested_webpack_require_199366__("d44e");
-var inheritIfRequired = __nested_webpack_require_199366__("7156");
+var $ = __nested_webpack_require_199611__("23e7");
+var global = __nested_webpack_require_199611__("da84");
+var isForced = __nested_webpack_require_199611__("94ca");
+var redefine = __nested_webpack_require_199611__("6eeb");
+var InternalMetadataModule = __nested_webpack_require_199611__("f183");
+var iterate = __nested_webpack_require_199611__("2266");
+var anInstance = __nested_webpack_require_199611__("19aa");
+var isObject = __nested_webpack_require_199611__("861d");
+var fails = __nested_webpack_require_199611__("d039");
+var checkCorrectnessOfIteration = __nested_webpack_require_199611__("1c7e");
+var setToStringTag = __nested_webpack_require_199611__("d44e");
+var inheritIfRequired = __nested_webpack_require_199611__("7156");
 
 module.exports = function (CONSTRUCTOR_NAME, wrapper, common) {
   var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
@@ -6737,14 +6725,14 @@ module.exports = function (CONSTRUCTOR_NAME, wrapper, common) {
 /***/ }),
 
 /***/ "6eeb":
-/***/ (function(module, exports, __nested_webpack_require_203628__) {
+/***/ (function(module, exports, __nested_webpack_require_203873__) {
 
-var global = __nested_webpack_require_203628__("da84");
-var createNonEnumerableProperty = __nested_webpack_require_203628__("9112");
-var has = __nested_webpack_require_203628__("5135");
-var setGlobal = __nested_webpack_require_203628__("ce4e");
-var inspectSource = __nested_webpack_require_203628__("8925");
-var InternalStateModule = __nested_webpack_require_203628__("69f3");
+var global = __nested_webpack_require_203873__("da84");
+var createNonEnumerableProperty = __nested_webpack_require_203873__("9112");
+var has = __nested_webpack_require_203873__("5135");
+var setGlobal = __nested_webpack_require_203873__("ce4e");
+var inspectSource = __nested_webpack_require_203873__("8925");
+var InternalStateModule = __nested_webpack_require_203873__("69f3");
 
 var getInternalState = InternalStateModule.get;
 var enforceInternalState = InternalStateModule.enforce;
@@ -6778,10 +6766,10 @@ var TEMPLATE = String(String).split('String');
 /***/ }),
 
 /***/ "7156":
-/***/ (function(module, exports, __nested_webpack_require_205163__) {
+/***/ (function(module, exports, __nested_webpack_require_205408__) {
 
-var isObject = __nested_webpack_require_205163__("861d");
-var setPrototypeOf = __nested_webpack_require_205163__("d2bb");
+var isObject = __nested_webpack_require_205408__("861d");
+var setPrototypeOf = __nested_webpack_require_205408__("d2bb");
 
 // makes subclassing work correct for wrapped built-ins
 module.exports = function ($this, dummy, Wrapper) {
@@ -6810,12 +6798,12 @@ exports.f = Object.getOwnPropertySymbols;
 /***/ }),
 
 /***/ "746f":
-/***/ (function(module, exports, __nested_webpack_require_206019__) {
+/***/ (function(module, exports, __nested_webpack_require_206264__) {
 
-var path = __nested_webpack_require_206019__("428f");
-var has = __nested_webpack_require_206019__("5135");
-var wrappedWellKnownSymbolModule = __nested_webpack_require_206019__("e538");
-var defineProperty = __nested_webpack_require_206019__("9bf2").f;
+var path = __nested_webpack_require_206264__("428f");
+var has = __nested_webpack_require_206264__("5135");
+var wrappedWellKnownSymbolModule = __nested_webpack_require_206264__("e538");
+var defineProperty = __nested_webpack_require_206264__("9bf2").f;
 
 module.exports = function (NAME) {
   var Symbol = path.Symbol || (path.Symbol = {});
@@ -6845,9 +6833,9 @@ module.exports = [
 /***/ }),
 
 /***/ "7b0b":
-/***/ (function(module, exports, __nested_webpack_require_206739__) {
+/***/ (function(module, exports, __nested_webpack_require_206984__) {
 
-var requireObjectCoercible = __nested_webpack_require_206739__("1d80");
+var requireObjectCoercible = __nested_webpack_require_206984__("1d80");
 
 // `ToObject` abstract operation
 // https://tc39.github.io/ecma262/#sec-toobject
@@ -6859,15 +6847,15 @@ module.exports = function (argument) {
 /***/ }),
 
 /***/ "7c73":
-/***/ (function(module, exports, __nested_webpack_require_207056__) {
+/***/ (function(module, exports, __nested_webpack_require_207301__) {
 
-var anObject = __nested_webpack_require_207056__("825a");
-var defineProperties = __nested_webpack_require_207056__("37e8");
-var enumBugKeys = __nested_webpack_require_207056__("7839");
-var hiddenKeys = __nested_webpack_require_207056__("d012");
-var html = __nested_webpack_require_207056__("1be4");
-var documentCreateElement = __nested_webpack_require_207056__("cc12");
-var sharedKey = __nested_webpack_require_207056__("f772");
+var anObject = __nested_webpack_require_207301__("825a");
+var defineProperties = __nested_webpack_require_207301__("37e8");
+var enumBugKeys = __nested_webpack_require_207301__("7839");
+var hiddenKeys = __nested_webpack_require_207301__("d012");
+var html = __nested_webpack_require_207301__("1be4");
+var documentCreateElement = __nested_webpack_require_207301__("cc12");
+var sharedKey = __nested_webpack_require_207301__("f772");
 
 var GT = '>';
 var LT = '<';
@@ -6944,14 +6932,14 @@ module.exports = Object.create || function create(O, Properties) {
 /***/ }),
 
 /***/ "7db0":
-/***/ (function(module, exports, __nested_webpack_require_209949__) {
+/***/ (function(module, exports, __nested_webpack_require_210194__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_209949__("23e7");
-var $find = __nested_webpack_require_209949__("b727").find;
-var addToUnscopables = __nested_webpack_require_209949__("44d2");
-var arrayMethodUsesToLength = __nested_webpack_require_209949__("ae40");
+var $ = __nested_webpack_require_210194__("23e7");
+var $find = __nested_webpack_require_210194__("b727").find;
+var addToUnscopables = __nested_webpack_require_210194__("44d2");
+var arrayMethodUsesToLength = __nested_webpack_require_210194__("ae40");
 
 var FIND = 'find';
 var SKIPS_HOLES = true;
@@ -6976,21 +6964,21 @@ addToUnscopables(FIND);
 /***/ }),
 
 /***/ "7dd0":
-/***/ (function(module, exports, __nested_webpack_require_210854__) {
+/***/ (function(module, exports, __nested_webpack_require_211099__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_210854__("23e7");
-var createIteratorConstructor = __nested_webpack_require_210854__("9ed3");
-var getPrototypeOf = __nested_webpack_require_210854__("e163");
-var setPrototypeOf = __nested_webpack_require_210854__("d2bb");
-var setToStringTag = __nested_webpack_require_210854__("d44e");
-var createNonEnumerableProperty = __nested_webpack_require_210854__("9112");
-var redefine = __nested_webpack_require_210854__("6eeb");
-var wellKnownSymbol = __nested_webpack_require_210854__("b622");
-var IS_PURE = __nested_webpack_require_210854__("c430");
-var Iterators = __nested_webpack_require_210854__("3f8c");
-var IteratorsCore = __nested_webpack_require_210854__("ae93");
+var $ = __nested_webpack_require_211099__("23e7");
+var createIteratorConstructor = __nested_webpack_require_211099__("9ed3");
+var getPrototypeOf = __nested_webpack_require_211099__("e163");
+var setPrototypeOf = __nested_webpack_require_211099__("d2bb");
+var setToStringTag = __nested_webpack_require_211099__("d44e");
+var createNonEnumerableProperty = __nested_webpack_require_211099__("9112");
+var redefine = __nested_webpack_require_211099__("6eeb");
+var wellKnownSymbol = __nested_webpack_require_211099__("b622");
+var IS_PURE = __nested_webpack_require_211099__("c430");
+var Iterators = __nested_webpack_require_211099__("3f8c");
+var IteratorsCore = __nested_webpack_require_211099__("ae93");
 
 var IteratorPrototype = IteratorsCore.IteratorPrototype;
 var BUGGY_SAFARI_ITERATORS = IteratorsCore.BUGGY_SAFARI_ITERATORS;
@@ -7074,10 +7062,10 @@ module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, I
 /***/ }),
 
 /***/ "7f9a":
-/***/ (function(module, exports, __nested_webpack_require_214833__) {
+/***/ (function(module, exports, __nested_webpack_require_215078__) {
 
-var global = __nested_webpack_require_214833__("da84");
-var inspectSource = __nested_webpack_require_214833__("8925");
+var global = __nested_webpack_require_215078__("da84");
+var inspectSource = __nested_webpack_require_215078__("8925");
 
 var WeakMap = global.WeakMap;
 
@@ -7087,9 +7075,9 @@ module.exports = typeof WeakMap === 'function' && /native code/.test(inspectSour
 /***/ }),
 
 /***/ "825a":
-/***/ (function(module, exports, __nested_webpack_require_215134__) {
+/***/ (function(module, exports, __nested_webpack_require_215379__) {
 
-var isObject = __nested_webpack_require_215134__("861d");
+var isObject = __nested_webpack_require_215379__("861d");
 
 module.exports = function (it) {
   if (!isObject(it)) {
@@ -7101,9 +7089,9 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "83ab":
-/***/ (function(module, exports, __nested_webpack_require_215392__) {
+/***/ (function(module, exports, __nested_webpack_require_215637__) {
 
-var fails = __nested_webpack_require_215392__("d039");
+var fails = __nested_webpack_require_215637__("d039");
 
 // Thank's IE8 for his funny defineProperty
 module.exports = !fails(function () {
@@ -7114,13 +7102,13 @@ module.exports = !fails(function () {
 /***/ }),
 
 /***/ "8418":
-/***/ (function(module, exports, __nested_webpack_require_215687__) {
+/***/ (function(module, exports, __nested_webpack_require_215932__) {
 
 "use strict";
 
-var toPrimitive = __nested_webpack_require_215687__("c04e");
-var definePropertyModule = __nested_webpack_require_215687__("9bf2");
-var createPropertyDescriptor = __nested_webpack_require_215687__("5c6c");
+var toPrimitive = __nested_webpack_require_215932__("c04e");
+var definePropertyModule = __nested_webpack_require_215932__("9bf2");
+var createPropertyDescriptor = __nested_webpack_require_215932__("5c6c");
 
 module.exports = function (object, key, value) {
   var propertyKey = toPrimitive(key);
@@ -7227,9 +7215,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ }),
 
 /***/ "8925":
-/***/ (function(module, exports, __nested_webpack_require_219609__) {
+/***/ (function(module, exports, __nested_webpack_require_219854__) {
 
-var store = __nested_webpack_require_219609__("c6cd");
+var store = __nested_webpack_require_219854__("c6cd");
 
 var functionToString = Function.toString;
 
@@ -7246,17 +7234,17 @@ module.exports = store.inspectSource;
 /***/ }),
 
 /***/ "8a79":
-/***/ (function(module, exports, __nested_webpack_require_220022__) {
+/***/ (function(module, exports, __nested_webpack_require_220267__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_220022__("23e7");
-var getOwnPropertyDescriptor = __nested_webpack_require_220022__("06cf").f;
-var toLength = __nested_webpack_require_220022__("50c4");
-var notARegExp = __nested_webpack_require_220022__("5a34");
-var requireObjectCoercible = __nested_webpack_require_220022__("1d80");
-var correctIsRegExpLogic = __nested_webpack_require_220022__("ab13");
-var IS_PURE = __nested_webpack_require_220022__("c430");
+var $ = __nested_webpack_require_220267__("23e7");
+var getOwnPropertyDescriptor = __nested_webpack_require_220267__("06cf").f;
+var toLength = __nested_webpack_require_220267__("50c4");
+var notARegExp = __nested_webpack_require_220267__("5a34");
+var requireObjectCoercible = __nested_webpack_require_220267__("1d80");
+var correctIsRegExpLogic = __nested_webpack_require_220267__("ab13");
+var IS_PURE = __nested_webpack_require_220267__("c430");
 
 var nativeEndsWith = ''.endsWith;
 var min = Math.min;
@@ -7288,11 +7276,11 @@ $({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGE
 /***/ }),
 
 /***/ "8aa5":
-/***/ (function(module, exports, __nested_webpack_require_221562__) {
+/***/ (function(module, exports, __nested_webpack_require_221807__) {
 
 "use strict";
 
-var charAt = __nested_webpack_require_221562__("6547").charAt;
+var charAt = __nested_webpack_require_221807__("6547").charAt;
 
 // `AdvanceStringIndex` abstract operation
 // https://tc39.github.io/ecma262/#sec-advancestringindex
@@ -7317,11 +7305,11 @@ module.exports = function (key) {
 /***/ }),
 
 /***/ "9112":
-/***/ (function(module, exports, __nested_webpack_require_222161__) {
+/***/ (function(module, exports, __nested_webpack_require_222406__) {
 
-var DESCRIPTORS = __nested_webpack_require_222161__("83ab");
-var definePropertyModule = __nested_webpack_require_222161__("9bf2");
-var createPropertyDescriptor = __nested_webpack_require_222161__("5c6c");
+var DESCRIPTORS = __nested_webpack_require_222406__("83ab");
+var definePropertyModule = __nested_webpack_require_222406__("9bf2");
+var createPropertyDescriptor = __nested_webpack_require_222406__("5c6c");
 
 module.exports = DESCRIPTORS ? function (object, key, value) {
   return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
@@ -7334,12 +7322,12 @@ module.exports = DESCRIPTORS ? function (object, key, value) {
 /***/ }),
 
 /***/ "9263":
-/***/ (function(module, exports, __nested_webpack_require_222633__) {
+/***/ (function(module, exports, __nested_webpack_require_222878__) {
 
 "use strict";
 
-var regexpFlags = __nested_webpack_require_222633__("ad6d");
-var stickyHelpers = __nested_webpack_require_222633__("9f7f");
+var regexpFlags = __nested_webpack_require_222878__("ad6d");
+var stickyHelpers = __nested_webpack_require_222878__("9f7f");
 
 var nativeExec = RegExp.prototype.exec;
 // This always refers to the native implementation, because the
@@ -7429,9 +7417,9 @@ module.exports = patchedExec;
 /***/ }),
 
 /***/ "94ca":
-/***/ (function(module, exports, __nested_webpack_require_225529__) {
+/***/ (function(module, exports, __nested_webpack_require_225774__) {
 
-var fails = __nested_webpack_require_225529__("d039");
+var fails = __nested_webpack_require_225774__("d039");
 
 var replacement = /#|\.prototype\./;
 
@@ -8193,31 +8181,31 @@ try {
 /***/ }),
 
 /***/ "9861":
-/***/ (function(module, exports, __nested_webpack_require_250443__) {
+/***/ (function(module, exports, __nested_webpack_require_250688__) {
 
 "use strict";
 
 // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
-__nested_webpack_require_250443__("e260");
-var $ = __nested_webpack_require_250443__("23e7");
-var getBuiltIn = __nested_webpack_require_250443__("d066");
-var USE_NATIVE_URL = __nested_webpack_require_250443__("0d3b");
-var redefine = __nested_webpack_require_250443__("6eeb");
-var redefineAll = __nested_webpack_require_250443__("e2cc");
-var setToStringTag = __nested_webpack_require_250443__("d44e");
-var createIteratorConstructor = __nested_webpack_require_250443__("9ed3");
-var InternalStateModule = __nested_webpack_require_250443__("69f3");
-var anInstance = __nested_webpack_require_250443__("19aa");
-var hasOwn = __nested_webpack_require_250443__("5135");
-var bind = __nested_webpack_require_250443__("0366");
-var classof = __nested_webpack_require_250443__("f5df");
-var anObject = __nested_webpack_require_250443__("825a");
-var isObject = __nested_webpack_require_250443__("861d");
-var create = __nested_webpack_require_250443__("7c73");
-var createPropertyDescriptor = __nested_webpack_require_250443__("5c6c");
-var getIterator = __nested_webpack_require_250443__("9a1f");
-var getIteratorMethod = __nested_webpack_require_250443__("35a1");
-var wellKnownSymbol = __nested_webpack_require_250443__("b622");
+__nested_webpack_require_250688__("e260");
+var $ = __nested_webpack_require_250688__("23e7");
+var getBuiltIn = __nested_webpack_require_250688__("d066");
+var USE_NATIVE_URL = __nested_webpack_require_250688__("0d3b");
+var redefine = __nested_webpack_require_250688__("6eeb");
+var redefineAll = __nested_webpack_require_250688__("e2cc");
+var setToStringTag = __nested_webpack_require_250688__("d44e");
+var createIteratorConstructor = __nested_webpack_require_250688__("9ed3");
+var InternalStateModule = __nested_webpack_require_250688__("69f3");
+var anInstance = __nested_webpack_require_250688__("19aa");
+var hasOwn = __nested_webpack_require_250688__("5135");
+var bind = __nested_webpack_require_250688__("0366");
+var classof = __nested_webpack_require_250688__("f5df");
+var anObject = __nested_webpack_require_250688__("825a");
+var isObject = __nested_webpack_require_250688__("861d");
+var create = __nested_webpack_require_250688__("7c73");
+var createPropertyDescriptor = __nested_webpack_require_250688__("5c6c");
+var getIterator = __nested_webpack_require_250688__("9a1f");
+var getIteratorMethod = __nested_webpack_require_250688__("35a1");
+var wellKnownSymbol = __nested_webpack_require_250688__("b622");
 
 var $fetch = getBuiltIn('fetch');
 var Headers = getBuiltIn('Headers');
@@ -8548,21 +8536,21 @@ module.exports = {
 /***/ }),
 
 /***/ "99af":
-/***/ (function(module, exports, __nested_webpack_require_262197__) {
+/***/ (function(module, exports, __nested_webpack_require_262442__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_262197__("23e7");
-var fails = __nested_webpack_require_262197__("d039");
-var isArray = __nested_webpack_require_262197__("e8b5");
-var isObject = __nested_webpack_require_262197__("861d");
-var toObject = __nested_webpack_require_262197__("7b0b");
-var toLength = __nested_webpack_require_262197__("50c4");
-var createProperty = __nested_webpack_require_262197__("8418");
-var arraySpeciesCreate = __nested_webpack_require_262197__("65f0");
-var arrayMethodHasSpeciesSupport = __nested_webpack_require_262197__("1dde");
-var wellKnownSymbol = __nested_webpack_require_262197__("b622");
-var V8_VERSION = __nested_webpack_require_262197__("2d00");
+var $ = __nested_webpack_require_262442__("23e7");
+var fails = __nested_webpack_require_262442__("d039");
+var isArray = __nested_webpack_require_262442__("e8b5");
+var isObject = __nested_webpack_require_262442__("861d");
+var toObject = __nested_webpack_require_262442__("7b0b");
+var toLength = __nested_webpack_require_262442__("50c4");
+var createProperty = __nested_webpack_require_262442__("8418");
+var arraySpeciesCreate = __nested_webpack_require_262442__("65f0");
+var arrayMethodHasSpeciesSupport = __nested_webpack_require_262442__("1dde");
+var wellKnownSymbol = __nested_webpack_require_262442__("b622");
+var V8_VERSION = __nested_webpack_require_262442__("2d00");
 
 var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
 var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
@@ -8616,10 +8604,10 @@ $({ target: 'Array', proto: true, forced: FORCED }, {
 /***/ }),
 
 /***/ "9a1f":
-/***/ (function(module, exports, __nested_webpack_require_264569__) {
+/***/ (function(module, exports, __nested_webpack_require_264814__) {
 
-var anObject = __nested_webpack_require_264569__("825a");
-var getIteratorMethod = __nested_webpack_require_264569__("35a1");
+var anObject = __nested_webpack_require_264814__("825a");
+var getIteratorMethod = __nested_webpack_require_264814__("35a1");
 
 module.exports = function (it) {
   var iteratorMethod = getIteratorMethod(it);
@@ -8632,9 +8620,9 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "9bdd":
-/***/ (function(module, exports, __nested_webpack_require_264978__) {
+/***/ (function(module, exports, __nested_webpack_require_265223__) {
 
-var anObject = __nested_webpack_require_264978__("825a");
+var anObject = __nested_webpack_require_265223__("825a");
 
 // call something on iterator step with safe closing on error
 module.exports = function (iterator, fn, value, ENTRIES) {
@@ -8652,12 +8640,12 @@ module.exports = function (iterator, fn, value, ENTRIES) {
 /***/ }),
 
 /***/ "9bf2":
-/***/ (function(module, exports, __nested_webpack_require_265512__) {
+/***/ (function(module, exports, __nested_webpack_require_265757__) {
 
-var DESCRIPTORS = __nested_webpack_require_265512__("83ab");
-var IE8_DOM_DEFINE = __nested_webpack_require_265512__("0cfb");
-var anObject = __nested_webpack_require_265512__("825a");
-var toPrimitive = __nested_webpack_require_265512__("c04e");
+var DESCRIPTORS = __nested_webpack_require_265757__("83ab");
+var IE8_DOM_DEFINE = __nested_webpack_require_265757__("0cfb");
+var anObject = __nested_webpack_require_265757__("825a");
+var toPrimitive = __nested_webpack_require_265757__("c04e");
 
 var nativeDefineProperty = Object.defineProperty;
 
@@ -8679,15 +8667,15 @@ exports.f = DESCRIPTORS ? nativeDefineProperty : function defineProperty(O, P, A
 /***/ }),
 
 /***/ "9ed3":
-/***/ (function(module, exports, __nested_webpack_require_266367__) {
+/***/ (function(module, exports, __nested_webpack_require_266612__) {
 
 "use strict";
 
-var IteratorPrototype = __nested_webpack_require_266367__("ae93").IteratorPrototype;
-var create = __nested_webpack_require_266367__("7c73");
-var createPropertyDescriptor = __nested_webpack_require_266367__("5c6c");
-var setToStringTag = __nested_webpack_require_266367__("d44e");
-var Iterators = __nested_webpack_require_266367__("3f8c");
+var IteratorPrototype = __nested_webpack_require_266612__("ae93").IteratorPrototype;
+var create = __nested_webpack_require_266612__("7c73");
+var createPropertyDescriptor = __nested_webpack_require_266612__("5c6c");
+var setToStringTag = __nested_webpack_require_266612__("d44e");
+var Iterators = __nested_webpack_require_266612__("3f8c");
 
 var returnThis = function () { return this; };
 
@@ -8703,12 +8691,12 @@ module.exports = function (IteratorConstructor, NAME, next) {
 /***/ }),
 
 /***/ "9f7f":
-/***/ (function(module, exports, __nested_webpack_require_267134__) {
+/***/ (function(module, exports, __nested_webpack_require_267379__) {
 
 "use strict";
 
 
-var fails = __nested_webpack_require_267134__("d039");
+var fails = __nested_webpack_require_267379__("d039");
 
 // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError,
 // so we use an intermediate function.
@@ -8734,15 +8722,15 @@ exports.BROKEN_CARET = fails(function () {
 /***/ }),
 
 /***/ "a180":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_267844__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_268089__) {
 
 "use strict";
-/* harmony export (binding) */ __nested_webpack_require_267844__.d(__webpack_exports__, "b", function() { return scan; });
-/* harmony export (binding) */ __nested_webpack_require_267844__.d(__webpack_exports__, "a", function() { return keepScanning; });
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_267844__("96cf");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_267844__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _home_travis_build_gruhn_vue_qrcode_reader_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_267844__("1da1");
-/* harmony import */ var callforth__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_267844__("c036");
+/* harmony export (binding) */ __nested_webpack_require_268089__.d(__webpack_exports__, "b", function() { return scan; });
+/* harmony export (binding) */ __nested_webpack_require_268089__.d(__webpack_exports__, "a", function() { return keepScanning; });
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_268089__("96cf");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_268089__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _home_travis_build_gruhn_vue_qrcode_reader_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_268089__("1da1");
+/* harmony import */ var callforth__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_268089__("c036");
 
 
 
@@ -8838,19 +8826,19 @@ var keepScanning = function keepScanning(spawnWorker, camera, options) {
 /***/ }),
 
 /***/ "a434":
-/***/ (function(module, exports, __nested_webpack_require_271389__) {
+/***/ (function(module, exports, __nested_webpack_require_271634__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_271389__("23e7");
-var toAbsoluteIndex = __nested_webpack_require_271389__("23cb");
-var toInteger = __nested_webpack_require_271389__("a691");
-var toLength = __nested_webpack_require_271389__("50c4");
-var toObject = __nested_webpack_require_271389__("7b0b");
-var arraySpeciesCreate = __nested_webpack_require_271389__("65f0");
-var createProperty = __nested_webpack_require_271389__("8418");
-var arrayMethodHasSpeciesSupport = __nested_webpack_require_271389__("1dde");
-var arrayMethodUsesToLength = __nested_webpack_require_271389__("ae40");
+var $ = __nested_webpack_require_271634__("23e7");
+var toAbsoluteIndex = __nested_webpack_require_271634__("23cb");
+var toInteger = __nested_webpack_require_271634__("a691");
+var toLength = __nested_webpack_require_271634__("50c4");
+var toObject = __nested_webpack_require_271634__("7b0b");
+var arraySpeciesCreate = __nested_webpack_require_271634__("65f0");
+var createProperty = __nested_webpack_require_271634__("8418");
+var arrayMethodHasSpeciesSupport = __nested_webpack_require_271634__("1dde");
+var arrayMethodUsesToLength = __nested_webpack_require_271634__("ae40");
 
 var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
 var USES_TO_LENGTH = arrayMethodUsesToLength('splice', { ACCESSORS: true, 0: 0, 1: 2 });
@@ -8916,46 +8904,46 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGT
 /***/ }),
 
 /***/ "a4d3":
-/***/ (function(module, exports, __nested_webpack_require_274193__) {
+/***/ (function(module, exports, __nested_webpack_require_274438__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_274193__("23e7");
-var global = __nested_webpack_require_274193__("da84");
-var getBuiltIn = __nested_webpack_require_274193__("d066");
-var IS_PURE = __nested_webpack_require_274193__("c430");
-var DESCRIPTORS = __nested_webpack_require_274193__("83ab");
-var NATIVE_SYMBOL = __nested_webpack_require_274193__("4930");
-var USE_SYMBOL_AS_UID = __nested_webpack_require_274193__("fdbf");
-var fails = __nested_webpack_require_274193__("d039");
-var has = __nested_webpack_require_274193__("5135");
-var isArray = __nested_webpack_require_274193__("e8b5");
-var isObject = __nested_webpack_require_274193__("861d");
-var anObject = __nested_webpack_require_274193__("825a");
-var toObject = __nested_webpack_require_274193__("7b0b");
-var toIndexedObject = __nested_webpack_require_274193__("fc6a");
-var toPrimitive = __nested_webpack_require_274193__("c04e");
-var createPropertyDescriptor = __nested_webpack_require_274193__("5c6c");
-var nativeObjectCreate = __nested_webpack_require_274193__("7c73");
-var objectKeys = __nested_webpack_require_274193__("df75");
-var getOwnPropertyNamesModule = __nested_webpack_require_274193__("241c");
-var getOwnPropertyNamesExternal = __nested_webpack_require_274193__("057f");
-var getOwnPropertySymbolsModule = __nested_webpack_require_274193__("7418");
-var getOwnPropertyDescriptorModule = __nested_webpack_require_274193__("06cf");
-var definePropertyModule = __nested_webpack_require_274193__("9bf2");
-var propertyIsEnumerableModule = __nested_webpack_require_274193__("d1e7");
-var createNonEnumerableProperty = __nested_webpack_require_274193__("9112");
-var redefine = __nested_webpack_require_274193__("6eeb");
-var shared = __nested_webpack_require_274193__("5692");
-var sharedKey = __nested_webpack_require_274193__("f772");
-var hiddenKeys = __nested_webpack_require_274193__("d012");
-var uid = __nested_webpack_require_274193__("90e3");
-var wellKnownSymbol = __nested_webpack_require_274193__("b622");
-var wrappedWellKnownSymbolModule = __nested_webpack_require_274193__("e538");
-var defineWellKnownSymbol = __nested_webpack_require_274193__("746f");
-var setToStringTag = __nested_webpack_require_274193__("d44e");
-var InternalStateModule = __nested_webpack_require_274193__("69f3");
-var $forEach = __nested_webpack_require_274193__("b727").forEach;
+var $ = __nested_webpack_require_274438__("23e7");
+var global = __nested_webpack_require_274438__("da84");
+var getBuiltIn = __nested_webpack_require_274438__("d066");
+var IS_PURE = __nested_webpack_require_274438__("c430");
+var DESCRIPTORS = __nested_webpack_require_274438__("83ab");
+var NATIVE_SYMBOL = __nested_webpack_require_274438__("4930");
+var USE_SYMBOL_AS_UID = __nested_webpack_require_274438__("fdbf");
+var fails = __nested_webpack_require_274438__("d039");
+var has = __nested_webpack_require_274438__("5135");
+var isArray = __nested_webpack_require_274438__("e8b5");
+var isObject = __nested_webpack_require_274438__("861d");
+var anObject = __nested_webpack_require_274438__("825a");
+var toObject = __nested_webpack_require_274438__("7b0b");
+var toIndexedObject = __nested_webpack_require_274438__("fc6a");
+var toPrimitive = __nested_webpack_require_274438__("c04e");
+var createPropertyDescriptor = __nested_webpack_require_274438__("5c6c");
+var nativeObjectCreate = __nested_webpack_require_274438__("7c73");
+var objectKeys = __nested_webpack_require_274438__("df75");
+var getOwnPropertyNamesModule = __nested_webpack_require_274438__("241c");
+var getOwnPropertyNamesExternal = __nested_webpack_require_274438__("057f");
+var getOwnPropertySymbolsModule = __nested_webpack_require_274438__("7418");
+var getOwnPropertyDescriptorModule = __nested_webpack_require_274438__("06cf");
+var definePropertyModule = __nested_webpack_require_274438__("9bf2");
+var propertyIsEnumerableModule = __nested_webpack_require_274438__("d1e7");
+var createNonEnumerableProperty = __nested_webpack_require_274438__("9112");
+var redefine = __nested_webpack_require_274438__("6eeb");
+var shared = __nested_webpack_require_274438__("5692");
+var sharedKey = __nested_webpack_require_274438__("f772");
+var hiddenKeys = __nested_webpack_require_274438__("d012");
+var uid = __nested_webpack_require_274438__("90e3");
+var wellKnownSymbol = __nested_webpack_require_274438__("b622");
+var wrappedWellKnownSymbolModule = __nested_webpack_require_274438__("e538");
+var defineWellKnownSymbol = __nested_webpack_require_274438__("746f");
+var setToStringTag = __nested_webpack_require_274438__("d44e");
+var InternalStateModule = __nested_webpack_require_274438__("69f3");
+var $forEach = __nested_webpack_require_274438__("b727").forEach;
 
 var HIDDEN = sharedKey('hidden');
 var SYMBOL = 'Symbol';
@@ -9235,11 +9223,11 @@ hiddenKeys[HIDDEN] = true;
 /***/ }),
 
 /***/ "a630":
-/***/ (function(module, exports, __nested_webpack_require_286945__) {
+/***/ (function(module, exports, __nested_webpack_require_287190__) {
 
-var $ = __nested_webpack_require_286945__("23e7");
-var from = __nested_webpack_require_286945__("4df4");
-var checkCorrectnessOfIteration = __nested_webpack_require_286945__("1c7e");
+var $ = __nested_webpack_require_287190__("23e7");
+var from = __nested_webpack_require_287190__("4df4");
+var checkCorrectnessOfIteration = __nested_webpack_require_287190__("1c7e");
 
 var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
   Array.from(iterable);
@@ -9255,11 +9243,11 @@ $({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
 /***/ }),
 
 /***/ "a640":
-/***/ (function(module, exports, __nested_webpack_require_287432__) {
+/***/ (function(module, exports, __nested_webpack_require_287677__) {
 
 "use strict";
 
-var fails = __nested_webpack_require_287432__("d039");
+var fails = __nested_webpack_require_287677__("d039");
 
 module.exports = function (METHOD_NAME, argument) {
   var method = [][METHOD_NAME];
@@ -9288,9 +9276,9 @@ module.exports = function (argument) {
 /***/ }),
 
 /***/ "ab13":
-/***/ (function(module, exports, __nested_webpack_require_288155__) {
+/***/ (function(module, exports, __nested_webpack_require_288400__) {
 
-var wellKnownSymbol = __nested_webpack_require_288155__("b622");
+var wellKnownSymbol = __nested_webpack_require_288400__("b622");
 
 var MATCH = wellKnownSymbol('match');
 
@@ -9310,12 +9298,12 @@ module.exports = function (METHOD_NAME) {
 /***/ }),
 
 /***/ "ac1f":
-/***/ (function(module, exports, __nested_webpack_require_288581__) {
+/***/ (function(module, exports, __nested_webpack_require_288826__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_288581__("23e7");
-var exec = __nested_webpack_require_288581__("9263");
+var $ = __nested_webpack_require_288826__("23e7");
+var exec = __nested_webpack_require_288826__("9263");
 
 $({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
   exec: exec
@@ -9325,11 +9313,11 @@ $({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
 /***/ }),
 
 /***/ "ad6d":
-/***/ (function(module, exports, __nested_webpack_require_288841__) {
+/***/ (function(module, exports, __nested_webpack_require_289086__) {
 
 "use strict";
 
-var anObject = __nested_webpack_require_288841__("825a");
+var anObject = __nested_webpack_require_289086__("825a");
 
 // `RegExp.prototype.flags` getter implementation
 // https://tc39.github.io/ecma262/#sec-get-regexp.prototype.flags
@@ -9349,11 +9337,11 @@ module.exports = function () {
 /***/ }),
 
 /***/ "ae40":
-/***/ (function(module, exports, __nested_webpack_require_289412__) {
+/***/ (function(module, exports, __nested_webpack_require_289657__) {
 
-var DESCRIPTORS = __nested_webpack_require_289412__("83ab");
-var fails = __nested_webpack_require_289412__("d039");
-var has = __nested_webpack_require_289412__("5135");
+var DESCRIPTORS = __nested_webpack_require_289657__("83ab");
+var fails = __nested_webpack_require_289657__("d039");
+var has = __nested_webpack_require_289657__("5135");
 
 var defineProperty = Object.defineProperty;
 var cache = {};
@@ -9383,15 +9371,15 @@ module.exports = function (METHOD_NAME, options) {
 /***/ }),
 
 /***/ "ae93":
-/***/ (function(module, exports, __nested_webpack_require_290380__) {
+/***/ (function(module, exports, __nested_webpack_require_290625__) {
 
 "use strict";
 
-var getPrototypeOf = __nested_webpack_require_290380__("e163");
-var createNonEnumerableProperty = __nested_webpack_require_290380__("9112");
-var has = __nested_webpack_require_290380__("5135");
-var wellKnownSymbol = __nested_webpack_require_290380__("b622");
-var IS_PURE = __nested_webpack_require_290380__("c430");
+var getPrototypeOf = __nested_webpack_require_290625__("e163");
+var createNonEnumerableProperty = __nested_webpack_require_290625__("9112");
+var has = __nested_webpack_require_290625__("5135");
+var wellKnownSymbol = __nested_webpack_require_290625__("b622");
+var IS_PURE = __nested_webpack_require_290625__("c430");
 
 var ITERATOR = wellKnownSymbol('iterator');
 var BUGGY_SAFARI_ITERATORS = false;
@@ -9428,12 +9416,12 @@ module.exports = {
 /***/ }),
 
 /***/ "b041":
-/***/ (function(module, exports, __nested_webpack_require_291751__) {
+/***/ (function(module, exports, __nested_webpack_require_291996__) {
 
 "use strict";
 
-var TO_STRING_TAG_SUPPORT = __nested_webpack_require_291751__("00ee");
-var classof = __nested_webpack_require_291751__("f5df");
+var TO_STRING_TAG_SUPPORT = __nested_webpack_require_291996__("00ee");
+var classof = __nested_webpack_require_291996__("f5df");
 
 // `Object.prototype.toString` method implementation
 // https://tc39.github.io/ecma262/#sec-object.prototype.tostring
@@ -9445,10 +9433,10 @@ module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
 /***/ }),
 
 /***/ "b0c0":
-/***/ (function(module, exports, __nested_webpack_require_292192__) {
+/***/ (function(module, exports, __nested_webpack_require_292437__) {
 
-var DESCRIPTORS = __nested_webpack_require_292192__("83ab");
-var defineProperty = __nested_webpack_require_292192__("9bf2").f;
+var DESCRIPTORS = __nested_webpack_require_292437__("83ab");
+var defineProperty = __nested_webpack_require_292437__("9bf2").f;
 
 var FunctionPrototype = Function.prototype;
 var FunctionPrototypeToString = FunctionPrototype.toString;
@@ -9474,15 +9462,15 @@ if (DESCRIPTORS && !(NAME in FunctionPrototype)) {
 /***/ }),
 
 /***/ "b3af":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_292941__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_293186__) {
 
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
-var runtime = __nested_webpack_require_292941__("96cf");
+var runtime = __nested_webpack_require_293186__("96cf");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
-var asyncToGenerator = __nested_webpack_require_292941__("1da1");
+var asyncToGenerator = __nested_webpack_require_293186__("1da1");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/mixins/CommonAPI.vue?vue&type=script&lang=js&
 
@@ -9533,7 +9521,7 @@ var asyncToGenerator = __nested_webpack_require_292941__("1da1");
 // CONCATENATED MODULE: ./src/mixins/CommonAPI.vue?vue&type=script&lang=js&
  /* harmony default export */ var mixins_CommonAPIvue_type_script_lang_js_ = (CommonAPIvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __nested_webpack_require_292941__("2877");
+var componentNormalizer = __nested_webpack_require_293186__("2877");
 
 // CONCATENATED MODULE: ./src/mixins/CommonAPI.vue
 var render, staticRenderFns
@@ -9559,13 +9547,13 @@ var component = Object(componentNormalizer["a" /* default */])(
 /***/ }),
 
 /***/ "b575":
-/***/ (function(module, exports, __nested_webpack_require_295532__) {
+/***/ (function(module, exports, __nested_webpack_require_295777__) {
 
-var global = __nested_webpack_require_295532__("da84");
-var getOwnPropertyDescriptor = __nested_webpack_require_295532__("06cf").f;
-var classof = __nested_webpack_require_295532__("c6b6");
-var macrotask = __nested_webpack_require_295532__("2cf4").set;
-var IS_IOS = __nested_webpack_require_295532__("1cdc");
+var global = __nested_webpack_require_295777__("da84");
+var getOwnPropertyDescriptor = __nested_webpack_require_295777__("06cf").f;
+var classof = __nested_webpack_require_295777__("c6b6");
+var macrotask = __nested_webpack_require_295777__("2cf4").set;
+var IS_IOS = __nested_webpack_require_295777__("1cdc");
 
 var MutationObserver = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
@@ -9644,14 +9632,14 @@ module.exports = queueMicrotask || function (fn) {
 /***/ }),
 
 /***/ "b622":
-/***/ (function(module, exports, __nested_webpack_require_298036__) {
+/***/ (function(module, exports, __nested_webpack_require_298281__) {
 
-var global = __nested_webpack_require_298036__("da84");
-var shared = __nested_webpack_require_298036__("5692");
-var has = __nested_webpack_require_298036__("5135");
-var uid = __nested_webpack_require_298036__("90e3");
-var NATIVE_SYMBOL = __nested_webpack_require_298036__("4930");
-var USE_SYMBOL_AS_UID = __nested_webpack_require_298036__("fdbf");
+var global = __nested_webpack_require_298281__("da84");
+var shared = __nested_webpack_require_298281__("5692");
+var has = __nested_webpack_require_298281__("5135");
+var uid = __nested_webpack_require_298281__("90e3");
+var NATIVE_SYMBOL = __nested_webpack_require_298281__("4930");
+var USE_SYMBOL_AS_UID = __nested_webpack_require_298281__("fdbf");
 
 var WellKnownSymbolsStore = shared('wks');
 var Symbol = global.Symbol;
@@ -9668,18 +9656,18 @@ module.exports = function (name) {
 /***/ }),
 
 /***/ "b635":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_298854__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_299099__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __nested_webpack_require_298854__.d(__webpack_exports__, "e", function() { return install; });
-/* harmony import */ var _components_QrcodeStream_vue__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_298854__("0d0e");
-/* harmony reexport (safe) */ __nested_webpack_require_298854__.d(__webpack_exports__, "c", function() { return _components_QrcodeStream_vue__WEBPACK_IMPORTED_MODULE_0__["a"]; });
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __nested_webpack_require_299099__.d(__webpack_exports__, "e", function() { return install; });
+/* harmony import */ var _components_QrcodeStream_vue__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_299099__("0d0e");
+/* harmony reexport (safe) */ __nested_webpack_require_299099__.d(__webpack_exports__, "c", function() { return _components_QrcodeStream_vue__WEBPACK_IMPORTED_MODULE_0__["a"]; });
 
-/* harmony import */ var _components_QrcodeCapture_vue__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_298854__("5c0b");
-/* harmony reexport (safe) */ __nested_webpack_require_298854__.d(__webpack_exports__, "a", function() { return _components_QrcodeCapture_vue__WEBPACK_IMPORTED_MODULE_1__["a"]; });
+/* harmony import */ var _components_QrcodeCapture_vue__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_299099__("5c0b");
+/* harmony reexport (safe) */ __nested_webpack_require_299099__.d(__webpack_exports__, "a", function() { return _components_QrcodeCapture_vue__WEBPACK_IMPORTED_MODULE_1__["a"]; });
 
-/* harmony import */ var _components_QrcodeDropZone_vue__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_298854__("fe6b");
-/* harmony reexport (safe) */ __nested_webpack_require_298854__.d(__webpack_exports__, "b", function() { return _components_QrcodeDropZone_vue__WEBPACK_IMPORTED_MODULE_2__["a"]; });
+/* harmony import */ var _components_QrcodeDropZone_vue__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_299099__("fe6b");
+/* harmony reexport (safe) */ __nested_webpack_require_299099__.d(__webpack_exports__, "b", function() { return _components_QrcodeDropZone_vue__WEBPACK_IMPORTED_MODULE_2__["a"]; });
 
 
 
@@ -9713,17 +9701,17 @@ if (typeof window !== "undefined") {
 if (GlobalVue) {
   GlobalVue.use(plugin);
 }
-/* WEBPACK VAR INJECTION */}.call(this, __nested_webpack_require_298854__("c8ba")))
+/* WEBPACK VAR INJECTION */}.call(this, __nested_webpack_require_299099__("c8ba")))
 
 /***/ }),
 
 /***/ "b64b":
-/***/ (function(module, exports, __nested_webpack_require_300884__) {
+/***/ (function(module, exports, __nested_webpack_require_301129__) {
 
-var $ = __nested_webpack_require_300884__("23e7");
-var toObject = __nested_webpack_require_300884__("7b0b");
-var nativeKeys = __nested_webpack_require_300884__("df75");
-var fails = __nested_webpack_require_300884__("d039");
+var $ = __nested_webpack_require_301129__("23e7");
+var toObject = __nested_webpack_require_301129__("7b0b");
+var nativeKeys = __nested_webpack_require_301129__("df75");
+var fails = __nested_webpack_require_301129__("d039");
 
 var FAILS_ON_PRIMITIVES = fails(function () { nativeKeys(1); });
 
@@ -9739,13 +9727,13 @@ $({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
 /***/ }),
 
 /***/ "b727":
-/***/ (function(module, exports, __nested_webpack_require_301418__) {
+/***/ (function(module, exports, __nested_webpack_require_301663__) {
 
-var bind = __nested_webpack_require_301418__("0366");
-var IndexedObject = __nested_webpack_require_301418__("44ad");
-var toObject = __nested_webpack_require_301418__("7b0b");
-var toLength = __nested_webpack_require_301418__("50c4");
-var arraySpeciesCreate = __nested_webpack_require_301418__("65f0");
+var bind = __nested_webpack_require_301663__("0366");
+var IndexedObject = __nested_webpack_require_301663__("44ad");
+var toObject = __nested_webpack_require_301663__("7b0b");
+var toLength = __nested_webpack_require_301663__("50c4");
+var arraySpeciesCreate = __nested_webpack_require_301663__("65f0");
 
 var push = [].push;
 
@@ -9811,9 +9799,9 @@ module.exports = {
 /***/ }),
 
 /***/ "bb2f":
-/***/ (function(module, exports, __nested_webpack_require_304004__) {
+/***/ (function(module, exports, __nested_webpack_require_304249__) {
 
-var fails = __nested_webpack_require_304004__("d039");
+var fails = __nested_webpack_require_304249__("d039");
 
 module.exports = !fails(function () {
   return Object.isExtensible(Object.preventExtensions({}));
@@ -9823,11 +9811,11 @@ module.exports = !fails(function () {
 /***/ }),
 
 /***/ "c036":
-/***/ (function(__webpack_module__, __webpack_exports__, __nested_webpack_require_304256__) {
+/***/ (function(__webpack_module__, __webpack_exports__, __nested_webpack_require_304501__) {
 
 "use strict";
-/* harmony export (binding) */ __nested_webpack_require_304256__.d(__webpack_exports__, "a", function() { return e; });
-/* harmony export (binding) */ __nested_webpack_require_304256__.d(__webpack_exports__, "b", function() { return n; });
+/* harmony export (binding) */ __nested_webpack_require_304501__.d(__webpack_exports__, "a", function() { return e; });
+/* harmony export (binding) */ __nested_webpack_require_304501__.d(__webpack_exports__, "b", function() { return n; });
 function e(e,n,r){var t,i;void 0===r&&(r="error");var o=new Promise(function(e,n){t=e,i=n});return e.addEventListener(n,t),e.addEventListener(r,i),o.finally(function(){e.removeEventListener(n,t),e.removeEventListener(r,i)}),o}function n(e){return new Promise(function(n){return setTimeout(n,e)})}
 //# sourceMappingURL=callforth.mjs.map
 
@@ -9835,9 +9823,9 @@ function e(e,n,r){var t,i;void 0===r&&(r="error");var o=new Promise(function(e,n
 /***/ }),
 
 /***/ "c04e":
-/***/ (function(module, exports, __nested_webpack_require_304902__) {
+/***/ (function(module, exports, __nested_webpack_require_305147__) {
 
-var isObject = __nested_webpack_require_304902__("861d");
+var isObject = __nested_webpack_require_305147__("861d");
 
 // `ToPrimitive` abstract operation
 // https://tc39.github.io/ecma262/#sec-toprimitive
@@ -9856,11 +9844,11 @@ module.exports = function (input, PREFERRED_STRING) {
 /***/ }),
 
 /***/ "c244":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_305771__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_306016__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrcodeStream_vue_vue_type_style_index_0_id_7a81005d_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_305771__("2493");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrcodeStream_vue_vue_type_style_index_0_id_7a81005d_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_305771__.n(_node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrcodeStream_vue_vue_type_style_index_0_id_7a81005d_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrcodeStream_vue_vue_type_style_index_0_id_7a81005d_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_306016__("2493");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrcodeStream_vue_vue_type_style_index_0_id_7a81005d_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_306016__.n(_node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrcodeStream_vue_vue_type_style_index_0_id_7a81005d_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrcodeStream_vue_vue_type_style_index_0_id_7a81005d_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
@@ -9887,10 +9875,10 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "c6cd":
-/***/ (function(module, exports, __nested_webpack_require_308300__) {
+/***/ (function(module, exports, __nested_webpack_require_308545__) {
 
-var global = __nested_webpack_require_308300__("da84");
-var setGlobal = __nested_webpack_require_308300__("ce4e");
+var global = __nested_webpack_require_308545__("da84");
+var setGlobal = __nested_webpack_require_308545__("ce4e");
 
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || setGlobal(SHARED, {});
@@ -9928,10 +9916,10 @@ module.exports = g;
 /***/ }),
 
 /***/ "c8d2":
-/***/ (function(module, exports, __nested_webpack_require_309120__) {
+/***/ (function(module, exports, __nested_webpack_require_309365__) {
 
-var fails = __nested_webpack_require_309120__("d039");
-var whitespaces = __nested_webpack_require_309120__("5899");
+var fails = __nested_webpack_require_309365__("d039");
+var whitespaces = __nested_webpack_require_309365__("5899");
 
 var non = '\u200B\u0085\u180E';
 
@@ -9947,14 +9935,14 @@ module.exports = function (METHOD_NAME) {
 /***/ }),
 
 /***/ "c975":
-/***/ (function(module, exports, __nested_webpack_require_309617__) {
+/***/ (function(module, exports, __nested_webpack_require_309862__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_309617__("23e7");
-var $indexOf = __nested_webpack_require_309617__("4d64").indexOf;
-var arrayMethodIsStrict = __nested_webpack_require_309617__("a640");
-var arrayMethodUsesToLength = __nested_webpack_require_309617__("ae40");
+var $ = __nested_webpack_require_309862__("23e7");
+var $indexOf = __nested_webpack_require_309862__("4d64").indexOf;
+var arrayMethodIsStrict = __nested_webpack_require_309862__("a640");
+var arrayMethodUsesToLength = __nested_webpack_require_309862__("ae40");
 
 var nativeIndexOf = [].indexOf;
 
@@ -9977,12 +9965,12 @@ $({ target: 'Array', proto: true, forced: NEGATIVE_ZERO || !STRICT_METHOD || !US
 /***/ }),
 
 /***/ "ca84":
-/***/ (function(module, exports, __nested_webpack_require_310618__) {
+/***/ (function(module, exports, __nested_webpack_require_310863__) {
 
-var has = __nested_webpack_require_310618__("5135");
-var toIndexedObject = __nested_webpack_require_310618__("fc6a");
-var indexOf = __nested_webpack_require_310618__("4d64").indexOf;
-var hiddenKeys = __nested_webpack_require_310618__("d012");
+var has = __nested_webpack_require_310863__("5135");
+var toIndexedObject = __nested_webpack_require_310863__("fc6a");
+var indexOf = __nested_webpack_require_310863__("4d64").indexOf;
+var hiddenKeys = __nested_webpack_require_310863__("d012");
 
 module.exports = function (object, names) {
   var O = toIndexedObject(object);
@@ -10001,14 +9989,14 @@ module.exports = function (object, names) {
 /***/ }),
 
 /***/ "caad":
-/***/ (function(module, exports, __nested_webpack_require_311251__) {
+/***/ (function(module, exports, __nested_webpack_require_311496__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_311251__("23e7");
-var $includes = __nested_webpack_require_311251__("4d64").includes;
-var addToUnscopables = __nested_webpack_require_311251__("44d2");
-var arrayMethodUsesToLength = __nested_webpack_require_311251__("ae40");
+var $ = __nested_webpack_require_311496__("23e7");
+var $includes = __nested_webpack_require_311496__("4d64").includes;
+var addToUnscopables = __nested_webpack_require_311496__("44d2");
+var arrayMethodUsesToLength = __nested_webpack_require_311496__("ae40");
 
 var USES_TO_LENGTH = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
 
@@ -10027,10 +10015,10 @@ addToUnscopables('includes');
 /***/ }),
 
 /***/ "cc12":
-/***/ (function(module, exports, __nested_webpack_require_312049__) {
+/***/ (function(module, exports, __nested_webpack_require_312294__) {
 
-var global = __nested_webpack_require_312049__("da84");
-var isObject = __nested_webpack_require_312049__("861d");
+var global = __nested_webpack_require_312294__("da84");
+var isObject = __nested_webpack_require_312294__("861d");
 
 var document = global.document;
 // typeof document.createElement is 'object' in old IE
@@ -10044,10 +10032,10 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "cca6":
-/***/ (function(module, exports, __nested_webpack_require_312464__) {
+/***/ (function(module, exports, __nested_webpack_require_312709__) {
 
-var $ = __nested_webpack_require_312464__("23e7");
-var assign = __nested_webpack_require_312464__("60da");
+var $ = __nested_webpack_require_312709__("23e7");
+var assign = __nested_webpack_require_312709__("60da");
 
 // `Object.assign` method
 // https://tc39.github.io/ecma262/#sec-object.assign
@@ -10059,11 +10047,11 @@ $({ target: 'Object', stat: true, forced: Object.assign !== assign }, {
 /***/ }),
 
 /***/ "cdf9":
-/***/ (function(module, exports, __nested_webpack_require_312800__) {
+/***/ (function(module, exports, __nested_webpack_require_313045__) {
 
-var anObject = __nested_webpack_require_312800__("825a");
-var isObject = __nested_webpack_require_312800__("861d");
-var newPromiseCapability = __nested_webpack_require_312800__("f069");
+var anObject = __nested_webpack_require_313045__("825a");
+var isObject = __nested_webpack_require_313045__("861d");
+var newPromiseCapability = __nested_webpack_require_313045__("f069");
 
 module.exports = function (C, x) {
   anObject(C);
@@ -10078,10 +10066,10 @@ module.exports = function (C, x) {
 /***/ }),
 
 /***/ "ce4e":
-/***/ (function(module, exports, __nested_webpack_require_313280__) {
+/***/ (function(module, exports, __nested_webpack_require_313525__) {
 
-var global = __nested_webpack_require_313280__("da84");
-var createNonEnumerableProperty = __nested_webpack_require_313280__("9112");
+var global = __nested_webpack_require_313525__("da84");
+var createNonEnumerableProperty = __nested_webpack_require_313525__("9112");
 
 module.exports = function (key, value) {
   try {
@@ -10117,10 +10105,10 @@ module.exports = function (exec) {
 /***/ }),
 
 /***/ "d066":
-/***/ (function(module, exports, __nested_webpack_require_313893__) {
+/***/ (function(module, exports, __nested_webpack_require_314138__) {
 
-var path = __nested_webpack_require_313893__("428f");
-var global = __nested_webpack_require_313893__("da84");
+var path = __nested_webpack_require_314138__("428f");
+var global = __nested_webpack_require_314138__("da84");
 
 var aFunction = function (variable) {
   return typeof variable == 'function' ? variable : undefined;
@@ -10156,9 +10144,9 @@ exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
 /***/ }),
 
 /***/ "d28b":
-/***/ (function(module, exports, __nested_webpack_require_315082__) {
+/***/ (function(module, exports, __nested_webpack_require_315327__) {
 
-var defineWellKnownSymbol = __nested_webpack_require_315082__("746f");
+var defineWellKnownSymbol = __nested_webpack_require_315327__("746f");
 
 // `Symbol.iterator` well-known symbol
 // https://tc39.github.io/ecma262/#sec-symbol.iterator
@@ -10168,10 +10156,10 @@ defineWellKnownSymbol('iterator');
 /***/ }),
 
 /***/ "d2bb":
-/***/ (function(module, exports, __nested_webpack_require_315353__) {
+/***/ (function(module, exports, __nested_webpack_require_315598__) {
 
-var anObject = __nested_webpack_require_315353__("825a");
-var aPossiblePrototype = __nested_webpack_require_315353__("3bbe");
+var anObject = __nested_webpack_require_315598__("825a");
+var aPossiblePrototype = __nested_webpack_require_315598__("3bbe");
 
 // `Object.setPrototypeOf` method
 // https://tc39.github.io/ecma262/#sec-object.setprototypeof
@@ -10199,11 +10187,11 @@ module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
 /***/ }),
 
 /***/ "d3b7":
-/***/ (function(module, exports, __nested_webpack_require_316273__) {
+/***/ (function(module, exports, __nested_webpack_require_316518__) {
 
-var TO_STRING_TAG_SUPPORT = __nested_webpack_require_316273__("00ee");
-var redefine = __nested_webpack_require_316273__("6eeb");
-var toString = __nested_webpack_require_316273__("b041");
+var TO_STRING_TAG_SUPPORT = __nested_webpack_require_316518__("00ee");
+var redefine = __nested_webpack_require_316518__("6eeb");
+var toString = __nested_webpack_require_316518__("b041");
 
 // `Object.prototype.toString` method
 // https://tc39.github.io/ecma262/#sec-object.prototype.tostring
@@ -10215,11 +10203,11 @@ if (!TO_STRING_TAG_SUPPORT) {
 /***/ }),
 
 /***/ "d44e":
-/***/ (function(module, exports, __nested_webpack_require_316708__) {
+/***/ (function(module, exports, __nested_webpack_require_316953__) {
 
-var defineProperty = __nested_webpack_require_316708__("9bf2").f;
-var has = __nested_webpack_require_316708__("5135");
-var wellKnownSymbol = __nested_webpack_require_316708__("b622");
+var defineProperty = __nested_webpack_require_316953__("9bf2").f;
+var has = __nested_webpack_require_316953__("5135");
+var wellKnownSymbol = __nested_webpack_require_316953__("b622");
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 
@@ -10233,10 +10221,10 @@ module.exports = function (it, TAG, STATIC) {
 /***/ }),
 
 /***/ "d4ec":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_317196__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_317441__) {
 
 "use strict";
-/* harmony export (binding) */ __nested_webpack_require_317196__.d(__webpack_exports__, "a", function() { return _classCallCheck; });
+/* harmony export (binding) */ __nested_webpack_require_317441__.d(__webpack_exports__, "a", function() { return _classCallCheck; });
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -10246,12 +10234,12 @@ function _classCallCheck(instance, Constructor) {
 /***/ }),
 
 /***/ "d58f":
-/***/ (function(module, exports, __nested_webpack_require_317575__) {
+/***/ (function(module, exports, __nested_webpack_require_317820__) {
 
-var aFunction = __nested_webpack_require_317575__("1c0b");
-var toObject = __nested_webpack_require_317575__("7b0b");
-var IndexedObject = __nested_webpack_require_317575__("44ad");
-var toLength = __nested_webpack_require_317575__("50c4");
+var aFunction = __nested_webpack_require_317820__("1c0b");
+var toObject = __nested_webpack_require_317820__("7b0b");
+var IndexedObject = __nested_webpack_require_317820__("44ad");
+var toLength = __nested_webpack_require_317820__("50c4");
 
 // `Array.prototype.{ reduce, reduceRight }` methods implementation
 var createMethod = function (IS_RIGHT) {
@@ -10293,17 +10281,17 @@ module.exports = {
 /***/ }),
 
 /***/ "d784":
-/***/ (function(module, exports, __nested_webpack_require_318970__) {
+/***/ (function(module, exports, __nested_webpack_require_319215__) {
 
 "use strict";
 
 // TODO: Remove from `core-js@4` since it's moved to entry points
-__nested_webpack_require_318970__("ac1f");
-var redefine = __nested_webpack_require_318970__("6eeb");
-var fails = __nested_webpack_require_318970__("d039");
-var wellKnownSymbol = __nested_webpack_require_318970__("b622");
-var regexpExec = __nested_webpack_require_318970__("9263");
-var createNonEnumerableProperty = __nested_webpack_require_318970__("9112");
+__nested_webpack_require_319215__("ac1f");
+var redefine = __nested_webpack_require_319215__("6eeb");
+var fails = __nested_webpack_require_319215__("d039");
+var wellKnownSymbol = __nested_webpack_require_319215__("b622");
+var regexpExec = __nested_webpack_require_319215__("9263");
+var createNonEnumerableProperty = __nested_webpack_require_319215__("9112");
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -10426,14 +10414,14 @@ module.exports = function (KEY, length, exec, sham) {
 /***/ }),
 
 /***/ "d81d":
-/***/ (function(module, exports, __nested_webpack_require_323653__) {
+/***/ (function(module, exports, __nested_webpack_require_323898__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_323653__("23e7");
-var $map = __nested_webpack_require_323653__("b727").map;
-var arrayMethodHasSpeciesSupport = __nested_webpack_require_323653__("1dde");
-var arrayMethodUsesToLength = __nested_webpack_require_323653__("ae40");
+var $ = __nested_webpack_require_323898__("23e7");
+var $map = __nested_webpack_require_323898__("b727").map;
+var arrayMethodHasSpeciesSupport = __nested_webpack_require_323898__("1dde");
+var arrayMethodUsesToLength = __nested_webpack_require_323898__("ae40");
 
 var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
 // FF49- issue
@@ -10452,7 +10440,7 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGT
 /***/ }),
 
 /***/ "da84":
-/***/ (function(module, exports, __nested_webpack_require_324445__) {
+/***/ (function(module, exports, __nested_webpack_require_324690__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var check = function (it) {
   return it && it.Math == Math && it;
@@ -10468,19 +10456,19 @@ module.exports =
   // eslint-disable-next-line no-new-func
   Function('return this')();
 
-/* WEBPACK VAR INJECTION */}.call(this, __nested_webpack_require_324445__("c8ba")))
+/* WEBPACK VAR INJECTION */}.call(this, __nested_webpack_require_324690__("c8ba")))
 
 /***/ }),
 
 /***/ "dbb4":
-/***/ (function(module, exports, __nested_webpack_require_325110__) {
+/***/ (function(module, exports, __nested_webpack_require_325355__) {
 
-var $ = __nested_webpack_require_325110__("23e7");
-var DESCRIPTORS = __nested_webpack_require_325110__("83ab");
-var ownKeys = __nested_webpack_require_325110__("56ef");
-var toIndexedObject = __nested_webpack_require_325110__("fc6a");
-var getOwnPropertyDescriptorModule = __nested_webpack_require_325110__("06cf");
-var createProperty = __nested_webpack_require_325110__("8418");
+var $ = __nested_webpack_require_325355__("23e7");
+var DESCRIPTORS = __nested_webpack_require_325355__("83ab");
+var ownKeys = __nested_webpack_require_325355__("56ef");
+var toIndexedObject = __nested_webpack_require_325355__("fc6a");
+var getOwnPropertyDescriptorModule = __nested_webpack_require_325355__("06cf");
+var createProperty = __nested_webpack_require_325355__("8418");
 
 // `Object.getOwnPropertyDescriptors` method
 // https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors
@@ -10504,13 +10492,13 @@ $({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
 /***/ }),
 
 /***/ "ddb0":
-/***/ (function(module, exports, __nested_webpack_require_326149__) {
+/***/ (function(module, exports, __nested_webpack_require_326394__) {
 
-var global = __nested_webpack_require_326149__("da84");
-var DOMIterables = __nested_webpack_require_326149__("fdbc");
-var ArrayIteratorMethods = __nested_webpack_require_326149__("e260");
-var createNonEnumerableProperty = __nested_webpack_require_326149__("9112");
-var wellKnownSymbol = __nested_webpack_require_326149__("b622");
+var global = __nested_webpack_require_326394__("da84");
+var DOMIterables = __nested_webpack_require_326394__("fdbc");
+var ArrayIteratorMethods = __nested_webpack_require_326394__("e260");
+var createNonEnumerableProperty = __nested_webpack_require_326394__("9112");
+var wellKnownSymbol = __nested_webpack_require_326394__("b622");
 
 var ITERATOR = wellKnownSymbol('iterator');
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
@@ -10544,10 +10532,10 @@ for (var COLLECTION_NAME in DOMIterables) {
 /***/ }),
 
 /***/ "df75":
-/***/ (function(module, exports, __nested_webpack_require_327732__) {
+/***/ (function(module, exports, __nested_webpack_require_327977__) {
 
-var internalObjectKeys = __nested_webpack_require_327732__("ca84");
-var enumBugKeys = __nested_webpack_require_327732__("7839");
+var internalObjectKeys = __nested_webpack_require_327977__("ca84");
+var enumBugKeys = __nested_webpack_require_327977__("7839");
 
 // `Object.keys` method
 // https://tc39.github.io/ecma262/#sec-object.keys
@@ -10559,19 +10547,19 @@ module.exports = Object.keys || function keys(O) {
 /***/ }),
 
 /***/ "e01a":
-/***/ (function(module, exports, __nested_webpack_require_328092__) {
+/***/ (function(module, exports, __nested_webpack_require_328337__) {
 
 "use strict";
 // `Symbol.prototype.description` getter
 // https://tc39.github.io/ecma262/#sec-symbol.prototype.description
 
-var $ = __nested_webpack_require_328092__("23e7");
-var DESCRIPTORS = __nested_webpack_require_328092__("83ab");
-var global = __nested_webpack_require_328092__("da84");
-var has = __nested_webpack_require_328092__("5135");
-var isObject = __nested_webpack_require_328092__("861d");
-var defineProperty = __nested_webpack_require_328092__("9bf2").f;
-var copyConstructorProperties = __nested_webpack_require_328092__("e893");
+var $ = __nested_webpack_require_328337__("23e7");
+var DESCRIPTORS = __nested_webpack_require_328337__("83ab");
+var global = __nested_webpack_require_328337__("da84");
+var has = __nested_webpack_require_328337__("5135");
+var isObject = __nested_webpack_require_328337__("861d");
+var defineProperty = __nested_webpack_require_328337__("9bf2").f;
+var copyConstructorProperties = __nested_webpack_require_328337__("e893");
 
 var NativeSymbol = global.Symbol;
 
@@ -10617,12 +10605,12 @@ if (DESCRIPTORS && typeof NativeSymbol == 'function' && (!('description' in Nati
 /***/ }),
 
 /***/ "e163":
-/***/ (function(module, exports, __nested_webpack_require_330243__) {
+/***/ (function(module, exports, __nested_webpack_require_330488__) {
 
-var has = __nested_webpack_require_330243__("5135");
-var toObject = __nested_webpack_require_330243__("7b0b");
-var sharedKey = __nested_webpack_require_330243__("f772");
-var CORRECT_PROTOTYPE_GETTER = __nested_webpack_require_330243__("e177");
+var has = __nested_webpack_require_330488__("5135");
+var toObject = __nested_webpack_require_330488__("7b0b");
+var sharedKey = __nested_webpack_require_330488__("f772");
+var CORRECT_PROTOTYPE_GETTER = __nested_webpack_require_330488__("e177");
 
 var IE_PROTO = sharedKey('IE_PROTO');
 var ObjectPrototype = Object.prototype;
@@ -10641,9 +10629,9 @@ module.exports = CORRECT_PROTOTYPE_GETTER ? Object.getPrototypeOf : function (O)
 /***/ }),
 
 /***/ "e177":
-/***/ (function(module, exports, __nested_webpack_require_331006__) {
+/***/ (function(module, exports, __nested_webpack_require_331251__) {
 
-var fails = __nested_webpack_require_331006__("d039");
+var fails = __nested_webpack_require_331251__("d039");
 
 module.exports = !fails(function () {
   function F() { /* empty */ }
@@ -10655,15 +10643,15 @@ module.exports = !fails(function () {
 /***/ }),
 
 /***/ "e260":
-/***/ (function(module, exports, __nested_webpack_require_331296__) {
+/***/ (function(module, exports, __nested_webpack_require_331541__) {
 
 "use strict";
 
-var toIndexedObject = __nested_webpack_require_331296__("fc6a");
-var addToUnscopables = __nested_webpack_require_331296__("44d2");
-var Iterators = __nested_webpack_require_331296__("3f8c");
-var InternalStateModule = __nested_webpack_require_331296__("69f3");
-var defineIterator = __nested_webpack_require_331296__("7dd0");
+var toIndexedObject = __nested_webpack_require_331541__("fc6a");
+var addToUnscopables = __nested_webpack_require_331541__("44d2");
+var Iterators = __nested_webpack_require_331541__("3f8c");
+var InternalStateModule = __nested_webpack_require_331541__("69f3");
+var defineIterator = __nested_webpack_require_331541__("7dd0");
 
 var ARRAY_ITERATOR = 'Array Iterator';
 var setInternalState = InternalStateModule.set;
@@ -10716,9 +10704,9 @@ addToUnscopables('entries');
 /***/ }),
 
 /***/ "e2cc":
-/***/ (function(module, exports, __nested_webpack_require_333539__) {
+/***/ (function(module, exports, __nested_webpack_require_333784__) {
 
-var redefine = __nested_webpack_require_333539__("6eeb");
+var redefine = __nested_webpack_require_333784__("6eeb");
 
 module.exports = function (target, src, options) {
   for (var key in src) redefine(target, key, src[key], options);
@@ -10729,13 +10717,13 @@ module.exports = function (target, src, options) {
 /***/ }),
 
 /***/ "e439":
-/***/ (function(module, exports, __nested_webpack_require_333804__) {
+/***/ (function(module, exports, __nested_webpack_require_334049__) {
 
-var $ = __nested_webpack_require_333804__("23e7");
-var fails = __nested_webpack_require_333804__("d039");
-var toIndexedObject = __nested_webpack_require_333804__("fc6a");
-var nativeGetOwnPropertyDescriptor = __nested_webpack_require_333804__("06cf").f;
-var DESCRIPTORS = __nested_webpack_require_333804__("83ab");
+var $ = __nested_webpack_require_334049__("23e7");
+var fails = __nested_webpack_require_334049__("d039");
+var toIndexedObject = __nested_webpack_require_334049__("fc6a");
+var nativeGetOwnPropertyDescriptor = __nested_webpack_require_334049__("06cf").f;
+var DESCRIPTORS = __nested_webpack_require_334049__("83ab");
 
 var FAILS_ON_PRIMITIVES = fails(function () { nativeGetOwnPropertyDescriptor(1); });
 var FORCED = !DESCRIPTORS || FAILS_ON_PRIMITIVES;
@@ -10752,9 +10740,9 @@ $({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS }, {
 /***/ }),
 
 /***/ "e538":
-/***/ (function(module, exports, __nested_webpack_require_334608__) {
+/***/ (function(module, exports, __nested_webpack_require_334853__) {
 
-var wellKnownSymbol = __nested_webpack_require_334608__("b622");
+var wellKnownSymbol = __nested_webpack_require_334853__("b622");
 
 exports.f = wellKnownSymbol;
 
@@ -10776,37 +10764,37 @@ module.exports = function (exec) {
 /***/ }),
 
 /***/ "e6cf":
-/***/ (function(module, exports, __nested_webpack_require_334992__) {
+/***/ (function(module, exports, __nested_webpack_require_335237__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_334992__("23e7");
-var IS_PURE = __nested_webpack_require_334992__("c430");
-var global = __nested_webpack_require_334992__("da84");
-var getBuiltIn = __nested_webpack_require_334992__("d066");
-var NativePromise = __nested_webpack_require_334992__("fea9");
-var redefine = __nested_webpack_require_334992__("6eeb");
-var redefineAll = __nested_webpack_require_334992__("e2cc");
-var setToStringTag = __nested_webpack_require_334992__("d44e");
-var setSpecies = __nested_webpack_require_334992__("2626");
-var isObject = __nested_webpack_require_334992__("861d");
-var aFunction = __nested_webpack_require_334992__("1c0b");
-var anInstance = __nested_webpack_require_334992__("19aa");
-var classof = __nested_webpack_require_334992__("c6b6");
-var inspectSource = __nested_webpack_require_334992__("8925");
-var iterate = __nested_webpack_require_334992__("2266");
-var checkCorrectnessOfIteration = __nested_webpack_require_334992__("1c7e");
-var speciesConstructor = __nested_webpack_require_334992__("4840");
-var task = __nested_webpack_require_334992__("2cf4").set;
-var microtask = __nested_webpack_require_334992__("b575");
-var promiseResolve = __nested_webpack_require_334992__("cdf9");
-var hostReportErrors = __nested_webpack_require_334992__("44de");
-var newPromiseCapabilityModule = __nested_webpack_require_334992__("f069");
-var perform = __nested_webpack_require_334992__("e667");
-var InternalStateModule = __nested_webpack_require_334992__("69f3");
-var isForced = __nested_webpack_require_334992__("94ca");
-var wellKnownSymbol = __nested_webpack_require_334992__("b622");
-var V8_VERSION = __nested_webpack_require_334992__("2d00");
+var $ = __nested_webpack_require_335237__("23e7");
+var IS_PURE = __nested_webpack_require_335237__("c430");
+var global = __nested_webpack_require_335237__("da84");
+var getBuiltIn = __nested_webpack_require_335237__("d066");
+var NativePromise = __nested_webpack_require_335237__("fea9");
+var redefine = __nested_webpack_require_335237__("6eeb");
+var redefineAll = __nested_webpack_require_335237__("e2cc");
+var setToStringTag = __nested_webpack_require_335237__("d44e");
+var setSpecies = __nested_webpack_require_335237__("2626");
+var isObject = __nested_webpack_require_335237__("861d");
+var aFunction = __nested_webpack_require_335237__("1c0b");
+var anInstance = __nested_webpack_require_335237__("19aa");
+var classof = __nested_webpack_require_335237__("c6b6");
+var inspectSource = __nested_webpack_require_335237__("8925");
+var iterate = __nested_webpack_require_335237__("2266");
+var checkCorrectnessOfIteration = __nested_webpack_require_335237__("1c7e");
+var speciesConstructor = __nested_webpack_require_335237__("4840");
+var task = __nested_webpack_require_335237__("2cf4").set;
+var microtask = __nested_webpack_require_335237__("b575");
+var promiseResolve = __nested_webpack_require_335237__("cdf9");
+var hostReportErrors = __nested_webpack_require_335237__("44de");
+var newPromiseCapabilityModule = __nested_webpack_require_335237__("f069");
+var perform = __nested_webpack_require_335237__("e667");
+var InternalStateModule = __nested_webpack_require_335237__("69f3");
+var isForced = __nested_webpack_require_335237__("94ca");
+var wellKnownSymbol = __nested_webpack_require_335237__("b622");
+var V8_VERSION = __nested_webpack_require_335237__("2d00");
 
 var SPECIES = wellKnownSymbol('species');
 var PROMISE = 'Promise';
@@ -11163,12 +11151,12 @@ $({ target: PROMISE, stat: true, forced: INCORRECT_ITERATION }, {
 /***/ }),
 
 /***/ "e893":
-/***/ (function(module, exports, __nested_webpack_require_348407__) {
+/***/ (function(module, exports, __nested_webpack_require_348652__) {
 
-var has = __nested_webpack_require_348407__("5135");
-var ownKeys = __nested_webpack_require_348407__("56ef");
-var getOwnPropertyDescriptorModule = __nested_webpack_require_348407__("06cf");
-var definePropertyModule = __nested_webpack_require_348407__("9bf2");
+var has = __nested_webpack_require_348652__("5135");
+var ownKeys = __nested_webpack_require_348652__("56ef");
+var getOwnPropertyDescriptorModule = __nested_webpack_require_348652__("06cf");
+var definePropertyModule = __nested_webpack_require_348652__("9bf2");
 
 module.exports = function (target, source) {
   var keys = ownKeys(source);
@@ -11184,9 +11172,9 @@ module.exports = function (target, source) {
 /***/ }),
 
 /***/ "e8b5":
-/***/ (function(module, exports, __nested_webpack_require_349052__) {
+/***/ (function(module, exports, __nested_webpack_require_349297__) {
 
-var classof = __nested_webpack_require_349052__("c6b6");
+var classof = __nested_webpack_require_349297__("c6b6");
 
 // `IsArray` abstract operation
 // https://tc39.github.io/ecma262/#sec-isarray
@@ -11198,10 +11186,10 @@ module.exports = Array.isArray || function isArray(arg) {
 /***/ }),
 
 /***/ "e95a":
-/***/ (function(module, exports, __nested_webpack_require_349354__) {
+/***/ (function(module, exports, __nested_webpack_require_349599__) {
 
-var wellKnownSymbol = __nested_webpack_require_349354__("b622");
-var Iterators = __nested_webpack_require_349354__("3f8c");
+var wellKnownSymbol = __nested_webpack_require_349599__("b622");
+var Iterators = __nested_webpack_require_349599__("3f8c");
 
 var ITERATOR = wellKnownSymbol('iterator');
 var ArrayPrototype = Array.prototype;
@@ -11215,10 +11203,10 @@ module.exports = function (it) {
 /***/ }),
 
 /***/ "ede3":
-/***/ (function(module, exports, __nested_webpack_require_349779__) {
+/***/ (function(module, exports, __nested_webpack_require_350024__) {
 
 // Imports
-var ___CSS_LOADER_API_IMPORT___ = __nested_webpack_require_349779__("24fb");
+var ___CSS_LOADER_API_IMPORT___ = __nested_webpack_require_350024__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".qrcode-stream-wrapper[data-v-7a81005d]{width:100%;height:100%;position:relative;z-index:0}.qrcode-stream-overlay[data-v-7a81005d]{width:100%;height:100%;position:absolute;top:0;left:0}.qrcode-stream-camera[data-v-7a81005d]{width:100%;height:100%;display:block;-o-object-fit:cover;object-fit:cover}", ""]);
@@ -11229,11 +11217,11 @@ module.exports = exports;
 /***/ }),
 
 /***/ "f069":
-/***/ (function(module, exports, __nested_webpack_require_350362__) {
+/***/ (function(module, exports, __nested_webpack_require_350607__) {
 
 "use strict";
 
-var aFunction = __nested_webpack_require_350362__("1c0b");
+var aFunction = __nested_webpack_require_350607__("1c0b");
 
 var PromiseCapability = function (C) {
   var resolve, reject;
@@ -11255,14 +11243,14 @@ module.exports.f = function (C) {
 /***/ }),
 
 /***/ "f183":
-/***/ (function(module, exports, __nested_webpack_require_350962__) {
+/***/ (function(module, exports, __nested_webpack_require_351207__) {
 
-var hiddenKeys = __nested_webpack_require_350962__("d012");
-var isObject = __nested_webpack_require_350962__("861d");
-var has = __nested_webpack_require_350962__("5135");
-var defineProperty = __nested_webpack_require_350962__("9bf2").f;
-var uid = __nested_webpack_require_350962__("90e3");
-var FREEZING = __nested_webpack_require_350962__("bb2f");
+var hiddenKeys = __nested_webpack_require_351207__("d012");
+var isObject = __nested_webpack_require_351207__("861d");
+var has = __nested_webpack_require_351207__("5135");
+var defineProperty = __nested_webpack_require_351207__("9bf2").f;
+var uid = __nested_webpack_require_351207__("90e3");
+var FREEZING = __nested_webpack_require_351207__("bb2f");
 
 var METADATA = uid('meta');
 var id = 0;
@@ -11323,11 +11311,11 @@ hiddenKeys[METADATA] = true;
 /***/ }),
 
 /***/ "f5df":
-/***/ (function(module, exports, __nested_webpack_require_352774__) {
+/***/ (function(module, exports, __nested_webpack_require_353019__) {
 
-var TO_STRING_TAG_SUPPORT = __nested_webpack_require_352774__("00ee");
-var classofRaw = __nested_webpack_require_352774__("c6b6");
-var wellKnownSymbol = __nested_webpack_require_352774__("b622");
+var TO_STRING_TAG_SUPPORT = __nested_webpack_require_353019__("00ee");
+var classofRaw = __nested_webpack_require_353019__("c6b6");
+var wellKnownSymbol = __nested_webpack_require_353019__("b622");
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 // ES3 wrong here
@@ -11356,24 +11344,24 @@ module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
 /***/ }),
 
 /***/ "f718":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_353839__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_354084__) {
 
 "use strict";
 /* unused harmony export imageDataFromImage */
-/* harmony export (binding) */ __nested_webpack_require_353839__.d(__webpack_exports__, "c", function() { return imageDataFromVideo; });
-/* harmony export (binding) */ __nested_webpack_require_353839__.d(__webpack_exports__, "b", function() { return imageDataFromUrl; });
-/* harmony export (binding) */ __nested_webpack_require_353839__.d(__webpack_exports__, "a", function() { return imageDataFromFile; });
-/* harmony import */ var core_js_modules_es_array_includes__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_353839__("caad");
-/* harmony import */ var core_js_modules_es_array_includes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_353839__.n(core_js_modules_es_array_includes__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_string_includes__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_353839__("2532");
-/* harmony import */ var core_js_modules_es_string_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_353839__.n(core_js_modules_es_string_includes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_353839__("2ca0");
-/* harmony import */ var core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nested_webpack_require_353839__.n(core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_353839__("96cf");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__nested_webpack_require_353839__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _home_travis_build_gruhn_vue_qrcode_reader_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_353839__("1da1");
-/* harmony import */ var _errors_js__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_353839__("1cc0");
-/* harmony import */ var callforth__WEBPACK_IMPORTED_MODULE_6__ = __nested_webpack_require_353839__("c036");
+/* harmony export (binding) */ __nested_webpack_require_354084__.d(__webpack_exports__, "c", function() { return imageDataFromVideo; });
+/* harmony export (binding) */ __nested_webpack_require_354084__.d(__webpack_exports__, "b", function() { return imageDataFromUrl; });
+/* harmony export (binding) */ __nested_webpack_require_354084__.d(__webpack_exports__, "a", function() { return imageDataFromFile; });
+/* harmony import */ var core_js_modules_es_array_includes__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_354084__("caad");
+/* harmony import */ var core_js_modules_es_array_includes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nested_webpack_require_354084__.n(core_js_modules_es_array_includes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_string_includes__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_354084__("2532");
+/* harmony import */ var core_js_modules_es_string_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nested_webpack_require_354084__.n(core_js_modules_es_string_includes__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_354084__("2ca0");
+/* harmony import */ var core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nested_webpack_require_354084__.n(core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_354084__("96cf");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__nested_webpack_require_354084__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _home_travis_build_gruhn_vue_qrcode_reader_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_354084__("1da1");
+/* harmony import */ var _errors_js__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_354084__("1cc0");
+/* harmony import */ var callforth__WEBPACK_IMPORTED_MODULE_6__ = __nested_webpack_require_354084__("c036");
 
 
 
@@ -11483,10 +11471,10 @@ function _imageDataFromFile() {
 /***/ }),
 
 /***/ "f772":
-/***/ (function(module, exports, __nested_webpack_require_359492__) {
+/***/ (function(module, exports, __nested_webpack_require_359737__) {
 
-var shared = __nested_webpack_require_359492__("5692");
-var uid = __nested_webpack_require_359492__("90e3");
+var shared = __nested_webpack_require_359737__("5692");
+var uid = __nested_webpack_require_359737__("90e3");
 
 var keys = shared('keys');
 
@@ -11498,17 +11486,17 @@ module.exports = function (key) {
 /***/ }),
 
 /***/ "fb15":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_359781__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_360026__) {
 
 "use strict";
 // ESM COMPAT FLAG
-__nested_webpack_require_359781__.r(__webpack_exports__);
+__nested_webpack_require_360026__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_359781__.d(__webpack_exports__, "install", function() { return /* reexport */ src_0["e" /* install */]; });
-__nested_webpack_require_359781__.d(__webpack_exports__, "QrcodeStream", function() { return /* reexport */ src_0["c" /* QrcodeStream */]; });
-__nested_webpack_require_359781__.d(__webpack_exports__, "QrcodeCapture", function() { return /* reexport */ src_0["a" /* QrcodeCapture */]; });
-__nested_webpack_require_359781__.d(__webpack_exports__, "QrcodeDropZone", function() { return /* reexport */ src_0["b" /* QrcodeDropZone */]; });
+__nested_webpack_require_360026__.d(__webpack_exports__, "install", function() { return /* reexport */ src_0["e" /* install */]; });
+__nested_webpack_require_360026__.d(__webpack_exports__, "QrcodeStream", function() { return /* reexport */ src_0["c" /* QrcodeStream */]; });
+__nested_webpack_require_360026__.d(__webpack_exports__, "QrcodeCapture", function() { return /* reexport */ src_0["a" /* QrcodeCapture */]; });
+__nested_webpack_require_360026__.d(__webpack_exports__, "QrcodeDropZone", function() { return /* reexport */ src_0["b" /* QrcodeDropZone */]; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -11516,7 +11504,7 @@ __nested_webpack_require_359781__.d(__webpack_exports__, "QrcodeDropZone", funct
 if (typeof window !== 'undefined') {
   var currentScript = window.document.currentScript
   if (true) {
-    var getCurrentScript = __nested_webpack_require_359781__("8875")
+    var getCurrentScript = __nested_webpack_require_360026__("8875")
     currentScript = getCurrentScript()
 
     // for backward compatibility, because previously we directly included the polyfill
@@ -11527,7 +11515,7 @@ if (typeof window !== 'undefined') {
 
   var src = currentScript && currentScript.src.match(/(.+\/)[^/]+\.js(\?.*)?$/)
   if (src) {
-    __nested_webpack_require_359781__.p = src[1] // eslint-disable-line
+    __nested_webpack_require_360026__.p = src[1] // eslint-disable-line
   }
 }
 
@@ -11535,7 +11523,7 @@ if (typeof window !== 'undefined') {
 /* harmony default export */ var setPublicPath = (null);
 
 // EXTERNAL MODULE: ./src/index.js
-var src_0 = __nested_webpack_require_359781__("b635");
+var src_0 = __nested_webpack_require_360026__("b635");
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
@@ -11547,20 +11535,20 @@ var src_0 = __nested_webpack_require_359781__("b635");
 /***/ }),
 
 /***/ "fb6a":
-/***/ (function(module, exports, __nested_webpack_require_361582__) {
+/***/ (function(module, exports, __nested_webpack_require_361827__) {
 
 "use strict";
 
-var $ = __nested_webpack_require_361582__("23e7");
-var isObject = __nested_webpack_require_361582__("861d");
-var isArray = __nested_webpack_require_361582__("e8b5");
-var toAbsoluteIndex = __nested_webpack_require_361582__("23cb");
-var toLength = __nested_webpack_require_361582__("50c4");
-var toIndexedObject = __nested_webpack_require_361582__("fc6a");
-var createProperty = __nested_webpack_require_361582__("8418");
-var wellKnownSymbol = __nested_webpack_require_361582__("b622");
-var arrayMethodHasSpeciesSupport = __nested_webpack_require_361582__("1dde");
-var arrayMethodUsesToLength = __nested_webpack_require_361582__("ae40");
+var $ = __nested_webpack_require_361827__("23e7");
+var isObject = __nested_webpack_require_361827__("861d");
+var isArray = __nested_webpack_require_361827__("e8b5");
+var toAbsoluteIndex = __nested_webpack_require_361827__("23cb");
+var toLength = __nested_webpack_require_361827__("50c4");
+var toIndexedObject = __nested_webpack_require_361827__("fc6a");
+var createProperty = __nested_webpack_require_361827__("8418");
+var wellKnownSymbol = __nested_webpack_require_361827__("b622");
+var arrayMethodHasSpeciesSupport = __nested_webpack_require_361827__("1dde");
+var arrayMethodUsesToLength = __nested_webpack_require_361827__("ae40");
 
 var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('slice');
 var USES_TO_LENGTH = arrayMethodUsesToLength('slice', { ACCESSORS: true, 0: 0, 1: 2 });
@@ -11604,11 +11592,11 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGT
 /***/ }),
 
 /***/ "fc6a":
-/***/ (function(module, exports, __nested_webpack_require_363724__) {
+/***/ (function(module, exports, __nested_webpack_require_363969__) {
 
 // toObject with fallback for non-array-like ES3 strings
-var IndexedObject = __nested_webpack_require_363724__("44ad");
-var requireObjectCoercible = __nested_webpack_require_363724__("1d80");
+var IndexedObject = __nested_webpack_require_363969__("44ad");
+var requireObjectCoercible = __nested_webpack_require_363969__("1d80");
 
 module.exports = function (it) {
   return IndexedObject(requireObjectCoercible(it));
@@ -11660,9 +11648,9 @@ module.exports = {
 /***/ }),
 
 /***/ "fdbf":
-/***/ (function(module, exports, __nested_webpack_require_364877__) {
+/***/ (function(module, exports, __nested_webpack_require_365122__) {
 
-var NATIVE_SYMBOL = __nested_webpack_require_364877__("4930");
+var NATIVE_SYMBOL = __nested_webpack_require_365122__("4930");
 
 module.exports = NATIVE_SYMBOL
   // eslint-disable-next-line no-undef
@@ -11674,7 +11662,7 @@ module.exports = NATIVE_SYMBOL
 /***/ }),
 
 /***/ "fe6b":
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_365191__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_365436__) {
 
 "use strict";
 
@@ -11686,31 +11674,31 @@ var staticRenderFns = []
 // CONCATENATED MODULE: ./src/components/QrcodeDropZone.vue?vue&type=template&id=d58a83ac&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.for-each.js
-var es_array_for_each = __nested_webpack_require_365191__("4160");
+var es_array_for_each = __nested_webpack_require_365436__("4160");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
-var web_dom_collections_for_each = __nested_webpack_require_365191__("159b");
+var web_dom_collections_for_each = __nested_webpack_require_365436__("159b");
 
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
-var runtime = __nested_webpack_require_365191__("96cf");
+var runtime = __nested_webpack_require_365436__("96cf");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
-var asyncToGenerator = __nested_webpack_require_365191__("1da1");
+var asyncToGenerator = __nested_webpack_require_365436__("1da1");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 3 modules
-var toConsumableArray = __nested_webpack_require_365191__("2909");
+var toConsumableArray = __nested_webpack_require_365436__("2909");
 
 // EXTERNAL MODULE: ./src/misc/scanner.js
-var scanner = __nested_webpack_require_365191__("a180");
+var scanner = __nested_webpack_require_365436__("a180");
 
 // EXTERNAL MODULE: ./src/misc/image-data.js
-var image_data = __nested_webpack_require_365191__("f718");
+var image_data = __nested_webpack_require_365436__("f718");
 
 // EXTERNAL MODULE: ./src/mixins/CommonAPI.vue + 2 modules
-var CommonAPI = __nested_webpack_require_365191__("b3af");
+var CommonAPI = __nested_webpack_require_365436__("b3af");
 
 // EXTERNAL MODULE: ./src/worker/jsqr.js
-var jsqr = __nested_webpack_require_365191__("3c85");
+var jsqr = __nested_webpack_require_365436__("3c85");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/QrcodeDropZone.vue?vue&type=script&lang=js&
 
@@ -11826,7 +11814,7 @@ var jsqr = __nested_webpack_require_365191__("3c85");
 // CONCATENATED MODULE: ./src/components/QrcodeDropZone.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_QrcodeDropZonevue_type_script_lang_js_ = (QrcodeDropZonevue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __nested_webpack_require_365191__("2877");
+var componentNormalizer = __nested_webpack_require_365436__("2877");
 
 // CONCATENATED MODULE: ./src/components/QrcodeDropZone.vue
 
@@ -11852,9 +11840,9 @@ var component = Object(componentNormalizer["a" /* default */])(
 /***/ }),
 
 /***/ "fea9":
-/***/ (function(module, exports, __nested_webpack_require_371286__) {
+/***/ (function(module, exports, __nested_webpack_require_371531__) {
 
-var global = __nested_webpack_require_371286__("da84");
+var global = __nested_webpack_require_371531__("da84");
 
 module.exports = global.Promise;
 
@@ -23866,8 +23854,9 @@ Vue.compile = compileToFunctions;
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -23937,9 +23926,29 @@ Vue.compile = compileToFunctions;
 /******/ 	}();
 /******/ 	
 /************************************************************************/
-/******/ 	// startup
-/******/ 	// Load entry module
-/******/ 	__webpack_require__("./resources/js/qr.js");
-/******/ 	// This entry module used 'exports' so it can't be inlined
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
+"use strict";
+/*!****************************!*\
+  !*** ./resources/js/qr.js ***!
+  \****************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _QR_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QR.vue */ "./resources/js/QR.vue");
+
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"); //Vue.use(VueQrcodeReader);
+
+
+var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
+  el: '#qr-reader-app',
+  components: {
+    QR: _QR_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  render: function render(h) {
+    return h(_QR_vue__WEBPACK_IMPORTED_MODULE_0__.default);
+  }
+});
+}();
 /******/ })()
 ;
