@@ -74,19 +74,27 @@
                 <div class="row pt-12 pb-10 min-vh-100 align-items-center">
                     <div class="col-md-8 col-xl-6 text-center text-md-left">
                         <h1 class="pb-1">
-                            <span class="d-block">Looking to get your</span>
+                            <span class="d-block">Still need to get your</span>
                             <span class="d-block">COVID-19 vaccine?</span>
                         </h1>
                         <p class="text-light opacity-80 pb-2 pb-md-5">
-                            While we're no longer accepting registrations, we've partnered with Lakeland Regional Health to better serve you.
+                            While we're no longer accepting registrations, there are many places available that can administer the vaccine for you.
                         </p>
-                        <div class="d-flex align-items-center justify-content-center justify-content-md-start">
-                            <a href="#" class="btn btn-primary-inverse btn-primary mr-5">Register now</a>
-                            <div class="d-flex align-items-center">
-                                <span class="fal fa-phone-alt fa-fw font-size-xl text-light mr-2"></span>
-                                <a class="text-light text-decoration-none" href="tel:+18632987500">+ 1 863-298-7500</a>
-                            </div>
-                        </div>
+						<p class="text-light opacity-80 pb-2 pb-md-5">
+							To help you find a vaccine location the Florida Department of Health has a tool available to assist with your search.
+						</p>
+						<div class="d-flex align-items-center justify-content-center justify-content-md-start">
+							<a href="https://floridahealthcovid19.gov/vaccines/vaccine-locator/?utm_source=floridahealth.gov&utm_medium=referral&utm_campaign=covid-19&utm_term=information+covid-19+vaccine+&utm_content=011921-vaccine-locater.redirect.html_in_article_link" class="btn btn-primary-inverse btn-primary mr-5">Locate a vaccine</a>
+						</div>
+						<p class="text-light opacity-80 pb-2 pb-md-5 mt-6">
+							Alternatively, you can call the Florida Health Department for more information.
+						</p>
+						<div class="d-flex align-items-center justify-content-center justify-content-md-start">
+							<div class="d-flex align-items-center">
+								<span class="fal fa-phone-alt fa-fw font-size-xl text-light mr-2"></span>
+								<a class="text-light text-decoration-none" href="tel:+18635197911">+ 1 863-519-7911</a>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>
