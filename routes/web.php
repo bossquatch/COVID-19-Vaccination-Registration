@@ -45,14 +45,14 @@ Route::group(["middleware" => "check.reset"], function() {
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::post('/home/register', [App\Http\Controllers\RegistrationController::class, 'submitRegistration']);
-    Route::get('/edit', [App\Http\Controllers\RegistrationController::class, 'edit']);
-    Route::post('/edit', [App\Http\Controllers\RegistrationController::class, 'update']);
-    Route::delete('/home/delete', [App\Http\Controllers\RegistrationController::class, 'deleteRegistration']);
+//    Route::post('/home/register', [App\Http\Controllers\RegistrationController::class, 'submitRegistration']);
+//    Route::get('/edit', [App\Http\Controllers\RegistrationController::class, 'edit']);
+//    Route::post('/edit', [App\Http\Controllers\RegistrationController::class, 'update']);
+//    Route::delete('/home/delete', [App\Http\Controllers\RegistrationController::class, 'deleteRegistration']);
 
-    Route::post('/home/invitation/accept', [App\Http\Controllers\InvitationController::class, 'accept'])->middleware('can:create_registration');
-    Route::post('/home/invitation/decline', [App\Http\Controllers\InvitationController::class, 'decline'])->middleware('can:create_registration');
-    Route::post('/home/invitation/postpone', [App\Http\Controllers\InvitationController::class, 'postpone'])->middleware('can:create_registration');
+//    Route::post('/home/invitation/accept', [App\Http\Controllers\InvitationController::class, 'accept'])->middleware('can:create_registration');
+//    Route::post('/home/invitation/decline', [App\Http\Controllers\InvitationController::class, 'decline'])->middleware('can:create_registration');
+//    Route::post('/home/invitation/postpone', [App\Http\Controllers\InvitationController::class, 'postpone'])->middleware('can:create_registration');
 
     Route::get('/address/validate', [App\Http\Controllers\UspsController::class, 'validateInlineAddress']);
 

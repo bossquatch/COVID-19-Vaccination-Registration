@@ -152,7 +152,7 @@
                                     </button>
                                 </div>
                                 <div class="col-3 text-center border-right postion-relative">
-                                    <a href="/edit" title="Edit Registration" class="btn btn-link p-0 stretched-link"><small><span class="fad fa-edit mr-1"></span>Edit</small></a>
+{{--                                    <a href="/edit" title="Edit Registration" class="btn btn-link p-0 stretched-link"><small><span class="fad fa-edit mr-1"></span>Edit</small></a>--}}
                                 </div>
                                 <div class="col-3 text-center border-right postion-relative">
                                     @if (Auth::user()->sms_verified_at != null)
@@ -162,16 +162,16 @@
                                     @else
                                     <form method="POST" action="{{ url('/sms/resend') }}">
                                         @csrf
-                                        <button type="submit" class="btn btn-link p-0 stretched-link">
-                                            <small><span class="fad fa-mobile mr-1"></span>Text Message Verify</small>
-                                        </button>
+{{--                                        <button type="submit" class="btn btn-link p-0 stretched-link">--}}
+{{--                                            <small><span class="fad fa-mobile mr-1"></span>Text Message Verify</small>--}}
+{{--                                        </button>--}}
                                     </form>
                                     @endif
                                 </div>
                                 <div class="col-3 text-center postion-relative">
-                                    <button class="btn btn-link p-0 text-danger stretched-link" data-toggle="modal" data-target="#deleteModal">
-                                        <small><span class="fad fa-trash-alt mr-1"></span> Delete</small>
-                                    </button>
+{{--                                    <button class="btn btn-link p-0 text-danger stretched-link" data-toggle="modal" data-target="#deleteModal">--}}
+{{--                                        <small><span class="fad fa-trash-alt mr-1"></span> Delete</small>--}}
+{{--                                    </button>--}}
                                 </div>
                             </div>
                         </div>
@@ -274,14 +274,14 @@
 
                         <!-- Text -->
                         <p class="text-gray-dark mb-0">
-                            You may also receive the vaccine if your phycisian deems you extremely vulnerable. To receive the 
-                            inoculation as extremely vulnerable you must bring a completed <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a> 
+                            You may also receive the vaccine if your phycisian deems you extremely vulnerable. To receive the
+                            inoculation as extremely vulnerable you must bring a completed <a href="/docs/EO-21-47-Form.pdf" target="_blank" rel="noopener" download aria-download="true">EO-21-47-Form</a>
                             and include a statement from the physician that the patient meets eligibility criteria outlined on the <a href="https://floridahealthcovid19.gov/high-risk-populations/">
                             Florida Department of Health website</a>.
                         </p>
 
                     </div>
-                    
+
                 </div>
             </div>
         </div>
