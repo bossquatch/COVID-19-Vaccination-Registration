@@ -1,197 +1,120 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-@section('title')
-    {{ config('app.name', 'Laravel') }}
-@endsection
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('header')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y0RQWGNMN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-2Y0RQWGNMN');
+    </script>
+
+    <title>
+        {{ config('app.name', 'Laravel') }}
+    </title>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{--<script src="{{ asset('js/project.js') }}" defer></script>--}}
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+
+    <script>
+        var csrf_token = '{{ csrf_token() }}';
+    </script>
+
     <script src="{{ asset('js/analytics.js') }}"></script>
     <link href="{{ asset('css/analytics.css') }}" rel="stylesheet">
-@endsection
+</head>
+<body class="site">
+{{--    @if (config('app.env') != 'prod' && config('app.env') != 'production')--}}
+{{--    <div class="fixed-top alert alert-warning alert-dismissible fade show mb-0" role="alert" style="z-index: 1031;" id="test-env-warning">--}}
+{{--        <span class="fad fa-exclamation-triangle"></span></strong>Warning!</strong> This is a testing environment and <strong>not</strong> the <a href="https://register.polk.health/">real website</a>.--}}
+{{--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--            <span aria-hidden="true">&times;</span>--}}
+{{--        </button>--}}
+{{--    </div>--}}
 
-@section('content')
-<!-- Header -->
-<div class="page-header header-filter page-header-default">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1 class="title">Polk County COVID-19 Vaccinations</h1>
-                <p class="sub-title h4 mb-5">Welcome to the Florida Department of Health Polk County’s vaccination registration web portal. Here you can create an account and then submit your personal information for a future vaccine appointment.</p>
-                @auth
-                <a class="btn btn-header btn-round btn-lg" href="/home">View Registration</a>
-                @else
-                @if(config('app.allow_self_service'))
-                <a class="btn btn-header btn-round btn-lg" href="/register">Register</a>
-                @endif
-                @endauth
-                <p class="font-size-xs mt-4">
-                    You must be able to provide proof of Florida residency at the time of your vaccination.  Please reference this <a href="https://floridahealthcovid19.gov/wp-content/uploads/2021/01/Prioritization-of-Floridans-for-Covid-19-Vaccinations.pdf" class="text-light font-weight-medium"><u>advisory</u></a> for more information.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+{{--    <script>--}}
+{{--        document.addEventListener("DOMContentLoaded", function(event) {--}}
+{{--            setTimeout(function () {--}}
+{{--                var warning = document.getElementById('test-env-warning');--}}
+{{--                if (typeof(warning) != 'undefined' && warning != null) {--}}
+{{--                    warning.classList.remove('show');--}}
+{{--                    setTimeout(function () {--}}
+{{--                        document.getElementById('test-env-warning').remove();--}}
+{{--                    }, 1000);--}}
+{{--                }--}}
+{{--            }, 5000);--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--    @endif--}}
 
-<!-- Main Content -->
-<section class="main pt-8 pt-md-11 pb-8 pb-md-12">
-    <div class="container">
-        <div class="row mb-6 mb-md-8">
-            <div class="col-12 col-md-8 mb-6 mb-md-0">
-                <div class="row mb-6 mb-md-8">
-                    <div class="col-12">
-                        <!-- Heading -->
-                        <h2 class="h3">
-                            Overview
-                        </h2>
+    @include('layouts.partials.navbar')
 
-                        <!-- Text -->
-                        <p class="text-gray-dark">
-                            To reduce the spread of COVID-19 and its impacts on health and society, a safe and effective vaccine is the most important intervention to end the pandemic. Many of the decisions regarding who gets the COVID-19 vaccine depends on the decisions of the state and federal government. This includes the amount of vaccine Polk County will receive, when, and how.
+    <main class="site-content">
+        <!-- Header -->
+        <section class="bg-primary text-light p-0">
+            <img src="/images/national-cancer-institute-fi3zHLxWrYw-unsplash.jpg" alt="Nurse administers a vaccine" class="bg-image blend-mode-multiply position-absolute">
+            <div class="container">
+                <div class="row pt-12 pb-10 min-vh-100 align-items-center">
+                    <div class="col-md-8 col-xl-6 text-center text-md-left">
+                        <h1 class="pb-1">
+                            <span class="d-block">Still need to get your</span>
+                            <span class="d-block">COVID-19 vaccine?</span>
+                        </h1>
+                        <p class="text-light opacity-80 pb-2 pb-md-5">
+                            While we're no longer accepting registrations, there are many places available that can administer the vaccine for you.
                         </p>
-
-                        <p class="text-gray-dark">
-                            The state’s allocation plan is based on a phased approach while the vaccine doses are in limited supply. Polk County is following the required prioritization set by the federal government and the State of Florida in directing current vaccinations to any person 18 and over for the Moderna and Johnson & Johnson vaccines and 16 or over for the Pfizer vaccine.
-                        </p>
-                    </div>
-                </div>
-                <div class="row mb-6 mb-md-8">
-                    <div class="col-12">
-                        <!-- Heading -->
-                        <h2 class="h3">
-                            Statistics
-                        </h2>
-                        <div class="chart mt-6">
-                            <canvas id="regByDay" width="400" height="400"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-4">
-                <!-- Card -->
-{{--                <div class="card shadow-light-lg mb-5">--}}
-{{--                    <div class="card-body">--}}
-{{--                        <!-- Heading -->--}}
-{{--                        <h2 class="h4">--}}
-{{--                            Current Status--}}
-{{--                        </h2>--}}
-
-{{--                        <!-- Text -->--}}
-{{--                        <p class="font-size-sm text-gray-dark mb-1">We are currently scheduling vaccinations for registrations that were made on:</p>--}}
-{{--                        <span class="badge badge-pill badge-primary ml-2">{{ $currentSchedule }}</span>--}}
-{{--                        <div class="card border-primary mb-2 mt-4" style="max-width: 18rem;">--}}
-{{--                            <div class="card-header">Header</div>--}}
-{{--                            <div class="card-body text-primary">--}}
-{{--                                <h6 class="card-title">Please note:</h6>--}}
-{{--                                <p class="card-text font-size-sm">If you registered prior to the date shown above and have not been contacted, please reach out to us at the call center for assistance.</p>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                    </div>--}}
-{{--                </div>--}}
-                <div class="card shadow-light-lg mb-5">
-                    <div class="card-body">
-                        <!-- Heading -->
-                        <h2 class="h4">
-                            Need help?
-                        </h2>
-
-                        <!-- Text -->
-                        <p class="font-size-sm text-gray-dark mb-5">
-                            If you aren’t sure what you’re looking for, or need clarification, you can contact our COVID-19 Vaccine Hotline.
-                        </p>
-
-                        <!-- Heading -->
-                        <h3 class="h6 font-weight-bold text-uppercase mb-2">
-                            Call center
-                        </h3>
-
-                        <!-- Text -->
-                        <p class="font-size-sm text-gray-dark mb-5">
-                            <a href="tel:863-298-7500">(863) 298-7500</a>
-                        </p>
-
-                        <!-- Heading -->
-                        <h3 class="h6 font-weight-bold text-uppercase mb-2">
-                            Call center hours
-                        </h3>
-
-                        <!-- Text -->
-                        <p class="font-size-sm text-gray-dark mb-0">
-                            <span class="mr-1">Mon-Fri:</span> 8am - 5pm
-                        </p>
-{{--                        <p class="font-size-sm text-gray-dark mb-0">--}}
-{{--                            <span class="mr-1">Sat & Sun:</span> 8am - 2pm--}}
-{{--                        </p>--}}
+						<p class="text-light opacity-80 pb-2 pb-md-5">
+							To help you find a vaccine location the Florida Department of Health has a tool available to assist with your search.
+						</p>
+						<div class="d-flex align-items-center justify-content-center justify-content-md-start">
+							<a href="https://floridahealthcovid19.gov/vaccines/vaccine-locator/?utm_source=floridahealth.gov&utm_medium=referral&utm_campaign=covid-19&utm_term=information+covid-19+vaccine+&utm_content=011921-vaccine-locater.redirect.html_in_article_link" class="btn btn-primary-inverse btn-primary mr-5">Locate a vaccine</a>
+						</div>
+						<p class="text-light opacity-80 pb-2 pb-md-5 mt-6">
+							Alternatively, you can call the Florida Health Department for more information.
+						</p>
+						<div class="d-flex align-items-center justify-content-center justify-content-md-start">
+							<div class="d-flex align-items-center">
+								<span class="fal fa-phone-alt fa-fw font-size-xl text-light mr-2"></span>
+								<a class="text-light text-decoration-none" href="tel:+18635197911">+ 1 863-519-7911</a>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-transparent container-fluid fixed-bottom">
+        <div class="d-md-flex align-items-center justify-content-between py-2 text-center text-md-left">
+            <ul class="list-inline font-size-xs mb-3 mb-md-0 order-md-2">
+                <li class="list-inline-item my-1"><a class="nav-link" href="/terms">Terms</a></li>
+                <li class="list-inline-item my-1"><a class="nav-link" href="/privacy">Privacy</a></li>
+            </ul>
+
+            <p class="font-size-xs mb-0 mr-4 order-md-1"><span>&copy; All rights reserved. Made by&nbsp;</span><a href="https://www.polk-county.net/" target="_blank" rel="noopener">Polk County</a></p>
         </div>
+    </footer>
 
-        <div class="row align-items-center">
-            <div class="col-12 col-md-6 mb-8 mb-md-0">
-                <!-- Badge -->
-                <span class="badge badge-pill badge-primary-soft mb-3">
-                    <span class="h6 text-uppercase">
-                        Google Translate
-                    </span>
-                </span>
+    @include('layouts.partials.modals')
 
-                <!-- Heading -->
-                <h2>
-                    Google Translate available on Chrome, iOS and Android.
-                </h2>
-
-                <!-- Text -->
-                <p class="font-size-lg text-gray-dark mb-6">
-                    You can translate text, handwriting, photos, and speech in over 100 languages with the Google Translate app. You can also use Translate on the web.
-                </p>
-
-                <!-- Available in the Chrome Web Store Button -->
-                <div>
-                    <a class="text-reset d-inline-block mr-2 mb-4" href="https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=en" title="Available in the Chrome Web Store" target="_blank" rel="noopener">
-                        <img class="img-fluid" alt="Available in the Chrome Web Store" src="/images/chrome-web-store-badge.png" style="max-width: 321px;" />
-                    </a>
-                </div>
-
-                <!-- Download on the App Store Button -->
-                <a class="text-reset d-inline-block mr-2 mb-4" href="https://apps.apple.com/us/app/google-translate/id414706506" title="Download on the App Store" target="_blank" rel="noopener">
-                    <img class="img-fluid" alt="Download on the App Store" src="/images/app-store-badge.png" style="max-width: 155px;" />
-                </a>
-
-                <!-- Get It On Google Play Button -->
-                <a class="text-reset d-inline-block mr-2 mb-4" href="https://play.google.com/store/apps/details?id=com.google.android.apps.translate" title="Get it on Google Play" target="_blank" rel="noopener">
-                    <img class="img-fluid" alt="Get it on Google Play" src="/images/google-play-badge.png" style="max-width: 155px;" />
-                </a>
-            </div>
-            <div class="col-12 col-md-6 mb-8 text-left text-md-center">
-                <!-- Google Translate Logo -->
-                <a class="text-reset d-inline-block" href="https://translate.google.com/" title="Google Translate" target="_blank" rel="noopener">
-                    <svg width="240" enable-background="new 0 0 998.1 998.3" version="1.1" viewBox="0 0 998.1 998.3" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-                        <path d="m931.7 998.3c36.5 0 66.4-29.4 66.4-65.4v-667.1c0-36-29.9-65.4-66.4-65.4h-648.1l260.1 797.9h388z" fill="#DBDBDB" />
-                        <path d="m931.7 230.4c9.7 0 18.9 3.8 25.8 10.6 6.8 6.7 10.6 15.5 10.6 24.8v667.1c0 9.3-3.7 18.1-10.6 24.8-6.9 6.8-16.1 10.6-25.8 10.6h-366.2l-240.6-737.9h606.8m0-30h-648.1l260.1 797.9h388c36.5 0 66.4-29.4 66.4-65.4v-667.1c0-36-29.9-65.4-66.4-65.4z" fill="#DCDCDC" />
-                        <polygon points="482.3 809.8 543.7 998.3 714.4 809.8" fill="#4352B8" />
-                        <path d="m936.1 476.1v-39.1h-188.5v-63.2h-61.2v63.2h-120.3v39.1h239.4c-12.8 45.1-41.1 87.7-68.7 120.8-48.9-57.9-49.1-76.7-49.1-76.7h-50.8s2.1 28.2 70.7 108.6c-22.3 22.8-39.2 36.3-39.2 36.3l15.6 48.8s23.6-20.3 53.1-51.6c29.6 32.1 67.8 70.7 117.2 116.7l32.1-32.1c-52.9-48-91.7-86.1-120.2-116.7 38.2-45.2 77-102.1 85.2-154.2h84.6v0.1z" fill="#607988" />
-                        <path d="M66.4,0C29.9,0,0,29.9,0,66.5v677c0,36.5,29.9,66.4,66.4,66.4h648.1L454.4,0H66.4z" fill="#4285F4" />
-                        <linearGradient id="b" x1="534.3" x2="998.1" y1="433.2" y2="433.2" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#fff" stop-opacity=".2" offset="0" />
-                            <stop stop-color="#fff" stop-opacity=".02" offset="1" />
-                        </linearGradient>
-                        <path d="M534.3,200.4h397.4c36.5,0,66.4,29.4,66.4,65.4V666L534.3,200.4z" enable-background="new" fill="url(#b)" />
-                        <path d="m371.4 430.6c-2.5 30.3-28.4 75.2-91.1 75.2-54.3 0-98.3-44.9-98.3-100.2s44-100.2 98.3-100.2c30.9 0 51.5 13.4 63.3 24.3l41.2-39.6c-27.1-25-62.4-40.6-104.5-40.6-86.1 0-156 69.9-156 156s69.9 156 156 156c90.2 0 149.8-63.3 149.8-152.6 0-12.8-1.6-22.2-3.7-31.8h-146v53.4l91 0.1z" fill="#eee" />
-                        <radialGradient id="a" cx="65.208" cy="19.366" r="1398.3" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#fff" stop-opacity=".1" offset="0" />
-                            <stop stop-color="#fff" stop-opacity="0" offset="1" />
-                        </radialGradient>
-                        <path d="m931.7 200.4h-412.9l-64.4-200.4h-388c-36.5 0-66.4 29.9-66.4 66.5v677c0 36.5 29.9 66.4 66.4 66.4h415.9l61.4 188.4h388c36.5 0 66.4-29.4 66.4-65.4v-667.1c0-36-29.9-65.4-66.4-65.4z" fill="url(#a)" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-@endsection
-@section('scripts')
     <script type="text/javascript">
         var ctx = document.getElementById('regByDay').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -285,4 +208,5 @@
             }
         });
     </script>
-@endsection
+</body>
+</html>
